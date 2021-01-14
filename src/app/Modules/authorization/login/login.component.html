@@ -1,1 +1,110 @@
-<p>login works!</p>
+<!--inner section login starts-->
+<aw-wizard #wizard >
+    <aw-wizard-step stepTitle="Basic Info">
+        <form>
+        <section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="login-boxouter bg-white mx-auto">
+                            <p class="mobile-pagetop-heading d-md-none mb-3 mb-md-4 text-center">LOG IN</p>
+                            <p class="mobile-pagetop-subheading mb-4 mb-md-5 d-block text-center">Please enter the email address and password you used when signing up to access your dashboard. </p>
+                            <div class="forms">
+                                <div class="single-form-row mb-35">
+                                    <input type="text" class="special--inputs swap-email w-100" placeholder="Enter your registered email address or mobile number"/>
+                                </div>
+                                <div class="single-form-row">                                    
+                                    <button  type="button" class="primary--button w-100 py-md-3" awNextStep>Continue</button> 
+                                </div>
+                                <div class="or-separator">
+                                    <span>OR</span>
+                                </div>
+                                <div class="single-form-row mb-4">
+                                    <button type="button" class="google-button social-tap-btn w-100">
+                                        <svg width="27" height="27" viewBox="0 0 27 27" fill="none" class="svg-thirdparty">
+                                            <g clip-path="url(#clip0)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.2001 5.39998C15.0321 5.39998 16.806 6.04663 18.2086 7.22788L22.1317 3.49108C20.6254 2.1021 18.816 1.08334 16.8473 0.515643C14.8785 -0.0520538 12.8045 -0.153058 10.7899 0.220646C8.77524 0.59435 6.87545 1.43248 5.24126 2.66851C3.60707 3.90454 2.28347 5.50445 1.37549 7.34128L5.79944 10.7514C6.31539 9.19559 7.30778 7.84158 8.63602 6.88114C9.96427 5.92069 11.561 5.40251 13.2001 5.39998Z" fill="#D94F3D"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.39994 13.2003C5.39994 12.3674 5.53494 11.5398 5.79954 10.7514L1.37559 7.34131C0.470517 9.16181 -0.000488281 11.1672 -0.000488281 13.2003C-0.000488281 15.2334 0.470517 17.2388 1.37559 19.0593L5.79954 15.6492C5.53594 14.8596 5.40101 14.0328 5.39994 13.2003Z" fill="#F2C042"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M25.8607 10.8H13.2598V16.2H20.4013C19.9764 17.7272 19.003 19.0438 17.6675 19.8977L22.0564 23.2808C24.8617 20.7631 26.51 16.6698 25.8607 10.8Z" fill="#5085ED"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6646 19.8976C16.3083 20.674 14.762 21.056 13.2001 21.0006C11.561 20.998 9.96427 20.4799 8.63602 19.5194C7.30778 18.559 6.31539 17.205 5.79944 15.6492L1.37549 19.0579C2.46806 21.2608 4.15365 23.1152 6.24265 24.4124C8.33164 25.7096 10.7412 26.3981 13.2001 26.4006C16.4357 26.4881 19.5893 25.3764 22.0548 23.2794L17.6646 19.8976Z" fill="#57A75C"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0">
+                                            <rect width="27" height="27" fill="white"/>
+                                            </clipPath>
+                                            </defs>
+                                        </svg>     
+                                        <span class="svg-thirdparty-text">Sign In With Google</span>
+                                    </button>
+                                </div>
+                                <div class="single-form-row mb-4">
+                                    <button type="button" class="google-button social-tap-btn w-100">
+                                        <svg width="27" height="27" viewBox="0 0 27 27" fill="none">
+                                            <path d="M9.76961 27C5.7512 26.9769 2.42725 18.7739 2.42725 14.5964C2.42725 7.77233 7.54644 6.27836 9.51933 6.27836C10.4084 6.27836 11.3578 6.62752 12.1952 6.93649C12.7807 7.15201 13.3863 7.3745 13.7232 7.3745C13.9248 7.3745 14.3998 7.18523 14.8193 7.01917C15.7138 6.66306 16.8269 6.22046 18.1232 6.22046C18.1255 6.22046 18.1286 6.22046 18.1309 6.22046C19.0987 6.22046 22.0334 6.43287 23.7977 9.08246L24.211 9.70351L23.6162 10.1523C22.7665 10.7935 21.2161 11.963 21.2161 14.2797C21.2161 17.0235 22.972 18.0787 23.8155 18.5862C24.1879 18.8103 24.5733 19.0412 24.5733 19.5464C24.5733 19.8763 21.9407 26.9591 18.1177 26.9591C17.1823 26.9591 16.521 26.6779 15.9378 26.43C15.3476 26.1789 14.8385 25.9626 13.9973 25.9626C13.5709 25.9626 13.0317 26.1642 12.4609 26.3782C11.6808 26.6694 10.7978 27 9.79587 27H9.76961Z" fill="black"/>
+                                            <path d="M18.528 0C18.6276 3.58995 16.0602 6.08048 13.4958 5.92429C13.0733 3.05938 16.0599 0 18.528 0Z" fill="black"/>
+                                        </svg>                                         
+                                        <span class="svg-thirdparty-text">Sign In With Apple</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-md-none mt-5">                        
+                                <div class="or-separator my-3 sudo-width">
+                                    <span class="new-mentordex-txt">New to MentorDex</span>
+                                </div>
+                                <div class="text-center">
+                                    <a href="#" class="alt--button font-w-500 py-2">SIGN UP</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </form>
+    </aw-wizard-step>
+    <aw-wizard-step stepTitle="gfbght">
+        <form>
+        <section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="login-boxouter bg-white mx-auto">
+                            <p class="mobile-pagetop-heading d-md-none mb-3 mb-md-4 text-center">LOG IN</p>
+                            <p class="mobile-pagetop-heading mb-2 text-center welcomnote-small">Welcome! Let’s get to work.</p>
+                            <p class="mobile-pagetop-subheading mb-4 mb-md-5 d-block text-center">Email@gmail.com</p>
+                            <div class="forms">
+                                <div class="single-form-row mb-2">
+                                    <input type="password" class="special--inputs w-100" placeholder="Enter your password"/>
+                                </div>
+                                <div class="text-right mb-35">
+                                    <a routerLink="/authorization/forgot-password" class="new-mentordex-txt hovernone">Forgot Password?</a>
+                                </div>
+                                <div class="single-form-row mb-35">
+                                    <input type="submit" class="primary--button w-100 py-md-3" value="LOG IN" />
+                                </div>
+                                <div class="text-center">
+                                    <a href="#" class="new-mentordex-txt hovernone">Not You?</a>
+                                </div>
+                            </div>
+                            <div class="d-md-none mt-5">
+                                
+                                <div class="or-separator my-3 sudo-width">
+                                    <span class="new-mentordex-txt">New to MentorDex</span>
+                                </div>
+                                <div class="text-center">
+                                    <a href="#" class="alt--button font-w-500 py-2">SIGN UP</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </form>
+    </aw-wizard-step>
+    
+</aw-wizard>
+
+<!--inner section login ends-->
+
+

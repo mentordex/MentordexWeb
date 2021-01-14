@@ -23,13 +23,11 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/css/css-loader.css"
+            "styles": [             
+              "node_modules/angular-archwizard/archwizard.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              
             ]
           },
           "configurations": {

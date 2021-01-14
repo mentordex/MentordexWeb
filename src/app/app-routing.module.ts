@@ -17,6 +17,14 @@ const routes: Routes = [
     path: 'home', 
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule) 
   },
+  { 
+    path: 'authorization', 
+    loadChildren: () => import('./Modules/authorization/authorization.module').then(m => m.AuthorizationModule) 
+  },
+  { 
+    path: 'quick-links', 
+    loadChildren: () => import('./Modules/quick-links/quick-links.module').then(m => m.QuickLinksModule) 
+  },
   {
     path: '**',
     component: PageNotFoundComponent,   

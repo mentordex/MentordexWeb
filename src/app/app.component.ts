@@ -14,6 +14,7 @@ export class AppComponent {
 
   ngOnInit() { 
     this.titleService.setTitle();
+    
   }
 
   onActivate(event) {
