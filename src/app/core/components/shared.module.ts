@@ -66,7 +66,11 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
       PageLoaderService, 
       AlertService, 
       UtilsService,
-      AuthGuard,      
+      AuthGuard,   
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ApiIntercepter, multi: true
+      },   
       {
         provide: HTTP_INTERCEPTORS,
         useClass: TokenInterceptor, multi: true

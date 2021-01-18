@@ -26,7 +26,12 @@ const routes: Routes = [
     path: 'forgot-password',
     component: ForgotPasswordComponent,   
     data: { title: 'Forgot password' }
-  }
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent,   
+    data: { title: 'Reset Password' }
+  },
 ];
 
 @NgModule({

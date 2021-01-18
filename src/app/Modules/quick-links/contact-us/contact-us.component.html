@@ -82,51 +82,20 @@
             <div class="other-page-rightbar box-sidebar px-3 px-md-0">
                 <h3 class="center-heading-title mb-35 text-center">Our Offices</h3>
                 <div class="row">
-                    <div class="col-sm-6 col-md-4 mb-35">
+                    <div *ngFor="let office of offices" class="col-sm-6 col-md-4 mb-35">
                         <div class="city-cardBox">
                             <!-- <a href="#" class="box-rendered"><spna class="sr-only">layer anchor</spna></a> -->
                             <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/office1.png" alt="cityImg">
+                                <img src="{{office.image}}" alt="cityImg">
                             </div>
                             <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Global HQ</p>
-                                <span class="testimonials-author-city">1234 Augustine Dr., Suite 123
-                                    Santa Clara, NY 123456
-                                    Phone: 123.456.7890
+                                <p class="testimonials-author-name">{{office.title}}</p>
+                                <span class="testimonials-author-city">{{office.address}}, {{office.city}},{{office.state}}, {{office.country}} {{office.zipcode}}, 
+                                    Phone: {{office.phone}}
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 mb-35">
-                        <div class="city-cardBox">
-                            <!-- <a href="#" class="box-rendered"><spna class="sr-only">layer anchor</spna></a> -->
-                            <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/office2.png" alt="cityImg">
-                            </div>
-                            <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Global HQ</p>
-                                <span class="testimonials-author-city">1234 Augustine Dr., Suite 123
-                                    Santa Clara, NY 123456
-                                    Phone: 123.456.7890
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 mb-35">
-                        <div class="city-cardBox">
-                            <!-- <a href="#" class="box-rendered"><spna class="sr-only">layer anchor</spna></a> -->
-                            <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/office3.png" alt="cityImg">
-                            </div>
-                            <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Global HQ</p>
-                                <span class="testimonials-author-city">1234 Augustine Dr., Suite 123
-                                    Santa Clara, NY 123456
-                                    Phone: 123.456.7890
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    </div>                    
                 </div>
                 <div class="mt-5">
                     <h3 class="center-heading-title mb-35 text-center">Contact us here too</h3>
