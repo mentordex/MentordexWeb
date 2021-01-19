@@ -29,7 +29,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         errorMessage = error.error
                     }
                     // window.alert(errorMessage);
-                    utilsService.onError(errorMessage);
+                    utilsService.onResponse(errorMessage, false);
                     return throwError(errorMessage);
                 })
             )

@@ -15,7 +15,7 @@ export class PageLoaderComponent implements OnInit {
     this.PageLoaderService.pageLoaderStatus.subscribe((val: boolean) => {
       
       this.showLoader = val;
-  
+      console.log('showLoader',this.showLoader)
       this.ref.detectChanges();
     })
     this.PageLoaderService.getLoaderText().subscribe((text: string) => {

@@ -11,10 +11,12 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { TeamComponent } from './team/team.component';
 import { CareerComponent } from './career/career.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { BlogsComponent } from './blogs/blogs.component';
+import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 
 
 @NgModule({
-  declarations: [ResourceComponent, CategoriesComponent, FaqComponent, HowItWorksParentsComponent, HowItWorksMentorsComponent, AboutUsComponent, TeamComponent, CareerComponent, ContactUsComponent],
+  declarations: [ResourceComponent, CategoriesComponent, FaqComponent, HowItWorksParentsComponent, HowItWorksMentorsComponent, AboutUsComponent, TeamComponent, CareerComponent, ContactUsComponent, BlogsComponent, BlogDetailComponent],
   imports: [
     CommonModule,
     QuickLinksRoutingModule

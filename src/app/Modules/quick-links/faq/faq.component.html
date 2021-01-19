@@ -21,20 +21,20 @@
         <div class="col-md-4 col-lg-3 mb-4 mb-md-0">
             <div class="faq-sidebar">
                 <ul>
-                    <li class="active">
-                        <a href="#">
+                    <li  [ngClass]="{'active': category=='GENERAL' }" class="active">
+                        <a href="javascript:void(0)" (click)="onClickCategory('GENERAL')">
                             <span></span>
                             general
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li [ngClass]="{'active': category=='PARENTS' }" >
+                      <a href="javascript:void(0)" (click)="onClickCategory('PARENTS')">
                             <span></span>
                             parents
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li [ngClass]="{'active': category=='MENTORS' }" >
+                      <a href="javascript:void(0)" (click)="onClickCategory('MENTORS')">
                             <span></span>
                             mentors
                         </a>
@@ -44,25 +44,25 @@
         </div>
         <div class="col-md-8 col-lg-9">
             <div class="other-page-rightbar box-sidebar">
-                <h3 class="center-heading-title mb-35 text-center">General FAQ’s</h3>
+                <h3 class="center-heading-title mb-35 text-center">{{category}} FAQ’s</h3>
                 <div class="accordion-box">
                     <div class="accordion" id="accordionExample">
-                        <div class="card">
-                          <div class="card-header" id="headingOne">
+                        <div *ngFor="let faq of faqs; let index=index" class="card">
+                          <div class="card-header" id="heading{{index}}">
                             <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                How does Mentordex help me as a parent?
+                              <button class="btn btn-link btn-block text-left" [ngClass]="{'collapsed': index>0 }"  type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-expanded="{{index<=0?true:false}}" aria-controls="collapse{{index}}">
+                                {{faq.type}}
                               </button>
                             </h2>
                           </div>
                       
-                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                          <div id="collapse{{index}}" class="collapse" [ngClass]="{'show': index<=0 }" aria-labelledby="heading{{index}}" data-parent="#accordionExample">
                             <div class="card-body desc--text">
-                                Mentordex.com was created to make your life easier when it comes to finding suitable coaches, tutors, teachers, and mentors for your kids. No where else can you find such an intuitive and helpful site specifically & solely dedicated for the purpose of helping you find in-person mentors for your kids. Here at Mentordex, you can easily filter your search to find mentors who have the parameters you are looking for (including their prices, availability, credentials, and ratings from other parents) and who have gone through an interview and background check process.
+                              {{faq.description}}
                             </div>
                           </div>
                         </div>
-                        <div class="card">
+                        <!--<div class="card">
                           <div class="card-header" id="headingTwo">
                             <h2 class="mb-0">
                               <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -117,7 +117,7 @@
                                 Mentordex.com was created to make your life easier when it comes to finding suitable coaches, tutors, teachers, and mentors for your kids. No where else can you find such an intuitive and helpful site specifically & solely dedicated for the purpose of helping you find in-person mentors for your kids. Here at Mentordex, you can easily filter your search to find mentors who have the parameters you are looking for (including their prices, availability, credentials, and ratings from other parents) and who have gone through an interview and background check process.
                               </div>
                             </div>
-                          </div>
+                          </div>-->
                       </div>
                 </div>
             </div>
@@ -128,7 +128,7 @@
             <div class="text-center py-65 bg-xs-fff bg-md-f8f8f8 h-center-350">
                 <div class="max-650 mx-auto">
                     <h1 class="about-us-largetitle mb-3 color-heading">Ready to get going on Mentordex?</h1>
-                    <a href="#" class="primary--button py-1">Yes! Let's do this! </a>
+                    <a routerLink="/authorization" class="primary--button py-1">Yes! Let's do this! </a>
                 </div>
             </div>
         </div>

@@ -1,16 +1,11 @@
-<ng-container *ngIf="errors && errors['required']">{{errorPrefix}} {{ 'VALIDATION-MESSAGE.IS-REQUIRED' | translate }}<br /></ng-container>
+<ng-container *ngIf="errors && errors['required']">{{errorPrefix}} is required<br /></ng-container>
 
-<ng-container *ngIf="errors && errors['email']">{{ 'VALIDATION-MESSAGE.VALID-EMAIL' | translate }}<br /></ng-container>
-<ng-container *ngIf="errors && errors['minlength']">{{ 'VALIDATION-MESSAGE.MIN-LENGTH' | translate }} {{minLength}}.<br /></ng-container>
-<ng-container *ngIf="errors && errors['maxlength']">{{ 'VALIDATION-MESSAGE.MAX-LENGTH' | translate }} {{maxLength}}.<br /></ng-container>
+<ng-container *ngIf="errors && errors['email']">Enter a valid email.<br /></ng-container>
+<ng-container *ngIf="errors && errors['minlength']">Minimum length is {{minLength}}.<br /></ng-container>
+<ng-container *ngIf="errors && errors['maxlength']">Maximum length is {{maxLength}}.<br /></ng-container>
 <ng-container *ngIf="errors && errors['pattern']">{{patternError}}<br /></ng-container>
-
-
-
-<ng-container *ngIf="errors && errors['NoPassswordMatch']">{{ 'VALIDATION-MESSAGE.PASSWORD-CONFIRMPASSWORD-NOT-MATCH' | translate }}<br /></ng-container>
-
-<ng-container *ngIf="errors && errors['emailNotExist']">{{ 'VALIDATION-MESSAGE.EMAIL-NOT-EXIST' | translate }}<br /></ng-container>
-
-<ng-container *ngIf="errors && errors['min']">{{ 'VALIDATION-MESSAGE.MIN' | translate }} {{min}}.<br /></ng-container>
-<ng-container *ngIf="errors && errors['max']">{{ 'VALIDATION-MESSAGE.MAX' | translate }} {{max}}.<br /></ng-container>
+<ng-container *ngIf="errors && errors['NoPassswordMatch']">Password and confirm password do not match.<br /></ng-container>
+<ng-container *ngIf="errors && errors['emailNotExist']">Email do not exist in our system.<br /></ng-container>
+<ng-container *ngIf="errors && errors['min']">Minimum value is {{min}}.<br /></ng-container>
+<ng-container *ngIf="errors && errors['max']">Maximum value is {{max}}.<br /></ng-container>
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 
@@ -12,10 +12,10 @@ export class TokenInterceptor implements HttpInterceptor {
 
     let apiReq = request.clone({ url: `${request.url}` });  
     
-      if (localStorage.getItem('dexmentor-auth-token') && !(request.url).includes('wp-json') && !(request.url).includes('ipify')) {
+      if (localStorage.getItem(environment.TOKEN_NAME)) {
         request = request.clone({
           setHeaders: {
-            'x-dexmentor-auth-token': localStorage.getItem('dexmentor-auth-token')
+            'x-dexmentor-auth-token': localStorage.getItem(environment.TOKEN_NAME)
           }
         });
       }
