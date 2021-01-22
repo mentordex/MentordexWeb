@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
       //check the page url and change title/name on routed page
       if (event instanceof NavigationEnd ) {
         //this.currentUrl = event.url;
-        console.log(event.url)
+        
         if(event.url =='/' || event.url =='/home' || (event.url).includes('quick-links')){
           this.isHomePage = true
         
