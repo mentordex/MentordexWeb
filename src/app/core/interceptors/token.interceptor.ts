@@ -12,7 +12,8 @@ export class TokenInterceptor implements HttpInterceptor {
 
     let apiReq = request.clone({ url: `${request.url}` });  
     
-      if (localStorage.getItem(environment.TOKEN_NAME)) {
+      if (localStorage.getItem(environment.TOKEN_NAME) && !(request.url).includes('wp-json')) {
+        
         request = request.clone({
           setHeaders: {
             'x-dexmentor-auth-token': localStorage.getItem(environment.TOKEN_NAME)

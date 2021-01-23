@@ -370,126 +370,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
+            <div *ngFor="let category of categories" class="col-sm-6 col-md-4 col-lg-3 mb-35">
                 <div class="city-cardBox">
                     <a href="#" class="box-rendered">
                         <span class="sr-only">layer anchor</span>
                     </a>
                     <div class="city-cardBox-thumbnail bg-3bb3bd d-flex justify-content-center align-items-center">
                         <div class="circle-shape">
-                            <img src="assets/img/piano 1.svg" alt="pianoImg">
+                            <img src="{{category?.image}}" alt="{{category?.title}}">
                         </div>
                     </div>
                     <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Piano Instructors</p>
+                        <p class="testimonials-author-name">{{category?.title}}</p>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail bg-3bb3bd d-flex justify-content-center align-items-center">
-                        <div class="circle-shape">
-                            <img src="assets/img/swimming 1.svg" alt="swimmingImg">
-                        </div>
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Swimming Instructors</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail bg-3bb3bd d-flex justify-content-center align-items-center">
-                        <div class="circle-shape">
-                            <img src="assets/img/maths 1.svg" alt="mathImg">
-                        </div>
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Math Tutors</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail bg-3bb3bd d-flex justify-content-center align-items-center">
-                        <div class="circle-shape">
-                            <img src="assets/img/004-tennis 1.svg" alt="tennisImg">
-                        </div>
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Tennis Coaches</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail bg-3bb3bd d-flex justify-content-center align-items-center">
-                        <div class="circle-shape">
-                            <img src="assets/img/football 1.svg" alt="soccerImg">
-                        </div>
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Soccer Coaches</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail bg-3bb3bd d-flex justify-content-center align-items-center">
-                        <div class="circle-shape">
-                            <img src="assets/img/guitar 1.svg" alt="guiterImg">
-                        </div>
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Guitar Instructors</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail bg-3bb3bd d-flex justify-content-center align-items-center">
-                        <div class="circle-shape">
-                            <img src="assets/img/dancing 1.svg" alt="danceImg">
-                        </div>
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Dance Teachers</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail bg-3bb3bd d-flex justify-content-center align-items-center">
-                        <div class="circle-shape">
-                            <img src="assets/img/art 1.svg" alt="artImg">
-                        </div>
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Art Teachers</p>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <div class="row mt-3">
             <div class="col-12 mb-3 text-center">
@@ -920,94 +816,31 @@
             <div class="col-12">
                 <div class="accordion-box">
                     <div class="accordion" id="accordionExample">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        How does Mentordex help me as a parent?
-                      </button>
+                        <div *ngFor="let faq of faqs;let index=index" class="card">
+                            <div class="card-header" id="heading{{index}}">
+                                <h2 class="mb-0">                                  
+
+                                    <button class="btn btn-link btn-block text-left" [ngClass]="{'collapsed': index>0 }"  type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-expanded="{{index<=0?true:false}}" aria-controls="collapse{{index}}">
+                                        {{faq.type}}
+                                    </button>
+
                                 </h2>
                             </div>
 
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div id="collapse{{index}}" class="collapse" [ngClass]="{'show': index<=0 }" aria-labelledby="heading{{index}}" data-parent="#accordionExample">
                                 <div class="card-body desc--text">
-                                    Mentordex.com was created to make your life easier when it comes to finding suitable coaches, tutors, teachers, and mentors for your kids. No where else can you find such an intuitive and helpful site specifically & solely dedicated for the purpose of
-                                    helping you find in-person mentors for your kids. Here at Mentordex, you can easily filter your search to find mentors who have the parameters you are looking for (including their prices, availability, credentials,
-                                    and ratings from other parents) and who have gone through an interview and background check process.
+                                    {{faq.description}}
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Why is Mentordex helpful to me as a potential mentor?
-                      </button>
-                                </h2>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                <div class="card-body desc--text">
-                                    Mentordex.com was created to make your life easier when it comes to finding suitable coaches, tutors, teachers, and mentors for your kids. No where else can you find such an intuitive and helpful site specifically & solely dedicated for the purpose of
-                                    helping you find in-person mentors for your kids. Here at Mentordex, you can easily filter your search to find mentors who have the parameters you are looking for (including their prices, availability, credentials,
-                                    and ratings from other parents) and who have gone through an interview and background check process.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Is there a Mentordex mobile app? 
-                      </button>
-                                </h2>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                <div class="card-body desc--text">
-                                    Mentordex.com was created to make your life easier when it comes to finding suitable coaches, tutors, teachers, and mentors for your kids. No where else can you find such an intuitive and helpful site specifically & solely dedicated for the purpose of
-                                    helping you find in-person mentors for your kids. Here at Mentordex, you can easily filter your search to find mentors who have the parameters you are looking for (including their prices, availability, credentials,
-                                    and ratings from other parents) and who have gone through an interview and background check process.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingFour">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            As a parent, Mentordex sounds great-- but what is the catch? How much does it cost to use? 
-                        </button>
-                                </h2>
-                            </div>
-                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-                                <div class="card-body desc--text">
-                                    Mentordex.com was created to make your life easier when it comes to finding suitable coaches, tutors, teachers, and mentors for your kids. No where else can you find such an intuitive and helpful site specifically & solely dedicated for the purpose of
-                                    helping you find in-person mentors for your kids. Here at Mentordex, you can easily filter your search to find mentors who have the parameters you are looking for (including their prices, availability, credentials,
-                                    and ratings from other parents) and who have gone through an interview and background check process.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingFive">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                            As a potential Mentordex mentor, this sounds great and all, but what is the catch for me? How much does it cost?
-                        </button>
-                                </h2>
-                            </div>
-                            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
-                                <div class="card-body desc--text">
-                                    Mentordex.com was created to make your life easier when it comes to finding suitable coaches, tutors, teachers, and mentors for your kids. No where else can you find such an intuitive and helpful site specifically & solely dedicated for the purpose of
-                                    helping you find in-person mentors for your kids. Here at Mentordex, you can easily filter your search to find mentors who have the parameters you are looking for (including their prices, availability, credentials,
-                                    and ratings from other parents) and who have gone through an interview and background check process.
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-12 text-center">
-                <a href="#" class="primary--button">View All</a>
+                <a routerLink="/quick-links/FAQs" class="primary--button">View All</a>
             </div>
         </div>
     </div>
@@ -1022,40 +855,26 @@
                 <h3 class="center-heading-title mb-60 text-center">Recent Mentordex Blog Posts</h3>
             </div>
         </div>
-        <div class="responsive-blog-slider">
+        <div  class="responsive-blog-slider">
             <div class="responsive-blog-slider-inner">
-                <div class="blog-cards hover-blogbox">
+                <div *ngFor="let blog of blogs" class="blog-cards hover-blogbox">
                     <a href="#" class="box-rendered">
                         <span class="sr-only">layer anchor</span>
                     </a>
                     <div class="blog-cardImg">
-                        <img src="assets/img/blogImg-one.png" alt="blogcardImg">
+                        <img style="width:200px" src="{{blog.image}}" alt="blogcardImg">
                     </div>
-                    <p class="blog-cardText">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p class="blog-cardText">{{blog?.title?.rendered}}</p>
                 </div>
-                <div class="blog-cards hover-blogbox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="blog-cardImg">
-                        <img src="assets/img/blogImg-two.png" alt="blogcardImg">
-                    </div>
-                    <p class="blog-cardText">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-                <div class="blog-cards hover-blogbox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="blog-cardImg">
-                        <img src="assets/img/blogImg-three.png" alt="blogcardImg">
-                    </div>
-                    <p class="blog-cardText">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
+                
             </div>
         </div>
+
+
+       
         <div class="row mt-5">
             <div class="col-12 text-center">
-                <a href="#" class="primary--button">Take Me to the Mentordex Blog</a>
+                <a href="http://18.218.99.213/mentordex/blog" target="_blank" class="primary--button">Take Me to the Mentordex Blog</a>
             </div>
         </div>
     </div>
