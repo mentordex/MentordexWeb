@@ -28,10 +28,13 @@
                             "src/assets/css/slick-slider.css",
                             "src/assets/css/main.css",
                             "src/assets/css/developer.css",
-                            "node_modules/angular-archwizard/archwizard.css"
+                            "node_modules/angular-archwizard/archwizard.css",
+                            "node_modules/slick-carousel/slick/slick.scss",
+                            "node_modules/slick-carousel/slick/slick-theme.scss"
                         ],
                         "scripts": [
-                            
+                            "node_modules/jquery/dist/jquery.min.js",
+                            "node_modules/slick-carousel/slick/slick.min.js"
                         ]
 
                     },

@@ -815,26 +815,19 @@
         <div class="row">
             <div class="col-12">
                 <div class="accordion-box">
-                    <div class="accordion" id="accordionExample">
-                        <div *ngFor="let faq of faqs;let index=index" class="card">
-                            <div class="card-header" id="heading{{index}}">
-                                <h2 class="mb-0">                                  
-
-                                    <button class="btn btn-link btn-block text-left" [ngClass]="{'collapsed': index>0 }"  type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-expanded="{{index<=0?true:false}}" aria-controls="collapse{{index}}">
-                                        {{faq.type}}
-                                    </button>
-
-                                </h2>
-                            </div>
-
-                            <div id="collapse{{index}}" class="collapse" [ngClass]="{'show': index<=0 }" aria-labelledby="heading{{index}}" data-parent="#accordionExample">
-                                <div class="card-body desc--text">
-                                    {{faq.description}}
-                                </div>
-                            </div>
-                        </div>
-                        
+                    <div class="accordion">
+                        <ngb-accordion [closeOthers]="true" activeIds="static-0">
+                            <ngb-panel class="card" id="static-{{index}}" *ngFor="let faq of faqs;let index=index" title="{{faq.type}}">
+                                <ng-template ngbPanelContent>
+                                    <div class="card-body desc--text">
+                                        {{faq.description}}
+                                    </div>
+                                    
+                                </ng-template>
+                            </ngb-panel>
+                        </ngb-accordion>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -856,18 +849,22 @@
             </div>
         </div>
         <div  class="responsive-blog-slider">
-            <div class="responsive-blog-slider-inner">
-                <div *ngFor="let blog of blogs" class="blog-cards hover-blogbox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="blog-cardImg">
-                        <img style="width:200px" src="{{blog.image}}" alt="blogcardImg">
+            
+                <ngx-slick-carousel class="responsive-blog-slider-inner" #slickModal="slick-carousel" [config]="slideConfig">
+                    <div ngxSlickItem *ngFor="let blog of blogs" class="blog-cards hover-blogbox">
+                        <a target="_blank" href="{{blog.link}}" class="box-rendered">
+                            <span class="sr-only">layer anchor</span>
+                        </a>
+                        <div class="blog-cardImg">
+                            <img  src="{{blog.image}}" alt="blogcardImg">
+                        </div>
+                        <p class="blog-cardText">{{blog?.title?.rendered}}</p>
                     </div>
-                    <p class="blog-cardText">{{blog?.title?.rendered}}</p>
-                </div>
+                </ngx-slick-carousel>
+
                 
-            </div>
+                
+           
         </div>
 
 

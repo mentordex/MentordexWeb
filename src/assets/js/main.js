@@ -107,7 +107,7 @@ $('.slider-carousel').slick({
 });
 
 //Slide INIT for BLOG
-$('.responsive-blog-slider-inner').slick({
+/*$('.responsive-blog-slider-inner').slick({
   slidesToShow: 3,
   slidesToScroll: 1,
   dots: false,
@@ -141,7 +141,7 @@ $('.prev').click(function(){
   $('.next').click(function(){
     $('.slider-carousel').slick('slickNext');
   })
-
+*/
 
 
 //---------tagify js init--------
