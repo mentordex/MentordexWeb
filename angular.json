@@ -24,14 +24,23 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/assets/css/bootstrap.min.css",
+                            "src/styles.css",
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "src/assets/css/slick-slider.css",
                             "src/assets/css/main.css",
                             "src/assets/css/developer.css",
                             "node_modules/angular-archwizard/archwizard.css"
                         ],
                         "scripts": [
-                            
+                            "node_modules/jquery/dist/jquery.min.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "src/assets/js/popper.min.js",
+                            "src/assets/js/gsap-3.5.0.min.js",
+                            "src/assets/js/gsap-scollTrigger-3.5.0.min.js",
+                            "src/assets/js/slick-slider.js",
+                            "src/assets/js/tilt.js",
+                            "src/assets/js/main.js"
+
                         ]
 
                     },
@@ -92,8 +101,11 @@
                         ],
                         "styles": [
                             "src/styles.css"
+
                         ],
-                        "scripts": []
+                        "scripts": [
+
+                        ]
                     }
                 },
                 "lint": {

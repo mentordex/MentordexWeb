@@ -385,7 +385,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <div class="row mt-3">
             <div class="col-12 mb-3 text-center">
@@ -818,9 +818,9 @@
                     <div class="accordion" id="accordionExample">
                         <div *ngFor="let faq of faqs;let index=index" class="card">
                             <div class="card-header" id="heading{{index}}">
-                                <h2 class="mb-0">                                  
+                                <h2 class="mb-0">
 
-                                    <button class="btn btn-link btn-block text-left" [ngClass]="{'collapsed': index>0 }"  type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-expanded="{{index<=0?true:false}}" aria-controls="collapse{{index}}">
+                                    <button class="btn btn-link btn-block text-left" [ngClass]="{'collapsed': index>0 }" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-expanded="{{index<=0?true:false}}" aria-controls="collapse{{index}}">
                                         {{faq.type}}
                                     </button>
 
@@ -833,7 +833,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -855,23 +855,25 @@
                 <h3 class="center-heading-title mb-60 text-center">Recent Mentordex Blog Posts</h3>
             </div>
         </div>
-        <div  class="responsive-blog-slider">
+        <div class="responsive-blog-slider">
             <div class="responsive-blog-slider-inner">
-                <div *ngFor="let blog of blogs" class="blog-cards hover-blogbox">
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="blog-cardImg">
-                        <img style="width:200px" src="{{blog.image}}" alt="blogcardImg">
+
+                <ng-container *ngFor="let blog of blogs">
+                    <div class="blog-cards hover-blogbox">
+                        <a href="#" class="box-rendered">
+                            <spna class="sr-only">layer anchor</spna>
+                        </a>
+                        <div class="blog-cardImg">
+                            <img src="{{blog.image}}" alt="{{blog?.title?.rendered}}">
+                        </div>
+                        <p class="blog-cardText">{{blog?.title?.rendered}}</p>
                     </div>
-                    <p class="blog-cardText">{{blog?.title?.rendered}}</p>
-                </div>
-                
+                </ng-container>
             </div>
         </div>
 
 
-       
+
         <div class="row mt-5">
             <div class="col-12 text-center">
                 <a href="http://18.218.99.213/mentordex/blog" target="_blank" class="primary--button">Take Me to the Mentordex Blog</a>

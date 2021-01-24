@@ -17,14 +17,14 @@ export class AppComponent {
 
 
     //Load External JS
-    this.loadScript('../assets/js/jquery.3.5.1.min.js');
+    /*this.loadScript('../assets/js/jquery.3.5.1.min.js');
     this.loadScript('../assets/js/popper.min.js');
     this.loadScript('../assets/js/bootstrap.min.js');
     this.loadScript('../assets/js/gsap-3.5.0.min.js');
     this.loadScript('../assets/js/gsap-scollTrigger-3.5.0.min.js');
     this.loadScript('../assets/js/slick-slider.js');
     this.loadScript('../assets/js/tilt.js');
-    this.loadScript('../assets/js/main.js');
+    this.loadScript('../assets/js/main.js'); */
     
   }
 

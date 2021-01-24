@@ -9,7 +9,7 @@ import { AuthService, UtilsService } from '../../core/services';
 //import enviornment
 import { environment } from '../../../environments/environment';
 
-//declare var $;
+
 
 @Component({
   selector: 'app-home',
@@ -18,76 +18,70 @@ import { environment } from '../../../environments/environment';
 })
 export class HomeComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
-  categories:any = []
-  blogs:any = []
-  faqs:any = []
+  categories: any = []
+  blogs: any = []
+  faqs: any = []
 
-  constructor( private utilsService: UtilsService) { }
+  constructor(private utilsService: UtilsService) { }
 
   ngOnInit(): void {
     this.fetchCategories()
     this.fetchBlogs()
     this.fetchFAQs()
-
     
   }
 
-  fetchFAQs(){
-    this.utilsService.processGetRequest('faqs/top5listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {       
-      this.faqs = response  
+
+  
+  
+  fetchFAQs() {
+    this.utilsService.processGetRequest('faqs/top5listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.faqs = response
     })
   }
-  fetchCategories(){
-    this.utilsService.processGetRequest('city/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {       
-      this.categories = response  
+
+  fetchCategories() {
+    this.utilsService.processGetRequest('city/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.categories = response
     })
   }
 
   //Fetch blog listing from wordpress
-  fetchBlogs(){     
+  fetchBlogs() {
     this.utilsService.processGetRequest(`${environment.BLOG_API_ENDPOINT}/posts/`).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-       Object.keys(response).forEach(item =>{ 
-        if(item < '3'){         
+      Object.keys(response).forEach(item => {
+        if (item < '3') {
           this.utilsService.processGetRequest(`${environment.BLOG_API_ENDPOINT}/media/${response[item]['featured_media']}`).pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
-             
-            response[item]['image'] =  data['guid']['rendered']
+
+            response[item]['image'] = data['guid']['rendered']
             this.blogs.push(response[item]);
           })
-          
+
         }
       });
     })
-    /*$('.responsive-blog-slider-inner').slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      dots: false,
-      infinite: true,
-      cssEase: 'linear',
-      arrows: false,
-      responsive: [
-          {
-            breakpoint: 767,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1
-            }
-          },
-          {
-            breakpoint: 575,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              dots: true,
-              infinite: true
-            }
-          }
-        ]
-    });*/
+
   }
 
-//destroy all subscription
-public ngOnDestroy(): void {
-  this.onDestroy$.next();
-}
+  public loadScript(url: string) {
+    const body = <HTMLDivElement>document.body;
+    const script = document.createElement('script');
+    script.innerHTML = '';
+    script.src = url;
+    script.async = false;
+    script.defer = true;
+    body.appendChild(script);
+  }
+
+  ngAfterContentInit() {
+    
+     // this.loadScript('../assets/js/blog.js');
+    
+  }
+
+  //destroy all subscription
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
 }
