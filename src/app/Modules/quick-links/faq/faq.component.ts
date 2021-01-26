@@ -18,27 +18,43 @@ export class FaqComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();  
   faqs:any = []
-  category:string = 'GENERAL'
-
+  selectedcategory:string = ''
+  selectedCategoryTitle:string = ''
+  faqcategories:any = []
   constructor(private utilsService: UtilsService) { 
     
     
   }
 
   ngOnInit(): void {
-    this.fetchFAQs()
+    this.fetchFAQCategory()
   }
 
   //fetch office listing
-  fetchFAQs(){
-    this.utilsService.processPostRequest('faqs/listing', {'category':this.category}, true ).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      this.faqs = response            
+  fetchFAQs() {
+
+    this.utilsService.processPostRequest('faqs/listing', {'category':this.selectedcategory}, true ).pipe(takeUntil(this.onDestroy$)).subscribe((responseFaqs) => {
+      this.faqs = responseFaqs
     })
   }
 
+  fetchFAQCategory() {
+
+    this.utilsService.processGetRequest('faqs/categories').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.faqcategories = response
+      this.selectedCategoryTitle = response[0]['title'];
+      this.selectedcategory = response[0]['_id'];   
+      this.fetchFAQs()   
+    })
+  }
+
+  
+
   //on click different category
   onClickCategory(category){
-    this.category = category
+    console.log('category',category)
+    this.selectedCategoryTitle = category.title
+    this.selectedcategory = category._id
     this.fetchFAQs()
   }
 

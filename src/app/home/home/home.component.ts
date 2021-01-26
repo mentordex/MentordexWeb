@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
   }
 
   fetchCategories() {
-    this.utilsService.processGetRequest('city/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+    this.utilsService.processGetRequest('category/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.categories = response
     })
   }
