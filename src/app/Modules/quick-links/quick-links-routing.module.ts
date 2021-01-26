@@ -31,6 +31,11 @@ const routes: Routes = [
     path: 'our-team',
     component: TeamComponent,   
     data: { title: 'Our Team' }
+  },
+  {
+    path: 'career',
+    component: CareerComponent,   
+    data: { title: 'Career' }
   }
 ];
 
