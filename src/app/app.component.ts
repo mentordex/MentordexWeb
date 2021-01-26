@@ -10,21 +10,22 @@ import { TitleService } from './core/services'
 })
 export class AppComponent {
   title = 'dexmentor';
-  constructor(private titleService:TitleService) { }
+  constructor(private titleService:TitleService) {
+    new Promise((resolve) => {
+      this.loadScript('../assets/js/jquery.3.5.1.min.js');
+      this.loadScript('../assets/js/popper.min.js');
+      this.loadScript('../assets/js/bootstrap.min.js');
+      this.loadScript('../assets/js/gsap-3.5.0.min.js');
+      this.loadScript('../assets/js/gsap-scollTrigger-3.5.0.min.js');
+      this.loadScript('../assets/js/slick-slider.js');
+      this.loadScript('../assets/js/tilt.js');
+      this.loadScript('../assets/js/main.js');
+      resolve(true);
+  });
+   }
 
   ngOnInit() { 
-    this.titleService.setTitle();
-
-
-    //Load External JS
-    this.loadScript('../assets/js/jquery.3.5.1.min.js');
-    this.loadScript('../assets/js/popper.min.js');
-    this.loadScript('../assets/js/bootstrap.min.js');
-    this.loadScript('../assets/js/gsap-3.5.0.min.js');
-    this.loadScript('../assets/js/gsap-scollTrigger-3.5.0.min.js');
-    this.loadScript('../assets/js/slick-slider.js');
-    this.loadScript('../assets/js/tilt.js');
-    this.loadScript('../assets/js/main.js');
+    this.titleService.setTitle(); 
     
   }
 
@@ -38,6 +39,7 @@ export class AppComponent {
         }
     }, 16);
   }
+  
 
   public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;

@@ -32,7 +32,7 @@
                            <span>About</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li   class="active">
                         <a routerLink="/quick-links/our-team">
                             <span class="svg-sidebarIcon">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -83,118 +83,23 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="grid">
-                            <div class="grid-item--width2">
-                                <div class="ourteam-card">
-                                    <div class="ourteam-card-profile">
-                                        <img src="assets/img/Ellipse 73.png" alt="Img-Profile">
+                            <ngx-masonry>
+                                <div ngxMasonryItem class="masonry-item grid-item--width2" *ngFor="let team of teams" >
+                                    <div class="ourteam-card">
+                                        <div class="ourteam-card-profile">
+                                            <img src="{{team?.image}}" alt="Img-Profile">
+                                        </div>
+                                        <h4>{{team?.name}}</h4>
+                                        <h5>{{team?.title}}</h5>
+                                        
+                                        <p>
+                                            {{team?.description}}
+                                        </p>
                                     </div>
-                                    <h4>Kimberly Sirmans</h4>
-                                    <h5>Founder and CEO</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce diam velit, porta at ante a, egestas feugiat felis. Vestibulum pellentesque risus ac vehicula blandit. Aliquam placerat pretium libero. Curabitur sed finibus risus. Mauris rhoncus, metus ut posuere pulvinar, sapien tellus ultrices odio, sed euismod mauris lacus sed ligula.
-                                    </p>
-                                    <p>
-                                        Vivamus quis magna metus. Vestibulum hendrerit vel est nec commodo. Sed euismod semper mauris, quis luctus nibh volutpat eu. Duis eget nunc tellus. Sed tortor lectus, sagittis sed ligula sed, ultricies fermentum metus. Aliquam varius mi massa.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="grid-item--width2">
-                                <div class="ourteam-card">
-                                    <div class="ourteam-card-profile">
-                                        <img src="assets/img/Ellipse 75.png" alt="Img-Profile">
-                                    </div>
-                                    <h4>Bessie Cooper</h4>
-                                    <h5>Founder and CEO</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce diam velit, porta at ante a, egestas feugiat felis. Vestibulum pellentesque risus ac vehicula blandit.
-                                    </p>
-                                    <p>
-                                        Vivamus quis magna metus. Vestibulum hendrerit vel est nec commodo. Sed euismod semper mauris, quis luctus nibh volutpat eu. Duis eget nunc tellus. Sed tortor lectus, sagittis sed ligula sed, ultricies fermentum metus. Aliquam varius mi massa.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="grid-item--width2">
-                                <div class="ourteam-card">
-                                    <div class="ourteam-card-profile">
-                                        <img src="assets/img/Ellipse 83.png" alt="Img-Profile">
-                                    </div>
-                                    <h4>Jenny Wilson</h4>
-                                    <h5>Founder and CEO</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce diam velit, porta at ante a, egestas feugiat felis. Vestibulum pellentesque risus ac vehicula blandit.
-                                    </p>
-                                    <p>
-                                        Vivamus quis magna metus. Vestibulum hendrerit vel est nec commodo. Sed euismod semper mauris, quis luctus nibh volutpat eu. Duis eget nunc tellus. Sed tortor lectus, sagittis sed ligula sed, ultricies fermentum metus. Aliquam varius mi massa.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="grid-item--width2">
-                                <div class="ourteam-card">
-                                    <div class="ourteam-card-profile">
-                                        <img src="assets/img/Ellipse 77.png" alt="Img-Profile">
-                                    </div>
-                                    <h4>Guy Hawkins</h4>
-                                    <h5>Founder and CEO</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce diam velit, porta at ante a, egestas feugiat felis. Vestibulum pellentesque risus ac vehicula blandit.
-                                    </p>
-                                    <p>
-                                        Vivamus quis magna metus. Vestibulum hendrerit vel est nec commodo. Sed euismod semper mauris, quis luctus nibh volutpat eu. Duis eget nunc tellus. Sed tortor lectus, sagittis sed ligula sed, ultricies fermentum metus. Aliquam varius mi massa.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="grid-item--width2">
-                                <div class="ourteam-card">
-                                    <div class="ourteam-card-profile">
-                                        <img src="assets/img/Ellipse 86.png" alt="Img-Profile">
-                                    </div>
-                                    <h4>Jane Cooper</h4>
-                                    <h5>Founder and CEO</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce diam velit, porta at ante a, egestas feugiat felis. Vestibulum pellentesque risus ac vehicula blandit.
-                                    </p>
-                                    <p>
-                                        Vivamus quis magna metus. Vestibulum hendrerit vel est nec commodo. Sed euismod semper mauris, quis luctus nibh volutpat eu. Duis eget nunc tellus. Sed tortor lectus, sagittis sed ligula sed, ultricies fermentum metus. Aliquam varius mi massa.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="grid-item--width2">
-                                <div class="ourteam-card">
-                                    <div class="ourteam-card-profile">
-                                        <img src="assets/img/Ellipse 80.png" alt="Img-Profile">
-                                    </div>
-                                    <h4>Wade Warren</h4>
-                                    <h5>Founder and CEO</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce diam velit, porta at ante a, egestas feugiat felis. Vestibulum pellentesque risus ac vehicula blandit.
-                                    </p>
-                                    <p>
-                                        Vivamus quis magna metus. Vestibulum hendrerit vel est nec commodo. Sed euismod semper mauris, quis luctus nibh volutpat eu. Duis eget nunc tellus. Sed tortor lectus, sagittis sed ligula sed, ultricies fermentum metus. Aliquam varius mi massa.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="grid-item--width2">
-                                <div class="ourteam-card">
-                                    <div class="ourteam-card-profile">
-                                        <img src="assets/img/Ellipse 87.png" alt="Img-Profile">
-                                    </div>
-                                    <h4>Arlene McCoy</h4>
-                                    <h5>Founder and CEO</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce diam velit, porta at ante a, egestas feugiat felis. Vestibulum pellentesque risus ac vehicula blandit.
-                                    </p>
-                                    <p>
-                                        Vivamus quis magna metus. Vestibulum hendrerit vel est nec commodo. Sed euismod semper mauris, quis luctus nibh volutpat eu. Duis eget nunc tellus. Sed tortor lectus, sagittis sed ligula sed, ultricies fermentum metus. Aliquam varius mi massa.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="grid-item--width2">
-                                <div class="ourteam-card">
-                                    <div class="ourteam-card-profile">
-                                        <img src="assets/img/Ellipse 81.png" alt="Img-Profile">
-                                    </div>
-                                    <h4>Cody Fisher</h4>
-                                    <h5>Founder and CEO</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce diam velit, porta at ante a, egestas feugiat felis. Vestibulum pellentesque risus ac vehicula blandit.
-                                    </p>
-                                    <p>
-                                        Vivamus quis magna metus. Vestibulum hendrerit vel est nec commodo. Sed euismod semper mauris, quis luctus nibh volutpat eu. Duis eget nunc tellus. Sed tortor lectus, sagittis sed ligula sed, ultricies fermentum metus. Aliquam varius mi massa.
-                                    </p>
-                                </div>
-                            </div>
+                               </div>
+                            </ngx-masonry>
+
+                            
                         </div>
                     </div>
                 </div>

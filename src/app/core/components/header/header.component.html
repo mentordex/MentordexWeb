@@ -6,7 +6,7 @@
 <div *ngIf="isHomePage" class="navbar-outer home-nav">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand logo-home-anim" href="#">
+            <a class="navbar-brand logo-home-anim" routerLink="/">
                 <span class="sr-only">MentorDex</span>
                 <svg width="111" height="15" viewBox="0 0 111 15" fill="none">
                   <path d="M0.558594 0.445312H4.06862L8.41627 9.02095L12.724 0.445312H16.2141V14.4057H13.3822V4.97245L9.41343 12.9897H7.37922L3.39055 4.97245V14.4057H0.558594V0.445312Z" fill="#384047"/>
@@ -141,7 +141,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <div class="logo-box text-center text-md-left mx-auto mx-md-0">
-                <a class="navbar-brand d-none d-md-block mr-0" href="#">
+                <a class="navbar-brand d-none d-md-block mr-0" routerLink="/">
                     <span class="sr-only">MentorDex</span>
                     <svg width="111" height="15" viewBox="0 0 111 15" fill="none">
                         <path d="M0.558594 0.445312H4.06862L8.41627 9.02095L12.724 0.445312H16.2141V14.4057H13.3822V4.97245L9.41343 12.9897H7.37922L3.39055 4.97245V14.4057H0.558594V0.445312Z" fill="#384047"/>
@@ -184,7 +184,7 @@
                 </div>
 
                 <div *ngIf="isLoggedin" class="center-flex">
-                    <div class="new-mentordex-txt flex-shrink-0 mr-4">Sandeep</div>
+                    <div class="new-mentordex-txt flex-shrink-0 mr-4">Demo</div>
                     <a class="alt--button font-w-500 py-2" (click)="logout()">LOGOUT</a>
                 </div>
 
@@ -194,3 +194,4 @@
     </nav>
 </div>
 <!--navbar ends-->
+isHomePage:{{isHomePage}}

@@ -222,7 +222,7 @@ if($('.cardNumber').length > 0) {
  var $grid;
  if($('.grid').length > 0) { 
     // init Masonry
-    $grid = $('.grid').masonry();
+    //$grid = $('.grid').masonry();
  };
  //Filter-btn
  if($('.filter--btn').length > 0) { 

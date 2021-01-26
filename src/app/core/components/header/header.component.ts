@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, NgZone  } from '@angular/core';
 import { ActivatedRoute, ActivationEnd, ActivationStart, Router, RouterEvent, NavigationEnd } from "@angular/router";
 import { Subscription } from 'rxjs/Subscription';
 import { takeUntil } from 'rxjs/operators';
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   isLoggedin:boolean = false
   loginSubscription
   title='';
-  constructor(private router:Router, private utilsService:UtilsService) { 
+  constructor(private zone:NgZone, private router:Router, private utilsService:UtilsService) { 
 
     
     this.loginSubscription =  router.events.subscribe((event) => {
@@ -47,13 +47,20 @@ export class HeaderComponent implements OnInit {
       //check the page url and change title/name on routed page
       if (event instanceof NavigationEnd ) {
         //this.currentUrl = event.url;
-        
+        console.log('url',event.url)
         if(event.url =='/' || event.url =='/home' || (event.url).includes('quick-links')){
-          this.isHomePage = true
-        
+          console.log('home');
+          this.zone.run(() => {
+            this.isHomePage = true
+            this.isLoginPage = false
+          });
         }else if((event.url).includes('authorization')){
-         
-          this.isLoginPage = true
+          console.log('other');
+          
+          this.zone.run(() => {
+            this.isLoginPage = true
+            this.isHomePage = false
+          });
           this.title = 'Login'
           if((event.url).includes('login'))
             this.title = 'Login'
@@ -67,6 +74,7 @@ export class HeaderComponent implements OnInit {
           if((event.url).includes('reset-password'))  
             this.title = 'Reset Password'
         }
+        
       }  
         
     });   

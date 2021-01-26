@@ -10,6 +10,7 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -47,7 +48,8 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
         NgxPaginationModule,
         NgxMaskModule.forRoot(),
         SlickCarouselModule,
-        NgbModule
+        NgbModule,
+        NgxMasonryModule
     ],
     declarations: [      
         
@@ -105,7 +107,8 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
         NgxPaginationModule,
         NgxMaskModule,
         SlickCarouselModule,
-        NgbModule
+        NgbModule,
+        NgxMasonryModule
     ]
 })
 export class SharedModule {

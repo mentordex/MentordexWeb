@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-//import jquery and sweet alert plugin
-declare var $;
+//import enviornment
+import { environment } from '../../../../environments/environment';
+
+
+// import fade in animation
+import { UtilsService } from '../../../core/services';
 
 @Component({
   selector: 'app-team',
@@ -10,10 +16,27 @@ declare var $;
 })
 export class TeamComponent implements OnInit {
 
-  constructor() { }
-
+ 
+  private onDestroy$: Subject<void> = new Subject<void>();  
+  teams:any = []
+  constructor(private utilsService: UtilsService) { 
+    
+    
+  }
   ngOnInit(): void {
-    $('.grid').masonry();
+    this.fetchTeams()
+  }
+
+  //fetch office listing
+  fetchTeams(){
+    this.utilsService.processGetRequest('team', true ).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.teams = response            
+    })
+  }
+
+  //destroy all subscription
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 
 }
