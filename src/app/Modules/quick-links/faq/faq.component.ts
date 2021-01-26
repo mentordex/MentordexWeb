@@ -9,7 +9,6 @@ import { environment } from '../../../../environments/environment';
 // import fade in animation
 import { UtilsService } from '../../../core/services';
 
-
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',

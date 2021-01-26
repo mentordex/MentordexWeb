@@ -47,17 +47,24 @@ export class HomeComponent implements OnInit {
         }
       ]
   };
-  constructor( private utilsService: UtilsService) { }
+  constructor( private utilsService: UtilsService) { 
+    new Promise((resolve) => {
+      this.loadScript('../assets/js/jquery.3.5.1.min.js');
+      this.loadScript('../assets/js/popper.min.js');
+      this.loadScript('../assets/js/bootstrap.min.js');
+      this.loadScript('../assets/js/gsap-3.5.0.min.js');
+      this.loadScript('../assets/js/gsap-scollTrigger-3.5.0.min.js');
+      this.loadScript('../assets/js/slick-slider.js');
+      this.loadScript('../assets/js/tilt.js');
+      this.loadScript('../assets/js/main.js');
+      resolve(true);
+    });
+  }
 
   ngOnInit(): void {
     this.fetchCategories()
     this.fetchBlogs()
-    this.fetchFAQs()
-
- 
-    
-    
-     
+    this.fetchFAQs()   
     
   }
 
