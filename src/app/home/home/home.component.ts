@@ -9,7 +9,7 @@ import { AuthService, UtilsService } from '../../core/services';
 //import enviornment
 import { environment } from '../../../environments/environment';
 
-
+declare var $;
 
 @Component({
   selector: 'app-home',
@@ -18,16 +18,46 @@ import { environment } from '../../../environments/environment';
 })
 export class HomeComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
-  categories: any = []
-  blogs: any = []
-  faqs: any = []
-
-  constructor(private utilsService: UtilsService) { }
+  categories:any = []
+  blogs:any = []
+  faqs:any = []
+  slideConfig = {
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    dots: false,
+    infinite: true,
+    cssEase: 'linear',
+    arrows: false,
+    responsive: [
+        {
+          breakpoint: 767,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 575,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: true,
+            infinite: true
+          }
+        }
+      ]
+  };
+  constructor( private utilsService: UtilsService) { }
 
   ngOnInit(): void {
     this.fetchCategories()
     this.fetchBlogs()
     this.fetchFAQs()
+
+ 
+    
+    
+     
     
   }
 
@@ -60,7 +90,7 @@ export class HomeComponent implements OnInit {
         }
       });
     })
-
+   
   }
 
   public loadScript(url: string) {

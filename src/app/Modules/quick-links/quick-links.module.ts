@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../../core/components/shared.module';
 
 import { QuickLinksRoutingModule } from './quick-links-routing.module';
 import { ResourceComponent } from './resource/resource.component';
@@ -19,7 +20,8 @@ import { BlogDetailComponent } from './blog-detail/blog-detail.component';
   declarations: [ResourceComponent, CategoriesComponent, FaqComponent, HowItWorksParentsComponent, HowItWorksMentorsComponent, AboutUsComponent, TeamComponent, CareerComponent, ContactUsComponent, BlogsComponent, BlogDetailComponent],
   imports: [
     CommonModule,
-    QuickLinksRoutingModule
+    QuickLinksRoutingModule,
+    SharedModule
   ]
 })
 export class QuickLinksModule { }
