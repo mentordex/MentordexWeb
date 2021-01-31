@@ -60,11 +60,11 @@ $(document).ready(function() {
             }, ],
         });
     }
-    $('.prev-banner').click(function() {
+    $('.prev-banner').on('click', function() {
         $('.banner-slider').slick('slickPrev');
     })
 
-    $('.next-banner').click(function() {
+    $('.next-banner').on('click', function() {
         $('.banner-slider').slick('slickNext');
     })
 
@@ -132,7 +132,7 @@ $(document).ready(function() {
           }
         ]
     });
-    
+  
     $('.prev').click(function(){
         $('.slider-carousel').slick('slickPrev');
       })
@@ -225,12 +225,12 @@ $(document).ready(function() {
     };
     //Filter-btn
     if ($('.filter--btn').length > 0) {
-        $('.filter--btn').click(function() {
+        $('.filter--btn').on('click', function() {
             $('body').toggleClass('filter-offcanvas');
         });
     };
     if ($('.sumbit-filter--btn').length > 0) {
-        $('.sumbit-filter--btn').click(function() {
+        $('.sumbit-filter--btn').on('click', function() {
             $('body').removeClass('filter-offcanvas');
         });
     };
@@ -248,7 +248,7 @@ $(document).ready(function() {
     var buttonPlus = $(".cart-qty-plus");
     var buttonMinus = $(".cart-qty-minus");
 
-    var incrementPlus = buttonPlus.click(function() {
+    var incrementPlus = buttonPlus.on('click', function() {
         var $n = $(this)
             .parent(".button-container")
             .parent(".quantity-increament")
@@ -256,7 +256,7 @@ $(document).ready(function() {
         $n.val(Number($n.val()) + 1);
     });
 
-    var incrementMinus = buttonMinus.click(function() {
+    var incrementMinus = buttonMinus.on('click', function() {
         var $n = $(this)
             .parent(".button-container")
             .parent(".quantity-increament")
@@ -271,7 +271,7 @@ $(document).ready(function() {
     // AOS.init();
 
     //Input tel
-    if ($('#phone').length > 0) {
+    /*if ($('#phone').length > 0) {
         var telInput = $("#phone");
         // initialise plugin
         telInput.intlTelInput({
@@ -292,6 +292,7 @@ $(document).ready(function() {
             initialCountry: "US"
         });
     };
+    */
 
     //----remove overflow from body---//
     setTimeout(function() { $("body").css('overflow', 'visible'); }, 1300);

@@ -70,7 +70,7 @@ export class UtilsService {
   * Post the data and endpoint 
   */
   processPostRequest(apiEndPoint, data, showLoader = false, message = ''){
-    console.log('showLoader', showLoader)
+    
     if(showLoader)
       this.onRequest(environment.MESSGES['CHECKING-AUTHORIZATION']);//show page loader
 

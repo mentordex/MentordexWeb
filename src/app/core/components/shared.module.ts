@@ -11,6 +11,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { NgxMasonryModule } from 'ngx-masonry';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -49,7 +50,8 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
         NgxMaskModule.forRoot(),
         SlickCarouselModule,
         NgbModule,
-        NgxMasonryModule
+        NgxMasonryModule,
+        NgxIntlTelInputModule
     ],
     declarations: [      
         
@@ -108,7 +110,8 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
         NgxMaskModule,
         SlickCarouselModule,
         NgbModule,
-        NgxMasonryModule
+        NgxMasonryModule,
+        NgxIntlTelInputModule
     ]
 })
 export class SharedModule {

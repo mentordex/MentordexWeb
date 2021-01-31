@@ -95,6 +95,26 @@ main {
     border: 1px solid var(--footer-secondary);
     text-decoration: none;
 }
+.primary--button-bordered {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    background: #fff;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 24px;
+    border-radius: 2px;
+    transition: .2s ease-in all;
+}
+.primary--button-bordered:hover, .primary--button-bordered:focus {
+    background: var(--footer-primary);
+    color: var(--color-white);
+    border: 1px solid var(--footer-primary);
+    text-decoration: none;
+}
 .primary--button-transparent {
     display: inline-block;
     padding: 10px 15px;
@@ -1408,6 +1428,211 @@ button.option--button::after {
 .textarea--compact textarea:focus {
     outline: none;
 }
+.report-signal-text {
+    font-size: 14px;
+    margin-bottom: 0px;
+    display: block;
+    line-height: normal;
+    color: var(--color-primary);
+}
+.vertical-align-text-top {
+    vertical-align: text-top;
+}
+.chatscroll {
+    max-height: 450px;
+}
+.payement-modal .modal-header {
+    background: #3C6A7A;
+    border-radius: 0px;
+    position: relative;
+    padding: 18px 0px;
+}
+.payement-modal .modal-content {
+    border-radius: 3px;
+    overflow: hidden;
+}
+.payement-modal .modal-header .modal-title {
+    color: #fff;
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: normal;
+}
+.payement-modal .modal-header .close {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    padding: 0px;
+}
+.payement-modal .modal-header .close:focus {
+    outline: none;
+}
+.payment-hostory-body {
+    padding: 5px 15px;
+}
+.note--list li {
+    display: block;
+    margin-bottom: 0px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-text);
+    font-style: italic;
+}
+.note--list li + li { 
+    margin-top: 10px;
+}
+.mentor-memebership--title {
+    font-size: 18px;
+    margin-bottom: 0px;
+    line-height: normal;
+    color: var(--color-heading);
+    font-weight: 500;
+}
+.mentor-memebership--box {
+    margin-top: 15px;
+    padding-top: 25px;
+    border-top: 1px solid #e8e8e8;
+}
+.border-radius-4 {
+    border-radius: 4px !important;
+}
+.mentor-responsive-tabletbar.parents-mentors-tab.responsivetablet--bar .nav-pills .nav-item .nav-link.active {
+    border-bottom: 4px solid var(--color-primary);
+    color: #fff;
+    padding-bottom: 30px;
+}
+.mentor-responsive-tabletbar.parents-mentors-tab.responsivetablet--bar .nav-pills .nav-item .nav-link {
+    text-align: left !important;
+    display: inline-block;
+    color: #fff;
+    text-transform: initial;
+}
+.mentor-responsive-tabletbar.parents-mentors-tab.responsivetablet--bar .nav-pills {
+    border-bottom: 0px;
+    padding: 0px;
+}
+.payment--settings-li li {
+    margin-bottom: 8px;
+}
+.line-h-22 {
+    line-height: 22px !important;
+}
+.font-12 {
+    font-size: 12px !important;
+}
+.line-h-18 {
+    line-height: 18px !important;
+}
+.max-h-auto {
+    max-height: none !important;
+}
+.mentor-review-rating-pagination {
+    border-top: 0.8px solid #E8E8E8;
+}
+.mentor-review-rating-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+}
+.mentor-review-rating-pagination ul { 
+    padding-left: 0px;
+    margin-bottom: 0px;
+    list-style-type: none;
+}
+.mentor-review-rating-pagination li {
+    display: inline-block;
+    padding: 5px 15px !important;
+}
+.mentor-review-rating-pagination li + li {
+    border-top: 0px !important;
+}
+.mentor-review-rating-pagination li a {
+    color: var(--color-text);
+    font-size: 15px;
+    display: inline-block;
+    text-decoration: none;
+}
+.mentor-review-rating-pagination li a:hover, .mentor-review-rating-pagination li a:focus {
+    color: var(--color-primary);
+}
+.mentor-dropdown-shortcode-profile {
+    display: flex;
+    align-items: center;
+    padding-inline: 10px;
+}
+.mentor-dropdown-shortcode-profile--pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.mentor-dropdown-shortcode-profile--desc {
+    flex-shrink: 0;
+    padding-left: 8px;
+    width: calc(100% - 50px);
+}
+.mentor-dropdown-shortcode-profile--desc p {
+    color: var(--color-heding);
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 0px;
+    line-height: normal;
+    display: block;
+}
+.mentor-dropdown-shortcode-profile--desc a {
+    display: inline-block;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.mentor-dropdown-shortcode-profile--pic > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.mentor-dropdown-shortcode {
+    padding: 15px 0px;
+}
+.mentor-dropdown-shortcode li + li {
+    margin-top: 8px;
+}
+.mentor-dropdown-shortcode li > a  {
+    padding-block: 3px;
+}
+.mentor-dropdown-shortcode li > a:hover {
+    background: transparent !important;
+}
+.mentor-dropdown-shortcode li > a > span { 
+    color: var(--color-heding) !important;
+    font-weight: 500;
+    font-size: 14px !important;
+}
+.mentor-dropdown-shortcode li > a:hover >  span, .mentor-dropdown-shortcode li > a:focus >  span {
+    outline: none;
+    color: var(--color-primary) !important;
+    background: transparent;
+}
+.glow-active svg, .glow-active svg path {
+    fill: var(--color-primary);
+}
+.glow-active .pills-text {
+    color: var(--color-primary);
+}
+.fill-csupload-file label  {
+    background: rgba(59, 179, 189, 0.15) !important;
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+}
+.fill-csupload-file label svg, .fill-csupload-file label svg path {
+    stroke: var(--color-primary);
+}
 /*Mentor css ends*/
 
 
@@ -2373,6 +2598,9 @@ span.flatpickr-weekday {
 .custom-select.arrow-select {
     background: #fff url("../img/select-dropdown.svg") no-repeat right .75rem center/14px 10px !important;
 }
+.top-0 {
+    top: 0px !important;
+}
 .py-13 {
     padding-block: 13px !important;
 }
@@ -3176,6 +3404,7 @@ body {
     color: var(--color-heding);
     display: inline-block;
     font-size: 26px;
+    width: 120px;
 }
 .navbar-outer .navbar-collapse .navbar-nav .nav-item .nav-link {
     color: var(--color-heding);
@@ -3933,6 +4162,9 @@ header {
 .max-400 {
     max-width: 400px;
 }
+.line-height-normal {
+    line-height: normal !important;
+}
 .newsletter--btn:hover, .newsletter--btn:focus {
     background-color: var(--footer-primary);
     outline: none;
@@ -4100,6 +4332,15 @@ header {
 }
 .font-20-xs {
     font-size: 16px !important;
+}
+.font-32-xs {
+    font-size: 17px;
+}
+.max-w-780 {
+    max-width: 780px;
+}
+.bgcolor--F9F9F9 {
+    background: #f9f9f9 !important;
 }
 /*---------Footer css ends----------*/
 
@@ -4557,8 +4798,28 @@ header {
     .parents-mentors-tab.responsivetablet--bar .nav-pills .nav-item + .nav-item {
         margin-left: 20px !important;
     }
+    .payment-hostory-body {
+        padding: 5px 30px;
+    }
+    .mentor-responsive-tabletbar.parents-mentors-tab.responsivetablet--bar .nav-pills .nav-item:nth-child(2) {
+        width: 35%;
+    }
+    .mentor-responsive-tabletbar.parents-mentors-tab.responsivetablet--bar .nav-pills .nav-item:nth-child(3) {
+        width: 20%;
+    }
+    .mentor-responsive-tabletbar.parents-mentors-tab.responsivetablet--bar .nav-pills .nav-item:first-child {
+        width: 45%;
+    }
+    .mentor-responsive-tabletbar.parents-mentors-tab.responsivetablet--bar .nav-pills .nav-item + .nav-item {
+        margin-left: 0px !important;
+    }
+
 }
 @media only screen and (min-width: 992px) { 
+    .col--lg-5 {
+        flex: 0 0 392px !important;
+        max-width: 392px !important;
+    }
     .profile-steps-leftsidebar {
         padding-left: 40px;
     }
@@ -4764,6 +5025,19 @@ header {
     .chatbox-bodyheader-name {
         font-size: 20px;
     }
+    .payement-modal .modal-header .modal-title {
+        font-size: 23px;
+    }
+    .payement-modal .modal-header .close {
+        right: 45px;
+        top: 35px;
+    }
+    .mentor-memebership--title {
+        font-size: 28px;
+    }
+    .font-32-xs {
+        font-size: 32px;
+    }
 }
 @media only screen and (min-width: 1200px) { 
     /*footer css starts*/
@@ -4825,6 +5099,16 @@ header {
     }
     .mentor-jd-description-list ul li { 
         font-size: 16px;
+    }
+    .dashboard-parent-profile-header-pic {
+        width: 150px;
+        height: 150px;
+    }
+    .dashboard-parent-profile-header-content {
+        width: calc(100% - 150px);
+    }
+    .navbar-brand {
+        width: 200px;
     }
 }
 @media only screen and (min-width: 1600px) { 
