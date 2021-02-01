@@ -126,11 +126,18 @@ export class SignupComponent implements OnInit {
       return false;
     }
 
+    let phoneJson = this.signupStep2Form.controls.phone.value;
 
-    console.log(this.signupStep2Form.value);
+    this.signupStep2Form.patchValue({
+      phone: phoneJson.e164Number
+    });
 
-    this.utilsService.processPostRequest('signup', this.signupStep2Form.value, true, environment.MESSGES['EMAIL-AUTHORIZED']).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log('response', response);
+    //console.log(this.signupStep2Form.value);
+    //return;
+
+    this.utilsService.processPostRequest('signup', this.signupStep2Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log('response', response);
+      this.utilsService.onResponse(environment.MESSGES['REGISTERED-SUCCESSFULLY'], true);
     })
   }
 

@@ -22,6 +22,10 @@ const routes: Routes = [
     loadChildren: () => import('./Modules/authorization/authorization.module').then(m => m.AuthorizationModule) 
   },
   { 
+    path: 'mentor', 
+    loadChildren: () => import('./Modules/mentors/mentors.module').then(m => m.MentorsModule) 
+  },
+  { 
     path: 'quick-links', 
     loadChildren: () => import('./Modules/quick-links/quick-links.module').then(m => m.QuickLinksModule) 
   },

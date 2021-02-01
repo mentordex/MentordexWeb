@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone  } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, ActivationEnd, ActivationStart, Router, RouterEvent, NavigationEnd } from "@angular/router";
 import { Subscription } from 'rxjs/Subscription';
 import { takeUntil } from 'rxjs/operators';
@@ -22,72 +22,88 @@ import Swal from 'sweetalert2'
 export class HeaderComponent implements OnInit {
 
   destroy$: Subject<boolean> = new Subject<boolean>();
-  isHomePage:boolean =false
-  isLoginPage:boolean =false
-  isLoggedin:boolean = false
+  isHomePage: boolean = false
+  isLoginPage: boolean = false
+  isMentorPage: boolean = false
+  isLoggedin: boolean = false
   loginSubscription
-  title='';
-  constructor(private zone:NgZone, private router:Router, private utilsService:UtilsService) { 
+  title = '';
+  constructor(private zone: NgZone, private router: Router, private utilsService: UtilsService) {
 
-    
-    this.loginSubscription =  router.events.subscribe((event) => {
-     
+
+    this.loginSubscription = router.events.subscribe((event) => {
+
       //subscribe the route change and check user is loggedin or not
       if (event instanceof ActivationEnd) {
-       
+
         if (localStorage.getItem(environment.TOKEN_NAME)) {
-        
-          this.isLoggedin = true;          
-        }else{
+
+          this.isLoggedin = true;
+        } else {
           this.isLoggedin = false;
         }
       }
-      
+
 
       //check the page url and change title/name on routed page
-      if (event instanceof NavigationEnd ) {
+      if (event instanceof NavigationEnd) {
         //this.currentUrl = event.url;
-        console.log('url',event.url)
-        if(event.url =='/' || event.url =='/home' || (event.url).includes('quick-links')){
-          console.log('home');
+        console.log('url', event.url)
+        if (event.url == '/' || event.url == '/home' || (event.url).includes('quick-links')) {
+          //console.log('home');
           this.zone.run(() => {
             this.isHomePage = true
             this.isLoginPage = false
+            this.isMentorPage = false
           });
-        }else if((event.url).includes('authorization')){
-          console.log('other');
+        } else if ((event.url).includes('mentor')) {
+          this.zone.run(() => {
+            this.isHomePage = false
+            this.isLoginPage = false
+            this.isMentorPage = true
+          });
+
+
+          this.title = 'Mentor Login';
+
+          if ((event.url).includes('verify-phone'))
+            this.title = 'Verify Phone'
+
+        } else if ((event.url).includes('authorization')) {
           
           this.zone.run(() => {
             this.isLoginPage = true
             this.isHomePage = false
+            this.isMentorPage = false
           });
+
           this.title = 'Login'
-          if((event.url).includes('login'))
+          if ((event.url).includes('login'))
             this.title = 'Login'
-          
-          if((event.url).includes('forgot-password'))
+
+          if ((event.url).includes('forgot-password'))
             this.title = 'Forgot Password'
 
-          if((event.url).includes('signup'))  
+          if ((event.url).includes('signup'))
             this.title = 'Signup'
 
-          if((event.url).includes('reset-password'))  
+          if ((event.url).includes('reset-password'))
             this.title = 'Reset Password'
         }
-        
-      }  
-        
-    });   
+
+      }
+
+    });
   }
 
   ngOnInit() {
     //check user is loggedin or not on page refresh
     if (localStorage.getItem(environment.TOKEN_NAME)) {
-      this.isLoggedin = true;       
-    }      
-  } 
-  
-  logout(){
+      this.isLoggedin = true;
+    }
+  }
+
+  logout() {
     Swal.fire({
       title: 'Are you sure?',
       text: 'Your session will be end and redirect to home page!',
@@ -96,9 +112,9 @@ export class HeaderComponent implements OnInit {
       confirmButtonText: 'Yes, logout me!',
       cancelButtonText: 'No, keep it'
     }).then((result) => {
-      if (result.value) {        
-        this.utilsService.logout()       
-      
+      if (result.value) {
+        this.utilsService.logout()
+
       }
     })
   }
@@ -107,9 +123,9 @@ export class HeaderComponent implements OnInit {
     this.destroy$.next(true);
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
-    if (this.loginSubscription) {  
+    if (this.loginSubscription) {
       this.loginSubscription.unsubscribe();
-    }    
+    }
   }
 
 

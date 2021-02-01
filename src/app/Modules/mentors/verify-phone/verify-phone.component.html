@@ -1,0 +1,41 @@
+<section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-md-6 mx-auto">
+                    <p class="mobile-pagetop-heading mb-3 mb-md-4 text-center">Welcome {{mentorDetails.first_name}} {{mentorDetails.last_name}}</p>
+                    <p class="mobile-pagetop-subheading mb-3 d-block text-center">Before going further, please complete this two-step verification process for your email and phone number.</p>
+                    <p class="mobile-pagetop-subheading mb-4 mb-md-5 d-block text-center font-style-italic">We do this to ensure you're not a robot</p>
+                </div>
+                <div class="login-boxouter bg-white mx-auto">
+                    <ng-container *ngIf="(mentorDetails.is_email_verified == 'NOT-VERIFIED');">
+                        <p class="mobile-pagetop-subheading mb-4 d-block text-center">An email verification link has been sent to your email address: {{mentorDetails.email}}. Please click the link to verify your account.</p>
+                        <p class="mobile-pagetop-subheading mb-2 d-block text-center font-14">Didn’t receive the email?</p>
+                        <a href="javascript:void(0)" (click)="resendEmailVerification(mentorDetails._id)" class="mobile-pagetop-subheading mb-2 d-block text-center font-14">Resend email?</a>
+                        <p class="spam-index mb-4 d-block text-center">(Check your spam folder as well)</p>
+                        <hr>
+                    </ng-container>
+
+                    <div class="forms">
+                        <p class="mobile-pagetop-subheading mb-4 d-block text-center px-3">We have just sent a 4-digit code to your phone number <span class="color-dex">{{mentorDetails.phone}}</span></p>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="single-form-row mb-4">
+                                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="special--inputs w-100 pr-7" placeholder="Enter the 4 digit OTP" />
+                                    <button class="resend--text text-uppercase" (click)="resendPhoneVerification(mentorDetails._id)" type="button">Resend</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-form-row mb-3">
+                            <input type="submit" class="primary--button w-100 py-md-3" value="Proceed" />
+                        </div>
+                        <div class="text-center">
+                            <a href="#" class="mobile-pagetop-subheading mb-2 d-block text-center font-14">Change email address and phone number?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
