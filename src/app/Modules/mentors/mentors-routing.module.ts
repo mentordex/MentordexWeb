@@ -8,7 +8,13 @@ const routes: Routes = [
     path: 'verify-phone/:id',
     component: VerifyPhoneComponent,
     data: { title: 'Verify Phone' }
+  },
+  {
+    path: 'verify-email/:id/:email_token',
+    component: VerifyEmailComponent,
+    data: { title: 'Verify Email' }
   }
+
 ];
 
 @NgModule({

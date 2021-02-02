@@ -18,17 +18,23 @@
 
                     <div class="forms">
                         <p class="mobile-pagetop-subheading mb-4 d-block text-center px-3">We have just sent a 4-digit code to your phone number <span class="color-dex">{{mentorDetails.phone}}</span></p>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="single-form-row mb-4">
-                                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="special--inputs w-100 pr-7" placeholder="Enter the 4 digit OTP" />
-                                    <button class="resend--text text-uppercase" (click)="resendPhoneVerification(mentorDetails._id)" type="button">Resend</button>
+                        <form [formGroup]="phoneVerificationForm">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="single-form-row mb-4">
+                                        <input type="text" formControlName="phone_token" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="special--inputs w-100 pr-7" placeholder="Enter the 4 digit OTP" />
+                                        <button class="resend--text text-uppercase" (click)="resendPhoneVerification(mentorDetails._id)" type="button">Resend</button>
+
+                                        <p class="errorCls" *ngIf="phoneVerificationForm.controls.phone_token.touched || isPhoneVerificationFormSubmitted">
+                                            <app-form-validation-errors minLength=4 maxLength=4 errorPrefix="OTP " [errors]="phoneVerificationForm.get('phone_token').errors"></app-form-validation-errors>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="single-form-row mb-3">
-                            <input type="submit" class="primary--button w-100 py-md-3" value="Proceed" />
-                        </div>
+                            <div class="single-form-row mb-3">
+                                <input type="submit" (click)="onPhoneVerificationFormSubmit()" [disabled]="phoneVerificationForm.invalid" class="primary--button w-100 py-md-3" value="Proceed" />
+                            </div>
+                        </form>
                         <div class="text-center">
                             <a href="#" class="mobile-pagetop-subheading mb-2 d-block text-center font-14">Change email address and phone number?</a>
                         </div>

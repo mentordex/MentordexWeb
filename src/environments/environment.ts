@@ -15,6 +15,7 @@ export const environment = {
     "REGISTERED-SUCCESSFULLY":"Thank You for Registering! The verification link has been sent to your email successfully.",
     "RESEND-EMAIL-VERIFICATION":"The verification link has been sent to your email.",
     "RESEND-PHONE-VERIFICATION":"OTP has been sent to your phone.",
+    "PHONE-VERIFICATION-SUCCESS":"Phone number has been verified successfully.",
     "EMAIL-SUCCESS":"Account is authorized. Please enter password more for login.",
     "EMAIL-AUTHORIZED":"Email has been authorized successfully.",
     "SAVING-INFO":"Saving information. Please Wait...",
