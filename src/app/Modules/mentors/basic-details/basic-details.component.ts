@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -8,33 +8,42 @@ import { Subject } from 'rxjs';
 import { fadeInAnimation } from '../../../core/animations';
 import { AuthService, UtilsService } from '../../../core/services';
 
-//import enviornment
-import { environment } from '../../../../environments/environment';
-
 //import custom validators
 import { CustomValidators } from '../../../core/custom-validators';
 
-import { SearchCountryField, TooltipLabel, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+//import enviornment
+import { environment } from '../../../../environments/environment';
+
+
+const getMonth = (idx) => {
+
+  var objDate = new Date();
+  objDate.setDate(1);
+  objDate.setMonth(idx-1);
+
+  var locale = "en-us",
+      month = objDate.toLocaleString(locale, { month: "long" });
+
+    return month;
+}
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-basic-details',
+  templateUrl: './basic-details.component.html',
+  styleUrls: ['./basic-details.component.css']
 })
-export class SignupComponent implements OnInit {
+export class BasicDetailsComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
-  signupStep1Form: FormGroup;
-  signupStep2Form: FormGroup;
-  isSignupStep1FormSubmitted: boolean = false
-  isSignupStep2FormSubmitted: boolean = false
-  getEmailValue: string = '';
+  id: any = ''
+  mentorDetails: any = {};
+  basicDetailsForm: FormGroup;
+  isBasicDetailsFormSubmitted: boolean = false
 
-  SearchCountryField = SearchCountryField;
-  TooltipLabel = TooltipLabel;
-  CountryISO = CountryISO;
-  PhoneNumberFormat = PhoneNumberFormat;
-  preferredCountries: CountryISO[] = [CountryISO.UnitedStates];
+  months = Array(12).fill(0).map((i,idx) => getMonth(idx + 1));
+  selectedYear = 2004;
+  selectedMonth = 1;
+  selectedDay = 1;
 
   countries: any = [];
   states: any = [];
@@ -49,101 +58,101 @@ export class SignupComponent implements OnInit {
 
   zipcodeArray = [{ id: 1, value: '70510', city_id: 1 }, { id: 2, value: '70511', city_id: 1 }, { id: 3, value: '36201', city_id: 2 }, { id: 4, value: '36204', city_id: 2 }, { id: 5, value: '36027', city_id: 3 }, { id: 6, value: '99726', city_id: 4 }, { id: 7, value: '56258', city_id: 5 }, { id: 8, value: '92877', city_id: 6 }, { id: 9, value: '92880', city_id: 6 }, { id: 10, value: '46140', city_id: 7 }, { id: 11, value: '33125', city_id: 8 }, { id: 12, value: '33129', city_id: 8 }, { id: 13, value: '33601', city_id: 9 }, { id: 14, value: '33605', city_id: 9 }, { id: 15, value: '73065', city_id: 10 }, { id: 16, value: '73072', city_id: 10 }, { id: 17, value: '95695', city_id: 11 }, { id: 18, value: '95776', city_id: 11 }];
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit(): void {
-    this.initalizeSignupStep1Form()
-    this.initalizeSignupStep2Form()
+    this.initalizeBasicDetailsForm()
+    this.checkQueryParam();
+    this.getCountryListing();
   }
 
-  //initalize Step 1 form
-  private initalizeSignupStep1Form() {
-    this.signupStep1Form = this.formBuilder.group({
+  //initalize Basic Detailsform
+  private initalizeBasicDetailsForm() {
+    this.basicDetailsForm = this.formBuilder.group({
+      id: [''],
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      //phone: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]]      
-    });
-  }
-
-  //initalize Step 2 form
-  private initalizeSignupStep2Form() {
-    this.signupStep2Form = this.formBuilder.group({
-      first_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
-      last_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
-      email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      password: ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(50),
-        // check whether the entered password has a number
-        CustomValidators.patternValidator(/\d/, {
-          hasNumber: true
-        }),
-        // check whether the entered password has upper case letter
-        CustomValidators.patternValidator(/[A-Z]/, {
-          hasCapitalCase: true
-        }),
-        // check whether the entered password has a lower case letter
-        CustomValidators.patternValidator(/[a-z]/, {
-          hasSmallCase: true
-        }),
-        // check whether the entered password has a special character
-        CustomValidators.patternValidator(
-          /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
-          {
-            hasSpecialCharacters: true
-          }
-        ) 
-      ])
-      ],
-      phone: [undefined, [Validators.required]],
-      country_id: ['', [Validators.required]],
+      phone: ['', Validators.required],
+      gender: ['', Validators.required],
+      primary_language: ['', Validators.required],
+      dob: this.formBuilder.group({
+        year: ['', Validators.required],
+        month: ['', Validators.required],
+        day: ['', Validators.required],
+      }),
+      address1: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
+      address2: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
+      country_id: [{ value: '' }, [Validators.required]],
       state_id: [{ value: '' }, [Validators.required]],
       city_id: [{ value: '' }, [Validators.required]],
-      zipcode: [{ value: '' }, [Validators.required]],
-      role: ['', [Validators.required]],
-      agree_terms: [false, Validators.requiredTrue],
+      zipcode: [{ value: '' }, Validators.required],
+      linkedin_url: ['', Validators.required],
+      twitter_url: ['', Validators.required],
+      instagram_url: ['', Validators.required],
     });
   }
 
-  //Authorizing Submit form
-  onSignupStep1FormSubmit() {
-    if (this.signupStep1Form.invalid) {
-      this.isSignupStep1FormSubmitted = true
-      return false;
-    }
+  // URL Query Param
+  private checkQueryParam() {
 
-    this.getEmailValue = this.signupStep1Form.controls.email.value;
-    this.signupStep2Form.patchValue({
-      email: this.signupStep1Form.controls.email.value
+    this.activatedRoute.params.subscribe((params) => {
+      this.id = params['id'];
+      this.getMentorDetailsByToken(params['id']);
+      this.basicDetailsForm.patchValue({
+        id: params['id']
+      });
     });
-
-    // get Country Listing
-    this.getCountryListing();
-
   }
 
-  //Authorizing Submit form
-  onSignupStep2FormSubmit() {
-    if (this.signupStep2Form.invalid) {
-      this.isSignupStep2FormSubmitted = true
-      return false;
-    }
+  /**
+   * get Mentor Details By Token
+  */
+  getMentorDetailsByToken(id): void {
+    this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.mentorDetails = response;
+      console.log(this.mentorDetails);
 
-    let phoneJson = this.signupStep2Form.controls.phone.value;
+      if(this.mentorDetails.country_id != ''){
+        this.getStateListing(this.mentorDetails.country_id);
+      }
 
-    this.signupStep2Form.patchValue({
-      phone: phoneJson.e164Number
-    });
-
-    //console.log(this.signupStep2Form.value);
-    //return;
-
-    this.utilsService.processPostRequest('signup', this.signupStep2Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      //console.log('response', response);
-      this.utilsService.onResponse(environment.MESSGES['REGISTERED-SUCCESSFULLY'], true);
     })
   }
 
+  /**
+   * on Submit Basic Details
+  */
+  onSubmitBasicDetailsForm(): void {
+
+  }
+
+  public get days() {
+    
+    const dayCount = this.getDaysInMonth(this.selectedYear, this.selectedMonth);
+    return Array(dayCount).fill(0).map((i,idx) => idx +1)
+  }
+
+  public get years(){
+    var currentYear = new Date().getFullYear(), years = [];
+    let startYear = currentYear - 60;  
+    while ( startYear <= currentYear ) {
+        years.push(startYear++);
+    } 
+    return years; 
+  }
+
+  public getDaysInMonth(year: number, month: number) {
+
+    return 32 - new Date(year, month - 1, 32).getDate();
+  }
+
+  public onSelectMonth(month){
+    this.basicDetailsForm.controls.dob.get('day').patchValue(''); 
+    this.selectedMonth = month;
+  }
+
+  public onSelectYear(year){
+    this.selectedYear = year;
+  }
 
   /**
    * get All Countries
@@ -257,7 +266,7 @@ export class SignupComponent implements OnInit {
   * Reset City Control
   */
   resetStateControl(): void {
-    let stateControl = this.signupStep2Form.controls.state_id;
+    let stateControl = this.basicDetailsForm.controls.state_id;
     stateControl.disable(); stateControl.setValue(''); this.states = [];
   }
 
@@ -265,7 +274,7 @@ export class SignupComponent implements OnInit {
   * Reset City Control
   */
   resetCityControl(): void {
-    let cityControl = this.signupStep2Form.controls.city_id;
+    let cityControl = this.basicDetailsForm.controls.city_id;
     cityControl.disable(); cityControl.setValue(''); this.cities = [];
   }
 
@@ -273,7 +282,7 @@ export class SignupComponent implements OnInit {
   * Reset Zipcode Control
   */
   resetZipcodeControl() {
-    let zipcodeControl = this.signupStep2Form.controls.zipcode;
+    let zipcodeControl = this.basicDetailsForm.controls.zipcode;
     zipcodeControl.disable(); zipcodeControl.setValue(''); this.zipcodes = [];
   }
 
@@ -281,7 +290,7 @@ export class SignupComponent implements OnInit {
   * Enable State Control
   */
   enableStateControl(): void {
-    let stateControl = this.signupStep2Form.controls.state_id;
+    let stateControl = this.basicDetailsForm.controls.state_id;
     stateControl.enable();
   }
 
@@ -289,7 +298,7 @@ export class SignupComponent implements OnInit {
   * Enable City Control
   */
   enableCityControl(): void {
-    let cityControl = this.signupStep2Form.controls.city_id;
+    let cityControl = this.basicDetailsForm.controls.city_id;
     cityControl.enable();
   }
 
@@ -297,9 +306,10 @@ export class SignupComponent implements OnInit {
   * Enable Zipcode Control
   */
   enableZipcodeControl(): void {
-    let zipcodeControl = this.signupStep2Form.controls.zipcode;
+    let zipcodeControl = this.basicDetailsForm.controls.zipcode;
     zipcodeControl.enable();
   }
+
 
   //destroy all subscription
   public ngOnDestroy(): void {

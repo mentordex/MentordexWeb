@@ -15,15 +15,14 @@ import { CustomValidators } from '../../../core/custom-validators';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-verify-email',
-  templateUrl: './verify-email.component.html',
-  styleUrls: ['./verify-email.component.css']
+  selector: 'app-verification-success',
+  templateUrl: './verification-success.component.html',
+  styleUrls: ['./verification-success.component.css']
 })
-export class VerifyEmailComponent implements OnInit {
+export class VerificationSuccessComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
   id: any = ''
-  email_token: any = ''
   mentorDetails: any = {};
 
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
@@ -34,26 +33,30 @@ export class VerifyEmailComponent implements OnInit {
 
   // URL Query Param
   private checkQueryParam() {
-
     this.activatedRoute.params.subscribe((params) => {
       this.id = params['id'];
-      this.email_token = params['email_token'];
-      this.verifyMentorEmailByToken(params['id']);
-      //console.log(this.priceValuationForm.value);
-
+      this.getMentorDetailsByToken(params['id']);
     });
   }
 
   /**
    * get Mentor Details By Token
   */
- verifyMentorEmailByToken(id): void {
-    this.utilsService.processPostRequest('verifyMentorEmail', { userID: this.id, emailToken: this.email_token }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+  getMentorDetailsByToken(id): void {
+    this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorDetails = response;
       //console.log(this.mentorDetails);
     })
   }
-  
+
+  /**
+   * Complete Your Application Submit
+  */
+  onCompleteApplicationSubmit(): void {
+    this.router.navigate(['/mentor/basic-details/' + this.id]);
+    //this.router.navigate(['/authorization']);
+  }
+
   //destroy all subscription
   public ngOnDestroy(): void {
     this.onDestroy$.next();

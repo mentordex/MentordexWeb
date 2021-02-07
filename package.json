@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
     "@ng-bootstrap/ng-bootstrap": "^9.0.1",
+    "@yaireo/tagify": "^3.22.1",
     "angular-archwizard": "^6.1.0",
     "bootstrap": "^4.5.3",
     "google-libphonenumber": "^3.2.16",

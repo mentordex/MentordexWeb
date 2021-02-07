@@ -147,6 +147,9 @@
                                                         name="phone" formControlName="phone">
                                                     </ngx-intl-tel-input>
 
+                                                    <!--p class="errorCls" *ngIf="signupStep2Form.get('phone').errors && signupStep2Form.get('phone')">
+                                                        Invalid Phone Number.
+                                                    </p-->
             
                                                     <p class="errorCls" *ngIf="signupStep2Form.controls.phone.touched || isSignupStep2FormSubmitted">
                                                         <app-form-validation-errors errorPrefix="Mobile Number " minLength=10 maxLength=10 [errors]="signupStep2Form.get('phone').errors"></app-form-validation-errors>

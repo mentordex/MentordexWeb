@@ -37,7 +37,6 @@ export class HeaderComponent implements OnInit {
       if (event instanceof ActivationEnd) {
 
         if (localStorage.getItem(environment.TOKEN_NAME)) {
-
           this.isLoggedin = true;
         } else {
           this.isLoggedin = false;
@@ -69,8 +68,11 @@ export class HeaderComponent implements OnInit {
           if ((event.url).includes('verify-phone'))
             this.title = 'Verify Phone'
 
+          if ((event.url).includes('verify-email'))
+            this.title = 'Verify Email'
+
         } else if ((event.url).includes('authorization')) {
-          
+
           this.zone.run(() => {
             this.isLoginPage = true
             this.isHomePage = false

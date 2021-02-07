@@ -1,0 +1,75 @@
+<section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-md-12">
+                    <p class="mobile-pagetop-heading mb-3 mb-md-4 text-center">Thanks, {{mentorDetails.first_name}} {{mentorDetails.last_name}}!</p>
+                    <p class="mobile-pagetop-subheading mb-3 d-block text-center color-text">Thank you for verying your email address and phone number with us.
+                        <br> We take this extra step to make sure that our platform has real users.</p>
+                </div>
+                <div class="login-boxouter mx-auto">
+                    <div class="forms">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="single-form-row mb-4">
+                                    <span class="small-tel-icon">
+                                        <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                                        <path d="M12.7695 0.204147H1.23047C0.551988 0.204147 0 0.756136 0 1.43462V8.56537C0 9.24385 0.551988 9.79584 1.23047 9.79584H12.7695C13.448 9.79584 14 9.24385 14 8.56537V1.43462C14 0.756136 13.448 0.204147 12.7695 0.204147ZM12.6089 1.02446L12.4447 1.16121L7.4882 5.2885C7.2053 5.52404 6.79465 5.52404 6.5118 5.2885L1.55529 1.16121L1.39106 1.02446H12.6089ZM0.820312 1.61667L4.85877 4.97949L0.820312 7.66719V1.61667ZM12.7695 8.97553H1.23047C1.03228 8.97553 0.866523 8.83422 0.828543 8.64711L5.51649 5.52715L5.98691 5.91888C6.28042 6.16328 6.64024 6.28548 7.00003 6.28548C7.35982 6.28548 7.71961 6.16328 8.01314 5.91888L8.48356 5.52715L13.1715 8.64708C13.1335 8.83425 12.9677 8.97553 12.7695 8.97553ZM13.1797 7.66719L9.14123 4.97951L13.1797 1.61667V7.66719Z" fill="#094E54"/>
+                                        </svg>
+                                    </span>
+                                    <input type="email" class="special--inputs w-100 pr-5 pl-40" value="{{mentorDetails.email}}" readonly="true" />
+                                    <ng-container *ngIf="(mentorDetails.is_email_verified == 'VERIFIED');">
+                                        <span class="right-circle">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <circle cx="12" cy="12" r="12" fill="#3BB3BD"/>
+                                            <g clip-path="url(#clip0)">
+                                            <path d="M11.4463 14.8621C11.3604 14.9485 11.2431 14.9967 11.1214 14.9967C10.9996 14.9967 10.8824 14.9485 10.7965 14.8621L8.20194 12.2671C7.93269 11.9978 7.93269 11.5612 8.20194 11.2925L8.52682 10.9675C8.79617 10.6982 9.23228 10.6982 9.50154 10.9675L11.1214 12.5874L15.4984 8.21029C15.7678 7.94103 16.2043 7.94103 16.4732 8.21029L16.798 8.53525C17.0673 8.80451 17.0673 9.24105 16.798 9.50989L11.4463 14.8621Z" fill="white"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0">
+                                            <rect width="9" height="9" fill="white" transform="translate(8 7)"/>
+                                            </clipPath>
+                                            </defs>
+                                        </svg>  
+                                        </span>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="single-form-row mb-4">
+                                    <span class="small-tel-icon">
+                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5.79803 8.2028C4.46175 6.86652 4.16003 5.53025 4.09196 4.99487C4.07294 4.84683 4.12388 4.69838 4.22978 4.59321L5.31116 3.51231C5.47024 3.35334 5.49847 3.10558 5.37923 2.9149L3.65747 0.241384C3.52556 0.030237 3.25472 -0.045968 3.03206 0.0654183L0.268026 1.36718C0.0879717 1.45584 -0.0179341 1.64714 0.00250914 1.8468C0.147337 3.22266 0.747164 6.60487 4.07096 9.9289C7.39475 13.2529 10.7765 13.8525 12.1531 13.9973C12.3527 14.0178 12.544 13.9119 12.6327 13.7318L13.9344 10.9678C14.0454 10.7456 13.9697 10.4755 13.7594 10.3433L11.0859 8.62207C10.8953 8.50272 10.6476 8.53074 10.4885 8.68966L9.40761 9.77104C9.30245 9.87694 9.15399 9.92789 9.00596 9.90886C8.47058 9.8408 7.1343 9.53907 5.79803 8.2028Z" fill="#094E54"/>
+                                            <path d="M11.1038 7.48276C10.8372 7.48276 10.621 7.26662 10.621 7C10.6188 5.00128 8.99905 3.38157 7.00034 3.3793C6.73372 3.3793 6.51758 3.16317 6.51758 2.89655C6.51758 2.62992 6.73372 2.41379 7.00034 2.41379C9.53207 2.41658 11.5837 4.46826 11.5865 7C11.5865 7.26662 11.3704 7.48276 11.1038 7.48276Z" fill="#094E54"/>
+                                            <path d="M13.5176 7.48276C13.251 7.48276 13.0348 7.26662 13.0348 7C13.0311 3.66879 10.3315 0.969243 7.00034 0.965519C6.73372 0.965519 6.51758 0.74938 6.51758 0.48276C6.51758 0.21614 6.73372 1.19209e-06 7.00034 1.19209e-06C10.8646 0.00425813 13.9961 3.13577 14.0003 7C14.0003 7.12804 13.9495 7.25083 13.8589 7.34136C13.7684 7.4319 13.6456 7.48276 13.5176 7.48276Z" fill="#094E54"/>
+                                            </svg>                                                                                       
+                                    </span>
+                                    <input type="text" class="special--inputs w-100 pr-5 pl-40" value="{{mentorDetails.phone}}" readonly="true" />
+                                    <ng-container *ngIf="(mentorDetails.is_phone_verified == 'VERIFIED');">
+                                        <span class="right-circle">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <circle cx="12" cy="12" r="12" fill="#3BB3BD"/>
+                                            <g clip-path="url(#clip0)">
+                                            <path d="M11.4463 14.8621C11.3604 14.9485 11.2431 14.9967 11.1214 14.9967C10.9996 14.9967 10.8824 14.9485 10.7965 14.8621L8.20194 12.2671C7.93269 11.9978 7.93269 11.5612 8.20194 11.2925L8.52682 10.9675C8.79617 10.6982 9.23228 10.6982 9.50154 10.9675L11.1214 12.5874L15.4984 8.21029C15.7678 7.94103 16.2043 7.94103 16.4732 8.21029L16.798 8.53525C17.0673 8.80451 17.0673 9.24105 16.798 9.50989L11.4463 14.8621Z" fill="white"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0">
+                                            <rect width="9" height="9" fill="white" transform="translate(8 7)"/>
+                                            </clipPath>
+                                            </defs>
+                                            </svg>  
+                                        </span>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-form-row mb-3">
+                            <input type="submit" (click)="onCompleteApplicationSubmit()" class="primary--button w-100 py-md-3" value="Complete Your Application" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

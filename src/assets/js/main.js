@@ -145,6 +145,7 @@ $(document).ready(function() {
 
     //---------tagify js init--------
     // The DOM element you wish to replace with Tagify
+    /*
     if ($('input[name=basic]').length > 0) {
         var input = document.querySelector('input[name=basic]');
         let data = [
@@ -192,6 +193,7 @@ $(document).ready(function() {
             $(this).closest('.notification--mesgouter li').remove();
         });
     };
+    */
 
 
 

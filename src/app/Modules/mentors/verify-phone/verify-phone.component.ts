@@ -94,4 +94,9 @@ export class VerifyPhoneComponent implements OnInit {
     })
   }
 
+  //destroy all subscription
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
+
 }
