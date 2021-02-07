@@ -156,9 +156,9 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="country_id" #country (change)="getStateListing(country.value)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="country_id" #country (change)="getStateListing($event)" class="custom-select special--select special--inputs w-100">
                                                     <option disabled selected value="">Country</option>
-                                                    <option *ngFor="let country of countries;" value="{{country.id}}">{{country.value}}</option>
+                                                    <option *ngFor="let country of countries;" value="{{country._id}}">{{country.title}}</option>
                                                 </select>
 
                                                 <p class="errorCls" *ngIf="signupStep2Form.controls.country_id.touched || isSignupStep2FormSubmitted">
@@ -168,9 +168,9 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="state_id" #state (change)="getCityListing(state.value)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="state_id" #state (change)="getCityListing($event)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">State</option>
-                                                    <option *ngFor="let state of states;" value="{{state.id}}">{{state.value}}</option> 
+                                                    <option *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
                                                 </select>
 
                                                 <p class="errorCls" *ngIf="signupStep2Form.controls.state_id.touched || isSignupStep2FormSubmitted">
@@ -180,9 +180,9 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="city_id" #city (change)="getZipcodeListing(city.value)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="city_id" #city (change)="getZipcodeListing($event)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">City</option>
-                                                    <option *ngFor="let city of cities;" value="{{city.id}}">{{city.value}}</option>
+                                                    <option *ngFor="let city of cities;" value="{{city._id}}">{{city.title}}</option>
                                                 </select>
 
                                                 <p class="errorCls" *ngIf="signupStep2Form.controls.city_id.touched || isSignupStep2FormSubmitted">
@@ -233,7 +233,10 @@
                                         </div>
                                     </div>
                                     <div class="single-form-row mb-35">
-                                        <input type="submit" (click)="onSignupStep2FormSubmit()" [disabled]="signupStep2Form.invalid" class="primary--button w-100 py-md-3" value="Create My Account" />
+                                        <input type="submit" (click)="onSignupStep2FormSubmit()" [disabled]="signupStep2Form.invalid" class="primary--button w-100 py-md-3" value="Create My Account" awNextStep />
+
+                                        
+
                                     </div>
                                     <div>
                                         <div class="form-check check-opacity mb-3">
@@ -345,6 +348,173 @@
                 </div>
             </section>
             <!--cards section ends-->
+        </form>
+    </aw-wizard-step>
+    <aw-wizard-step stepTitle="signupStep3">
+        <form [formGroup]="signupStep3Form">
+            <section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mx-auto max-510">
+                                <p class="mobile-pagetop-heading mb-3 text-center">Welcome Parent Name!</p>
+                                <p class="mobile-pagetop-subheading mb-4 mb-md-5 d-block text-center">Please select from the following options so that we can curate your Mentordex feed to be personalized to your needs and specifications. </p>
+                            </div>
+                            <div class="bg-white p-md-60 mx-auto">
+                                <p class="mobile-pagetop-heading mb-3 text-center">Let's personalize your MentorDex feed!</p>
+                                <p class="mobile-pagetop-subheading mb-4 mb-md-5 d-block text-center">First, select the city, state, and zip code where you are looking to hire a mentor.</p>
+                                <div class="forms">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="single-form-row mb-4">
+                                                <select formControlName="lstate_id" #state (change)="getCity2Listing($event)" class="custom-select special--select special--inputs w-100">
+                                                    <option selected value="">State</option>
+                                                    <option *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="single-form-row mb-4">
+                                                <select formControlName="lcity_id" #city (change)="getZipcode2Listing($event)" class="custom-select special--select special--inputs w-100">
+                                                    <option selected value="">City</option>
+                                                    <option *ngFor="let city of cities2;" value="{{city._id}}">{{city.title}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="single-form-row mb-4">
+                                                <select formControlName="lzipcode" class="custom-select special--select special--inputs w-100">
+                                                    <option selected value="">Zipcode</option>
+                                                    <option *ngFor="let zipcode of zipcodes2;" value="{{zipcode.value}}">{{zipcode.value}}</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <div class="single-form-row mb-3 text-center">
+                                                 <p class="mobile-pagetop-subheading d-block text-center">Second, choose 1-3 categories from our AAA index from which you would like to hire a mentor.
+                                                 </p>
+                                            </div>
+                                        </div>   
+                                        <div class="col-12">
+                                            <div class="row align-items-end">
+                                                <div class="col-sm-6 col-md-4">
+                                                    <small class="d-block mb-2">You may always edit this preference. </small>
+                                                    <div class="single-form-row mb-4">
+                                                        <select formControlName="category_id1" class="custom-select special--select special--inputs w-100" (change)="getSubcategory1Listing($event)">
+                                                            <option selected value="">Select category 1</option>
+                                                            <option *ngFor="let category of categories;" value="{{category._id}}">{{category.title}}</option>
+                                                            
+                                                        </select>
+                                                        <p class="errorCls" *ngIf="signupStep3Form.controls.category_id1.touched || isSignupStep3FormSubmitted">
+                                                            <app-form-validation-errors errorPrefix="Category 1 " [errors]="signupStep3Form.get('category_id1').errors"></app-form-validation-errors>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-4">
+                                                    <div class="single-form-row mb-4">
+                                                        <select (change)="getSubcategory2Listing($event)" formControlName="category_id2" class="custom-select special--select special--inputs w-100">
+                                                            <option selected value="">Select category 2</option>
+                                                            <option *ngFor="let category of categories;" value="{{category._id}}">{{category.title}}</option>
+                                                            
+                                                        </select>
+                                                        <p class="errorCls" *ngIf="signupStep3Form.controls.category_id2.touched || isSignupStep3FormSubmitted">
+                                                            <app-form-validation-errors errorPrefix="Category 2 " [errors]="signupStep3Form.get('category_id2').errors"></app-form-validation-errors>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-4">
+                                                    <div class="single-form-row mb-4">
+                                                        <select (change)="getSubcategory3Listing($event)" formControlName="category_id3" class="custom-select special--select special--inputs w-100">
+                                                            <option selected value="">Select category 3</option>
+                                                            <option *ngFor="let category of categories;" value="{{category._id}}">{{category.title}}</option>
+                                                            
+                                                        </select>
+                                                        <p class="errorCls" *ngIf="signupStep3Form.controls.category_id3.touched || isSignupStep3FormSubmitted">
+                                                            <app-form-validation-errors errorPrefix="Category 3 " [errors]="signupStep3Form.get('category_id3').errors"></app-form-validation-errors>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                        <div *ngIf="subcategories1.length>0 || subcategories2.length>0 || subcategories3.length>0" class="col-12 mt-4">
+                                            <p class="mobile-pagetop-subheading d-block text-left mb-4 font-md-18">Please choose a speciality or skill
+                                            </p>
+                                        </div>
+                                        
+                                        <div *ngIf="subcategories1.length>0" class="col-12">
+                                            <div class="row">
+                                                <div class="col-lg-5 mb-4 mb-lg-0">
+                                                    <p class="subject-category-title mb-3">Subcategory 1</p>
+                                                    <div class="subject-category-box">
+                                                        <ul>
+                                                            <li *ngFor="let subcategory of subcategories1">
+                                                                <label class="mordern-radiobox-label">
+                                                                    <input type="radio" value="{{subcategory._id}}" (change)="selectSubcategory1($event)" name="dark">
+                                                                    <span class="design"></span>
+                                                                    <span class="text">{{subcategory.title}}</span>
+                                                                </label>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                        </div>  
+                                        <div *ngIf="subcategories2.length>0" class="col-12">
+                                            <div class="row">
+                                                <div class="col-lg-5 mb-4 mb-lg-0">
+                                                    <p class="subject-category-title mb-3">Subcategory 2</p>
+                                                    <div class="subject-category-box">
+                                                        <ul>
+                                                            <li *ngFor="let subcategory of subcategories2">
+                                                                <label class="mordern-radiobox-label">
+                                                                    <input type="radio" value="{{subcategory._id}}" name="dark">
+                                                                    <span class="design"></span>
+                                                                    <span class="text">{{subcategory.title}}</span>
+                                                                </label>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                        </div> 
+                                        <div *ngIf="subcategories3.length>0" class="col-12">
+                                            <div class="row">
+                                                <div class="col-lg-5 mb-4 mb-lg-0">
+                                                    <p class="subject-category-title mb-3">Subcategory 3</p>
+                                                    <div class="subject-category-box">
+                                                        <ul>
+                                                            <li *ngFor="let subcategory of subcategories3">
+                                                                <label class="mordern-radiobox-label">
+                                                                    <input type="radio" value="{{subcategory._id}}" name="dark">
+                                                                    <span class="design"></span>
+                                                                    <span class="text">{{subcategory.title}}</span>
+                                                                </label>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                        </div>    
+                                    </div>
+                                    <div class="max-410 mt-4 mt-md-5 mx-auto text-center">
+                                        <input type="button" (click)="onSignupStep3FormSubmit()" class="primary--button w-100 py-md-3" value="Personalize My Mentordex Feed"/>
+                                        <a routerLink="/parent/dashboard" class="skip-text mt-3 d-inline-block">Skip and take me to dashboard</a>
+                                    </div>
+                                </div>
+                                <div class="d-md-none mt-5">
+                                    <div class="text-center">
+                                        <a href="#" class="alt--button font-w-500 py-2">LOG OUT</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </form>
     </aw-wizard-step>
 

@@ -13,6 +13,7 @@ export const environment = {
     "LOGIN-SUCCESS":"You have loggedin successfully.",
     "LOGOUT-SUCCESS":"You have been loggedout successfully.",
     "REGISTERED-SUCCESSFULLY":"Thank You for Registering! The verification link has been sent to your email successfully.",
+    "PARENT-REGISTERED-SUCCESSFULLY":"Thank You for Registering!.",
     "RESEND-EMAIL-VERIFICATION":"The verification link has been sent to your email.",
     "RESEND-PHONE-VERIFICATION":"OTP has been sent to your phone.",
     "PHONE-VERIFICATION-SUCCESS":"Phone number has been verified successfully.",

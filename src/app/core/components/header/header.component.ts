@@ -25,11 +25,25 @@ export class HeaderComponent implements OnInit {
   isHomePage: boolean = false
   isLoginPage: boolean = false
   isMentorPage: boolean = false
+  isParentPage: boolean = false
   isLoggedin: boolean = false
   loginSubscription
+  loginType:String =''
   title = '';
-  constructor(private zone: NgZone, private router: Router, private utilsService: UtilsService) {
+  constructor(private zone: NgZone, private router: Router, private authService: AuthService, private utilsService: UtilsService) {
 
+    //login subscription
+    this.loginSubscription = this.authService.checkLoggedinStatus().subscribe((loginStatus) => {
+       
+  
+      if (localStorage.getItem(environment.TOKEN_NAME)) {
+        this.loginType = localStorage.getItem('x-user-type')
+        this.isLoggedin = true;
+      } else {
+        this.isLoggedin = false;
+      }
+      
+    });
 
     this.loginSubscription = router.events.subscribe((event) => {
 
@@ -37,8 +51,14 @@ export class HeaderComponent implements OnInit {
       if (event instanceof ActivationEnd) {
 
         if (localStorage.getItem(environment.TOKEN_NAME)) {
-
+          this.loginType = localStorage.getItem('x-user-type')
           this.isLoggedin = true;
+          this.zone.run(() => {
+            this.isHomePage = false
+            this.isLoginPage = true
+            this.isMentorPage = false
+            this.isParentPage = false
+          });
         } else {
           this.isLoggedin = false;
         }
@@ -68,6 +88,15 @@ export class HeaderComponent implements OnInit {
 
           if ((event.url).includes('verify-phone'))
             this.title = 'Verify Phone'
+
+        }else if ((event.url).includes('parent')) {
+          this.zone.run(() => {
+            this.isHomePage = false
+            this.isLoginPage = false
+            this.isMentorPage = false
+            this.isParentPage = true
+          });
+          this.title = 'Parent Login';       
 
         } else if ((event.url).includes('authorization')) {
           
@@ -113,6 +142,7 @@ export class HeaderComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.value) {
+        this.loginType = ''
         this.utilsService.logout()
 
       }
