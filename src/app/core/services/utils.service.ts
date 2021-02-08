@@ -83,6 +83,21 @@ export class UtilsService {
         )
       );
   }
+
+  processSignupRequest(apiEndPoint, data, showLoader = false, message = ''){
+    
+    if(showLoader)
+      this.onRequest(environment.MESSGES['CHECKING-AUTHORIZATION']);//show page loader
+
+      return this.httpClient.post(apiEndPoint, data,  { observe: 'response' })
+      .pipe(
+        tap( // Log the result or error
+          data => {
+            this.onResponse(message, true);//show page loader
+          }
+        )
+      );
+  }
   /**
   * Get the data using posted endpoint 
   */

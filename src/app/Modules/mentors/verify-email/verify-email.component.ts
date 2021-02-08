@@ -50,6 +50,10 @@ export class VerifyEmailComponent implements OnInit {
  verifyMentorEmailByToken(id): void {
     this.utilsService.processPostRequest('verifyMentorEmail', { userID: this.id, emailToken: this.email_token }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorDetails = response;
+      if(this.mentorDetails.email_verify == false){
+        this.utilsService.onResponse(this.mentorDetails.message, false);
+        this.router.navigate(['/']);
+      }
       //console.log(this.mentorDetails);
     })
   }

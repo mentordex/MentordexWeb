@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+
+import { MovingDirection, WizardComponent } from 'angular-archwizard';
 
 // import fade in animation
 import { fadeInAnimation } from '../../../core/animations';
@@ -21,13 +23,19 @@ import { SearchCountryField, TooltipLabel, CountryISO, PhoneNumberFormat } from 
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
+
 export class SignupComponent implements OnInit {
+
+  @ViewChild(WizardComponent)
+  public wizard: WizardComponent;
 
   private onDestroy$: Subject<void> = new Subject<void>();
   signupStep1Form: FormGroup;
   signupStep2Form: FormGroup;
+  signupStep3Form: FormGroup;
   isSignupStep1FormSubmitted: boolean = false
   isSignupStep2FormSubmitted: boolean = false
+  isSignupStep3FormSubmitted: boolean = false
   getEmailValue: string = '';
 
   SearchCountryField = SearchCountryField;
@@ -39,21 +47,20 @@ export class SignupComponent implements OnInit {
   countries: any = [];
   states: any = [];
   cities: any = [];
+  cities2: any = []
   zipcodes: any = [];
-
-  countryArray = [{ id: 1, value: 'US' }];
-
-  stateArray = [{ id: 1, value: 'Alabama', country_id: 1 }, { id: 2, value: 'Alaska', country_id: 1 }, { id: 3, value: 'California', country_id: 1 }, { id: 4, value: 'Florida', country_id: 1 }, { id: 5, value: 'Washington', country_id: 1 }];
-
-  cityArray = [{ id: 1, value: 'Abbeville', state_id: 1, country_id: 1 }, { id: 2, value: 'Anniston', state_id: 1, country_id: 1 }, { id: 3, value: 'Bakerhill', state_id: 1, country_id: 1 }, { id: 4, value: 'Bettles', state_id: 2, country_id: 1 }, { id: 5, value: 'Marshall', state_id: 2, country_id: 1 }, { id: 6, value: 'Corona', state_id: 3, country_id: 1 }, { id: 7, value: 'Greenfield', state_id: 3, country_id: 1 }, { id: 8, value: 'Miami', state_id: 4, country_id: 1 }, { id: 9, value: 'Tampa', state_id: 4, country_id: 1 }, { id: 10, value: 'Newcastle', state_id: 5, country_id: 1 }, { id: 11, value: 'Woodland', state_id: 5, country_id: 1 }];
-
-  zipcodeArray = [{ id: 1, value: '70510', city_id: 1 }, { id: 2, value: '70511', city_id: 1 }, { id: 3, value: '36201', city_id: 2 }, { id: 4, value: '36204', city_id: 2 }, { id: 5, value: '36027', city_id: 3 }, { id: 6, value: '99726', city_id: 4 }, { id: 7, value: '56258', city_id: 5 }, { id: 8, value: '92877', city_id: 6 }, { id: 9, value: '92880', city_id: 6 }, { id: 10, value: '46140', city_id: 7 }, { id: 11, value: '33125', city_id: 8 }, { id: 12, value: '33129', city_id: 8 }, { id: 13, value: '33601', city_id: 9 }, { id: 14, value: '33605', city_id: 9 }, { id: 15, value: '73065', city_id: 10 }, { id: 16, value: '73072', city_id: 10 }, { id: 17, value: '95695', city_id: 11 }, { id: 18, value: '95776', city_id: 11 }];
+  zipcodes2: any = [];
+  categories: any = [];
+  subcategories1: any = [];
+  subcategories2: any = [];
+  subcategories3: any = [];
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit(): void {
     this.initalizeSignupStep1Form()
     this.initalizeSignupStep2Form()
+    this.initalizeSignupStep3Form()
   }
 
   //initalize Step 1 form
@@ -92,7 +99,7 @@ export class SignupComponent implements OnInit {
           {
             hasSpecialCharacters: true
           }
-        ) 
+        )
       ])
       ],
       phone: [undefined, [Validators.required]],
@@ -105,25 +112,69 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  //initalize Step 3 form
+  private initalizeSignupStep3Form() {
+    this.signupStep3Form = this.formBuilder.group({
+      lcountry_id: [this.signupStep2Form.get('country_id').value],
+      user_id: [''],
+      lstate_id: [''],
+      lcity_id: [''],
+      lzipcode: [''],
+      category_id1: [''],
+      subcategory_id1: [''],
+      category_id2: [''],
+      subcategory_id2: [''],
+      category_id3: [''],
+      subcategory_id3: [''],
+    });
+  }
+
+  selectSubcategory1(event) {
+    this.signupStep3Form.patchValue({
+      subcategory_id1: event.target.value
+    });
+  }
+
+  selectSubcategory2(event) {
+    this.signupStep3Form.patchValue({
+      subcategory_id2: event.target.value
+    });
+  }
+
+  selectSubcategory3(event) {
+    this.signupStep3Form.patchValue({
+      subcategory_id3: event.target.value
+    });
+  }
+
   //Authorizing Submit form
   onSignupStep1FormSubmit() {
+
     if (this.signupStep1Form.invalid) {
       this.isSignupStep1FormSubmitted = true
       return false;
     }
 
-    this.getEmailValue = this.signupStep1Form.controls.email.value;
-    this.signupStep2Form.patchValue({
-      email: this.signupStep1Form.controls.email.value
-    });
 
-    // get Country Listing
-    this.getCountryListing();
+    // Check Email Exists or not
+    this.utilsService.processPostRequest('checkEmailExists', this.signupStep1Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      console.log('response', response);
+      this.getEmailValue = this.signupStep1Form.controls.email.value;
+      this.signupStep2Form.patchValue({
+        email: this.signupStep1Form.controls.email.value
+      });
+      // get Country Listing
+      this.getCountryListing();
+      this.wizard.goToNextStep();
+    })
+
 
   }
 
   //Authorizing Submit form
   onSignupStep2FormSubmit() {
+
+
     if (this.signupStep2Form.invalid) {
       this.isSignupStep2FormSubmitted = true
       return false;
@@ -135,28 +186,122 @@ export class SignupComponent implements OnInit {
       phone: phoneJson.e164Number
     });
 
-    //console.log(this.signupStep2Form.value);
-    //return;
-
-    this.utilsService.processPostRequest('signup', this.signupStep2Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+    this.utilsService.processSignupRequest('signup', this.signupStep2Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log('response', response);
-      this.utilsService.onResponse(environment.MESSGES['REGISTERED-SUCCESSFULLY'], true);
+      
+      if (this.signupStep2Form.get('role').value == 'PARENT') {          
+    
+        this.getCategoryListing(); // get Category Listing
+
+        this.signupStep3Form.patchValue({
+          user_id: response.body['_id'],
+          lcountry_id: this.signupStep2Form.controls.country_id.value
+        });
+
+
+        localStorage.setItem('x-user-ID', response.body['_id'])
+        localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))
+
+        this.authService.isLoggedIn(true); // Parent Login
+        localStorage.setItem('x-user-type', 'PARENT')
+
+        //this.utilsService.onResponse(environment.MESSGES['PARENT-REGISTERED-SUCCESSFULLY'], true);
+        this.wizard.goToNextStep();
+
+      } else {
+
+        //localStorage.setItem('x-user-type', 'MENTOR')
+        this.utilsService.onResponse(environment.MESSGES['REGISTERED-SUCCESSFULLY'], true);
+        this.router.navigate(['/mentor/verify-phone/' + response.body['_id']]);
+
+      }
+    })
+
+  }
+
+  onSignupStep3FormSubmit() {
+
+    this.utilsService.processPostRequest('updateParentInfo', this.signupStep3Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log('response', response);
+
+      this.utilsService.onResponse('Information updated', true);
+      this.router.navigate(['/parent/dashboard']);
     })
   }
 
 
   /**
+   * get All categories
+   */
+  getCategoryListing() {
+
+    this.utilsService.processGetRequest('category/listing', false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.categories = response;
+    })
+  }
+
+  /**
+   * get All categories
+   */
+  getSubcategory1Listing(event) {
+    let categoryID = event.target.value
+    this.subcategories1 = []
+    this.signupStep3Form.patchValue({
+      subcategory_id1: ''
+    });
+
+    if (categoryID) {
+      this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        this.subcategories1 = response;
+      })
+    }
+
+  }
+
+  getSubcategory2Listing(event) {
+    let categoryID = event.target.value
+    this.subcategories2 = []
+    this.signupStep3Form.patchValue({
+      subcategory_id2: ''
+    });
+    if (categoryID) {
+      this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        this.subcategories2 = response;
+      })
+    }
+
+  }
+
+  getSubcategory3Listing(event) {
+    let categoryID = event.target.value
+    this.subcategories3 = []
+    this.signupStep3Form.patchValue({
+      subcategory_id3: ''
+    });
+    if (categoryID) {
+      this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        this.subcategories3 = response;
+      })
+    }
+
+  }
+  /**
    * get All Countries
    */
   getCountryListing() {
-    this.countries = this.countryArray;
+
+    this.utilsService.processGetRequest('country/listing', false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.countries = response;
+    })
+
     this.resetAllControls('all');
   }
 
   /**
    * get All States
    */
-  getStateListing(countryId) {
+  getStateListing(event) {
+    let countryId = event.target.value
     this.resetAllControls('state');
 
 
@@ -166,49 +311,108 @@ export class SignupComponent implements OnInit {
       return;
     }
 
-    this.states = this.stateArray.filter(function (el) {
-      return el.country_id == countryId;
-    });
-
-    if (this.states.length > 0) {
-      this.enableStateControl();
-    } else {
-      this.resetAllControls('state');
-    }
+    this.utilsService.processPostRequest('state/listing', { country_id: countryId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.states = response;
+      if (this.states.length > 0) {
+        this.enableStateControl();
+      } else {
+        this.resetAllControls('state');
+      }
+    })
 
   }
 
   /**
    * get All Cities
    */
-  getCityListing(stateId) {
+  getCityListing(event) {
+
+    let stateId = event.target.value
     this.resetAllControls('city');
-
-
-
     // check State ID Empty or not
     if (stateId == '') {
-      console.log('stateId', stateId)
+      //console.log('stateId', stateId)
       this.resetAllControls('city');
       return;
     }
 
-    this.cities = this.cityArray.filter(function (el) {
-      return el.state_id == stateId;
-    });
 
-    if (this.cities.length > 0) {
-      this.enableCityControl();
-    } else {
-      this.resetAllControls('city');
-    }
+    this.utilsService.processPostRequest('city/listing', { state_id: stateId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.cities = response;
+      if (this.cities.length > 0) {
+        this.enableCityControl();
+      } else {
+        this.resetAllControls('city');
+      }
+    })
+
 
   }
 
   /**
    * get All Cities
    */
-  getZipcodeListing(cityId) {
+  getCity2Listing(event) {
+    let stateId = event.target.value
+    this.resetAllControls('city2');
+    // check State ID Empty or not
+    if (stateId == '') {
+      //console.log('stateId', stateId)
+      this.resetAllControls('city2');
+      return;
+    }
+
+
+    this.utilsService.processPostRequest('city/listing', { state_id: stateId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.cities2 = response;
+      if (this.cities2.length > 0) {
+        this.enableCityControl();
+      } else {
+        this.resetAllControls('city2');
+      }
+    })
+    if (this.cities.length > 0) {
+      this.enableCity2Control();
+    } else {
+      this.resetAllControls('city2');
+    }
+  }
+
+  /**
+   * get All Cities
+   */
+  getZipcode2Listing(event) {
+    let cityId = event.target.value
+    this.resetZipcode2Control();
+
+
+    // check State ID Empty or not
+    if (cityId == "") {
+      this.resetZipcode2Control();
+      return;
+    }
+
+    this.utilsService.processPostRequest('city/cityInfo', { city_id: cityId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.zipcodes2 = (response) ? response['zipcodes'] : [];
+      if (this.zipcodes2.length > 0) {
+        this.enableZipcode2Control();
+      } else {
+        this.resetZipcode2Control();
+      }
+    })
+
+    if (this.zipcodes2.length > 0) {
+      this.enableZipcodeControl();
+    } else {
+      this.resetZipcodeControl();
+    }
+
+  }
+  /**
+   * get All Cities
+   */
+  getZipcodeListing(event) {
+    let cityId = event.target.value
     this.resetZipcodeControl();
 
 
@@ -218,17 +422,19 @@ export class SignupComponent implements OnInit {
       return;
     }
 
-    this.zipcodes = this.zipcodeArray.filter(function (el) {
-      return el.city_id == cityId;
-    });
+    this.utilsService.processPostRequest('city/cityInfo', { city_id: cityId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.zipcodes = (response) ? response['zipcodes'] : [];
+      if (this.zipcodes.length > 0) {
+        this.enableZipcodeControl();
+      } else {
+        this.resetZipcodeControl();
+      }
+    })
 
-    if (this.zipcodes.length > 0) {
-      this.enableZipcodeControl();
-    } else {
-      this.resetZipcodeControl();
-    }
+
 
   }
+
 
   /**
   * Reset All Control
@@ -245,6 +451,13 @@ export class SignupComponent implements OnInit {
       this.resetZipcodeControl();
     }
 
+    if (value == 'city2') {
+      this.resetCity2Control();
+      this.resetZipcode2Control();
+    }
+
+
+
     if (value == 'all') {
       this.resetStateControl();
       this.resetCityControl();
@@ -259,6 +472,22 @@ export class SignupComponent implements OnInit {
   resetStateControl(): void {
     let stateControl = this.signupStep2Form.controls.state_id;
     stateControl.disable(); stateControl.setValue(''); this.states = [];
+  }
+
+  /**
+  * Reset City Control
+  */
+  resetCity2Control(): void {
+    let cityControl = this.signupStep3Form.controls.lcity_id;
+    cityControl.disable(); cityControl.setValue(''); this.cities2 = [];
+  }
+
+  /**
+  * Reset Zipcode Control
+  */
+  resetZipcode2Control() {
+    let zipcodeControl = this.signupStep3Form.controls.lzipcode;
+    zipcodeControl.disable(); zipcodeControl.setValue(''); this.zipcodes2 = [];
   }
 
   /**
@@ -294,10 +523,26 @@ export class SignupComponent implements OnInit {
   }
 
   /**
+  * Enable City Control
+  */
+  enableCity2Control(): void {
+    let cityControl = this.signupStep3Form.controls.lcity_id;
+    cityControl.enable();
+  }
+
+  /**
   * Enable Zipcode Control
   */
   enableZipcodeControl(): void {
     let zipcodeControl = this.signupStep2Form.controls.zipcode;
+    zipcodeControl.enable();
+  }
+
+  /**
+  * Enable Zipcode Control
+  */
+  enableZipcode2Control(): void {
+    let zipcodeControl = this.signupStep3Form.controls.lzipcode;
     zipcodeControl.enable();
   }
 

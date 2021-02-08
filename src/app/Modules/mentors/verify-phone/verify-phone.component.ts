@@ -91,6 +91,7 @@ export class VerifyPhoneComponent implements OnInit {
   onPhoneVerificationFormSubmit():void{
     this.utilsService.processPostRequest('submitMentorPhoneVerification', { userID: this.id, phoneToken: this.phoneVerificationForm.controls.phone_token.value }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse(environment.MESSGES['PHONE-VERIFICATION-SUCCESS'], true);
+      this.router.navigate(['/mentor/verification-success/' + this.id]);
     })
   }
 

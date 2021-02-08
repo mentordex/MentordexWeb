@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -15,16 +15,29 @@ import { CustomValidators } from '../../../core/custom-validators';
 import { environment } from '../../../../environments/environment';
 
 
+
+export const atLeastOne = (validator: ValidatorFn) => (
+  group: FormGroup,
+): ValidationErrors | null => {
+  const hasAtLeastOne =
+    group &&
+    group.controls &&
+    Object.keys(group.controls).some(k => !validator(group.controls[k]));
+
+  return hasAtLeastOne ? null : { atLeastOne: true };
+};
+
+
 const getMonth = (idx) => {
 
   var objDate = new Date();
   objDate.setDate(1);
-  objDate.setMonth(idx-1);
+  objDate.setMonth(idx - 1);
 
   var locale = "en-us",
-      month = objDate.toLocaleString(locale, { month: "long" });
+    month = objDate.toLocaleString(locale, { month: "long" });
 
-    return month;
+  return month;
 }
 
 @Component({
@@ -40,7 +53,7 @@ export class BasicDetailsComponent implements OnInit {
   basicDetailsForm: FormGroup;
   isBasicDetailsFormSubmitted: boolean = false
 
-  months = Array(12).fill(0).map((i,idx) => getMonth(idx + 1));
+  months = Array(12).fill(0).map((i, idx) => getMonth(idx + 1));
   selectedYear = 2004;
   selectedMonth = 1;
   selectedDay = 1;
@@ -73,21 +86,23 @@ export class BasicDetailsComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       phone: ['', Validators.required],
       gender: ['', Validators.required],
-      primary_language: ['', Validators.required],
+      tags: new FormControl([{ value: '' }], Validators.compose([Validators.required, Validators.minLength(1)])),
       dob: this.formBuilder.group({
         year: ['', Validators.required],
         month: ['', Validators.required],
         day: ['', Validators.required],
       }),
-      address1: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
-      address2: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
+      address1: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
+      address2: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
       country_id: [{ value: '' }, [Validators.required]],
       state_id: [{ value: '' }, [Validators.required]],
       city_id: [{ value: '' }, [Validators.required]],
       zipcode: [{ value: '' }, Validators.required],
-      linkedin_url: ['', Validators.required],
-      twitter_url: ['', Validators.required],
-      instagram_url: ['', Validators.required],
+      social_links: this.formBuilder.group({
+        linkedin_url: [''],
+        twitter_url: [''],
+        instagram_url: [''],
+      }, { validator: atLeastOne(Validators.required) }),
     });
   }
 
@@ -109,11 +124,31 @@ export class BasicDetailsComponent implements OnInit {
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorDetails = response;
-      console.log(this.mentorDetails);
+      //console.log(this.mentorDetails);
 
-      if(this.mentorDetails.country_id != ''){
+
+      
+
+      if (this.mentorDetails.country_id != '') {
         this.getStateListing(this.mentorDetails.country_id);
       }
+
+      if (this.mentorDetails.state_id != '') {
+        this.getCityListing(this.mentorDetails.state_id);
+      }
+
+      if (this.mentorDetails.city_id != '') {
+        this.getZipcodeListing(this.mentorDetails.city_id);
+      }
+
+      this.basicDetailsForm.patchValue({
+        email: this.mentorDetails.email,
+        phone: this.mentorDetails.phone,
+        country_id: this.mentorDetails.country_id,
+        state_id: this.mentorDetails.state_id,
+        city_id: this.mentorDetails.city_id,
+        zipcode: this.mentorDetails.zipcode,
+      });
 
     })
   }
@@ -126,18 +161,18 @@ export class BasicDetailsComponent implements OnInit {
   }
 
   public get days() {
-    
+
     const dayCount = this.getDaysInMonth(this.selectedYear, this.selectedMonth);
-    return Array(dayCount).fill(0).map((i,idx) => idx +1)
+    return Array(dayCount).fill(0).map((i, idx) => idx + 1)
   }
 
-  public get years(){
+  public get years() {
     var currentYear = new Date().getFullYear(), years = [];
-    let startYear = currentYear - 60;  
-    while ( startYear <= currentYear ) {
-        years.push(startYear++);
-    } 
-    return years; 
+    let startYear = currentYear - 60;
+    while (startYear <= currentYear) {
+      years.push(startYear++);
+    }
+    return years;
   }
 
   public getDaysInMonth(year: number, month: number) {
@@ -145,12 +180,12 @@ export class BasicDetailsComponent implements OnInit {
     return 32 - new Date(year, month - 1, 32).getDate();
   }
 
-  public onSelectMonth(month){
-    this.basicDetailsForm.controls.dob.get('day').patchValue(''); 
+  public onSelectMonth(month) {
+    this.basicDetailsForm.controls.dob.get('day').patchValue('');
     this.selectedMonth = month;
   }
 
-  public onSelectYear(year){
+  public onSelectYear(year) {
     this.selectedYear = year;
   }
 
@@ -158,7 +193,12 @@ export class BasicDetailsComponent implements OnInit {
    * get All Countries
    */
   getCountryListing() {
-    this.countries = this.countryArray;
+
+    this.utilsService.processGetRequest('country/listing', false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.countries = response;
+    })
+
+    //this.countries = this.countryArray;
     this.resetAllControls('all');
   }
 
@@ -166,6 +206,8 @@ export class BasicDetailsComponent implements OnInit {
    * get All States
    */
   getStateListing(countryId) {
+
+    //let countryId = event.target.value;
     this.resetAllControls('state');
 
 
@@ -175,7 +217,7 @@ export class BasicDetailsComponent implements OnInit {
       return;
     }
 
-    this.states = this.stateArray.filter(function (el) {
+    /* this.states = this.stateArray.filter(function (el) {
       return el.country_id == countryId;
     });
 
@@ -183,7 +225,16 @@ export class BasicDetailsComponent implements OnInit {
       this.enableStateControl();
     } else {
       this.resetAllControls('state');
-    }
+    }*/
+
+    this.utilsService.processPostRequest('state/listing', { country_id: countryId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.states = response;
+      if (this.states.length > 0) {
+        this.enableStateControl();
+      } else {
+        this.resetAllControls('state');
+      }
+    })
 
   }
 
@@ -191,9 +242,8 @@ export class BasicDetailsComponent implements OnInit {
    * get All Cities
    */
   getCityListing(stateId) {
+    //let stateId = event.target.value
     this.resetAllControls('city');
-
-
 
     // check State ID Empty or not
     if (stateId == '') {
@@ -202,7 +252,7 @@ export class BasicDetailsComponent implements OnInit {
       return;
     }
 
-    this.cities = this.cityArray.filter(function (el) {
+    /* this.cities = this.cityArray.filter(function (el) {
       return el.state_id == stateId;
     });
 
@@ -210,16 +260,25 @@ export class BasicDetailsComponent implements OnInit {
       this.enableCityControl();
     } else {
       this.resetAllControls('city');
-    }
+    } */
+
+    this.utilsService.processPostRequest('city/listing', { state_id: stateId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.cities = response;
+      if (this.cities.length > 0) {
+        this.enableCityControl();
+      } else {
+        this.resetAllControls('city');
+      }
+    })
 
   }
 
   /**
-   * get All Cities
+   * get All Zipcodes
    */
   getZipcodeListing(cityId) {
+    //let cityId = event.target.value;
     this.resetZipcodeControl();
-
 
     // check State ID Empty or not
     if (cityId == "") {
@@ -227,7 +286,16 @@ export class BasicDetailsComponent implements OnInit {
       return;
     }
 
-    this.zipcodes = this.zipcodeArray.filter(function (el) {
+    this.utilsService.processPostRequest('city/cityInfo', { city_id: cityId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.zipcodes = (response) ? response['zipcodes'] : [];
+      if (this.zipcodes.length > 0) {
+        this.enableZipcodeControl();
+      } else {
+        this.resetZipcodeControl();
+      }
+    });
+
+    /*this.zipcodes = this.zipcodeArray.filter(function (el) {
       return el.city_id == cityId;
     });
 
@@ -235,7 +303,7 @@ export class BasicDetailsComponent implements OnInit {
       this.enableZipcodeControl();
     } else {
       this.resetZipcodeControl();
-    }
+    } */
 
   }
 

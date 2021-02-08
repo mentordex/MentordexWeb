@@ -2,3 +2,38 @@ app-form-validation-errors {
     color: red;
     font-size: 13px;
 }
+
+p.errorCls span {
+    color: red;
+    font-size: 13px;
+}
+
+.resend-modify {
+    bottom: auto;
+    top: 15px;
+    border: 0px;
+}
+
+.ngx-intl-tel-box-modify ngx-intl-tel-input,
+.ngx-intl-tel-box-modify .iti {
+    display: inline-block;
+    min-width: 100%;
+}
+
+.ngx-intl-tel-box-modify .errorCls {
+    margin-bottom: 0px;
+}
+
+@media only screen and (min-width: 768px) {
+    .listing-category-modify ul li {
+        flex: 0 0 33.33%;
+        max-width: 33.33%
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .listing-category-modify ul li {
+        flex: 0 0 25%;
+        max-width: 25%
+    }
+}

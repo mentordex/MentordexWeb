@@ -132,9 +132,16 @@
                                             <div class="col-md-9">
                                                 <div class="d-block">
                                                     <label for="" class="profile-label-text">Primary Language</label>
-                                                    <div class="tagify-outer">
-                                                        <input name='basic' value='' class="tagify-placeholder" placeholder="Enter Language Here">
-                                                    </div>
+
+                                                    <tagify name="tags" formControlName="tags"></tagify>
+
+                                                    <p class="errorCls" *ngIf="basicDetailsForm.controls.tags.invalid">
+                                                        <span>Primary Language is required.</span>
+                                                    </p>
+
+                                                    <p class="errorCls" *ngIf="basicDetailsForm.controls.tags.touched || isBasicDetailsFormSubmitted">
+                                                        <app-form-validation-errors errorPrefix="Gender " [errors]="basicDetailsForm.get('tags').errors"></app-form-validation-errors>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,9 +152,11 @@
                                                 <div class="d-block">
                                                     <label for="" class="profile-label-text">Date of Birth</label>
                                                     <div formGroupName="dob" class="">
-                                                        <select formControlName="day" class=" custom-select profile-steps-input h-auto w-auto">
-                                                            <option value="">DD</option>
-                                                            <option *ngFor="let day of days" [value]="day">{{day}}</option>
+
+
+                                                        <select formControlName="year" #year (change)="onSelectYear(year.value)" class="custom-select profile-steps-input h-auto w-auto">
+                                                            <option value="">YYYY</option>
+                                                            <option *ngFor="let year of years" [value]="year">{{year}}</option>
                                                         </select>
 
                                                         <select formControlName="month" #month (change)="onSelectMonth(month.value)" class="ml-2 ml-lg-3 custom-select profile-steps-input h-auto w-auto">
@@ -155,9 +164,10 @@
                                                             <option *ngFor="let month of months; let i = index" [value]="i+1">{{month}}</option>
 
                                                         </select>
-                                                        <select formControlName="year" #year (change)="onSelectYear(year.value)" class="ml-2 ml-lg-3 custom-select profile-steps-input h-auto w-auto">
-                                                            <option value="">YYYY</option>
-                                                            <option *ngFor="let year of years" [value]="year">{{year}}</option>
+
+                                                        <select formControlName="day" class="ml-2 ml-lg-3 custom-select profile-steps-input h-auto w-auto">
+                                                            <option value="">DD</option>
+                                                            <option *ngFor="let day of days" [value]="day">{{day}}</option>
                                                         </select>
 
 
@@ -173,18 +183,21 @@
                                         <div class="row">
                                             <div class="col-lg-8">
                                                 <label for="" class="profile-label-text">Residential Address</label>
-                                                <input type="text" class="profile-steps-input w-100 bg-white" placeholder="Address 1" />
-                                                <div class="vefified-box text-right d-none">
-                                                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.757812 7.5C0.757812 3.63401 3.89182 0.5 7.75781 0.5C11.6238 0.5 14.7578 3.63401 14.7578 7.5C14.7578 11.366 11.6238 14.5 7.75781 14.5C3.89182 14.5 0.757812 11.366 0.757812 7.5ZM7.35816 10.4966L11.3889 5.45816L10.6601 4.87511L7.22418 9.17001L4.78992 7.14147L4.19242 7.85848L7.35816 10.4966Z" fill="#3BB3BD"/>
-                                                    </svg>
-                                                    <span>Verified</span>
-                                                </div>
+                                                <input type="text" formControlName="address1" class="profile-steps-input w-100 bg-white" placeholder="Address 1" />
+
+                                                <p class="errorCls" *ngIf="basicDetailsForm.controls.address1.touched || isBasicDetailsFormSubmitted">
+                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Address 1 " [errors]="basicDetailsForm.get('address1').errors"></app-form-validation-errors>
+                                                </p>
+
                                             </div>
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-lg-8">
-                                                <input type="text" class="profile-steps-input w-100 bg-white" placeholder="Address 2" />
+                                                <input type="text" formControlName="address2" class="profile-steps-input w-100 bg-white" placeholder="Address 2" />
+
+                                                <p class="errorCls" *ngIf="basicDetailsForm.controls.address2.touched || isBasicDetailsFormSubmitted">
+                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Address 2 " [errors]="basicDetailsForm.get('address2').errors"></app-form-validation-errors>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="row mt-3">
@@ -193,7 +206,7 @@
 
                                                 <select formControlName="state_id" #state (change)="getCityListing(state.value)" class="custom-select profile-steps-input h-auto">
                                                     <option value="">State</option>
-                                                    <option [selected]="mentorDetails.state_id == state.id" *ngFor="let state of states;" value="{{state.id}}">{{state.value}} {{mentorDetails.state_id == state.id | json}}</option> 
+                                                    <option [selected]="state._id == mentorDetails.state_id" *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
                                                 </select>
 
                                                 <p class="errorCls" *ngIf="basicDetailsForm.controls.state_id.touched || isBasicDetailsFormSubmitted">
@@ -206,8 +219,8 @@
                                                 <div class="row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                                         <select formControlName="city_id" #city (change)="getZipcodeListing(city.value)" class="custom-select profile-steps-input h-auto w-100">
-                                                            <option selected value="">City</option>
-                                                            <option [selected]="city.id == mentorDetails.city_id" *ngFor="let city of cities;" value="{{city.id}}">{{city.value}}</option>
+                                                            <option value="">City</option>
+                                                            <option [selected]="city._id == mentorDetails.city_id" *ngFor="let city of cities;" value="{{city._id}}">{{city.title}}</option>
                                                         </select>
 
                                                         <p class="errorCls" *ngIf="basicDetailsForm.controls.city_id.touched || isBasicDetailsFormSubmitted">
@@ -216,7 +229,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <select formControlName="zipcode" class="custom-select profile-steps-input h-auto w-100">
-                                                            <option selected value="">Zipcode</option>
+                                                            <option value="">Zipcode</option>
                                                             <option [selected]="zipcode.value == mentorDetails.zipcode" *ngFor="let zipcode of zipcodes;" value="{{zipcode.value}}">{{zipcode.value}}</option>
                                                             
                                                         </select>
@@ -232,8 +245,8 @@
 
 
                                                 <select formControlName="country_id" #country (change)="getStateListing(country.value)" class="custom-select profile-steps-input h-auto">
-                                                    <option disabled selected value="">Country</option>
-                                                    <option [selected]="country.id == mentorDetails.country_id" *ngFor="let country of countries;" value="{{country.id}}">{{country.value}}</option>
+                                                    <option selected value="">Country</option>
+                                                    <option [selected]="country._id == mentorDetails.country_id" *ngFor="let country of countries;" value="{{country._id}}">{{country.title}}</option>
                                                 </select>
 
                                                 <p class="errorCls" *ngIf="basicDetailsForm.controls.country_id.touched || isBasicDetailsFormSubmitted">
@@ -257,13 +270,13 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="row">
-                                            <div class="col-lg-8">
+                                            <div formGroupName="social_links" class="col-lg-8">
                                                 <div class="row align-items-center mb-3">
                                                     <div class="col-md-3 mb-2 mb-md-0">
                                                         <label for="" class="profile-label-text mb-0">LinkedIn</label>
                                                     </div>
                                                     <div class="col-md-9">
-                                                        <input type="text" class="profile-steps-input w-100 bg-white" />
+                                                        <input formControlName="linkedin_url" type="text" class="profile-steps-input w-100 bg-white" />
                                                     </div>
                                                 </div>
                                                 <div class="row align-items-center mb-3">
@@ -271,7 +284,7 @@
                                                         <label for="" class="profile-label-text mb-0">Twitter</label>
                                                     </div>
                                                     <div class="col-md-9">
-                                                        <input type="text" class="profile-steps-input w-100 bg-white" />
+                                                        <input type="text" formControlName="twitter_url" class="profile-steps-input w-100 bg-white" />
                                                     </div>
                                                 </div>
                                                 <div class="row align-items-center mb-3">
@@ -279,9 +292,15 @@
                                                         <label for="" class="profile-label-text mb-0">Instagram</label>
                                                     </div>
                                                     <div class="col-md-9">
-                                                        <input type="text" class="profile-steps-input w-100 bg-white" />
+                                                        <input type="text" formControlName="instagram_url" class="profile-steps-input w-100 bg-white" />
                                                     </div>
                                                 </div>
+
+                                                <p class="errorCls" *ngIf="basicDetailsForm.controls.social_links.hasError('atLeastOne') && (basicDetailsForm.controls.social_links.get('linkedin_url').touched || basicDetailsForm.controls.social_links.get('twitter_url').touched || basicDetailsForm.controls.social_links.get('instagram_url').touched)">
+                                                    <span>Atleast One is required.</span>
+                                                </p>
+
+
                                             </div>
                                         </div>
                                     </div>

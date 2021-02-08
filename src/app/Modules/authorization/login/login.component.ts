@@ -74,9 +74,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse(environment.MESSGES['LOGIN-SUCCESS'], true);//show page loader  
       localStorage.setItem('x-user-ID', response.body._id)     
-      localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))      
-      this.router.navigate(['/home']);    
-     
+      localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))    
+      localStorage.setItem('x-user-type', response.body.role)  
+      this.router.navigate(['/home']);
     })
   }
 

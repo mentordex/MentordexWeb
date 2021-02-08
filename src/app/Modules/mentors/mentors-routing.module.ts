@@ -26,6 +26,11 @@ const routes: Routes = [
     path: 'basic-details/:id',
     component: BasicDetailsComponent,
     data: { title: 'Basic Details' }
+  },
+  {
+    path: 'skills/:id',
+    component: BasicDetailsComponent,
+    data: { title: 'Skills' }
   }
 
 ];

@@ -6,8 +6,16 @@ import { Observable, Subject, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
+  public isUserLoggedIn: Subject<any> = new Subject<any>();
   constructor(private httpClient: HttpClient) { }
+
+  isLoggedIn(value: boolean) {  
+
+    this.isUserLoggedIn.next({ isLoggedIn: value });
+  }
+  checkLoggedinStatus(): Observable<any> {
+    return this.isUserLoggedIn.asObservable();
+  }
 
   login(postedData): Observable<any> {
     
