@@ -64,9 +64,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute:ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.utilsService.onRequest('yes')
-    //this.utilsService.checkAndRedirect();
+  ngOnInit(): void {  
     this.initalizeSignupStep1Form()
     this.initalizeSignupStep2Form()
     this.initalizeSignupStep3Form()
