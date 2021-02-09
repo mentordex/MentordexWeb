@@ -203,7 +203,7 @@
                 <ng-container *ngIf="isLoggedin">
                     <div class="d-none d-md-block">
                         <div class="center-flex">
-                            <div class="new-mentordex-txt flex-shrink-0 mr-3 mr-xl-4">Signed in as <span>Mentor name</span></div>
+                            <div class="new-mentordex-txt flex-shrink-0 mr-3 mr-xl-4">Signed in as <span>{{userInfo?.first_name}}</span></div>
                             <a class="alt--button font-w-500 py-2" href="javascript:void(0)" (click)="logout()">LOG OUT</a>
                         </div>
                     </div>

@@ -9,7 +9,7 @@ export const environment = {
   BLOG_API_ENDPOINT:'http://18.218.99.213/mentordex/blog/wp-json/wp/v2',
   TOKEN_NAME:"x-mentordex-auth-token",
   MESSGES:{
-    "CHECKING-AUTHORIZATION":"Checking Authorization. Please Wait..",
+    "CHECKING-AUTHORIZATION":"Please Wait..",
     "LOGIN-SUCCESS":"You have loggedin successfully.",
     "LOGOUT-SUCCESS":"You have been loggedout successfully.",
     "REGISTERED-SUCCESSFULLY":"Thank You for Registering! The verification link has been sent to your email successfully.",

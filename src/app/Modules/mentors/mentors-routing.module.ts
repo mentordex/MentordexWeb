@@ -34,7 +34,7 @@ const routes: Routes = [
     data: { title: 'Skills' }
   },
   {
-    path: 'book-a-alot',
+    path: 'book-a-slot',
     component: BookASlotComponent,
     data: { title: 'Book a Slot' }
   }

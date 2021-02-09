@@ -386,8 +386,7 @@ export class SignupComponent implements OnInit {
     //let stateId = event.target.value
     this.resetAllControls('city');
     // check State ID Empty or not
-    if (stateId == '') {
-      //console.log('stateId', stateId)
+    if (stateId == '') {      
       this.resetAllControls('city');
       return;
     }
@@ -527,7 +526,11 @@ export class SignupComponent implements OnInit {
   */
   resetStateControl(): void {
     let stateControl = this.signupStep2Form.controls.state_id;
-    stateControl.disable(); stateControl.setValue(''); this.states = [];
+    let stateControl2 = this.signupStep3Form.controls.state_id;
+    stateControl.disable(); stateControl.setValue(''); 
+    stateControl2.disable(); stateControl2.setValue(''); 
+    
+    this.states = [];
   }
 
   /**
@@ -551,7 +554,11 @@ export class SignupComponent implements OnInit {
   */
   resetCityControl(): void {
     let cityControl = this.signupStep2Form.controls.city_id;
-    cityControl.disable(); cityControl.setValue(''); this.cities = [];
+    let cityControl2 = this.signupStep3Form.controls.city_id;
+    cityControl.disable(); cityControl.setValue(''); 
+    cityControl2.disable(); cityControl2.setValue(''); 
+    
+    this.cities = [];
   }
 
   /**
@@ -559,7 +566,10 @@ export class SignupComponent implements OnInit {
   */
   resetZipcodeControl() {
     let zipcodeControl = this.signupStep2Form.controls.zipcode;
-    zipcodeControl.disable(); zipcodeControl.setValue(''); this.zipcodes = [];
+    let zipcodeControl2 = this.signupStep3Form.controls.zipcode;
+    zipcodeControl.disable(); zipcodeControl.setValue(''); 
+    zipcodeControl2.disable(); zipcodeControl2.setValue(''); 
+    this.zipcodes = [];
   }
 
   /**
@@ -567,7 +577,9 @@ export class SignupComponent implements OnInit {
   */
   enableStateControl(): void {
     let stateControl = this.signupStep2Form.controls.state_id;
+    let stateControl2 = this.signupStep3Form.controls.state_id;
     stateControl.enable();
+    stateControl2.enable();
   }
 
   /**
@@ -575,7 +587,9 @@ export class SignupComponent implements OnInit {
   */
   enableCityControl(): void {
     let cityControl = this.signupStep2Form.controls.city_id;
+    let cityControl2 = this.signupStep3Form.controls.city_id;
     cityControl.enable();
+    cityControl2.enable();
   }
 
   /**
@@ -591,7 +605,9 @@ export class SignupComponent implements OnInit {
   */
   enableZipcodeControl(): void {
     let zipcodeControl = this.signupStep2Form.controls.zipcode;
+    let zipcodeControl2 = this.signupStep3Form.controls.zipcode;
     zipcodeControl.enable();
+    zipcodeControl2.enable();
   }
 
   /**
