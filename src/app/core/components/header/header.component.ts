@@ -20,8 +20,7 @@ import Swal from 'sweetalert2'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  destroy$: Subject<boolean> = new Subject<boolean>();
+  private onDestroy$: Subject<void> = new Subject<void>();  
   isHomePage: boolean = false
   isLoginPage: boolean = false
   isMentorPage: boolean = false
@@ -30,33 +29,9 @@ export class HeaderComponent implements OnInit {
   loginSubscription: Subscription;
   loginType: String = ''
   title = '';
+  userInfo;
 
   constructor(private zone: NgZone, private router: Router, private authService: AuthService, private utilsService: UtilsService) {
-
-    //Check Logged In Status
-    
-
-      this.loginSubscription = this.authService.checkLoggedinStatus().subscribe((loginStatus) => {
-
-        //console.log('loginStatus', loginStatus)
-
-        if (localStorage.getItem(environment.TOKEN_NAME)) {
-
-          this.loginType = localStorage.getItem('x-user-type');
-          this.isLoggedin = true;
-
-        } else {
-
-          this.isLoggedin = false;
-
-        }
-
-        //console.log('loggedIn', this.isLoggedin)
-
-      });
-    
-
-
 
     this.loginSubscription = router.events.subscribe((event) => {
 
@@ -65,6 +40,7 @@ export class HeaderComponent implements OnInit {
 
         if (localStorage.getItem(environment.TOKEN_NAME)) {
           this.loginType = localStorage.getItem('x-user-type')
+          this.fetchUserInfo(localStorage.getItem('x-user-ID'))
           this.isLoggedin = true; // check 
           this.zone.run(() => {
             this.isHomePage = false
@@ -144,10 +120,16 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  fetchUserInfo(userID){
+    this.utilsService.processPostRequest('getMentorDetails', { userID: userID }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.userInfo = response;
+    })
+  }
   ngOnInit() {
     //check user is loggedin or not on page refresh
     if (localStorage.getItem(environment.TOKEN_NAME)) {
       this.isLoggedin = true;
+      this.fetchUserInfo(localStorage.getItem('x-user-ID'))
     }
   }
 
@@ -169,9 +151,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.destroy$.next(true);
+    this.onDestroy$.next();
     // Unsubscribe from the subject
-    this.destroy$.unsubscribe();
+    this.onDestroy$.unsubscribe();
     if (this.loginSubscription) {
       this.loginSubscription.unsubscribe();
     }

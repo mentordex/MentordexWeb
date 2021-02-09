@@ -160,8 +160,8 @@
                 </div>
 
                 <div *ngIf="isLoggedin" class="center-flex">
-                    <div *ngIf="loginType=='PARENT'" class="new-mentordex-txt flex-shrink-0 mr-3 mr-xl-4">Signed in as <span>Parent</span></div>
-                    <div *ngIf="loginType=='MENTOR'" class="new-mentordex-txt flex-shrink-0 mr-3 mr-xl-4">Signed in as <span>Mentor</span></div>
+                    <div *ngIf="loginType=='PARENT'" class="new-mentordex-txt flex-shrink-0 mr-3 mr-xl-4">Signed in as <span>{{userInfo?.first_name}}</span></div>
+                    <div *ngIf="loginType=='MENTOR'" class="new-mentordex-txt flex-shrink-0 mr-3 mr-xl-4">Signed in as <span>{{userInfo?.first_name}}</span></div>
                     <a class="alt--button font-w-500 py-2" (click)="logout()">LOGOUT</a>
                 </div>
 

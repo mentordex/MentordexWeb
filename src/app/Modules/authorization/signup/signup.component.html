@@ -1,6 +1,7 @@
 <!--inner section login starts-->
-<aw-wizard #wizard>
-    <aw-wizard-step stepTitle="signupStep1">
+
+<aw-wizard #wizard [defaultStepIndex]="wizardStep">
+    <aw-wizard-step stepTitle="signupStep1">      
         <form [formGroup]="signupStep1Form">
             <!--inner section login starts-->
             <section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
@@ -368,7 +369,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-md-4">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="state_id" #state (change)="getCityListing(state.value)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="state_id" #state2 (change)="getCityListing(state2.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">State</option>
                                                     <option [selected]="state._id == parentDetails.state_id" *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
                                                 </select>
@@ -376,7 +377,7 @@
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="city_id" #city (change)="getZipcodeListing(city.value)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="city_id" #city2 (change)="getZipcodeListing(city2.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">City</option>
                                                     <option [selected]="city._id == parentDetails.city_id" *ngFor="let city of cities;" value="{{city._id}}">{{city.title}}</option>
                                                 </select>
