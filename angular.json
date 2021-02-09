@@ -35,7 +35,8 @@
                             "node_modules/slick-carousel/slick/slick.scss",
                             "node_modules/slick-carousel/slick/slick-theme.scss",
                             "node_modules/intl-tel-input/build/css/intlTelInput.css",
-                            "node_modules/ngx-tagify/styles/tagify.scss"
+                            "node_modules/ngx-tagify/styles/tagify.scss",
+                            "src/assets/css/css-loader.css"
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.min.js",

@@ -23,6 +23,11 @@ const routes: Routes = [
     data: { title: 'Signup' }
   },
   {
+    path: 'signup/:userID',
+    component: SignupComponent,   
+    data: { title: 'Signup' }
+  },  
+  {
     path: 'forgot-password',
     component: ForgotPasswordComponent,   
     data: { title: 'Forgot password' }

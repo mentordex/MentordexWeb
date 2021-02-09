@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -60,14 +60,26 @@ export class SignupComponent implements OnInit {
   selectedCategory3Name: any = '';
 
   parentDetails: any = {};
+  wizardStep = 0
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute:ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.utilsService.checkAndRedirect();
+  ngOnInit(): void {  
     this.initalizeSignupStep1Form()
     this.initalizeSignupStep2Form()
     this.initalizeSignupStep3Form()
+
+    this.activatedRoute.params.subscribe((params) => {  
+      const userID =  ('userID' in params)?params['userID']:''
+      if(userID){
+      
+        this.wizardStep = 2
+        this.getParentDetailsByToken(userID)
+      }else{
+        this.utilsService.checkAndRedirect();
+      }
+
+    })
   }
 
   //initalize Step 1 form
@@ -198,7 +210,35 @@ export class SignupComponent implements OnInit {
 
       if (this.signupStep2Form.get('role').value == 'PARENT') {
 
-        this.parentDetails = response.body;
+        
+        localStorage.setItem('x-user-ID', response.body['_id']);
+        localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME));
+        localStorage.setItem('x-user-type', 'PARENT');
+
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+
+         this.router.navigate(['/authorization/signup/'+response.body['_id']]))
+        /*this.zone.run(() => {
+          this.authService.isLoggedIn(true); // Parent Login
+        });
+
+        //this.utilsService.onResponse(environment.MESSGES['PARENT-REGISTERED-SUCCESSFULLY'], true);
+        this.wizard.goToNextStep();*/
+
+      } else {
+
+        //localStorage.setItem('x-user-type', 'MENTOR')
+        this.utilsService.onResponse(environment.MESSGES['REGISTERED-SUCCESSFULLY'], true);
+        this.router.navigate(['/mentor/verify-phone/' + response.body['_id']]);
+
+      }
+    })
+
+  }
+
+  getParentDetailsByToken(id): void {
+    this.utilsService.processPostRequest('getMentorDetails', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.parentDetails = response;
 
         //console.log(this.parentDetails);
 
@@ -217,34 +257,16 @@ export class SignupComponent implements OnInit {
         }
 
         this.signupStep3Form.patchValue({
-          user_id: response.body['_id'],
+          user_id: this.parentDetails._id,
           country_id: this.parentDetails.country_id,
           state_id: this.parentDetails.state_id,
           city_id: this.parentDetails.city_id,
           zipcode: this.parentDetails.zipcode,
         });
 
+      console.log(this.signupStep3Form.value)
 
-        localStorage.setItem('x-user-ID', response.body['_id']);
-        localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME));
-        localStorage.setItem('x-user-type', 'PARENT');
-
-        this.zone.run(() => {
-          this.authService.isLoggedIn(true); // Parent Login
-        });
-
-        //this.utilsService.onResponse(environment.MESSGES['PARENT-REGISTERED-SUCCESSFULLY'], true);
-        this.wizard.goToNextStep();
-
-      } else {
-
-        //localStorage.setItem('x-user-type', 'MENTOR')
-        this.utilsService.onResponse(environment.MESSGES['REGISTERED-SUCCESSFULLY'], true);
-        this.router.navigate(['/mentor/verify-phone/' + response.body['_id']]);
-
-      }
     })
-
   }
 
   onSignupStep3FormSubmit() {
