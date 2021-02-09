@@ -5,6 +5,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { VerificationSuccessComponent } from './verification-success/verification-success.component';
 import { BasicDetailsComponent } from './basic-details/basic-details.component';
 import { SkillsComponent } from './skills/skills.component';
+import { BookASlotComponent } from './book-a-slot/book-a-slot.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,11 @@ const routes: Routes = [
     path: 'skills',
     component: SkillsComponent,
     data: { title: 'Skills' }
+  },
+  {
+    path: 'book-a-alot',
+    component: BookASlotComponent,
+    data: { title: 'Book a Slot' }
   }
 
 ];

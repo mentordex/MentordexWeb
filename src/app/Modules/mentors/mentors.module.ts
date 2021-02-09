@@ -8,10 +8,11 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { VerificationSuccessComponent } from './verification-success/verification-success.component';
 import { BasicDetailsComponent } from './basic-details/basic-details.component';
 import { SkillsComponent } from './skills/skills.component';
+import { BookASlotComponent } from './book-a-slot/book-a-slot.component';
 
 
 @NgModule({
-  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent],
+  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent],
   imports: [
     CommonModule,
     MentorsRoutingModule,

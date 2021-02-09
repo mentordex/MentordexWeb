@@ -135,13 +135,11 @@
 
                                                     <tagify name="primary_language" formControlName="primary_language"></tagify>
 
-                                                    <p class="errorCls" *ngIf="basicDetailsForm.controls.primary_language.invalid">
-                                                        <span>Primary Language is required.</span>
+                                                    <p class="errorCls" *ngIf="basicDetailsForm.controls.primary_language.hasError('MinLengthArray')">
+                                                        <span>Atleast one primary language is required.</span>
                                                     </p>
 
-                                                    <!--p class="errorCls" *ngIf="basicDetailsForm.controls.primary_language.touched || isBasicDetailsFormSubmitted">
-                                                        <app-form-validation-errors errorPrefix="Gender " [errors]="basicDetailsForm.get('primary_language').errors"></app-form-validation-errors>
-                                                    </p-->
+
                                                 </div>
                                             </div>
                                         </div>
@@ -297,7 +295,7 @@
                                                 </div>
 
                                                 <p class="errorCls" *ngIf="basicDetailsForm.controls.social_links.hasError('atLeastOne') && (basicDetailsForm.controls.social_links.get('linkedin_url').touched || basicDetailsForm.controls.social_links.get('twitter_url').touched || basicDetailsForm.controls.social_links.get('instagram_url').touched)">
-                                                    <span>Atleast One is required.</span>
+                                                    <span>Atleast one social link is required.</span>
                                                 </p>
 
 
@@ -308,7 +306,7 @@
                                 </div>
                             </div>
                             <div class="profile-steps-rightsidebar-column-footer">
-                                <input type="submit" (click)="onSubmitBasicDetailsForm()" [disabled]="basicDetailsForm.invalid" class="primary--button py-2 px-30" value="NEXT">
+                                <input type="submit" [disabled]="basicDetailsForm.invalid" (click)="onSubmitBasicDetailsForm()" class="primary--button py-2 px-30" value="NEXT">
                             </div>
                         </form>
                     </div>

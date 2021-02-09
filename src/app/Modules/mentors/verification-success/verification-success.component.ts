@@ -56,13 +56,17 @@ export class VerificationSuccessComponent implements OnInit {
   onCompleteYourApplication(): void {
 
     this.authService.onCompleteYourApplication({ userID: this.id }).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      localStorage.setItem('x-user-ID', response.body._id)
-      localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))
-      localStorage.setItem('x-user-type', response.body.role)
-      this.router.navigate(['/mentor/basic-details/']);
+      if (response.body.verify_phone == false) {
+        this.router.navigate(['/mentor/verify-phone/' + response.body._id]);
+      } else {
+        localStorage.setItem('x-user-ID', response.body._id)
+        localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))
+        localStorage.setItem('x-user-type', response.body.role)
+        this.router.navigate(['/mentor/basic-details/']);
+      }
     })
 
-    
+
     //this.router.navigate(['/authorization']);
   }
 

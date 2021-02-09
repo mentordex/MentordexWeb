@@ -123,16 +123,16 @@
                                                                 <div class="small-checkboxes">
                                                                     <div class="form-check check-opacity mb-3">
                                                                         <label class="form-check-label text-muted">
-                                                                    <input type="checkbox" class="form-check-input" name="subcategory" [attr.data-subCategoryName]="subcategory.title"  (change)="onCheckboxChange($event)" value="{{subcategory._id}}">{{subcategory.title}}<i class="input-helper"></i></label>
+                                                                    <input type="checkbox" class="form-check-input" name="subcategory" [checked]="checkSubcategory(subcategory._id)"  [attr.data-subCategoryName]="subcategory.title"  (change)="onCheckboxChange($event)" value="{{subcategory._id}}">{{subcategory.title}}<i class="input-helper"></i></label>
                                                                     </div>
                                                                 </div>
                                                             </li>
 
                                                         </ul>
 
-                                                        <p class="errorCls" *ngIf="skillsForm.controls.subcategories.hasError('MinLengthArray')">
+                                                        <!--p class="errorCls" *ngIf="skillsForm.controls.subcategories.hasError('MinLengthArray')">
                                                             <span>Select atleast 1 specialization.</span>
-                                                        </p>
+                                                        </p-->
 
                                                         <p class="errorCls" *ngIf="skillsForm.controls.subcategories.hasError('MaxLengthArray')">
                                                             <span>You can select max 3 specializations.</span>

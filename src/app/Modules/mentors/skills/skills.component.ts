@@ -45,6 +45,7 @@ export class SkillsComponent implements OnInit {
   categories: any = [];
   subcategoryArray: any = [];
   selectedSubcategoryArray: any = [];
+  selectedSubcategories: any = [];
   selectedCategoryName: any = '';
 
   skillsForm: FormGroup;
@@ -71,16 +72,27 @@ export class SkillsComponent implements OnInit {
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
       this.mentorDetails = response;
-      //console.log(this.mentorDetails);
+      
       this.skillsForm.patchValue({
-        category_id: this.mentorDetails.category_id ? this.mentorDetails.category_id : '',
-        subcategories: this.mentorDetails.subcategories ? this.mentorDetails.subcategories : []
+        category_id: this.mentorDetails.category_id ? this.mentorDetails.category_id : ''
       });
 
-      if(this.mentorDetails.category_id){
+      this.mentorDetails.subcategories.forEach(element => {
+        subcategories.push(new FormControl(element));
+      });
+
+      if (this.mentorDetails.category_id) {
         this.utilsService.processPostRequest('subcategory/listing', { category_id: this.mentorDetails.category_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
           this.subcategoryArray = response;
+          
+          this.subcategoryArray.forEach(element => {
+            if(this.mentorDetails.subcategories.indexOf(element._id) > -1){
+              this.selectedSubcategoryArray.push({ id: element._id, name: element.title });
+            }
+          });
+
         })
       }
 
@@ -92,7 +104,7 @@ export class SkillsComponent implements OnInit {
     this.skillsForm = this.formBuilder.group({
       userID: [''],
       category_id: ['', [Validators.required]],
-      subcategories: this.formBuilder.array([], [minLengthArray(1), maxLengthArray(2)])
+      subcategories: this.formBuilder.array([], [minLengthArray(1), maxLengthArray(3)])
     });
   }
 
@@ -136,12 +148,12 @@ export class SkillsComponent implements OnInit {
     if (this.skillsForm.invalid) {
       this.isSkillsFormSubmitted = true
       return false;
-    }
-    //console.log('skillsForm', this.skillsForm.value);
+    } 
+    
     this.utilsService.processPostRequest('updateSkillsDetails', this.skillsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       console.log(response);
       //this.utilsService.onResponse('Your information updated successfully.', true);
-      //this.router.navigate(['/mentor/book-a-slot']);
+      this.router.navigate(['/mentor/book-a-slot']);
     })
   }
 
@@ -189,9 +201,14 @@ export class SkillsComponent implements OnInit {
 
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
         this.subcategoryArray = response;
+
       })
     }
 
+  }
+
+  checkSubcategory(id) {
+    return this.selectedSubcategoryArray.some(t => t.id === id);
   }
 
 
