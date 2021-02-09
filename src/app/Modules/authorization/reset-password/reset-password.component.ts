@@ -24,25 +24,28 @@ export class ResetPasswordComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
   resetPasswordForm: FormGroup;
-  isFormSubmitted:boolean = false
-  token:any=''
+  isFormSubmitted: boolean = false
+  token: any = ''
+  userDetails: any = {};
 
-  constructor(private activatedRoute:ActivatedRoute, private formBuilder: FormBuilder, private authService:AuthService, private utilsService: UtilsService, private router: Router) { 
-    
-    this.utilsService.checkAndRedirect()
-    this.initalizeResetPasswordForm()
+  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) {
 
-    
+    this.utilsService.checkAndRedirect();
+    this.initalizeResetPasswordForm();
+
+
     //checking & authorizing the token
     this.activatedRoute.params.subscribe((params) => {
       this.token = params['token'];
-      
-      this.utilsService.processPostRequest('verifyToken',{token:this.token}, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.utilsService.processPostRequest('verifyToken', { token: this.token }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
+        this.userDetails = response;
         this.resetPasswordForm.patchValue({
-          token:this.token
-        })        
-      })      
-     })
+          id: this.userDetails._id
+        })
+
+      })
+    })
   }
 
   ngOnInit(): void {
@@ -50,11 +53,35 @@ export class ResetPasswordComponent implements OnInit {
 
   //initalize reset password form
   private initalizeResetPasswordForm() {
-    this.resetPasswordForm = this.formBuilder.group({     
-      password: [null, [Validators.required,Validators.minLength(10),Validators.maxLength(50)]],
-      repassword: [null, [Validators.required, Validators.minLength(10),Validators.maxLength(50)]],
-      token:[]
-    },{
+    this.resetPasswordForm = this.formBuilder.group({
+      password: [null, Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(50),
+        // check whether the entered password has a number
+        CustomValidators.patternValidator(/\d/, {
+          hasNumber: true
+        }),
+        // check whether the entered password has upper case letter
+        CustomValidators.patternValidator(/[A-Z]/, {
+          hasCapitalCase: true
+        }),
+        // check whether the entered password has a lower case letter
+        CustomValidators.patternValidator(/[a-z]/, {
+          hasSmallCase: true
+        }),
+        // check whether the entered password has a special character
+        CustomValidators.patternValidator(
+          /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+          {
+            hasSpecialCharacters: true
+          }
+        )
+      ])
+      ],
+      repassword: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
+      id: ['']
+    }, {
       // check whether our password and confirm password match
       validators: CustomValidators.passwordMatchValidator
     });
@@ -62,12 +89,12 @@ export class ResetPasswordComponent implements OnInit {
 
   //onsubmit login form
   onSubmit() {
-    if (this.resetPasswordForm.invalid) {    
-      this.isFormSubmitted= true
-      return false;      
+    if (this.resetPasswordForm.invalid) {
+      this.isFormSubmitted = true
+      return false;
     }
-    
-    if((this.resetPasswordForm.get('token').value==null) || (this.resetPasswordForm.get('token').value).length<=0){
+
+    if ((this.resetPasswordForm.get('id').value == null) || (this.resetPasswordForm.get('id').value).length <= 0) {
       Swal.fire({
         showClass: {
           popup: 'animate__animated animate__fadeInDown'
@@ -77,13 +104,13 @@ export class ResetPasswordComponent implements OnInit {
         },
         icon: 'error',
         title: 'Error!!',
-        text: 'System can not process your request due to token mismatch. Please try with valid link.'
+        text: 'Failed to process your request. Please try again with valid link.'
       })
-      return false;     
+      return false;
     }
-   
-    this.utilsService.processPostRequest('updatePassword',this.resetPasswordForm.value, true, environment.MESSGES['PASSWORD-UPDATED']).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      
+
+    this.utilsService.processPostRequest('updatePassword', this.resetPasswordForm.value, true, environment.MESSGES['PASSWORD-UPDATED']).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
       this.router.navigate(['/authorization/login']);
     })
   }

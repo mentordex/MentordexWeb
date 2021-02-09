@@ -82,11 +82,11 @@ export class BasicDetailsComponent implements OnInit {
   //initalize Basic Detailsform
   private initalizeBasicDetailsForm() {
     this.basicDetailsForm = this.formBuilder.group({
-      id: [''],
+      userID: [''],
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       phone: ['', Validators.required],
       gender: ['', Validators.required],
-      tags: new FormControl([{ value: '' }], Validators.compose([Validators.required, Validators.minLength(1)])),
+      primary_language: new FormControl([{ value: '' }], Validators.compose([Validators.required, Validators.minLength(1)])),
       dob: this.formBuilder.group({
         year: ['', Validators.required],
         month: ['', Validators.required],
@@ -108,13 +108,10 @@ export class BasicDetailsComponent implements OnInit {
 
   // URL Query Param
   private checkQueryParam() {
-
-    this.activatedRoute.params.subscribe((params) => {
-      this.id = params['id'];
-      this.getMentorDetailsByToken(params['id']);
-      this.basicDetailsForm.patchValue({
-        id: params['id']
-      });
+    this.id = localStorage.getItem('x-user-ID');
+    this.getMentorDetailsByToken(this.id);
+    this.basicDetailsForm.patchValue({
+      userID: this.id
     });
   }
 
@@ -126,8 +123,6 @@ export class BasicDetailsComponent implements OnInit {
       this.mentorDetails = response;
       //console.log(this.mentorDetails);
 
-
-      
 
       if (this.mentorDetails.country_id != '') {
         this.getStateListing(this.mentorDetails.country_id);
@@ -148,6 +143,12 @@ export class BasicDetailsComponent implements OnInit {
         state_id: this.mentorDetails.state_id,
         city_id: this.mentorDetails.city_id,
         zipcode: this.mentorDetails.zipcode,
+        gender: this.mentorDetails.gender ? this.mentorDetails.gender : '',
+        dob: this.mentorDetails.dob ? this.mentorDetails.dob : {},
+        primary_language: this.mentorDetails.primary_language ? this.mentorDetails.primary_language : new FormControl({value:''}),
+        address1: this.mentorDetails.address1 ? this.mentorDetails.address1 : '',
+        address2: this.mentorDetails.address2 ? this.mentorDetails.address2 : '',
+        social_links: this.mentorDetails.social_links ? this.mentorDetails.social_links: {},
       });
 
     })
@@ -156,8 +157,19 @@ export class BasicDetailsComponent implements OnInit {
   /**
    * on Submit Basic Details
   */
-  onSubmitBasicDetailsForm(): void {
+  onSubmitBasicDetailsForm() {
 
+    if (this.basicDetailsForm.invalid) {
+      this.isBasicDetailsFormSubmitted = true
+      return false;
+    }
+
+    //console.log('basicDetailsForm', this.basicDetailsForm.value);
+    this.utilsService.processPostRequest('updateBasicDetails', this.basicDetailsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      console.log(response);
+      //this.utilsService.onResponse('Your information updated successfully.', true);
+      this.router.navigate(['/mentor/skills']);
+    })
   }
 
   public get days() {

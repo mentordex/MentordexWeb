@@ -29,6 +29,7 @@ export class VerifyEmailComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit(): void {
+    this.utilsService.checkAndRedirect();
     this.checkQueryParam();
   }
 

@@ -23,13 +23,13 @@ const routes: Routes = [
     data: { title: 'Verify Email' }
   },
   {
-    path: 'basic-details/:id',
+    path: 'basic-details',
     component: BasicDetailsComponent,
     data: { title: 'Basic Details' }
   },
   {
-    path: 'skills/:id',
-    component: BasicDetailsComponent,
+    path: 'skills',
+    component: SkillsComponent,
     data: { title: 'Skills' }
   }
 

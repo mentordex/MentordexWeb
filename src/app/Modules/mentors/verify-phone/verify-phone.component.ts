@@ -30,6 +30,7 @@ export class VerifyPhoneComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit(): void {
+    this.utilsService.checkAndRedirect();
     this.initalizePhoneVerificationForm()
     this.checkQueryParam();
   }
@@ -88,11 +89,18 @@ export class VerifyPhoneComponent implements OnInit {
   /**
    * Phone Verification Submit
   */
-  onPhoneVerificationFormSubmit():void{
+  onPhoneVerificationFormSubmit(){
+
+    if (this.phoneVerificationForm.invalid) {
+      this.isPhoneVerificationFormSubmitted = true
+      return false;
+    }
+
     this.utilsService.processPostRequest('submitMentorPhoneVerification', { userID: this.id, phoneToken: this.phoneVerificationForm.controls.phone_token.value }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse(environment.MESSGES['PHONE-VERIFICATION-SUCCESS'], true);
       this.router.navigate(['/mentor/verification-success/' + this.id]);
     })
+    
   }
 
   //destroy all subscription

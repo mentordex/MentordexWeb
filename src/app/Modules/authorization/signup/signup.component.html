@@ -136,6 +136,7 @@
                                                         [preferredCountries]="preferredCountries"
                                                         [enableAutoCountrySelect]="false" 
                                                         [enablePlaceholder]="true" 
+                                                        [customPlaceholder]="'Mobile Number'" 
                                                         [searchCountryFlag]="true"
                                                         [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
                                                         [selectFirstCountry]="false" 
@@ -159,7 +160,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="country_id" #country (change)="getStateListing($event)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="country_id" #country (change)="getStateListing(country.value)" class="custom-select special--select special--inputs w-100">
                                                     <option disabled selected value="">Country</option>
                                                     <option *ngFor="let country of countries;" value="{{country._id}}">{{country.title}}</option>
                                                 </select>
@@ -171,7 +172,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="state_id" #state (change)="getCityListing($event)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="state_id" #state (change)="getCityListing(state.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">State</option>
                                                     <option *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
                                                 </select>
@@ -183,7 +184,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="city_id" #city (change)="getZipcodeListing($event)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="city_id" #city (change)="getZipcodeListing(city.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">City</option>
                                                     <option *ngFor="let city of cities;" value="{{city._id}}">{{city.title}}</option>
                                                 </select>
@@ -357,7 +358,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="mx-auto max-510">
-                                <p class="mobile-pagetop-heading mb-3 text-center">Welcome Parent Name!</p>
+                                <p class="mobile-pagetop-heading mb-3 text-center">Welcome {{parentDetails.first_name}} {{parentDetails.last_name}}!</p>
                                 <p class="mobile-pagetop-subheading mb-4 mb-md-5 d-block text-center">Please select from the following options so that we can curate your Mentordex feed to be personalized to your needs and specifications. </p>
                             </div>
                             <div class="bg-white p-md-60 mx-auto">
@@ -367,25 +368,25 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-md-4">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="lstate_id" #state (change)="getCity2Listing($event)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="state_id" #state (change)="getCityListing(state.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">State</option>
-                                                    <option *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
+                                                    <option [selected]="state._id == parentDetails.state_id" *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="lcity_id" #city (change)="getZipcode2Listing($event)" class="custom-select special--select special--inputs w-100">
+                                                <select formControlName="city_id" #city (change)="getZipcodeListing(city.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">City</option>
-                                                    <option *ngFor="let city of cities2;" value="{{city._id}}">{{city.title}}</option>
+                                                    <option [selected]="city._id == parentDetails.city_id" *ngFor="let city of cities;" value="{{city._id}}">{{city.title}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="lzipcode" class="custom-select special--select special--inputs w-100">
-                                                    <option selected value="">Zipcode</option>
-                                                    <option *ngFor="let zipcode of zipcodes2;" value="{{zipcode.value}}">{{zipcode.value}}</option>
+                                                <select formControlName="zipcode" class="custom-select special--select special--inputs w-100">
+                                                    <option value="">Zipcode</option>
+                                                    <option [selected]="zipcode.value == parentDetails.zipcode" *ngFor="let zipcode of zipcodes;" value="{{zipcode.value}}">{{zipcode.value}}</option>
                                                     
                                                 </select>
                                             </div>
@@ -403,7 +404,7 @@
                                                     <div class="single-form-row mb-4">
                                                         <select formControlName="category_id1" class="custom-select special--select special--inputs w-100" (change)="getSubcategory1Listing($event)">
                                                             <option selected value="">Select category 1</option>
-                                                            <option *ngFor="let category of categories;" value="{{category._id}}">{{category.title}}</option>
+                                                            <option *ngFor="let category of categories;" [attr.data-categoryName]="category.title" value="{{category._id}}">{{category.title}}</option>
                                                             
                                                         </select>
                                                         <p class="errorCls" *ngIf="signupStep3Form.controls.category_id1.touched || isSignupStep3FormSubmitted">
@@ -415,7 +416,7 @@
                                                     <div class="single-form-row mb-4">
                                                         <select (change)="getSubcategory2Listing($event)" formControlName="category_id2" class="custom-select special--select special--inputs w-100">
                                                             <option selected value="">Select category 2</option>
-                                                            <option *ngFor="let category of categories;" value="{{category._id}}">{{category.title}}</option>
+                                                            <option *ngFor="let category of categories;" [attr.data-categoryName]="category.title" value="{{category._id}}">{{category.title}}</option>
                                                             
                                                         </select>
                                                         <p class="errorCls" *ngIf="signupStep3Form.controls.category_id2.touched || isSignupStep3FormSubmitted">
@@ -427,7 +428,7 @@
                                                     <div class="single-form-row mb-4">
                                                         <select (change)="getSubcategory3Listing($event)" formControlName="category_id3" class="custom-select special--select special--inputs w-100">
                                                             <option selected value="">Select category 3</option>
-                                                            <option *ngFor="let category of categories;" value="{{category._id}}">{{category.title}}</option>
+                                                            <option *ngFor="let category of categories;" [attr.data-categoryName]="category.title" value="{{category._id}}">{{category.title}}</option>
                                                             
                                                         </select>
                                                         <p class="errorCls" *ngIf="signupStep3Form.controls.category_id3.touched || isSignupStep3FormSubmitted">
@@ -445,12 +446,12 @@
                                         <div *ngIf="subcategories1.length>0" class="col-12 mb-4 listing-category-modify">
                                             <div class="row">
                                                 <div class="col-lg-12 mb-4 mb-lg-0">
-                                                    <p class="subject-category-title mb-3">Subcategory 1</p>
+                                                    <p class="subject-category-title mb-3">{{selectedCategory1Name}}</p>
                                                     <div class="subject-category-box">
                                                         <ul>
                                                             <li *ngFor="let subcategory of subcategories1">
                                                                 <label class="mordern-radiobox-label">
-                                                                    <input type="radio" value="{{subcategory._id}}" (change)="selectSubcategory1($event)" name="dark">
+                                                                    <input type="radio" value="{{subcategory._id}}" (change)="selectSubcategory1($event)" name="subcategory_id1">
                                                                     <span class="design"></span>
                                                                     <span class="text">{{subcategory.title}}</span>
                                                                 </label>
@@ -465,12 +466,12 @@
                                         <div *ngIf="subcategories2.length>0" class="col-12 mb-4 listing-category-modify">
                                             <div class="row">
                                                 <div class="col-lg-12 mb-4 mb-lg-0">
-                                                    <p class="subject-category-title mb-3">Subcategory 2</p>
+                                                    <p class="subject-category-title mb-3">{{selectedCategory2Name}}</p>
                                                     <div class="subject-category-box">
                                                         <ul>
                                                             <li *ngFor="let subcategory of subcategories2">
                                                                 <label class="mordern-radiobox-label">
-                                                                    <input type="radio" value="{{subcategory._id}}" name="dark">
+                                                                    <input type="radio" value="{{subcategory._id}}" (change)="selectSubcategory2($event)" name="subcategory_id2">
                                                                     <span class="design"></span>
                                                                     <span class="text">{{subcategory.title}}</span>
                                                                 </label>
@@ -485,12 +486,12 @@
                                         <div *ngIf="subcategories3.length>0" class="col-12 mb-4 listing-category-modify">
                                             <div class="row">
                                                 <div class="col-lg-12 mb-4 mb-lg-0">
-                                                    <p class="subject-category-title mb-3">Subcategory 3</p>
+                                                    <p class="subject-category-title mb-3">{{selectedCategory3Name}}</p>
                                                     <div class="subject-category-box">
                                                         <ul>
                                                             <li *ngFor="let subcategory of subcategories3">
                                                                 <label class="mordern-radiobox-label">
-                                                                    <input type="radio" value="{{subcategory._id}}" name="dark">
+                                                                    <input type="radio" value="{{subcategory._id}}" (change)="selectSubcategory3($event)" name="subcategory_id3">
                                                                     <span class="design"></span>
                                                                     <span class="text">{{subcategory.title}}</span>
                                                                 </label>

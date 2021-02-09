@@ -172,28 +172,18 @@
 </div>
 <!--navbar ends-->
 
-
 <!--navbar starts-->
-<div *ngIf="isMentorPage" class="navbar-outer mobile-menu-bg">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <div class="logo-box text-center text-md-left mx-auto mx-md-0">
-                <a class="navbar-brand d-none d-md-block mr-0" href="#">
-                    <span class="sr-only">MentorDex</span>
-                    <svg width="111" height="15" viewBox="0 0 111 15" fill="none">
-                        <path d="M0.558594 0.445312H4.06862L8.41627 9.02095L12.724 0.445312H16.2141V14.4057H13.3822V4.97245L9.41343 12.9897H7.37922L3.39055 4.97245V14.4057H0.558594V0.445312Z" fill="#384047"/>
-                        <path d="M23.861 3.57642C25.5894 3.57642 26.899 4.075 27.7898 5.07217C28.6939 6.06933 29.146 7.45872 29.146 9.24033C29.146 9.55942 29.1393 9.80539 29.126 9.97823H21.4279C21.6007 10.6563 21.9331 11.1881 22.4251 11.5737C22.917 11.946 23.5087 12.1321 24.2 12.1321C24.7053 12.1321 25.1905 12.039 25.6559 11.8529C26.1212 11.6535 26.54 11.3676 26.9123 10.9953L28.5277 12.6307C27.9826 13.2423 27.3178 13.7143 26.5334 14.0467C25.7623 14.3658 24.898 14.5253 23.9408 14.5253C22.8106 14.5253 21.8201 14.2993 20.9692 13.8472C20.1316 13.3952 19.4801 12.757 19.0148 11.9327C18.5627 11.1084 18.3367 10.1577 18.3367 9.08078C18.3367 7.99054 18.5694 7.03326 19.0347 6.20894C19.5 5.37132 20.1515 4.72648 20.9891 4.27443C21.8268 3.80909 22.784 3.57642 23.861 3.57642ZM26.2542 8.16339C26.2276 7.45872 26.0016 6.89366 25.5761 6.4682C25.1507 6.04274 24.5856 5.83002 23.8809 5.83002C23.2161 5.83002 22.6577 6.04274 22.2057 6.4682C21.7669 6.88036 21.4877 7.44543 21.3681 8.16339H26.2542Z" fill="#384047"/>
-                        <path d="M37.9346 3.55647C39.1312 3.55647 40.0818 3.92875 40.7865 4.6733C41.5045 5.41785 41.8634 6.41502 41.8634 7.6648V14.4057H38.7922V8.56225C38.7922 7.88418 38.5994 7.35236 38.2138 6.96679C37.8415 6.56792 37.3296 6.36849 36.6782 6.36849C35.9203 6.38178 35.322 6.64769 34.8833 7.16622C34.4445 7.67145 34.2251 8.32293 34.2251 9.12067V14.4057H31.1539V3.67613H34.2251V5.55081C34.9697 4.24784 36.2062 3.58306 37.9346 3.55647Z" fill="#384047"/>
-                        <path d="M51.1555 13.8074C50.7566 14.0467 50.3112 14.2328 49.8193 14.3658C49.3406 14.4854 48.8553 14.5453 48.3634 14.5453C47.3662 14.5453 46.5552 14.2594 45.9303 13.6877C45.3054 13.116 44.993 12.2983 44.993 11.2347V6.26877H43.4972V4.15477H44.993V1.20316H48.0443V4.15477H50.956V6.28871H48.0443V10.7161C48.0443 11.5405 48.3701 11.9526 49.0215 11.9526C49.4736 11.9526 49.9722 11.8197 50.5173 11.5538L51.1555 13.8074Z" fill="#384047"/>
-                        <path d="M57.7742 3.57642C58.9043 3.57642 59.9015 3.80244 60.7657 4.25449C61.6432 4.70654 62.3213 5.34473 62.7999 6.16905C63.2785 6.99338 63.5178 7.95066 63.5178 9.04089C63.5178 10.1178 63.2785 11.0751 62.7999 11.9127C62.3213 12.7371 61.6432 13.3819 60.7657 13.8472C59.9015 14.2993 58.9043 14.5253 57.7742 14.5253C56.6307 14.5253 55.6203 14.2993 54.7428 13.8472C53.8786 13.3819 53.2071 12.7371 52.7285 11.9127C52.2499 11.0751 52.0105 10.1178 52.0105 9.04089C52.0105 7.95066 52.2499 6.99338 52.7285 6.16905C53.2071 5.34473 53.8786 4.70654 54.7428 4.25449C55.6203 3.80244 56.6307 3.57642 57.7742 3.57642ZM57.7742 6.12917C56.9764 6.12917 56.3249 6.40172 55.8197 6.94684C55.3278 7.49196 55.0818 8.20327 55.0818 9.08078C55.0818 9.95829 55.3278 10.6696 55.8197 11.2147C56.3249 11.7598 56.9764 12.0324 57.7742 12.0324C58.5586 12.0324 59.1968 11.7598 59.6887 11.2147C60.194 10.6696 60.4466 9.95829 60.4466 9.08078C60.4466 8.20327 60.194 7.49196 59.6887 6.94684C59.1968 6.40172 58.5586 6.12917 57.7742 6.12917Z" fill="#384047"/>
-                        <path d="M68.6196 5.61064C68.9919 4.94586 69.4772 4.44063 70.0755 4.09494C70.6738 3.74926 71.3718 3.56977 72.1695 3.55647V6.44826C72.0632 6.43496 71.9036 6.42832 71.6909 6.42832C70.7469 6.42832 69.9957 6.68758 69.4373 7.2061C68.8922 7.71134 68.6196 8.38941 68.6196 9.24033V14.4057H65.5483V3.67613H68.6196V5.61064Z" fill="#384047"/>
-                        <path d="M79.8281 0.445312C81.2507 0.445312 82.5204 0.744463 83.6373 1.34276C84.7541 1.92777 85.6183 2.75209 86.2299 3.81574C86.8548 4.86609 87.1672 6.06933 87.1672 7.42548C87.1672 8.78163 86.8481 9.99153 86.2099 11.0552C85.5851 12.1055 84.7076 12.9298 83.5774 13.5281C82.4473 14.1131 81.1576 14.4057 79.7084 14.4057H73.9049V0.445312H79.8281ZM79.9079 11.7532C80.679 11.7532 81.3704 11.5737 81.9819 11.2147C82.6068 10.8424 83.0921 10.3306 83.4378 9.67908C83.7835 9.0276 83.9563 8.28305 83.9563 7.44543C83.9563 6.60781 83.7702 5.85661 83.3979 5.19183C83.0389 4.52705 82.5404 4.01517 81.9022 3.65619C81.2773 3.28391 80.566 3.09778 79.7682 3.09778H77.0559V11.7532H79.9079Z" fill="#384047"/>
-                        <path d="M93.7795 3.57642C95.5079 3.57642 96.8176 4.075 97.7084 5.07217C98.6125 6.06933 99.0645 7.45872 99.0645 9.24033C99.0645 9.55942 99.0579 9.80539 99.0446 9.97823H91.3464C91.5193 10.6563 91.8517 11.1881 92.3436 11.5737C92.8355 11.946 93.4272 12.1321 94.1186 12.1321C94.6238 12.1321 95.1091 12.039 95.5744 11.8529C96.0398 11.6535 96.4586 11.3676 96.8309 10.9953L98.4463 12.6307C97.9012 13.2423 97.2364 13.7143 96.4519 14.0467C95.6808 14.3658 94.8166 14.5253 93.8593 14.5253C92.7292 14.5253 91.7387 14.2993 90.8877 13.8472C90.0501 13.3952 89.3986 12.757 88.9333 11.9327C88.4812 11.1084 88.2552 10.1577 88.2552 9.08078C88.2552 7.99054 88.4879 7.03326 88.9532 6.20894C89.4186 5.37132 90.0701 4.72648 90.9077 4.27443C91.7453 3.80909 92.7026 3.57642 93.7795 3.57642ZM96.1727 8.16339C96.1461 7.45872 95.9201 6.89366 95.4947 6.4682C95.0692 6.04274 94.5041 5.83002 93.7995 5.83002C93.1347 5.83002 92.5763 6.04274 92.1242 6.4682C91.6855 6.88036 91.4063 7.44543 91.2866 8.16339H96.1727Z" fill="#384047"/>
-                        <path d="M99.3917 3.67613H102.902L104.876 6.9269L106.97 3.67613H110.321L106.91 8.90129L110.56 14.4057H107.03L104.876 10.8956L102.523 14.4057H99.1324L102.842 8.92123L99.3917 3.67613Z" fill="#384047"/>
-                    </svg>
-                </a>
-                <a class="navbar-brand d-md-none mr-0" href="#">
-                    <svg width="111" height="15" viewBox="0 0 111 15" fill="none">
+<ng-container *ngIf="isMentorPage">
+    <div class="navbar-outer mobile-menu-bg">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <div class="logo-box text-center text-md-left mx-auto mx-md-0">
+                    <a class="navbar-brand d-none d-md-block mr-0" href="#">
+                        <span class="sr-only">MentorDex</span>
+                        <img class="img-fluid" src="assets/img/mentordex-main-logo.svg" alt="mentordex-main-logo">
+                    </a>
+                    <a class="navbar-brand d-md-none mr-0" href="#">
+                        <svg width="111" height="15" viewBox="0 0 111 15" fill="none">
                         <path d="M0.693359 0.208984H4.20339L8.55103 8.78462L12.8588 0.208984H16.3489V14.1693H13.5169V4.73612L9.5482 12.7533H7.51398L3.52531 4.73612V14.1693H0.693359V0.208984Z" fill="#65B67C"/>
                         <path d="M23.9958 3.34009C25.7242 3.34009 27.0338 3.83867 27.9246 4.83584C28.8287 5.83301 29.2807 7.22239 29.2807 9.004C29.2807 9.32309 29.2741 9.56906 29.2608 9.7419H21.5627C21.7355 10.42 22.0679 10.9518 22.5598 11.3374C23.0518 11.7096 23.6434 11.8958 24.3348 11.8958C24.84 11.8958 25.3253 11.8027 25.7906 11.6166C26.256 11.4171 26.6748 11.1313 27.0471 10.759L28.6625 12.3944C28.1174 13.006 27.4526 13.478 26.6682 13.8103C25.897 14.1294 25.0328 14.289 24.0755 14.289C22.9454 14.289 21.9549 14.063 21.104 13.6109C20.2663 13.1589 19.6149 12.5207 19.1495 11.6964C18.6975 10.872 18.4714 9.92139 18.4714 8.84445C18.4714 7.75422 18.7041 6.79694 19.1695 5.97261C19.6348 5.13499 20.2863 4.49016 21.1239 4.03811C21.9615 3.57276 22.9188 3.34009 23.9958 3.34009ZM26.389 7.92706C26.3624 7.22239 26.1363 6.65733 25.7109 6.23187C25.2854 5.80642 24.7204 5.59369 24.0157 5.59369C23.3509 5.59369 22.7925 5.80642 22.3405 6.23187C21.9017 6.64404 21.6225 7.2091 21.5028 7.92706H26.389Z" fill="#65B67C"/>
                         <path d="M38.0694 3.32015C39.266 3.32015 40.2166 3.69242 40.9213 4.43697C41.6392 5.18152 41.9982 6.17869 41.9982 7.42847V14.1693H38.9269V8.32592C38.9269 7.64785 38.7341 7.11603 38.3486 6.73046C37.9763 6.33159 37.4644 6.13216 36.8129 6.13216C36.0551 6.14545 35.4568 6.41136 35.018 6.92989C34.5793 7.43512 34.3599 8.0866 34.3599 8.88434V14.1693H31.2886V3.43981H34.3599V5.31448C35.1045 4.01152 36.3409 3.34674 38.0694 3.32015Z" fill="#65B67C"/>
@@ -204,22 +194,26 @@
                         <path d="M93.9142 3.34009C95.6426 3.34009 96.9522 3.83867 97.843 4.83584C98.7471 5.83301 99.1992 7.22239 99.1992 9.004C99.1992 9.32309 99.1925 9.56906 99.1792 9.7419H91.4811C91.6539 10.42 91.9863 10.9518 92.4783 11.3374C92.9702 11.7096 93.5618 11.8958 94.2532 11.8958C94.7585 11.8958 95.2437 11.8027 95.7091 11.6166C96.1744 11.4171 96.5932 11.1313 96.9655 10.759L98.5809 12.3944C98.0358 13.006 97.371 13.478 96.5866 13.8103C95.8154 14.1294 94.9512 14.289 93.9939 14.289C92.8638 14.289 91.8733 14.063 91.0224 13.6109C90.1848 13.1589 89.5333 12.5207 89.0679 11.6964C88.6159 10.872 88.3899 9.92139 88.3899 8.84445C88.3899 7.75422 88.6226 6.79694 89.0879 5.97261C89.5532 5.13499 90.2047 4.49016 91.0423 4.03811C91.88 3.57276 92.8372 3.34009 93.9142 3.34009ZM96.3074 7.92706C96.2808 7.22239 96.0548 6.65733 95.6293 6.23187C95.2038 5.80642 94.6388 5.59369 93.9341 5.59369C93.2694 5.59369 92.7109 5.80642 92.2589 6.23187C91.8201 6.64404 91.5409 7.2091 91.4213 7.92706H96.3074Z" fill="white"/>
                         <path d="M99.5264 3.43981H103.036L105.011 6.69057L107.105 3.43981H110.455L107.045 8.66496L110.695 14.1693H107.165L105.011 10.6593L102.657 14.1693H99.2671L102.977 8.68491L99.5264 3.43981Z" fill="white"/>
                         </svg>
-                    <span class="sr-only">mobile-logo</span>
-                </a>
-            </div>
-            <div class="mx-auto d-none d-md-block ml-100cent">
-                <p class="navlogin--title">MENTOR</p>
-            </div>
-            <div class="d-none">
-                <div class="center-flex">
-                    <div class="new-mentordex-txt flex-shrink-0 mr-4">New to MentorDex</div>
-                    <a class="alt--button font-w-500 py-2" href="#">LOG IN</a>
+                        <span class="sr-only">mobile-logo</span>
+                    </a>
                 </div>
+                <div class="mx-auto d-none d-md-block ml-100cent">
+                    <p class="navlogin--title">MENTOR</p>
+                </div>
+                <ng-container *ngIf="isLoggedin">
+                    <div class="d-none d-md-block">
+                        <div class="center-flex">
+                            <div class="new-mentordex-txt flex-shrink-0 mr-3 mr-xl-4">Signed in as <span>Mentor name</span></div>
+                            <a class="alt--button font-w-500 py-2" href="javascript:void(0)" (click)="logout()">LOG OUT</a>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
-        </div>
-    </nav>
-</div>
+        </nav>
+    </div>
+</ng-container>
 <!--navbar ends-->
+
 
 <!--navbar starts-->
 <div *ngIf="isParentPage" class="navbar-outer">
@@ -227,12 +221,12 @@
         <div class="container">
             <a class="navbar-brand order-lg-1" href="#">
                 <span class="sr-only">MentorDex</span>
-                <img class="img-fluid" src="assets/img/mentordex-main-logo.svg" alt="mentordex-main-logo">                     
+                <img class="img-fluid" src="assets/img/mentordex-main-logo.svg" alt="mentordex-main-logo">
             </a>
             <div class="ml-auto ml-lg-4 ml-xl-35 order-lg-3 md-profile">
                 <div class="d-flex align-items-center">
                     <div class="notification btn-cs-nav-dropdown">
-                        <button class="position-relative" dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                        <button class="position-relative" dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <span>
                               <svg width="25" height="29" viewBox="0 0 25 29" fill="none">
                                   <path d="M0.799805 19.8999H24.1998M3.4998 19.8999V10.8999C3.4998 5.92934 7.52924 1.8999 12.4998 1.8999C17.4704 1.8999 21.4998 5.92934 21.4998 10.8999V19.8999M8.8998 22.5999V23.4999C8.8998 25.4881 10.5116 27.0999 12.4998 27.0999C14.488 27.0999 16.0998 25.4881 16.0998 23.4999V22.5999" stroke="#3BB3BD" stroke-width="2"/>
@@ -241,58 +235,58 @@
                           <span class="notication-color"></span>
                         </button>
                         <ul class="list-unstyled mb-0 suggetion-dropdown dropdown-menu" role="listbox">
-                          <li role="presentation">
-                              <a role="option" class="nav-search-anchor">
-                                  <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                            <li role="presentation">
+                                <a role="option" class="nav-search-anchor">
+                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
                                     <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span> 
-                                  <span class="nav-search-catalog-option">
+                                  </span>
+                                    <span class="nav-search-catalog-option">
                                   Notification Title
                                   </span>
-                                  <span class="nav-search-catalog-query-type">
+                                    <span class="nav-search-catalog-query-type">
                                   Notification Description
                                   </span>
-                              </a>
-                          </li>
-                          <li role="presentation">
-                              <a role="option" class="nav-search-anchor">
-                                  <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="option" class="nav-search-anchor">
+                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
                                     <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span> 
-                                  <span class="nav-search-catalog-option">
+                                  </span>
+                                    <span class="nav-search-catalog-option">
                                     Notification Title
                                   </span>
-                                  <span class="nav-search-catalog-query-type">
+                                    <span class="nav-search-catalog-query-type">
                                     Notification Description
                                   </span>
-                              </a>
-                          </li>
-                          <li role="presentation">
-                              <a role="option" class="nav-search-anchor">
-                                  <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="option" class="nav-search-anchor">
+                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
                                     <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span> 
-                                  <span class="nav-search-catalog-option">
+                                  </span>
+                                    <span class="nav-search-catalog-option">
                                     Notification Title
                                   </span>
-                                  <span class="nav-search-catalog-query-type">
+                                    <span class="nav-search-catalog-query-type">
                                     Notification Description
                                   </span>
-                              </a>
-                          </li>
-                          <li role="presentation">
-                              <a role="option" class="nav-search-anchor">
-                                  <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="option" class="nav-search-anchor">
+                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
                                     <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span> 
-                                  <span class="nav-search-catalog-option">
+                                  </span>
+                                    <span class="nav-search-catalog-option">
                                     Notification Title
                                   </span>
-                                  <span class="nav-search-catalog-query-type">
+                                    <span class="nav-search-catalog-query-type">
                                     Notification Description
                                   </span>
-                              </a>
-                          </li>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <span class="mx-2 mx-lg-3">
@@ -301,7 +295,7 @@
                       </svg>                        
                     </span>
                     <div class="btn-cs-nav-dropdown">
-                      <button dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                        <button dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <span>
                               <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
                                   <path d="M10 11C10 8.23858 12.2386 6 15 6C17.7614 6 20 8.23858 20 11C20 13.7614 17.7614 16 15 16C12.2386 16 10 13.7614 10 11Z" fill="#3BB3BD"/>
@@ -358,95 +352,95 @@
                 </span>
             </button>
             <div class="collapse navbar-collapse order-lg-2" id="navbarSupportedContent">
-              <ul class="navbar-nav align-items-center ml-lg-auto">
-                <li class="nav-item">
-                    <div class="max-270 position-relative dropdown">
-                        <button class="search--btn" type="submit">
+                <ul class="navbar-nav align-items-center ml-lg-auto">
+                    <li class="nav-item">
+                        <div class="max-270 position-relative dropdown">
+                            <button class="search--btn" type="submit">
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                             <path d="M7.875 14.625C11.6029 14.625 14.625 11.6029 14.625 7.875C14.625 4.14708 11.6029 1.125 7.875 1.125C4.14708 1.125 1.125 4.14708 1.125 7.875C1.125 11.6029 4.14708 14.625 7.875 14.625Z" stroke="#3BB3BD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M12.9375 12.9375L16.875 16.875" stroke="#3BB3BD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </button>
-                        <button dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop--btn" type="submit">
+                            <button dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop--btn" type="submit">
                             <svg style="margin-left:0px;" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.80005 11.2666L13 16.4666L18.2 11.2666" stroke="#3BB3BD" stroke-width="1.5" stroke-linecap="square"/>
                             </svg>
                         </button>
-                        <input dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="search" class="navbar-serach-input w-100" placeholder="Search jobs">
-                        <ul class="list-unstyled mb-0 suggetion-dropdown dropdown-menu" role="listbox">
-                            <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
-                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                            <input dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="search" class="navbar-serach-input w-100" placeholder="Search jobs">
+                            <ul class="list-unstyled mb-0 suggetion-dropdown dropdown-menu" role="listbox">
+                                <li role="presentation">
+                                    <a role="option" class="nav-search-anchor">
+                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" aria-hidden="true" role="img"><path d="M7 8c-3.314 0-6 1.85-6 3.297v2.027c0 .373.358.676.8.676h10.4c.442 0 .8-.303.8-.676v-2.027C13 9.85 10.314 8 7 8zm3-5a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
-                                    </span> 
-                                    <span class="nav-search-catalog-option">
+                                    </span>
+                                        <span class="nav-search-catalog-option">
                                     Talent
                                     </span>
-                                    <span class="nav-search-catalog-query-type">
+                                        <span class="nav-search-catalog-query-type">
                                      Hire professionals and agencies
                                     </span>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
-                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="option" class="nav-search-anchor">
+                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" aria-hidden="true" role="img"><path d="M7 8c-3.314 0-6 1.85-6 3.297v2.027c0 .373.358.676.8.676h10.4c.442 0 .8-.303.8-.676v-2.027C13 9.85 10.314 8 7 8zm3-5a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
-                                    </span> 
-                                    <span class="nav-search-catalog-option">
+                                    </span>
+                                        <span class="nav-search-catalog-option">
                                     Talent
                                     </span>
-                                    <span class="nav-search-catalog-query-type">
+                                        <span class="nav-search-catalog-query-type">
                                      Hire professionals and agencies
                                     </span>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
-                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="option" class="nav-search-anchor">
+                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" aria-hidden="true" role="img"><path d="M7 8c-3.314 0-6 1.85-6 3.297v2.027c0 .373.358.676.8.676h10.4c.442 0 .8-.303.8-.676v-2.027C13 9.85 10.314 8 7 8zm3-5a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
-                                    </span> 
-                                    <span class="nav-search-catalog-option">
+                                    </span>
+                                        <span class="nav-search-catalog-option">
                                     Talent
                                     </span>
-                                    <span class="nav-search-catalog-query-type">
+                                        <span class="nav-search-catalog-query-type">
                                      Hire professionals and agencies
                                     </span>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
-                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="option" class="nav-search-anchor">
+                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" aria-hidden="true" role="img"><path d="M7 8c-3.314 0-6 1.85-6 3.297v2.027c0 .373.358.676.8.676h10.4c.442 0 .8-.303.8-.676v-2.027C13 9.85 10.314 8 7 8zm3-5a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
-                                    </span> 
-                                    <span class="nav-search-catalog-option">
+                                    </span>
+                                        <span class="nav-search-catalog-option">
                                     Talent
                                     </span>
-                                    <span class="nav-search-catalog-query-type">
+                                        <span class="nav-search-catalog-query-type">
                                      Hire professionals and agencies
                                     </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-              </ul>
-              <ul class="navbar-nav align-items-center ml-lg-4 ml-xl-35">
-                <li class="nav-item">
-                  <a class="nav-link scoll--link" routerLink="parent/dashboard">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link scoll--link" href="javascript:void(0)">MY MENTORS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link scoll--link" href="javascript:void(0)">MESSAGES</a>
-                </li>
-              </ul>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav align-items-center ml-lg-4 ml-xl-35">
+                    <li class="nav-item">
+                        <a class="nav-link scoll--link" routerLink="parent/dashboard">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link scoll--link" href="javascript:void(0)">MY MENTORS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link scoll--link" href="javascript:void(0)">MESSAGES</a>
+                    </li>
+                </ul>
             </div>
         </div>
-      </nav>
+    </nav>
 </div>
 <!--navbar ends-->

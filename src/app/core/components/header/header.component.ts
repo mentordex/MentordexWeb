@@ -27,23 +27,36 @@ export class HeaderComponent implements OnInit {
   isMentorPage: boolean = false
   isParentPage: boolean = false
   isLoggedin: boolean = false
-  loginSubscription
-  loginType:String =''
+  loginSubscription: Subscription;
+  loginType: String = ''
   title = '';
+
   constructor(private zone: NgZone, private router: Router, private authService: AuthService, private utilsService: UtilsService) {
 
-    //login subscription
-    this.loginSubscription = this.authService.checkLoggedinStatus().subscribe((loginStatus) => {
-       
-  
-      if (localStorage.getItem(environment.TOKEN_NAME)) {
-        this.loginType = localStorage.getItem('x-user-type')
-        this.isLoggedin = true;
-      } else {
-        this.isLoggedin = false;
-      }
-      
-    });
+    //Check Logged In Status
+    
+
+      this.loginSubscription = this.authService.checkLoggedinStatus().subscribe((loginStatus) => {
+
+        //console.log('loginStatus', loginStatus)
+
+        if (localStorage.getItem(environment.TOKEN_NAME)) {
+
+          this.loginType = localStorage.getItem('x-user-type');
+          this.isLoggedin = true;
+
+        } else {
+
+          this.isLoggedin = false;
+
+        }
+
+        //console.log('loggedIn', this.isLoggedin)
+
+      });
+    
+
+
 
     this.loginSubscription = router.events.subscribe((event) => {
 
@@ -52,7 +65,7 @@ export class HeaderComponent implements OnInit {
 
         if (localStorage.getItem(environment.TOKEN_NAME)) {
           this.loginType = localStorage.getItem('x-user-type')
-          this.isLoggedin = true;
+          this.isLoggedin = true; // check 
           this.zone.run(() => {
             this.isHomePage = false
             this.isLoginPage = true
@@ -67,8 +80,7 @@ export class HeaderComponent implements OnInit {
 
       //check the page url and change title/name on routed page
       if (event instanceof NavigationEnd) {
-        //this.currentUrl = event.url;
-        console.log('url', event.url)
+
         if (event.url == '/' || event.url == '/home' || (event.url).includes('quick-links')) {
           //console.log('home');
           this.zone.run(() => {
@@ -79,6 +91,7 @@ export class HeaderComponent implements OnInit {
           });
 
         } else if ((event.url).includes('mentor')) {
+
           this.zone.run(() => {
             this.isHomePage = false
             this.isLoginPage = false
@@ -94,14 +107,14 @@ export class HeaderComponent implements OnInit {
           if ((event.url).includes('verify-email'))
             this.title = 'Verify Email'
 
-        }else if ((event.url).includes('parent')) {
+        } else if ((event.url).includes('parent')) {
           this.zone.run(() => {
             this.isHomePage = false
             this.isLoginPage = false
             this.isMentorPage = false
             this.isParentPage = true
           });
-          this.title = 'Parent Login';       
+          this.title = 'Parent Login';
 
         } else if ((event.url).includes('authorization')) {
 
@@ -141,7 +154,7 @@ export class HeaderComponent implements OnInit {
   logout() {
     Swal.fire({
       title: 'Are you sure?',
-      text: 'Your session will be end and redirect to home page!',
+      text: '',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, logout me!',

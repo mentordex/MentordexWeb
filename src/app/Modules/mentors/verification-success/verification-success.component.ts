@@ -28,6 +28,7 @@ export class VerificationSuccessComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit(): void {
+    this.utilsService.checkAndRedirect();
     this.checkQueryParam();
   }
 
@@ -52,8 +53,16 @@ export class VerificationSuccessComponent implements OnInit {
   /**
    * Complete Your Application Submit
   */
-  onCompleteApplicationSubmit(): void {
-    this.router.navigate(['/mentor/basic-details/' + this.id]);
+  onCompleteYourApplication(): void {
+
+    this.authService.onCompleteYourApplication({ userID: this.id }).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      localStorage.setItem('x-user-ID', response.body._id)
+      localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))
+      localStorage.setItem('x-user-type', response.body.role)
+      this.router.navigate(['/mentor/basic-details/']);
+    })
+
+    
     //this.router.navigate(['/authorization']);
   }
 

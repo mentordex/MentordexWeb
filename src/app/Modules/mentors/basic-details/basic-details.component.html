@@ -110,7 +110,7 @@
                                     </div>
                                     <div class="col-12 mb-4">
                                         <div class="d-block">
-                                            <label for="" class="profile-label-text">Mobile Number</label>
+                                            <label for="" class="profile-label-text">Gender</label>
                                         </div>
                                         <label class="mordern-radiobox-label my-0">
                                             <input type="radio" value="MALE" formControlName="gender" name="gender">
@@ -133,15 +133,15 @@
                                                 <div class="d-block">
                                                     <label for="" class="profile-label-text">Primary Language</label>
 
-                                                    <tagify name="tags" formControlName="tags"></tagify>
+                                                    <tagify name="primary_language" formControlName="primary_language"></tagify>
 
-                                                    <p class="errorCls" *ngIf="basicDetailsForm.controls.tags.invalid">
+                                                    <p class="errorCls" *ngIf="basicDetailsForm.controls.primary_language.invalid">
                                                         <span>Primary Language is required.</span>
                                                     </p>
 
-                                                    <p class="errorCls" *ngIf="basicDetailsForm.controls.tags.touched || isBasicDetailsFormSubmitted">
-                                                        <app-form-validation-errors errorPrefix="Gender " [errors]="basicDetailsForm.get('tags').errors"></app-form-validation-errors>
-                                                    </p>
+                                                    <!--p class="errorCls" *ngIf="basicDetailsForm.controls.primary_language.touched || isBasicDetailsFormSubmitted">
+                                                        <app-form-validation-errors errorPrefix="Gender " [errors]="basicDetailsForm.get('primary_language').errors"></app-form-validation-errors>
+                                                    </p-->
                                                 </div>
                                             </div>
                                         </div>

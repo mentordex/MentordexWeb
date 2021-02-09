@@ -7,21 +7,21 @@
                 <div class="login-boxouter bg-white mx-auto">
                     <p class="mobile-pagetop-heading d-md-none mb-3 mb-md-4 text-center">LOG IN</p>
                     <p class="mobile-pagetop-subheading mb-4 mb-md-5 d-block text-center">Please enter the email address and password you used when signing up to access your dashboard. </p>
-                    
+
                     <div class="forms">
-                        <form  [formGroup]="emailForm" (ngSubmit)="onEmailFormSubmit()">
+                        <form [formGroup]="emailForm" (ngSubmit)="onEmailFormSubmit()">
                             <div class="single-form-row mb-35">
-                                <input type="text" class="special--inputs swap-email w-100" formControlName="email"  placeholder="Enter your registered email address or mobile number">
-                                <p class="errorCls"  *ngIf="emailForm.controls.email.touched || isEmailFormSubmitted">
-                                    <app-form-validation-errors errorPrefix="Email/Mobile number " [errors]="emailForm.get('email').errors"></app-form-validation-errors>
+                                <input type="text" class="special--inputs swap-email w-100" formControlName="email" placeholder="Enter your registered email address">
+                                <p class="errorCls" *ngIf="emailForm.controls.email.touched || isEmailFormSubmitted">
+                                    <app-form-validation-errors patternError="Enter valid email address." errorPrefix="Email " [errors]="emailForm.get('email').errors"></app-form-validation-errors>
                                 </p>
 
-                                
+
                             </div>
-                            <div class="single-form-row">                                    
-                                <button [disabled]="emailForm.invalid"  class="primary--button w-100 py-md-3">Continue</button> 
+                            <div class="single-form-row">
+                                <button [disabled]="emailForm.invalid" class="primary--button w-100 py-md-3">Continue</button>
                             </div>
-                        
+
                         </form>
                         <div class="or-separator">
                             <span>OR</span>
@@ -54,12 +54,12 @@
                             </button>
                         </div>
                     </div>
-                    <div class="d-md-none mt-5">                        
+                    <div class="d-md-none mt-5">
                         <div class="or-separator my-3 sudo-width">
                             <span class="new-mentordex-txt">New to MentorDex</span>
                         </div>
                         <div class="text-center">
-                            <a href="#" class="alt--button font-w-500 py-2">SIGN UP</a>
+                            <a routerLink="/authorization/signup" class="alt--button font-w-500 py-2">SIGN UP</a>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,8 @@
 
 
 <!--password form starts-->
-<form *ngIf="isEmailValidated">
+<ng-container *ngIf="isEmailValidated">
+
     <section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
         <div class="container">
             <div class="row">
@@ -80,32 +81,32 @@
                         <p class="mobile-pagetop-heading mb-2 text-center welcomnote-small">Welcome! Let’s get to work.</p>
                         <p class="mobile-pagetop-subheading mb-4 mb-md-5 d-block text-center">{{authorizedEmail}}</p>
                         <div class="forms">
-                            <form  [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
+                            <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
                                 <div class="single-form-row mb-2">
-                                    <input type="password" class="special--inputs w-100" formControlName="password"  placeholder="Enter your password">
-                                    <p class="errorCls"  *ngIf="loginForm.controls.password.touched || isLoginFormSubmitted">
+                                    <input type="password" class="special--inputs w-100" formControlName="password" placeholder="Enter your password">
+                                    <p class="errorCls" *ngIf="loginForm.controls.password.touched || isLoginFormSubmitted">
                                         <app-form-validation-errors errorPrefix="Password " [errors]="loginForm.get('password').errors"></app-form-validation-errors>
-                                    </p>                                   
+                                    </p>
                                 </div>
                                 <div class="text-right mb-35">
                                     <a routerLink="/authorization/forgot-password" class="new-mentordex-txt hovernone">Forgot Password?</a>
                                 </div>
                                 <div class="single-form-row mb-35">
-                                    <button  [disabled]="loginForm.invalid" class="primary--button w-100 py-md-3">LOG IN</button>
-                                    
+                                    <button [disabled]="loginForm.invalid" class="primary--button w-100 py-md-3">LOG IN</button>
+
                                 </div>
                                 <div class="text-center">
-                                    <a href="#" class="new-mentordex-txt hovernone">Not You?</a>
+                                    <a href="javascript:void(0)" (click)="isEmailValidated = false" class="new-mentordex-txt hovernone">Not You?</a>
                                 </div>
                             </form>
                         </div>
                         <div class="d-md-none mt-5">
-                            
+
                             <div class="or-separator my-3 sudo-width">
                                 <span class="new-mentordex-txt">New to MentorDex</span>
                             </div>
                             <div class="text-center">
-                                <a href="#" class="alt--button font-w-500 py-2">SIGN UP</a>
+                                <a routerLink="/authorization/signup" class="alt--button font-w-500 py-2">SIGN UP</a>
                             </div>
                         </div>
                     </div>
@@ -113,7 +114,5 @@
             </div>
         </div>
     </section>
-</form>
 
-
-
+</ng-container>

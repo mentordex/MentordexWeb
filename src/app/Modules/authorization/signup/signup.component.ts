@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
@@ -55,9 +55,16 @@ export class SignupComponent implements OnInit {
   subcategories2: any = [];
   subcategories3: any = [];
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
+  selectedCategory1Name: any = '';
+  selectedCategory2Name: any = '';
+  selectedCategory3Name: any = '';
+
+  parentDetails: any = {};
+
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit(): void {
+    this.utilsService.checkAndRedirect();
     this.initalizeSignupStep1Form()
     this.initalizeSignupStep2Form()
     this.initalizeSignupStep3Form()
@@ -115,11 +122,11 @@ export class SignupComponent implements OnInit {
   //initalize Step 3 form
   private initalizeSignupStep3Form() {
     this.signupStep3Form = this.formBuilder.group({
-      lcountry_id: [this.signupStep2Form.get('country_id').value],
       user_id: [''],
-      lstate_id: [''],
-      lcity_id: [''],
-      lzipcode: [''],
+      country_id: [''],
+      state_id: [{ value: '' }],
+      city_id: [{ value: '' }],
+      zipcode: [{ value: '' }],
       category_id1: [''],
       subcategory_id1: [''],
       category_id2: [''],
@@ -158,7 +165,7 @@ export class SignupComponent implements OnInit {
 
     // Check Email Exists or not
     this.utilsService.processPostRequest('checkEmailExists', this.signupStep1Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log('response', response);
+      //console.log('response', response);
       this.getEmailValue = this.signupStep1Form.controls.email.value;
       this.signupStep2Form.patchValue({
         email: this.signupStep1Form.controls.email.value
@@ -188,22 +195,43 @@ export class SignupComponent implements OnInit {
 
     this.utilsService.processSignupRequest('signup', this.signupStep2Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log('response', response);
-      
-      if (this.signupStep2Form.get('role').value == 'PARENT') {          
-    
+
+      if (this.signupStep2Form.get('role').value == 'PARENT') {
+
+        this.parentDetails = response.body;
+
+        //console.log(this.parentDetails);
+
         this.getCategoryListing(); // get Category Listing
+
+        if (this.parentDetails.country_id != '') {
+          this.getStateListing(this.parentDetails.country_id);
+        }
+
+        if (this.parentDetails.state_id != '') {
+          this.getCityListing(this.parentDetails.state_id);
+        }
+
+        if (this.parentDetails.city_id != '') {
+          this.getZipcodeListing(this.parentDetails.city_id);
+        }
 
         this.signupStep3Form.patchValue({
           user_id: response.body['_id'],
-          lcountry_id: this.signupStep2Form.controls.country_id.value
+          country_id: this.parentDetails.country_id,
+          state_id: this.parentDetails.state_id,
+          city_id: this.parentDetails.city_id,
+          zipcode: this.parentDetails.zipcode,
         });
 
 
-        localStorage.setItem('x-user-ID', response.body['_id'])
-        localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))
+        localStorage.setItem('x-user-ID', response.body['_id']);
+        localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME));
+        localStorage.setItem('x-user-type', 'PARENT');
 
-        this.authService.isLoggedIn(true); // Parent Login
-        localStorage.setItem('x-user-type', 'PARENT')
+        this.zone.run(() => {
+          this.authService.isLoggedIn(true); // Parent Login
+        });
 
         //this.utilsService.onResponse(environment.MESSGES['PARENT-REGISTERED-SUCCESSFULLY'], true);
         this.wizard.goToNextStep();
@@ -222,9 +250,7 @@ export class SignupComponent implements OnInit {
   onSignupStep3FormSubmit() {
 
     this.utilsService.processPostRequest('updateParentInfo', this.signupStep3Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      //console.log('response', response);
-
-      this.utilsService.onResponse('Information updated', true);
+      this.utilsService.onResponse('Your information updated successfully.', true);
       this.router.navigate(['/parent/dashboard']);
     })
   }
@@ -245,12 +271,16 @@ export class SignupComponent implements OnInit {
    */
   getSubcategory1Listing(event) {
     let categoryID = event.target.value
+    
     this.subcategories1 = []
     this.signupStep3Form.patchValue({
       subcategory_id1: ''
     });
 
     if (categoryID) {
+
+      this.selectedCategory1Name = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
+
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
         this.subcategories1 = response;
       })
@@ -265,6 +295,8 @@ export class SignupComponent implements OnInit {
       subcategory_id2: ''
     });
     if (categoryID) {
+
+      this.selectedCategory2Name = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
         this.subcategories2 = response;
       })
@@ -279,6 +311,8 @@ export class SignupComponent implements OnInit {
       subcategory_id3: ''
     });
     if (categoryID) {
+      this.selectedCategory3Name = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
+
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
         this.subcategories3 = response;
       })
@@ -300,8 +334,8 @@ export class SignupComponent implements OnInit {
   /**
    * get All States
    */
-  getStateListing(event) {
-    let countryId = event.target.value
+  getStateListing(countryId) {
+    //let countryId = event.target.value
     this.resetAllControls('state');
 
 
@@ -325,9 +359,9 @@ export class SignupComponent implements OnInit {
   /**
    * get All Cities
    */
-  getCityListing(event) {
+  getCityListing(stateId) {
 
-    let stateId = event.target.value
+    //let stateId = event.target.value
     this.resetAllControls('city');
     // check State ID Empty or not
     if (stateId == '') {
@@ -411,8 +445,8 @@ export class SignupComponent implements OnInit {
   /**
    * get All Cities
    */
-  getZipcodeListing(event) {
-    let cityId = event.target.value
+  getZipcodeListing(cityId) {
+    //let cityId = event.target.value
     this.resetZipcodeControl();
 
 
