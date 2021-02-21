@@ -20,7 +20,7 @@ import Swal from 'sweetalert2'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private onDestroy$: Subject<void> = new Subject<void>();  
+  private onDestroy$: Subject<void> = new Subject<void>();
   isHomePage: boolean = false
   isLoginPage: boolean = false
   isMentorPage: boolean = false
@@ -105,8 +105,13 @@ export class HeaderComponent implements OnInit {
           if ((event.url).includes('login'))
             this.title = 'Login'
 
-          if ((event.url).includes('forgot-password'))
+          if ((event.url).includes('forgot-password')) {
+            this.zone.run(() => {
+              this.isLoginPage = false
+            });
             this.title = 'Forgot Password'
+          }
+
 
           if ((event.url).includes('signup'))
             this.title = 'Signup'
@@ -120,7 +125,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  fetchUserInfo(userID){
+  fetchUserInfo(userID) {
     this.utilsService.processPostRequest('getMentorDetails', { userID: userID }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.userInfo = response;
     })
@@ -135,12 +140,12 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you sure, you want to logout?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, logout me!',
-      cancelButtonText: 'No, keep it'
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
         this.loginType = ''

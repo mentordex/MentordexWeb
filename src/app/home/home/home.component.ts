@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Router } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -9,6 +9,8 @@ import { AuthService, UtilsService } from '../../core/services';
 //import enviornment
 import { environment } from '../../../environments/environment';
 
+import { SlickCarouselComponent } from 'ngx-slick-carousel';
+
 declare var $;
 
 @Component({
@@ -17,10 +19,78 @@ declare var $;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  @ViewChild('slickModal', {static: true}) slickModal: SlickCarouselComponent;
+  @ViewChild('testimonialsModal', {static: true}) testimonialsModal: SlickCarouselComponent;
+  @ViewChild('blogsModal', {static: true}) blogsModal: SlickCarouselComponent;
+
+
+
   private onDestroy$: Subject<void> = new Subject<void>();
-  categories:any = []
-  blogs:any = []
-  faqs:any = []
+  categories: any = []
+  blogs: any = []
+  faqs: any = []
+
+  bannerSlideConfig = {
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    autoplay: false,
+    infinite: true,
+    responsive: [
+      {
+        breakpoint: 767,
+        settings: {
+          vertical: false,
+          verticalSwiping: false,
+        }
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          adaptiveHeight: true
+        }
+      }
+    ]
+  };
+
+
+  testimonialsSlideConfig = {
+    //slide: '.slick-slideshow__slide',
+    centerMode: true,
+    //centerPadding: '60px',
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    dots: false,
+    infinite: true,
+    cssEase: 'linear',
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 1599,
+        settings: {
+          //slidesToShow: 3,
+          //slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 1080,
+        settings: {
+          //slidesToShow: 2,
+          //slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          //slidesToShow: 1,
+          //slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
+  
   slideConfig = {
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -29,48 +99,33 @@ export class HomeComponent implements OnInit {
     cssEase: 'linear',
     arrows: false,
     responsive: [
-        {
-          breakpoint: 767,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1
-          }
-        },
-        {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            dots: true,
-            infinite: true
-          }
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
         }
-      ]
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          infinite: true
+        }
+      }
+    ]
   };
-  constructor( private utilsService: UtilsService) { 
-    new Promise((resolve) => {
-      this.loadScript('../assets/js/jquery.3.5.1.min.js');
-      this.loadScript('../assets/js/popper.min.js');
-      this.loadScript('../assets/js/bootstrap.min.js');
-      this.loadScript('../assets/js/gsap-3.5.0.min.js');
-      this.loadScript('../assets/js/gsap-scollTrigger-3.5.0.min.js');
-      this.loadScript('../assets/js/slick-slider.js');
-      this.loadScript('../assets/js/tilt.js');
-      this.loadScript('../assets/js/main.js');
-      resolve(true);
-    });
-  }
+
+  constructor(private utilsService: UtilsService) {}
 
   ngOnInit(): void {
     this.fetchCategories()
     this.fetchBlogs()
-    this.fetchFAQs()   
-    
+    this.fetchFAQs()
   }
 
-
-  
-  
   fetchFAQs() {
     this.utilsService.processGetRequest('faqs/top5listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.faqs = response
@@ -97,7 +152,7 @@ export class HomeComponent implements OnInit {
         }
       });
     })
-   
+
   }
 
   public loadScript(url: string) {
@@ -110,11 +165,23 @@ export class HomeComponent implements OnInit {
     body.appendChild(script);
   }
 
-  ngAfterContentInit() {
-    
-     // this.loadScript('../assets/js/blog.js');
-    
+  nextBanner(){
+    this.slickModal.slickNext();
   }
+
+  prevBanner(){
+    this.slickModal.slickPrev();
+  }
+
+  nextTestimonials(){
+    this.testimonialsModal.slickNext();
+  }
+
+  prevTestimonials(){
+    this.testimonialsModal.slickPrev();
+  }
+
+  ngAfterContentInit() { }
 
   //destroy all subscription
   public ngOnDestroy(): void {

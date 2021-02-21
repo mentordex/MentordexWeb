@@ -1,9 +1,10 @@
 <!--Hero banner area starts-->
 <section class="hero-banner bg-fdfdfd mt-75">
     <header>
-        <div class="banner-slider">
+
+        <ngx-slick-carousel class="banner-slider" #slickModal="slick-carousel" [config]="bannerSlideConfig">
             <!--each banner-->
-            <div class="banner position-relative">
+            <div ngxSlickItem class="banner position-relative">
                 <div class="new-gutter position-relative min-h-inherit">
                     <div class="banner-img ic-svg">
                         <img src="assets/img/slider-01-svg.svg" class="animated-hero ml-auto" alt="slider-img">
@@ -33,7 +34,7 @@
             <!--each banner-->
 
             <!--each banner-->
-            <div class="banner position-relative">
+            <div ngxSlickItem class="banner position-relative">
                 <div class="new-gutter position-relative min-h-inherit">
                     <div class="banner-img ic-svg lef0">
                         <img src="assets/img/slide-02-01-svg.svg" class="animated-hero m-auto" alt="slider-img">
@@ -64,7 +65,7 @@
             <!--each banner-->
 
             <!--each banner-->
-            <div class="banner position-relative">
+            <div ngxSlickItem class="banner position-relative">
                 <div class="new-gutter position-relative min-h-inherit">
                     <div class="banner-img ic-svg lef0">
                         <div class="animated-hero w-100">
@@ -98,7 +99,7 @@
             <!--each banner-->
 
             <!--each banner-->
-            <div class="banner position-relative">
+            <div ngxSlickItem class="banner position-relative">
                 <div class="new-gutter position-relative min-h-inherit">
                     <div class="banner-img ic-svg max-lg-50">
                         <img src="assets/img/slide-03.svg" class="animated-hero ml-auto my-lg-auto" alt="slider-img">
@@ -126,14 +127,14 @@
                 </div>
             </div>
             <!--each banner-->
+        </ngx-slick-carousel>
 
-        </div>
         <div class="new-gutter position-relative">
             <div class="banner-arrow ic-svg">
-                <div class="prev-banner mr-2">
+                <div (click)="prevBanner()" class="prev-banner mr-2">
                     <span class="fa fa-angle-left" aria-hidden="true"></span>
                 </div>
-                <div class="next-banner">
+                <div (click)="nextBanner()" class="next-banner">
                     <span class="fa fa-angle-right" aria-hidden="true"></span>
                 </div>
             </div>
@@ -632,15 +633,16 @@
         <div class="col-12 px-0">
             <div class="sliderOuter position-relative">
                 <div class="text-center text-right mb-4 mb-md-0 pos-icon-slider">
-                    <div class="prev mr-3">
+                    <div (click)="nextTestimonials()" class="prev mr-3">
                         <span class="fa fa-angle-left" aria-hidden="true"></span>
                     </div>
-                    <div class="next">
+                    <div (click)="prevTestimonials()" class="next">
                         <span class="fa fa-angle-right" aria-hidden="true"></span>
                     </div>
                 </div>
-                <div class="slider-carousel">
-                    <div class="testimonials-inner slick-slideshow__slide">
+
+                <ngx-slick-carousel class="slider-carousel" #testimonialsModal="slick-carousel" [config]="testimonialsSlideConfig">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -659,7 +661,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -678,7 +680,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -697,7 +699,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -716,7 +718,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -735,7 +737,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -754,7 +756,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -773,7 +775,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -792,7 +794,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ngx-slick-carousel>
+
             </div>
         </div>
     </div>
@@ -850,7 +853,7 @@
         </div>
         <div class="responsive-blog-slider">
 
-            <ngx-slick-carousel class="responsive-blog-slider-inner" #slickModal="slick-carousel" [config]="slideConfig">
+            <ngx-slick-carousel class="responsive-blog-slider-inner" #blogsModal="slick-carousel" [config]="slideConfig">
                 <div ngxSlickItem *ngFor="let blog of blogs" class="blog-cards hover-blogbox">
                     <a target="_blank" href="{{blog.link}}" class="box-rendered">
                         <span class="sr-only">layer anchor</span>

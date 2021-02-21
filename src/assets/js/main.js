@@ -39,99 +39,16 @@ $(document).ready(function() {
 
 
     //-------Banner slider starts----------//
-    var $bannerSlider = $(".banner-slider");
-    if ($bannerSlider.length && $.fn.slick) {
-        $bannerSlider.slick({
-            slidesToScroll: 1,
-            arrows: false,
-            dots: false,
-            autoplay: false,
-            infinite: true,
-            responsive: [{
-                breakpoint: 767,
-                settings: {
-                    vertical: false,
-                    verticalSwiping: false,
-                },
-                breakpoint: 991,
-                settings: {
-                    adaptiveHeight: true
-                },
-            }, ],
-        });
-    }
-    $('.prev-banner').on('click', function() {
-        $('.banner-slider').slick('slickPrev');
-    })
-
-    $('.next-banner').on('click', function() {
-        $('.banner-slider').slick('slickNext');
-    })
 
 
 
     //--------Slider init----------//
-    $('.slider-carousel').slick({
-        slide: '.slick-slideshow__slide',
-        centerMode: true,
-        centerPadding: '60px',
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        dots: false,
-        infinite: true,
-        cssEase: 'linear',
-        arrows: false,
-        responsive: [{
-                breakpoint: 1599,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 1080,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    });
+
 
     //Slide INIT for BLOG
-    /*$('.responsive-blog-slider-inner').slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      dots: false,
-      infinite: true,
-      cssEase: 'linear',
-      arrows: false,
-      responsive: [
-          {
-            breakpoint: 767,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1
-            }
-          },
-          {
-            breakpoint: 575,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              dots: true,
-              infinite: true
-            }
-          }
-        ]
-    });
+    /*
+    
+    
   
     $('.prev').click(function(){
         $('.slider-carousel').slick('slickPrev');
@@ -198,12 +115,14 @@ $(document).ready(function() {
 
 
     //flatpickr
-    if ($('#myInput').length > 0) {
+    /* if ($('#myInput').length > 0) {
         const myInput = document.querySelector("#myInput");
         const fp = flatpickr(myInput, {
             inline: true
         }); // flatpickr 
     };
+
+    */
 
 
 
@@ -272,29 +191,7 @@ $(document).ready(function() {
     ///---------Aos init---------//
     // AOS.init();
 
-    //Input tel
-    /*if ($('#phone').length > 0) {
-        var telInput = $("#phone");
-        // initialise plugin
-        telInput.intlTelInput({
-            allowExtensions: true,
-            formatOnDisplay: true,
-            autoFormat: true,
-            autoHideDialCode: true,
-            autoPlaceholder: true,
-            defaultCountry: "auto",
-            ipinfoToken: "yolo",
 
-            nationalMode: false,
-            numberType: "MOBILE",
-            //onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-            preferredCountries: ['sa', 'ae', 'qa', 'om', 'bh', 'kw', 'ma'],
-            preventInvalidNumbers: true,
-            separateDialCode: true,
-            initialCountry: "US"
-        });
-    };
-    */
 
     //----remove overflow from body---//
     setTimeout(function() { $("body").css('overflow', 'visible'); }, 1300);
@@ -313,14 +210,7 @@ $(document).ready(function() {
             ease: Power4.easeInOut
         }, 0.09);
     };
-    // if($('.md-profile').length > 0) {
-    //   TweenMax.staggerFrom(".md-profile", 1, {
-    //     delay: 2.7,
-    //     opacity: 0,
-    //     x: -25,
-    //     ease: Power4.easeInOut
-    // }, 0.09);
-    // };
+
 
     /*Herro Banner effect*/
     var main = gsap.timeline({ defaults: { duration: 1 } });

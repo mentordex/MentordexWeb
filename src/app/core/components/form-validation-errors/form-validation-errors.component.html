@@ -12,3 +12,6 @@
 <ng-container *ngIf="errors && errors['hasSmallCase']">{{errorPrefix}} must contain at least 1 Letter in Small Case<br/></ng-container>
 <ng-container *ngIf="errors && errors['hasSpecialCharacters']">{{errorPrefix}} must contain at least 1 special character.<br/></ng-container>
 <ng-container *ngIf="errors && errors['hasNumber']">Must contain at least 1 number.<br/></ng-container>
+
+
+<ng-container *ngIf="errors && errors['NoPassswordMatchWithEmailOrName']">Password does not match with Email ID or Name.<br /></ng-container>

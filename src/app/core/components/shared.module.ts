@@ -22,6 +22,9 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LeftNavigationComponent } from './left-navigation/left-navigation.component';
 import { AlertComponent } from './alert/alert.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
+import { Select2Module } from "ng-select2-component";
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper'; // Dropzone Module
 
 //import core services
 import { TitleService, AuthService, PageLoaderService, AlertService, UtilsService } from '../services';
@@ -36,6 +39,12 @@ import { AuthGuard } from '../guards/auth-guard.service';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
 //import { TwoDigitDecimaNumberDirective } from '../directives/two-digit-decima-number.directive';
+
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  acceptedFiles: '.jpg, .png, .jpeg, .pdf',
+  createImageThumbnails: true
+};
 
 
 @NgModule({
@@ -53,7 +62,10 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
         NgbModule,
         NgxMasonryModule,
         TagifyModule.forRoot(),
-        NgxIntlTelInputModule
+        NgxIntlTelInputModule,
+        Select2Module,
+        FlatpickrModule.forRoot(),
+        DropzoneModule
     ],
     declarations: [      
         
@@ -114,7 +126,10 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
         NgbModule,
         NgxMasonryModule,
         TagifyModule,
-        NgxIntlTelInputModule
+        NgxIntlTelInputModule,
+        Select2Module,
+        FlatpickrModule,
+        DropzoneModule
     ]
 })
 export class SharedModule {

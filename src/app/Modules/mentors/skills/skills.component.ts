@@ -48,6 +48,8 @@ export class SkillsComponent implements OnInit {
   selectedSubcategories: any = [];
   selectedCategoryName: any = '';
 
+  
+
   skillsForm: FormGroup;
   isSkillsFormSubmitted: boolean = false
 
@@ -193,7 +195,9 @@ export class SkillsComponent implements OnInit {
     let categoryID = event.target.value
 
     this.subcategoryArray = [];
-
+    this.selectedSubcategoryArray = [];
+    const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
+    subcategories.clear();
 
     if (categoryID) {
 

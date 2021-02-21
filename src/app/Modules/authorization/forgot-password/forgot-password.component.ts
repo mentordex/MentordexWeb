@@ -26,6 +26,8 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   isFormSubmitted:boolean = false
 
+  isForgotPasswordSubmit:boolean = false;
+
   constructor(private formBuilder: FormBuilder, private authService:AuthService, private utilsService: UtilsService, private router: Router) { 
     
     this.utilsService.checkAndRedirect()
@@ -51,9 +53,16 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
  
+    this.utilsService.processPostRequest('forgot-password',this.forgotPasswordForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.isForgotPasswordSubmit = true;
+      //this.forgotPasswordForm.reset();           
+    })
+  }
+
+  resentEmail(){
     this.utilsService.processPostRequest('forgot-password',this.forgotPasswordForm.value, true, environment.MESSGES['EMAIL-SENT']).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      
-      this.forgotPasswordForm.reset();           
+      //this.isForgotPasswordSubmit = true;
+      //this.forgotPasswordForm.reset();           
     })
   }
 
