@@ -21,7 +21,6 @@
     "@angular/router": "~11.0.5",
     "@ng-bootstrap/ng-bootstrap": "^9.0.1",
     "angular-archwizard": "^6.1.0",
-    "angularx-flatpickr": "^6.5.2",
     "bootstrap": "^4.5.3",
     "flatpickr": "^4.6.9",
     "google-libphonenumber": "^3.2.16",

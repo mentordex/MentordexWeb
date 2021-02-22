@@ -14,20 +14,20 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class UtilsService {
 
- 
-  constructor(private httpClient: HttpClient, private pageLoaderService: PageLoaderService, private toastrManager: ToastrManager, private router:Router ) { }
+
+  constructor(private httpClient: HttpClient, private pageLoaderService: PageLoaderService, private toastrManager: ToastrManager, private router: Router) { }
 
 
   /**
   * Show page loder before request process
   * @return void
   */
-  public onRequest(message = ''):void{
+  public onRequest(message = ''): void {
     this.pageLoaderService.pageLoader(true);//show page loader
-    if(message.length>0){      
+    if (message.length > 0) {
       this.pageLoaderService.setLoaderText(message);//setting loader text
     }
-    
+
   }
 
   /**
@@ -37,11 +37,11 @@ export class UtilsService {
   public onResponse(message = '', isSuccess = false): void {
     this.pageLoaderService.pageLoader(false);//hide page loader
     this.pageLoaderService.setLoaderText('');//setting loader text empty
-    if(message.length>0){
-      if(isSuccess)
-          this.toastrManager.successToastr(message, 'Success!', {maxShown:1}); //showing success toaster 
-        else
-          this.toastrManager.errorToastr(message, 'Oops!',{maxShown:1});//showing error toaster message
+    if (message.length > 0) {
+      if (isSuccess)
+        this.toastrManager.successToastr(message, 'Success!', { maxShown: 1 }); //showing success toaster 
+      else
+        this.toastrManager.errorToastr(message, 'Oops!', { maxShown: 1 });//showing error toaster message
     }
   }
 
@@ -49,10 +49,10 @@ export class UtilsService {
   * Logout user from the system and erase all info from localstorage
   * @return void
   */
-  public logout():void{
-    this.onResponse(environment.MESSGES["LOGOUT-SUCCESS"], true)    
-    localStorage.clear()    
-    this.router.navigate(['/authorization']);    
+  public logout(): void {
+    this.onResponse(environment.MESSGES["LOGOUT-SUCCESS"], true)
+    localStorage.clear()
+    this.router.navigate(['/authorization']);
   }
 
   /**
@@ -60,7 +60,7 @@ export class UtilsService {
   * @return void
   */
 
-  public checkAndRedirect(){
+  public checkAndRedirect() {
     if (localStorage.getItem(environment.TOKEN_NAME)) {
       this.router.navigate(['/home']);
     }
@@ -69,12 +69,12 @@ export class UtilsService {
   /**
   * Post the data and endpoint 
   */
-  processPostRequest(apiEndPoint, data, showLoader = false, message = ''){
-    
-    if(showLoader)
+  processPostRequest(apiEndPoint, data, showLoader = false, message = '') {
+
+    if (showLoader)
       this.onRequest(environment.MESSGES['CHECKING-AUTHORIZATION']);//show page loader
 
-      return this.httpClient.post(apiEndPoint, data)
+    return this.httpClient.post(apiEndPoint, data)
       .pipe(
         tap( // Log the result or error
           data => {
@@ -84,12 +84,12 @@ export class UtilsService {
       );
   }
 
-  processSignupRequest(apiEndPoint, data, showLoader = false, message = ''){
-    
-    if(showLoader)
+  processSignupRequest(apiEndPoint, data, showLoader = false, message = '') {
+
+    if (showLoader)
       this.onRequest(environment.MESSGES['CHECKING-AUTHORIZATION']);//show page loader
 
-      return this.httpClient.post(apiEndPoint, data,  { observe: 'response' })
+    return this.httpClient.post(apiEndPoint, data, { observe: 'response' })
       .pipe(
         tap( // Log the result or error
           data => {
@@ -101,20 +101,62 @@ export class UtilsService {
   /**
   * Get the data using posted endpoint 
   */
-  processGetRequest(apiEndPoint, showLoader = false, message = ''){
-    if(showLoader)
+  processGetRequest(apiEndPoint, showLoader = false, message = '') {
+    if (showLoader)
       this.onRequest(environment.MESSGES['CHECKING-AUTHORIZATION']);//show page loader
 
 
     return this.httpClient
-        .get(apiEndPoint)
-        .pipe(
-          tap( // Log the result or error
-            data => {
-              this.onResponse(message, true);//show page loader
-            }
-          )
-        );
+      .get(apiEndPoint)
+      .pipe(
+        tap( // Log the result or error
+          data => {
+            this.onResponse(message, true);//show page loader
+          }
+        )
+      );
   }
-  
+
+
+  /**
+  * Show page loder on fetching data
+  * @return void
+  */
+  public showPageLoader(message = ''): void {
+    this.pageLoaderService.pageLoader(true);//show page loader
+    if (message.length > 0) {
+      this.pageLoaderService.setLoaderText(message);//setting loader text
+    }
+
+  }
+
+  /**
+  * Hide page loder on fetching data
+  * @return void
+  */
+  public hidePageLoader(): void {
+    this.pageLoaderService.pageLoader(false);//hide page loader
+    this.pageLoaderService.setLoaderText('');//setting loader text
+  }
+
+  /**
+  * Show alert on success response & hide page loader
+  * @return void
+  */
+  public onSuccess(message): void {
+    this.pageLoaderService.pageLoader(false);//hide page loader
+    this.pageLoaderService.setLoaderText('');//setting loader text empty
+    this.toastrManager.successToastr(message, 'Success!'); //showing success toaster 
+  }
+
+  /**
+  * Show alert on error response & hide page loader
+  * @return void
+  */
+  public onError(message): void {
+    this.pageLoaderService.setLoaderText('');//setting loader text
+    this.pageLoaderService.pageLoader(false);//hide page loader
+    this.toastrManager.errorToastr(message, 'Oops!', { maxShown: 1 });//showing error toaster message  
+  }
+
 }

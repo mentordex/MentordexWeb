@@ -31,19 +31,30 @@ export class BookASlotComponent implements OnInit {
   bookASlotForm: FormGroup;
   isBookASlotFormSubmitted: boolean = false
   getCurrentDate: Date = new Date();
-  minDate: Date = new Date();
+  minDate: Date;
   maxDate: Date;
   base64StringFile: any;
   disabled: boolean = false
+  getCurrentDay: any = '';
+  getAvailableSlots: any = [];
 
   public letterOfRecommendationConfiguration: DropzoneConfigInterface;
 
-  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private zone: NgZone) { }
+  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private zone: NgZone) {
+
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.minDate.setDate(this.minDate.getDate());
+    this.maxDate.setDate(this.maxDate.getDate() + 7);
+    this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
+
+  }
 
   ngOnInit(): void {
     this.initalizeBookASlotForm();
     this.checkQueryParam();
     this.letterOfRecommendationDropzoneInit();
+    this.getAvailableSlotsByDay(this.getCurrentDay);
   }
 
   private checkQueryParam() {
@@ -94,25 +105,23 @@ export class BookASlotComponent implements OnInit {
     this.references().removeAt(i);
   }
 
-
   /**
   * Initialize Dropzone Library(Image Upload).
   */
-
   private letterOfRecommendationDropzoneInit() {
     const componentObj = this;
     this.letterOfRecommendationConfiguration = {
       clickable: true,
       paramName: "file",
       uploadMultiple: false,
-      url: environment.API_ENDPOINT + "/api/uploadImage",
+      url: environment.API_ENDPOINT + "/api/uploadPdf",
       maxFiles: 3,
       autoReset: null,
       errorReset: null,
       cancelReset: null,
       acceptedFiles: '.jpg, .png, .jpeg, .pdf',
       maxFilesize: 2, // MB,
-      dictDefaultMessage: '<span class="button">Upload File</span>',
+      dictDefaultMessage: '<span class="button actual-upload-btn"><svg class="mr-2" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.49961 1.59998L10.9663 4.79998M7.49961 1.59998L4.29961 4.79998M7.49961 1.59998V11.7333M13.8996 7.46664V14.4H1.09961V7.46664" stroke="#384047"></path></svg>Upload File</span>',
       //previewsContainer: "#offerInHandsPreview",
       addRemoveLinks: true,
       //resizeWidth: 125,
@@ -131,25 +140,25 @@ export class BookASlotComponent implements OnInit {
 
 
         if ((componentObj.letterOfRecommendationPdfArray.length + 1) > 3) {
-          //componentObj.commonUtilsService.onError('You cannot upload any more files.');
-          //this.removeFile(file);
+          componentObj.utilsService.onError('You cannot upload any more files.');//hide page loader          
+          this.removeFile(file);
           return false;
         }
 
         const reader = new FileReader();
-        const _this = this
         reader.onload = function (event) {
 
           let base64String = reader.result
           let fileExtension = (file.name).split('.').pop();
 
           componentObj.base64StringFile = reader.result;
+
           if (fileExtension == "pdf") {
             componentObj.base64StringFile = componentObj.base64StringFile.replace('data:application/pdf;base64,', '');
           }
-          //componentObj.pageLoaderService.pageLoader(true);//start showing page loader
-          done();
 
+          componentObj.utilsService.showPageLoader();//start showing page loader
+          done();
         };
         reader.readAsDataURL(file);
       },
@@ -161,33 +170,32 @@ export class BookASlotComponent implements OnInit {
           formData.append('folder', 'LOR');
           formData.append('fileType', file.type);
           formData.append('base64StringFile', componentObj.base64StringFile);
+          componentObj.utilsService.showPageLoader();//start showing page loader 
         });
 
 
         this.on("totaluploadprogress", function (progress) {
-          //componentObj.pageLoaderService.pageLoader(true);//start showing page loader
-          //componentObj.pageLoaderService.setLoaderText('Uploading file ' + parseInt(progress) + '%');//setting loader text
+          componentObj.utilsService.showPageLoader('Uploading file ' + parseInt(progress) + '%')
           if (progress >= 100) {
-            //componentObj.pageLoaderService.pageLoader(false); //hide page loader
+            componentObj.utilsService.hidePageLoader();//hide page loader
           }
         })
 
         this.on("success", function (file, serverResponse) {
-
+          console.log('serverResponse', serverResponse);
 
           componentObj.zone.run(() => {
             componentObj.letterOfRecommendationPdfArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'LOR' }));
           });
-
+          console.log('letterOfRecommendationPdfArray', componentObj.letterOfRecommendationPdfArray);
           this.removeFile(file);
-
-          //componentObj.pageLoaderService.pageLoader(false); //hide page loader
+          componentObj.utilsService.hidePageLoader();//hide page loader
         });
 
         this.on("error", function (file, serverResponse) {
           this.removeFile(file);
-          //componentObj.pageLoaderService.pageLoader(false);//hide page loader  
-          //componentObj.toastr.errorToastr(serverResponse, 'Oops!');
+          componentObj.utilsService.onError(serverResponse);//hide page loader  
+          componentObj.utilsService.hidePageLoader();//hide page loader
         });
 
       }
@@ -203,6 +211,34 @@ export class BookASlotComponent implements OnInit {
 
     })
   }
+
+
+  /**
+   * get Available Slots By Day
+  */
+  getAvailableSlotsByDay(day): void {
+    this.utilsService.processPostRequest('dayTimeslot/getAvailableSlots', { day: day }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log('response', response);
+      let getSlots = response['slots'];
+      if (getSlots == false) {
+        this.getAvailableSlots = [];
+      }else{
+        this.getAvailableSlots = getSlots.filter(function (item) {
+          return item.isChecked !== false;
+        });
+      }
+      //console.log('response', this.getAvailableSlots);
+    })
+  }
+
+  onDateChange(value: Date): void {
+
+    let selectedDate = new Date(value);
+    let selectedDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
+    //this.getCurrentDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()]
+    this.getAvailableSlotsByDay(selectedDay);
+  }
+
 
   /**
 * set check object array length.

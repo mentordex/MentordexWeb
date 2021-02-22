@@ -23,8 +23,9 @@ import { LeftNavigationComponent } from './left-navigation/left-navigation.compo
 import { AlertComponent } from './alert/alert.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { Select2Module } from "ng-select2-component";
-import { FlatpickrModule } from 'angularx-flatpickr';
 import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper'; // Dropzone Module
+
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 //import core services
 import { TitleService, AuthService, PageLoaderService, AlertService, UtilsService } from '../services';
@@ -64,8 +65,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         TagifyModule.forRoot(),
         NgxIntlTelInputModule,
         Select2Module,
-        FlatpickrModule.forRoot(),
-        DropzoneModule
+        DropzoneModule,
+        BsDatepickerModule.forRoot()
     ],
     declarations: [      
         
@@ -128,8 +129,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         TagifyModule,
         NgxIntlTelInputModule,
         Select2Module,
-        FlatpickrModule,
-        DropzoneModule
+        DropzoneModule,
+        BsDatepickerModule
     ]
 })
 export class SharedModule {
