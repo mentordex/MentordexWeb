@@ -17,6 +17,15 @@ import { environment } from '../../../../environments/environment';
 
 import { DropzoneComponent, DropzoneDirective, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
+export const minLengthArray = (min: number) => {
+  return (c: AbstractControl): { [key: string]: any } => {
+    if (c.value.length >= min)
+      return null;
+
+    return { MinLengthArray: true };
+  }
+}
+
 @Component({
   selector: 'app-book-a-slot',
   templateUrl: './book-a-slot.component.html',
@@ -30,6 +39,7 @@ export class BookASlotComponent implements OnInit {
 
   bookASlotForm: FormGroup;
   isBookASlotFormSubmitted: boolean = false
+
   getCurrentDate: Date = new Date();
   minDate: Date;
   maxDate: Date;
@@ -72,7 +82,7 @@ export class BookASlotComponent implements OnInit {
       userID: [''],
       appointment_date: ['', [Validators.required]],
       appointment_time: ['', [Validators.required]],
-      references: this.formBuilder.array([this.newReferences()]),
+      references: this.formBuilder.array([this.newReferences()], [minLengthArray(2)]),
       letter_of_recommendation: this.formBuilder.array([])
 
     });
@@ -92,7 +102,7 @@ export class BookASlotComponent implements OnInit {
       relation: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
       job_title: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
       workplace_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-      contact_number: [undefined, [Validators.required]],
+      contact_number: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10), Validators.maxLength(10)]],
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
     })
   }
@@ -207,11 +217,27 @@ export class BookASlotComponent implements OnInit {
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-
-
+      this.mentorDetails = response;
+      if (this.mentorDetails.admin_status == 'NEW') {
+        this.router.navigate(['/mentor/application-status']);
+      }
     })
   }
 
+  /**
+    * on Submit Basic Details
+   */
+  onSubmitBookASlotDetailsForm() {
+
+    if (this.bookASlotForm.invalid) {
+      this.isBookASlotFormSubmitted = true
+      return false;
+    }
+    this.utilsService.processPostRequest('updateBookASlotDetails', this.bookASlotForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
+      this.router.navigate(['/mentor/application-status']);
+    })
+  }
 
   /**
    * get Available Slots By Day
@@ -222,7 +248,7 @@ export class BookASlotComponent implements OnInit {
       let getSlots = response['slots'];
       if (getSlots == false) {
         this.getAvailableSlots = [];
-      }else{
+      } else {
         this.getAvailableSlots = getSlots.filter(function (item) {
           return item.isChecked !== false;
         });
@@ -233,7 +259,13 @@ export class BookASlotComponent implements OnInit {
 
   onDateChange(value: Date): void {
 
+
     let selectedDate = new Date(value);
+
+
+    let formatDate = selectedDate.getDate() + '/' + selectedDate.getMonth() + '/' + selectedDate.getFullYear();
+    this.bookASlotForm.controls.appointment_date.patchValue(formatDate);
+
     let selectedDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
     //this.getCurrentDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()]
     this.getAvailableSlotsByDay(selectedDay);

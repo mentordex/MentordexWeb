@@ -99,11 +99,11 @@
                                                         <li *ngFor="let availableSlot of getAvailableSlots let i=index">
                                                             <div class="choose-category-wrapper time-slots">
                                                                 <label>
-                                                                <input type="radio" value="availableSlot._id" name="appointment_time" class="card-input-element">   
+                                                                <input [value]="availableSlot.slot" type="radio" formControlName="appointment_time" class="card-input-element">   
                                                                 <div class="category-innebox">
                                                                     <p class="category-heading-text">{{availableSlot.slot}}</p>
                                                                 </div>
-                                                            </label>
+                                                                </label>
                                                             </div>
                                                         </li>
 
@@ -189,7 +189,7 @@
                                                     <label for="" class="profile-label-text">Contact Number </label>
                                                     <input type="text" formControlName="contact_number" class="profile-steps-input w-100 bg-white" placeholder="">
                                                     <p class="errorCls" *ngIf="reference.get('contact_number').touched || isBookASlotFormSubmitted">
-                                                        <app-form-validation-errors minLength=10 maxLength=10 errorPrefix="Contact Number " [errors]="reference.get('contact_number').errors"></app-form-validation-errors>
+                                                        <app-form-validation-errors minLength=10 maxLength=10 patternError="Enter valid contact number." errorPrefix="Contact Number " [errors]="reference.get('contact_number').errors"></app-form-validation-errors>
                                                     </p>
                                                 </div>
                                                 <div class="col-sm-6 mb-4">
@@ -211,6 +211,10 @@
                                             </button>
                                             </div>
                                         </ng-container>
+
+                                        <p class="errorCls" *ngIf="bookASlotForm.controls.references.hasError('MinLengthArray')">
+                                            <span>Atleast 2 Reference is required.</span>
+                                        </p>
                                     </div>
                                     <div class="col-12 mb-4">
                                         <div class="row">
@@ -282,8 +286,8 @@
                             </div>
                             <div class="profile-steps-rightsidebar-column-footer">
                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="#">BACK</a>
-                                    <input type="submit" class="primary--button py-2 px-30" value="Submit">
+                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" [routerLink]="['/mentor/skills']">BACK</a>
+                                    <input [disabled]="bookASlotForm.invalid" (click)="onSubmitBookASlotDetailsForm()" type="submit" class="primary--button py-2 px-30" value="Submit">
                                 </div>
                             </div>
 

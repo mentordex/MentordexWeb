@@ -475,108 +475,40 @@
             </div>
             <div class="col-md-7 col-lg-6 order-md-1">
                 <div class="row">
-                    <div class="col-sm-6 mb-35">
+                    <div *ngFor="let firstFourCity of firstFourCities;let index=index" class="col-sm-6 mb-35">
                         <div class="city-cardBox" data-tilt>
-                            <a href="#" class="box-rendered">
+                            <a class="box-rendered">
                                 <span class="sr-only">layer anchor</span>
                             </a>
                             <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/image 10.png" alt="cityImg">
+                                <img [src]="firstFourCity.image" alt="cityImg">
                             </div>
                             <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Atlanta, GA</p>
-                                <span class="testimonials-author-city">58220 Tutors</span>
+                                <p class="testimonials-author-name">{{firstFourCity.title}}, {{ firstFourCity.state['0'].title }}</p>
+                                <span class="testimonials-author-city">{{ firstFourCity.zipcodes['0'].value }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-35">
-                        <div class="city-cardBox" data-tilt>
-                            <a href="#" class="box-rendered">
-                                <span class="sr-only">layer anchor</span>
-                            </a>
-                            <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/image 11.png" alt="cityImg">
-                            </div>
-                            <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Auburn, AL</p>
-                                <span class="testimonials-author-city">58220 Tutors</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mb-35">
-                        <div class="city-cardBox" data-tilt>
-                            <a href="#" class="box-rendered">
-                                <span class="sr-only">layer anchor</span>
-                            </a>
-                            <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/image 12.png" alt="cityImg">
-                            </div>
-                            <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Birmingham, AL</p>
-                                <span class="testimonials-author-city">58220 Tutors</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mb-35">
-                        <div class="city-cardBox" data-tilt>
-                            <a href="#" class="box-rendered">
-                                <span class="sr-only">layer anchor</span>
-                            </a>
-                            <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/Mask Group.png" alt="cityImg">
-                            </div>
-                            <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Jacksonville, FL</p>
-                                <span class="testimonials-author-city">58220 Tutors</span>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
+            <div *ngFor="let lastThreeCity of lastThreeCities;let index=index" class="col-sm-6 col-md-4 col-lg-3 mb-35">
                 <div class="city-cardBox" data-tilt>
-                    <a href="#" class="box-rendered">
+                    <a class="box-rendered">
                         <span class="sr-only">layer anchor</span>
                     </a>
                     <div class="city-cardBox-thumbnail">
-                        <img src="assets/img/image 14.png" alt="cityImg">
+                        <img [src]="lastThreeCity.image" alt="cityImg">
                     </div>
                     <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Nashville, TN</p>
-                        <span class="testimonials-author-city">58220 Tutors</span>
+                        <p class="testimonials-author-name">{{lastThreeCity.title}}, {{ lastThreeCity.state['0'].title }}</p>
+                        <span class="testimonials-author-city">{{ lastThreeCity.zipcodes['0'].value }}</span>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox" data-tilt>
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail">
-                        <img src="assets/img/image 15.png" alt="cityImg">
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Northwest Arkansas</p>
-                        <span class="testimonials-author-city">58220 Tutors</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox" data-tilt>
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail">
-                        <img src="assets/img/image 16.png" alt="cityImg">
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Tallahassee, FL</p>
-                        <span class="testimonials-author-city">58220 Tutors</span>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
                 <div class="city-cardBox" data-tilt>
                     <a href="#" class="box-rendered">

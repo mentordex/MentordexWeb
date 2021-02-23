@@ -74,8 +74,14 @@ export class SkillsComponent implements OnInit {
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
+      
       this.mentorDetails = response;
+
+      if (this.mentorDetails.admin_status == 'NEW') {
+        this.router.navigate(['/mentor/application-status']);
+      }
+
+      const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
       
       this.skillsForm.patchValue({
         category_id: this.mentorDetails.category_id ? this.mentorDetails.category_id : ''

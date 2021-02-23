@@ -6,6 +6,7 @@ import { VerificationSuccessComponent } from './verification-success/verificatio
 import { BasicDetailsComponent } from './basic-details/basic-details.component';
 import { SkillsComponent } from './skills/skills.component';
 import { BookASlotComponent } from './book-a-slot/book-a-slot.component';
+import { ApplicationStatusComponent } from './application-status/application-status.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
     path: 'book-a-slot',
     component: BookASlotComponent,
     data: { title: 'Book a Slot' }
+  },
+  {
+    path: 'application-status',
+    component: ApplicationStatusComponent,
+    data: { title: 'Application Status' }
   }
 
 ];

@@ -6,8 +6,8 @@ export const environment = {
   MESSGES:{
     "CHECKING-AUTHORIZATION":"Please Wait..",
     "LOGIN-SUCCESS":"You have loggedin successfully.",
-    "LOGOUT-SUCCESS":"You have been loggedout successfully.",
-    "REGISTERED-SUCCESSFULLY":"Thank You for Registering! The verification link has been sent to your email successfully.",
+    "LOGOUT-SUCCESS":"You are successfully logged out.",
+    "REGISTERED-SUCCESSFULLY":"Great! Thank you for registering with us. Please verify your email and mobile number.",
     "PARENT-REGISTERED-SUCCESSFULLY":"Thank You for Registering!.",
     "RESEND-EMAIL-VERIFICATION":"The verification link has been sent to your email.",
     "RESEND-PHONE-VERIFICATION":"OTP has been sent to your phone.",
@@ -16,7 +16,7 @@ export const environment = {
     "EMAIL-AUTHORIZED":"Email has been authorized successfully.",
     "SAVING-INFO":"Saving information. Please Wait...",
     "PASSWORD-UPDATED":"Password has been updated successfully.",
-    "EMAIL-SENT":"Email has been sent successfully. Please check your inbox.",
+    "EMAIL-SENT":"We have sent the password reset instructions to your email ID.",
   }
 
 };

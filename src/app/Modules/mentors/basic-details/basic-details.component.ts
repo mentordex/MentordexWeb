@@ -136,6 +136,9 @@ export class BasicDetailsComponent implements OnInit {
       this.mentorDetails = response;
       //console.log(this.mentorDetails);
 
+      if (this.mentorDetails.admin_status == 'NEW') {
+        this.router.navigate(['/mentor/application-status']);
+      }
 
       if (this.mentorDetails.country_id != '') {
         this.getStateListing(this.mentorDetails.country_id);

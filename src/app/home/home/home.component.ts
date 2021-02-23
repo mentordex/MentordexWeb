@@ -18,6 +18,7 @@ declare var $;
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent implements OnInit {
 
   @ViewChild('slickModal', {static: true}) slickModal: SlickCarouselComponent;
@@ -28,8 +29,12 @@ export class HomeComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
   categories: any = []
+  cities: any = []
   blogs: any = []
   faqs: any = []
+
+  firstFourCities:any = [];
+  lastThreeCities:any = [];
 
   bannerSlideConfig = {
     slidesToScroll: 1,
@@ -124,6 +129,7 @@ export class HomeComponent implements OnInit {
     this.fetchCategories()
     this.fetchBlogs()
     this.fetchFAQs()
+    this.fetchCities()
   }
 
   fetchFAQs() {
@@ -135,6 +141,22 @@ export class HomeComponent implements OnInit {
   fetchCategories() {
     this.utilsService.processGetRequest('category/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.categories = response
+    })
+  }
+
+  fetchCities() {
+    this.utilsService.processGetRequest('city/getActiveCities').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      
+      let citiesArray;
+
+      this.firstFourCities = response;
+      citiesArray = response;
+      
+      //this.firstFourCities = citiesArray1.splice(0,4);
+      this.lastThreeCities = citiesArray.splice(4,3);
+
+      //console.log(this.firstFourCities)
+      //console.log(this.lastThreeCities)
     })
   }
 
