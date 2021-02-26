@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { SlickCarouselComponent } from 'ngx-slick-carousel';
 
 // import fade in animation
 import { AuthService, UtilsService } from '../../core/services';
@@ -17,10 +18,30 @@ declare var $;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('slickModalBanner') slickModalBanner: SlickCarouselComponent;
+
   private onDestroy$: Subject<void> = new Subject<void>();
   categories:any = []
   blogs:any = []
   faqs:any = []
+  banners:any = []
+
+  bannerSlideConfig = {
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    autoplay: false,
+    infinite: true,
+    responsive: [{
+          breakpoint: 767,
+          settings: {
+              vertical: false,
+              verticalSwiping: false,
+          }
+      }, 
+    ]   
+  };
+
   slideConfig = {
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -45,7 +66,7 @@ export class HomeComponent implements OnInit {
             infinite: true
           }
         }
-      ]
+    ]    
   };
   constructor( private utilsService: UtilsService) { 
     new Promise((resolve) => {
@@ -61,15 +82,29 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  nextBanner() {
+    this.slickModalBanner.slickNext();
+  }
+  
+  previousBanner() {
+    this.slickModalBanner.slickPrev();
+  }
+
   ngOnInit(): void {
     this.fetchCategories()
     this.fetchBlogs()
-    this.fetchFAQs()   
+    this.fetchFAQs() 
+    this.fetchBanners()  
     
   }
 
 
   
+  fetchBanners() {
+    this.utilsService.processGetRequest('banner/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.banners = response
+    })
+  }
   
   fetchFAQs() {
     this.utilsService.processGetRequest('faqs/top5listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
