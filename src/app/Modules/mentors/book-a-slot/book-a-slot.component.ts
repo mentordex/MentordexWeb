@@ -40,12 +40,14 @@ export class BookASlotComponent implements OnInit {
   bookASlotForm: FormGroup;
   isBookASlotFormSubmitted: boolean = false
 
-  getCurrentDate: Date = new Date();
+  
   minDate: Date;
   maxDate: Date;
   base64StringFile: any;
   disabled: boolean = false
   getCurrentDay: any = '';
+  getCurrentDate: any = '';
+
   getAvailableSlots: any = [];
 
   public letterOfRecommendationConfiguration: DropzoneConfigInterface;
@@ -57,14 +59,15 @@ export class BookASlotComponent implements OnInit {
     this.minDate.setDate(this.minDate.getDate());
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
-
+    this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
+    
   }
 
   ngOnInit(): void {
     this.initalizeBookASlotForm();
     this.checkQueryParam();
     this.letterOfRecommendationDropzoneInit();
-    this.getAvailableSlotsByDay(this.getCurrentDay);
+    this.getAvailableSlotsByDay(this.getCurrentDay, this.getCurrentDate);
   }
 
   private checkQueryParam() {
@@ -124,12 +127,12 @@ export class BookASlotComponent implements OnInit {
       clickable: true,
       paramName: "file",
       uploadMultiple: false,
-      url: environment.API_ENDPOINT + "/api/uploadPdf",
+      url: environment.API_ENDPOINT + "/api/uploadFile",
       maxFiles: 3,
       autoReset: null,
       errorReset: null,
       cancelReset: null,
-      acceptedFiles: '.jpg, .png, .jpeg, .pdf',
+      acceptedFiles: '.pdf',
       maxFilesize: 2, // MB,
       dictDefaultMessage: '<span class="button actual-upload-btn"><svg class="mr-2" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.49961 1.59998L10.9663 4.79998M7.49961 1.59998L4.29961 4.79998M7.49961 1.59998V11.7333M13.8996 7.46664V14.4H1.09961V7.46664" stroke="#384047"></path></svg>Upload File</span>',
       //previewsContainer: "#offerInHandsPreview",
@@ -213,14 +216,41 @@ export class BookASlotComponent implements OnInit {
   }
 
   /**
+   * remove PDF
+   * @param index index of the image array
+   * @return  boolean
+   */
+  removeFile(index, file_category, file_key): void {
+   
+    this.letterOfRecommendationPdfArray.removeAt(index);  
+
+    this.removeFileFromBucket(file_key);
+  }
+
+  /**
+   * remove image from AWS Bucket
+   * @param filePath image url
+   * @param bucket s3 bucket name
+   */
+  removeFileFromBucket(file_key){    
+
+    const params = { fileKey : file_key }
+
+    this.utilsService.processPostRequest('removeFileFromBucket', params, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      console.log(response);
+    })
+  } 
+
+  /**
    * get Mentor Details By Token
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      this.mentorDetails = response;
-      if (this.mentorDetails.admin_status == 'NEW') {
+      
+       if (this.mentorDetails.admin_status == 'NEW') {
         this.router.navigate(['/mentor/application-status']);
       }
+      this.mentorDetails = response;
     })
   }
 
@@ -233,6 +263,9 @@ export class BookASlotComponent implements OnInit {
       this.isBookASlotFormSubmitted = true
       return false;
     }
+
+    //console.log(this.bookASlotForm.value); return;
+
     this.utilsService.processPostRequest('updateBookASlotDetails', this.bookASlotForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
 
       this.router.navigate(['/mentor/application-status']);
@@ -242,8 +275,9 @@ export class BookASlotComponent implements OnInit {
   /**
    * get Available Slots By Day
   */
-  getAvailableSlotsByDay(day): void {
-    this.utilsService.processPostRequest('dayTimeslot/getAvailableSlots', { day: day }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+  getAvailableSlotsByDay(day, getSelectedDate): void {
+
+    this.utilsService.processPostRequest('dayTimeslot/getAvailableSlots', { day: day, getSelectedDate: getSelectedDate }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log('response', response);
       let getSlots = response['slots'];
       if (getSlots == false) {
@@ -255,6 +289,7 @@ export class BookASlotComponent implements OnInit {
       }
       //console.log('response', this.getAvailableSlots);
     })
+
   }
 
   onDateChange(value: Date): void {
@@ -263,12 +298,16 @@ export class BookASlotComponent implements OnInit {
     let selectedDate = new Date(value);
 
 
-    let formatDate = selectedDate.getDate() + '/' + selectedDate.getMonth() + '/' + selectedDate.getFullYear();
+    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth()+1) + '/' + selectedDate.getFullYear();
     this.bookASlotForm.controls.appointment_date.patchValue(formatDate);
 
-    let selectedDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
+    let selectedDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()];
+
+    let getSelectedYear = selectedDate.getFullYear();
+    let getSelectedMonth = selectedDate.getMonth() + 1;
+    let getSelectedDate = selectedDate.getDate();
     //this.getCurrentDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()]
-    this.getAvailableSlotsByDay(selectedDay);
+    this.getAvailableSlotsByDay(selectedDay, formatDate);
   }
 
 

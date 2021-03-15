@@ -7,6 +7,7 @@ import { BasicDetailsComponent } from './basic-details/basic-details.component';
 import { SkillsComponent } from './skills/skills.component';
 import { BookASlotComponent } from './book-a-slot/book-a-slot.component';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,11 @@ const routes: Routes = [
     path: 'application-status',
     component: ApplicationStatusComponent,
     data: { title: 'Application Status' }
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    data: { title: 'Profile' }
   }
 
 ];
