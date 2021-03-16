@@ -65,6 +65,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.initalizeBasicDetailsForm();
     this.initalizeAcademicHistoryForm();
+    this.initalizeEmploymentHistoryForm();
     this.videoIntroductionDropzoneInit();
     this.profileImageDropzoneInit();
   }
@@ -74,7 +75,8 @@ export class ProfileComponent implements OnInit {
     this.basicDetailsForm = this.formBuilder.group({
       userID: [''],
       tagline: [''],
-      bio: ['', Validators.compose([Validators.minLength(30), Validators.maxLength(500)])],
+      bio: ['', Validators.compose([Validators.minLength(30), Validators.maxLength(500), Validators.required])],
+      servicable_zipcodes: new FormControl([{ value: '' }], minLengthArray(1)),
       profile_image: this.formBuilder.array([]),
       video_introduction: this.formBuilder.array([])
     });
@@ -85,7 +87,15 @@ export class ProfileComponent implements OnInit {
   private initalizeAcademicHistoryForm() {
     this.academicHistoryForm = this.formBuilder.group({
       userID: [''],
-      academic: this.formBuilder.array([this.newAcademic()], [minLengthArray(2)]),
+      academics: this.formBuilder.array([this.newAcademics()], [minLengthArray(1)]),
+    });
+  }
+
+  //initalize Academic History form
+  private initalizeEmploymentHistoryForm() {
+    this.employmentHistoryForm = this.formBuilder.group({
+      userID: [''],
+      employments: this.formBuilder.array([this.newEmployments()], [minLengthArray(1)]),
     });
   }
 
@@ -113,7 +123,7 @@ export class ProfileComponent implements OnInit {
       cancelReset: null,
       acceptedFiles: '.jpg, .png, .jpeg, .svg',
       maxFilesize: 2, // MB,
-      dictDefaultMessage: '<span class="button actual-upload-btn"><svg class="mr-2" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.49961 1.59998L10.9663 4.79998M7.49961 1.59998L4.29961 4.79998M7.49961 1.59998V11.7333M13.8996 7.46664V14.4H1.09961V7.46664" stroke="#384047"></path></svg>Upload File</span>',
+      dictDefaultMessage: '<span class="button actual-upload-btn"><svg class="mr-2" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.49961 1.59998L10.9663 4.79998M7.49961 1.59998L4.29961 4.79998M7.49961 1.59998V11.7333M13.8996 7.46664V14.4H1.09961V7.46664" stroke="#384047"></path></svg><span>Upload File</span></span>',
       //previewsContainer: "#offerInHandsPreview",
       addRemoveLinks: true,
       //resizeWidth: 125,
@@ -213,14 +223,14 @@ export class ProfileComponent implements OnInit {
       cancelReset: null,
       acceptedFiles: '.mp4, .mov, .webm, .avi',
       maxFilesize: 5, // MB,
-      dictDefaultMessage: '<span class="button actual-upload-btn"><svg class="mr-2" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.49961 1.59998L10.9663 4.79998M7.49961 1.59998L4.29961 4.79998M7.49961 1.59998V11.7333M13.8996 7.46664V14.4H1.09961V7.46664" stroke="#384047"></path></svg>Upload File</span>',
+      dictDefaultMessage: '<span class="button actual-upload-btn"><svg class="mr-2" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.49961 1.59998L10.9663 4.79998M7.49961 1.59998L4.29961 4.79998M7.49961 1.59998V11.7333M13.8996 7.46664V14.4H1.09961V7.46664" stroke="#384047"></path></svg><span>Upload File</span></span>',
       //previewsContainer: "#offerInHandsPreview",
       addRemoveLinks: true,
       //resizeWidth: 125,
       //resizeHeight: 125,
       //createImageThumbnails:false,
-      dictInvalidFileType: 'Only valid jpeg, jpg, png and pdf file is accepted.',
-      dictFileTooBig: 'Maximum upload file size limit is 2MB',
+      dictInvalidFileType: 'Only valid mp4, mov, webm and avi file is accepted.',
+      dictFileTooBig: 'Maximum upload file size limit is 5MB',
       dictCancelUpload: '<i class="fa fa-times" aria-hidden="true"></i>',
       dictRemoveFile: '<i class="fa fa-times" aria-hidden="true"></i>',
       headers: {
@@ -269,13 +279,13 @@ export class ProfileComponent implements OnInit {
         })
 
         this.on("success", function (file, serverResponse) {
-          console.log('serverResponse', serverResponse);
+          //console.log('serverResponse', serverResponse);
 
           componentObj.zone.run(() => {
             componentObj.videoIntroudctionArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'video_introduction' }));
           });
 
-          //console.log('videoIntroudctionArray', componentObj.videoIntroudctionArray);
+          console.log('videoIntroudctionArray', componentObj.videoIntroudctionArray);
           this.removeFile(file);
           componentObj.utilsService.hidePageLoader();//hide page loader
 
@@ -314,43 +324,129 @@ export class ProfileComponent implements OnInit {
     */
   }
 
-   /**
-   * on Submit Basic Details
-  */
- onSubmitAcademicHistoryForm() {
+  /**
+  * on Submit Academic History
+ */
+  onSubmitAcademicHistoryForm() {
 
-  if (this.academicHistoryForm.invalid) {
-    this.isAcademicHistoryFormSubmitted = true
-    return false;
+
+    //console.log(this.academicHistoryForm); return;
+
+    if (this.academicHistoryForm.invalid) {
+      this.isAcademicHistoryFormSubmitted = true
+      return false;
+    }
+
+    this.wizard.goToNextStep();
+
+
   }
 
-  this.wizard.goToNextStep();
+  /**
+  * on Submit Employment History
+ */
+  onSubmitEmploymentHistoryForm() {
 
-  
-}
+
+    //console.log(this.employmentHistoryForm); return;
+
+    if (this.employmentHistoryForm.invalid) {
+      this.isEmploymentHistoryFormSubmitted = true
+      return false;
+    }
+
+    this.wizard.goToNextStep();
+
+
+  }
 
 
   academics(): FormArray {
-    return this.academicHistoryForm.get("academic") as FormArray
+    return this.academicHistoryForm.get("academics") as FormArray
   }
 
-  newAcademic(): FormGroup {
+  newAcademics(): FormGroup {
     return this.formBuilder.group({
-      name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
-      relation: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
-      job_title: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-      workplace_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-      contact_number: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10), Validators.maxLength(10)]],
-      email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      institution_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
+      grade: [''],
+      area_of_study: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
+      degree: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
+      start_year: [''],
+      end_year: [''],
     })
   }
 
   addAcademic() {
-    this.academics().push(this.newAcademic());
+    this.academics().push(this.newAcademics());
   }
 
   removeAcademic(i: number) {
     this.academics().removeAt(i);
+  }
+
+
+
+  employments(): FormArray {
+    return this.employmentHistoryForm.get("employments") as FormArray
+  }
+
+  newEmployments(): FormGroup {
+    return this.formBuilder.group({
+      company: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
+      city: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
+      state: ['', Validators.compose([Validators.required])],
+      title: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
+      start_year: [''],
+      end_year: [''],
+      description: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(200)])],
+    })
+  }
+
+  addEmployment() {
+    this.employments().push(this.newEmployments());
+  }
+
+  removeEmployment(i: number) {
+    this.employments().removeAt(i);
+  }
+
+  /**
+   * remove PDF
+   * @param index index of the image array
+   * @return  boolean
+   */
+  removeFile(index, file_category, file_key): void {
+
+    this.videoIntroudctionArray.removeAt(index);
+    this.removeFileFromBucket(file_key);
+  }
+
+  /**
+   * remove image from AWS Bucket
+   * @param filePath image url
+   * @param bucket s3 bucket name
+   */
+  removeFileFromBucket(file_key) {
+
+    const params = { fileKey: file_key }
+
+    this.utilsService.processPostRequest('deleteObject', params, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.videoIntroudctionArray.reset();
+    })
+  }
+
+  /**
+* set check object array length.
+* @param object
+*  @return number
+*/
+  public checkObjectLength(object): number {
+    return Object.keys(object).length;
+  }
+
+  //destroy all subscription
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 
 }
