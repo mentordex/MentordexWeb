@@ -53,6 +53,8 @@ export class ProfileComponent implements OnInit {
   isAddSocialLinksFormSubmitted: boolean = false
   wizardStep = 0;
   disabled: boolean = false
+  id: any = '';
+  mentorProfileDetails: any = {};
 
   profileImagePath: any = 'assets/img/image.png';
 
@@ -63,11 +65,78 @@ export class ProfileComponent implements OnInit {
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+
     this.initalizeBasicDetailsForm();
     this.initalizeAcademicHistoryForm();
     this.initalizeEmploymentHistoryForm();
     this.videoIntroductionDropzoneInit();
     this.profileImageDropzoneInit();
+    this.checkQueryParam();
+  }
+
+  private checkQueryParam() {
+    this.id = localStorage.getItem('x-user-ID');
+    this.getMentorProfileDetailsByToken(this.id);
+    this.basicDetailsForm.patchValue({
+      userID: this.id
+    });
+
+    this.academicHistoryForm.patchValue({
+      userID: this.id
+    });
+
+  }
+
+  /**
+   * get Mentor Details By Token
+  */
+  getMentorProfileDetailsByToken(id): void {
+    this.utilsService.processPostRequest('getMentorProfileDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.mentorProfileDetails = response;
+      console.log(response);
+      this.basicDetailsForm.patchValue({
+        bio: this.mentorProfileDetails.bio,
+        tagline: this.mentorProfileDetails.tagline,
+        servicable_zipcodes: this.mentorProfileDetails.servicable_zipcodes
+      });
+
+      if(this.mentorProfileDetails.profile_image.length > 0){
+        this.profileImageArray.push(new FormControl(this.mentorProfileDetails.profile_image[0]));
+
+        this.profileImagePath = this.mentorProfileDetails.profile_image[0].file_path;
+      }
+
+      if(this.mentorProfileDetails.introduction_video.length > 0){
+        this.videoIntroudctionArray.push(new FormControl(this.mentorProfileDetails.introduction_video[0]));
+      }
+      /*
+      this.academicHistoryForm.patchValue({
+        academics: this.mentorProfileDetails.academics
+      }); 
+      */
+
+     const formGroups = this.mentorProfileDetails.academics.map(x => ({
+      institution_name: x.institution_name
+     }));
+
+    console.log(formGroups)
+    this.academics().push(formGroups)
+      
+      //const academics: FormArray = this.academicHistoryForm.get('academics') as FormArray;
+      /*this.mentorProfileDetails.academics.forEach(element => {
+        //console.log(element)
+
+        this.academics().get('institution_name').patchValue(element.institution_name);
+
+        this.academics().push(new FormControl({
+          institution_name: element.institution_name
+        }));
+      }); */
+      
+      
+
+      console.log(this.academicHistoryForm.value);
+    })
   }
 
   //initalize Basic Detailsform
@@ -78,7 +147,7 @@ export class ProfileComponent implements OnInit {
       bio: ['', Validators.compose([Validators.minLength(30), Validators.maxLength(500), Validators.required])],
       servicable_zipcodes: new FormControl([{ value: '' }], minLengthArray(1)),
       profile_image: this.formBuilder.array([]),
-      video_introduction: this.formBuilder.array([])
+      introduction_video: this.formBuilder.array([])
     });
   }
 
@@ -104,7 +173,7 @@ export class ProfileComponent implements OnInit {
   }
 
   get videoIntroudctionArray(): FormArray {
-    return this.basicDetailsForm.get('video_introduction') as FormArray;
+    return this.basicDetailsForm.get('introduction_video') as FormArray;
   }
 
   /**
@@ -264,7 +333,7 @@ export class ProfileComponent implements OnInit {
 
         this.on('sending', function (file, xhr, formData) {
 
-          formData.append('folder', 'video_introduction');
+          formData.append('folder', 'introduction_video');
           formData.append('fileType', file.type);
           formData.append('base64StringFile', componentObj.base64StringFile);
           componentObj.utilsService.showPageLoader();//start showing page loader 
@@ -282,10 +351,10 @@ export class ProfileComponent implements OnInit {
           //console.log('serverResponse', serverResponse);
 
           componentObj.zone.run(() => {
-            componentObj.videoIntroudctionArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'video_introduction' }));
+            componentObj.videoIntroudctionArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'introduction_video' }));
           });
 
-          console.log('videoIntroudctionArray', componentObj.videoIntroudctionArray);
+          //console.log('videoIntroudctionArray', componentObj.videoIntroudctionArray);
           this.removeFile(file);
           componentObj.utilsService.hidePageLoader();//hide page loader
 
@@ -306,58 +375,49 @@ export class ProfileComponent implements OnInit {
   */
   onSubmitBasicDetailsForm() {
 
+    //console.log('basicDetailsForm', this.basicDetailsForm.value); return;
     if (this.basicDetailsForm.invalid) {
       this.isBasicDetailsFormSubmitted = true
       return false;
     }
-
-    this.wizard.goToNextStep();
-
-    //console.log('basicDetailsForm', this.basicDetailsForm.value);
-    /*
-    this.utilsService.processPostRequest('updateBasicDetails', this.basicDetailsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
-      //this.utilsService.onResponse('Your information updated successfully.', true);
-      this.router.navigate(['/mentor/skills']);
+    this.utilsService.processPostRequest('updateProfileBasicDetails', this.basicDetailsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log(response);
+      this.wizard.goToNextStep();
     })
-  
-    */
+
   }
 
   /**
   * on Submit Academic History
  */
   onSubmitAcademicHistoryForm() {
-
-
-    //console.log(this.academicHistoryForm); return;
+    console.log(this.academicHistoryForm.value); return;
 
     if (this.academicHistoryForm.invalid) {
       this.isAcademicHistoryFormSubmitted = true
       return false;
     }
 
-    this.wizard.goToNextStep();
+    this.utilsService.processPostRequest('updateProfileAcademicHistoryDetails', this.academicHistoryForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log(response);
 
-
+      this.wizard.goToNextStep();
+    })
   }
 
   /**
   * on Submit Employment History
  */
   onSubmitEmploymentHistoryForm() {
-
-
-    //console.log(this.employmentHistoryForm); return;
-
     if (this.employmentHistoryForm.invalid) {
       this.isEmploymentHistoryFormSubmitted = true
       return false;
     }
 
-    this.wizard.goToNextStep();
-
-
+    this.utilsService.processPostRequest('updateProfileEmploymentHistoryDetails', this.employmentHistoryForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log(response);
+      this.wizard.goToNextStep();
+    })
   }
 
 
@@ -383,8 +443,6 @@ export class ProfileComponent implements OnInit {
   removeAcademic(i: number) {
     this.academics().removeAt(i);
   }
-
-
 
   employments(): FormArray {
     return this.employmentHistoryForm.get("employments") as FormArray

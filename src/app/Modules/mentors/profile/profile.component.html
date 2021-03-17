@@ -219,7 +219,7 @@
                                                                                         <img src="assets/img/pdf_icon.png" alt="" class="img-fluid">
                                                                                 </a>
                                                                                 <div class="pdf-delt-times">
-                                                                                    <i (click)="removeFile(videoIntroudction.key, 'video_introduction',videoIntroudction.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
+                                                                                    <i (click)="removeFile(videoIntroudction.key, 'introduction_video',videoIntroudction.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
                                                                                 </div>
                                                                             </span>
                                                                     </span>
@@ -234,7 +234,7 @@
                                                 <div class="row">
                                                     <div class="col-md-8 col-lg-7">
                                                         <label for="" class="profile-label-text">Tagline <small class="font-italic">(optional)</small></label>
-                                                        <input type="text" class="profile-steps-input w-100 bg-white">
+                                                        <input type="text" formControlName="tagline" class="profile-steps-input w-100 bg-white">
                                                     </div>
                                                 </div>
                                             </div>
