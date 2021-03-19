@@ -231,6 +231,65 @@ aw-wizard-navigation-bar {
     font-size: 14px;
 }
 
+.modal.fade.show {
+    padding-right: 0px !important;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+    margin: 20px auto !important;
+    max-width: 800px !important;
+}
+
+.modal-content {
+    position: relative;
+    z-index: 1;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../img/whole-patternbg.png") repeat;
+    mix-blend-mode: normal;
+}
+
+.modal-header {
+    position: absolute;
+    right: -10px;
+    z-index: 9;
+    top: -18px;
+    background-color: #3bb3bd;
+    border-radius: 50%;
+    text-align: center;
+    padding: 0;
+    height: 30px;
+    width: 30px;
+    border: 0px;
+}
+
+.modal-header .close {
+    padding: 0;
+    margin: 0;
+    left: 30%;
+    position: relative;
+    color: #fff;
+    opacity: 1;
+    top: 9%;
+}
+
+.modal-header .close:hover {
+    opacity: 1 !important;
+}
+
+.modal-header .close:focus {
+    outline: 0 !important;
+}
+
 @media only screen and (min-width: 768px) {
     .listing-category-modify ul li {
         flex: 0 0 33.33%;

@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -32,9 +33,12 @@ export class HomeComponent implements OnInit {
   cities: any = []
   blogs: any = []
   faqs: any = []
+  banners:any = []
 
   firstFourCities:any = [];
   lastThreeCities:any = [];
+
+  getVideoLink:any = '';
 
   bannerSlideConfig = {
     slidesToScroll: 1,
@@ -123,13 +127,14 @@ export class HomeComponent implements OnInit {
     ]
   };
 
-  constructor(private utilsService: UtilsService) {}
+  constructor(private utilsService: UtilsService, private dom:DomSanitizer) {}
 
   ngOnInit(): void {
     this.fetchCategories()
     this.fetchBlogs()
     this.fetchFAQs()
     this.fetchCities()
+    this.fetchBanners()
   }
 
   fetchFAQs() {
@@ -177,6 +182,13 @@ export class HomeComponent implements OnInit {
 
   }
 
+  fetchBanners() {
+    this.utilsService.processGetRequest('banner/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.banners = response
+      //console.log( this.banners);
+    })
+  }
+
   public loadScript(url: string) {
     const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
@@ -201,6 +213,20 @@ export class HomeComponent implements OnInit {
 
   prevTestimonials(){
     this.testimonialsModal.slickPrev();
+  }
+
+  public openYoutubePopup(video_link): void { 
+    this.getVideoLink =  this.dom.bypassSecurityTrustResourceUrl(video_link); 
+    //console.log(this.getVideoLink);
+    if(this.getVideoLink != ""){
+      $('#videoModal').modal('show')
+    }
+    
+  }
+
+  public stopYoutubeVideo(): void {   
+    this.getVideoLink = ''; 
+    $("#videoModal iframe").attr("src", $("#videoModal iframe").attr("src"));
   }
 
   ngAfterContentInit() { }

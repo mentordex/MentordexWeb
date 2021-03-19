@@ -55,6 +55,11 @@ export class ProfileComponent implements OnInit {
   disabled: boolean = false
   id: any = '';
   mentorProfileDetails: any = {};
+  endAcademicyears: any = [];
+  endEmploymentyears: any = [];
+
+  calculateProfilePercentage:any = 0;
+  isCurrentlyWorkHereChecked: boolean = false
 
   profileImagePath: any = 'assets/img/image.png';
 
@@ -85,6 +90,10 @@ export class ProfileComponent implements OnInit {
       userID: this.id
     });
 
+    this.employmentHistoryForm.patchValue({
+      userID: this.id
+    });
+
   }
 
   /**
@@ -100,42 +109,94 @@ export class ProfileComponent implements OnInit {
         servicable_zipcodes: this.mentorProfileDetails.servicable_zipcodes
       });
 
-      if(this.mentorProfileDetails.profile_image.length > 0){
+      if(this.mentorProfileDetails.bio != ""){
+        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+      }
+
+      if(this.mentorProfileDetails.tagline != ""){
+        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+      }
+
+      if(this.mentorProfileDetails.servicable_zipcodes != ""){
+        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+      }
+
+      if (this.mentorProfileDetails.profile_image.length > 0) {
         this.profileImageArray.push(new FormControl(this.mentorProfileDetails.profile_image[0]));
 
         this.profileImagePath = this.mentorProfileDetails.profile_image[0].file_path;
+
+        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+
       }
 
-      if(this.mentorProfileDetails.introduction_video.length > 0){
+      if (this.mentorProfileDetails.introduction_video.length > 0) {
         this.videoIntroudctionArray.push(new FormControl(this.mentorProfileDetails.introduction_video[0]));
+
+        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
       }
-      /*
-      this.academicHistoryForm.patchValue({
-        academics: this.mentorProfileDetails.academics
-      }); 
-      */
 
-     const formGroups = this.mentorProfileDetails.academics.map(x => ({
-      institution_name: x.institution_name
-     }));
+      if (this.mentorProfileDetails.academics.length > 0) {
+        this.mentorProfileDetails.academics.forEach((element, index, academicsArray) => {
+          this.addAcademic();
+          this.academics().at(index).patchValue({
+            institution_name: academicsArray[index].institution_name,
+            grade: academicsArray[index].grade,
+            area_of_study: academicsArray[index].area_of_study,
+            degree: academicsArray[index].degree,
+            start_year: academicsArray[index].start_year,
+            end_year: academicsArray[index].end_year,
+          })
 
-    console.log(formGroups)
-    this.academics().push(formGroups)
-      
-      //const academics: FormArray = this.academicHistoryForm.get('academics') as FormArray;
-      /*this.mentorProfileDetails.academics.forEach(element => {
-        //console.log(element)
+          if (academicsArray[index].start_year != '') {
+            this.onSelectAcademicStartYear(academicsArray[index].start_year, index)
+          }
 
-        this.academics().get('institution_name').patchValue(element.institution_name);
+        });
 
-        this.academics().push(new FormControl({
-          institution_name: element.institution_name
-        }));
-      }); */
-      
-      
+        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
 
-      console.log(this.academicHistoryForm.value);
+      } else {
+        this.addAcademic();
+      }
+
+
+      if (this.mentorProfileDetails.employments.length > 0) {
+
+        this.mentorProfileDetails.employments.forEach((element, index, employmentsArray) => {
+          this.addEmployment();
+          this.employments().at(index).patchValue({
+            company: employmentsArray[index].company,
+            state: employmentsArray[index].state,
+            city: employmentsArray[index].city,
+            title: employmentsArray[index].title,
+            description: employmentsArray[index].description,
+            start_year: employmentsArray[index].start_year,
+            end_year: employmentsArray[index].end_year,
+          })
+
+          if (employmentsArray[index].start_year != '') {
+            this.onSelectEmploymentStartYear(employmentsArray[index].start_year, index)
+          }
+
+          /*if (employmentsArray[index].end_year == 'Present') {
+            //console.log('hello');
+
+            this.endyears[index] = [];
+            this.isCurrentlyWorkHereChecked = true;
+
+          } */
+
+        });
+
+        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+      } else {
+        this.addEmployment();
+      }
+
+      //console.log(this.calculateProfilePercentage);
+
+      //console.log(this.academicHistoryForm.value);
     })
   }
 
@@ -156,7 +217,7 @@ export class ProfileComponent implements OnInit {
   private initalizeAcademicHistoryForm() {
     this.academicHistoryForm = this.formBuilder.group({
       userID: [''],
-      academics: this.formBuilder.array([this.newAcademics()], [minLengthArray(1)]),
+      academics: this.formBuilder.array([], [minLengthArray(1)]),
     });
   }
 
@@ -164,7 +225,7 @@ export class ProfileComponent implements OnInit {
   private initalizeEmploymentHistoryForm() {
     this.employmentHistoryForm = this.formBuilder.group({
       userID: [''],
-      employments: this.formBuilder.array([this.newEmployments()], [minLengthArray(1)]),
+      employments: this.formBuilder.array([], [minLengthArray(1)]),
     });
   }
 
@@ -375,11 +436,37 @@ export class ProfileComponent implements OnInit {
   */
   onSubmitBasicDetailsForm() {
 
-    //console.log('basicDetailsForm', this.basicDetailsForm.value); return;
+    //console.log('basicDetailsForm', this.basicDetailsForm.value); 
+    //console.log('basicDetailsForm', this.basicDetailsForm.controls.servicable_zipcodes.value);
+    //return;
     if (this.basicDetailsForm.invalid) {
       this.isBasicDetailsFormSubmitted = true
       return false;
     }
+
+    
+    this.calculateProfilePercentage = 0;
+
+    if(this.basicDetailsForm.controls.bio.value != ''){
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+    }
+
+    if(this.basicDetailsForm.controls.tagline.value != ''){
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+    }
+
+    if(this.basicDetailsForm.controls.servicable_zipcodes.value){
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+    }
+
+    if(this.profileImageArray.length > 0){
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+    }
+
+    if(this.videoIntroudctionArray.length > 0){
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+    }
+
     this.utilsService.processPostRequest('updateProfileBasicDetails', this.basicDetailsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
       this.wizard.goToNextStep();
@@ -391,16 +478,20 @@ export class ProfileComponent implements OnInit {
   * on Submit Academic History
  */
   onSubmitAcademicHistoryForm() {
-    console.log(this.academicHistoryForm.value); return;
+    //console.log(this.academicHistoryForm.value); return;
 
     if (this.academicHistoryForm.invalid) {
       this.isAcademicHistoryFormSubmitted = true
       return false;
     }
 
+    if(this.academics().length > 0){
+      
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+    }
+
     this.utilsService.processPostRequest('updateProfileAcademicHistoryDetails', this.academicHistoryForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
-
       this.wizard.goToNextStep();
     })
   }
@@ -412,6 +503,10 @@ export class ProfileComponent implements OnInit {
     if (this.employmentHistoryForm.invalid) {
       this.isEmploymentHistoryFormSubmitted = true
       return false;
+    }
+
+    if(this.employments().length > 0){
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
     }
 
     this.utilsService.processPostRequest('updateProfileEmploymentHistoryDetails', this.employmentHistoryForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
@@ -427,12 +522,12 @@ export class ProfileComponent implements OnInit {
 
   newAcademics(): FormGroup {
     return this.formBuilder.group({
-      institution_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
+      institution_name: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
       grade: [''],
       area_of_study: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
       degree: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
-      start_year: [''],
-      end_year: [''],
+      start_year: [{ value: '' }],
+      end_year: [{ value: '' }],
     })
   }
 
@@ -450,13 +545,13 @@ export class ProfileComponent implements OnInit {
 
   newEmployments(): FormGroup {
     return this.formBuilder.group({
-      company: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
-      city: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
-      state: ['', Validators.compose([Validators.required])],
-      title: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
+      company: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
+      city: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
+      state: [''],
+      title: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
       start_year: [''],
       end_year: [''],
-      description: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(200)])],
+      description: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(200)])],
     })
   }
 
@@ -491,6 +586,74 @@ export class ProfileComponent implements OnInit {
     this.utilsService.processPostRequest('deleteObject', params, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.videoIntroudctionArray.reset();
     })
+  }
+
+  public get years() {
+    var currentYear = new Date().getFullYear(), years = [];
+    let startYear = currentYear - 60;
+    while (startYear <= currentYear) {
+      years.push(startYear++);
+    }
+
+    //this.endyears = years;
+
+    return years;
+  }
+
+
+  public onSelectAcademicStartYear(start_year, i) {
+
+    
+    this.zone.run(() => {
+
+      if (start_year != '') {
+        this.endAcademicyears[i] = [];
+        var currentYear = new Date().getFullYear(), years = [];
+        let startYear = start_year;
+        while (startYear <= currentYear) {
+          this.endAcademicyears[i].push(startYear++);
+        }
+      }
+    });
+    //
+  }
+
+  public onSelectEmploymentStartYear(start_year, i) {
+
+    
+    this.zone.run(() => {
+
+      if (start_year != '') {
+        this.endEmploymentyears[i] = [];
+        var currentYear = new Date().getFullYear(), years = [];
+        let startYear = start_year;
+        while (startYear <= currentYear) {
+          this.endEmploymentyears[i].push(startYear++);
+        }
+      }
+    });
+    //
+  }
+
+  onSelectCurrentlyWorkHere(e) {
+    let formGroupIndex = e.target.getAttribute('data-formGroupIndex');
+    let startYear = e.target.getAttribute('data-startYear');
+    if (e.target.checked) {
+
+      this.employments().at(formGroupIndex).patchValue({
+        end_year: 'Present'
+      })
+
+      this.endEmploymentyears[formGroupIndex] = [];
+
+    } else {
+
+      this.employments().at(formGroupIndex).patchValue({
+        end_year: ''
+      })
+
+      this.onSelectEmploymentStartYear(startYear, formGroupIndex)
+    }
   }
 
   /**

@@ -236,7 +236,7 @@ export class BookASlotComponent implements OnInit {
 
     const params = { fileKey : file_key }
 
-    this.utilsService.processPostRequest('removeFileFromBucket', params, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+    this.utilsService.processPostRequest('deleteObject', params, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       console.log(response);
     })
   } 

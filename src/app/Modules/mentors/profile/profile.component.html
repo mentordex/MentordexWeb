@@ -155,10 +155,10 @@
                                             <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
                                                 <div class="pgbarouter">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                     <div class="text-center mt-1">
-                                                        <p class="text-white mb-0">0% Completed</p>
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -216,7 +216,7 @@
                                                                                 
         
                                                                                 <a data-toggle="tooltip" title="{{videoIntroudction.value.file_name}}" class="upload_pdf" href="{{videoIntroudction.value.file_path}}" target="_blank">
-                                                                                        <img src="assets/img/pdf_icon.png" alt="" class="img-fluid">
+                                                                                        <img src="assets/img/video-file.png" alt="" class="img-fluid">
                                                                                 </a>
                                                                                 <div class="pdf-delt-times">
                                                                                     <i (click)="removeFile(videoIntroudction.key, 'introduction_video',videoIntroudction.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
@@ -273,7 +273,7 @@
                                                 <input [disabled]="basicDetailsForm.invalid" (click)="onSubmitBasicDetailsForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
                                             </div>
                                             <!--div class="col-12 col-md-3 text-center text-md-right">
-                                                <a href="#" class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                                <a href="javascript:void(0)" awNextStep class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
                                             </div-->
                                             <div class="col-12 mt-2">
                                                 <div class="text-center text-md-left text-top-detail">
@@ -303,10 +303,10 @@
                                             <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
                                                 <div class="pgbarouter">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 18%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                     <div class="text-center mt-1">
-                                                        <p class="text-white mb-0">18% Completed</p>
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -361,12 +361,12 @@
                                                                 <label class="profile-label-text mb-2">Period</label>
                                                                 <div class="row">
                                                                     <div class="col-6">
-                                                                        <select formControlName="start_year" class="custom-select arrow-select">
-                                                                        <option value="">From</option>
-                                                                        <option value="01">01</option>
+                                                                        <select #academic_start_year (change)="onSelectAcademicStartYear(academic_start_year.value, i)" formControlName="start_year" class="custom-select arrow-select">
+                                                                        <option disabled selected value="">From</option>
+                                                                        <option *ngFor="let year of years" [value]="year">{{year}}</option>
                                                                     </select>
                                                                         <p class="errorCls" *ngIf="academic.get('start_year').touched || isAcademicHistoryFormSubmitted">
-                                                                            <app-form-validation-errors errorPrefix="Grade Level " [errors]="academic.get('start_year').errors"></app-form-validation-errors>
+                                                                            <app-form-validation-errors errorPrefix="Year " [errors]="academic.get('start_year').errors"></app-form-validation-errors>
                                                                         </p>
                                                                     </div>
                                                                     <div class="span-bar">
@@ -374,11 +374,11 @@
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <select formControlName="end_year" class="custom-select arrow-select">
-                                                                        <option value="">To (or expected graduation year)</option>
-                                                                        <option value="01">01</option>
+                                                                        <option disabled selected value="">To</option>
+                                                                        <option *ngFor="let year of endAcademicyears[i]" [value]="year">{{year}}</option>
                                                                     </select>
                                                                         <p class="errorCls" *ngIf="academic.get('end_year').touched || isAcademicHistoryFormSubmitted">
-                                                                            <app-form-validation-errors errorPrefix="Grade Level " [errors]="academic.get('end_year').errors"></app-form-validation-errors>
+                                                                            <app-form-validation-errors errorPrefix="Year " [errors]="academic.get('end_year').errors"></app-form-validation-errors>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -436,7 +436,7 @@
                                                 </div>
                                             </div>
                                             <!--div class="col-12 col-md-3 text-center text-md-right">
-                                                <a href="#" class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                                <a href="javascript:void(0)" awNextStep class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
                                             </div-->
                                             <div class="col-12 mt-2">
                                                 <div class="text-center text-md-left text-top-detail">
@@ -467,10 +467,10 @@
                                             <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
                                                 <div class="pgbarouter">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 37%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                     <div class="text-center mt-1">
-                                                        <p class="text-white mb-0">37% Completed</p>
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -530,10 +530,8 @@
                                                                 <div class="col-lg-6 mb-4 mb-lg-0">
                                                                     <div class="w-100 mb-4">
                                                                         <label class="profile-label-text mb-2">State</label>
-                                                                        <select formControlName="state" class="custom-select profile-steps-input h-auto arrow-select py-13">
-                                                                            <option value="">Select State</option>
-                                                                            <option value="">01</option>
-                                                                        </select>
+
+                                                                        <input formControlName="state" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
 
                                                                         <p class="errorCls" *ngIf="employment.get('state').touched || isEmploymentHistoryFormSubmitted">
                                                                             <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="State " [errors]="employment.get('state').errors"></app-form-validation-errors>
@@ -556,9 +554,9 @@
                                                                     <label class="profile-label-text mb-2">Period</label>
                                                                     <div class="row">
                                                                         <div class="col-6">
-                                                                            <select formControlName="start_year" class="custom-select profile-steps-input h-auto arrow-select py-13 ">
-                                                                                <option value="">Year</option>
-                                                                                <option value="01">01</option>
+                                                                            <select #employment_start_year formControlName="start_year" (change)="onSelectEmploymentStartYear(employment_start_year.value, i)" class="custom-select profile-steps-input h-auto arrow-select py-13 ">
+                                                                                <option disabled selected value="">From</option>
+                                                                        <option *ngFor="let year of years" [value]="year">{{year}}</option>
                                                                             </select>
 
                                                                             <p class="errorCls" *ngIf="employment.get('start_year').touched || isEmploymentHistoryFormSubmitted">
@@ -570,8 +568,8 @@
                                                                         </div>
                                                                         <div class="col-6">
                                                                             <select formControlName="end_year" class="custom-select profile-steps-input h-auto arrow-select py-13 ">
-                                                                                <option value="">Year</option>
-                                                                                <option value="01">01</option>
+                                                                                <option disabled selected value="">To</option>
+                                                                        <option *ngFor="let year of endEmploymentyears[i]" [value]="year">{{year}}</option>
                                                                             </select>
 
                                                                             <p class="errorCls" *ngIf="employment.get('end_year').touched || isEmploymentHistoryFormSubmitted">
@@ -586,7 +584,12 @@
                                                                     <div class="small-checkboxes">
                                                                         <div class="form-check check-opacity mb-3">
                                                                             <label class="form-check-label text-muted">
-                                                                            <input type="checkbox" class="form-check-input" name="categoryTwo">I currently work here<i class="input-helper"></i></label>
+                                                                            <input (change)="onSelectCurrentlyWorkHere($event)"
+                                                                            [attr.data-formGroupIndex]="i"
+                                                                            [attr.data-startYear]="employment_start_year.value" 
+                                                                            type="checkbox" 
+                                                                            [checked]="isCurrentlyWorkHereChecked"
+                                                                            value="Present" class="form-check-input" name="currentlyWork">I currently work here<i class="input-helper"></i></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -629,9 +632,9 @@
                                                     <input [disabled]="employmentHistoryForm.invalid" (click)="onSubmitEmploymentHistoryForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-3 text-center text-md-right">
-                                                <a href="#" class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
-                                            </div>
+                                            <!--div class="col-12 col-md-3 text-center text-md-right">
+                                                <a href="javascript:void(0)" awNextStep class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                            </div-->
                                             <div class="col-12 mt-2">
                                                 <div class="text-center text-md-left text-top-detail">
                                                     We recommend you set up your account at least 80%. Of course, 100% is best!
@@ -642,6 +645,143 @@
                                 </div>
                             </div>
                         </form>
+                    </aw-wizard-step>
+
+                    <aw-wizard-step stepTitle="Achievements">
+                        <div class="profile-steps-rightsidebar-column">
+                            <div class="profile-steps-rightsidebar-column-header">
+                                <div class="row">
+                                    <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                        <div class="col-md-12 px-0">
+                                            <p class="basic-title">Training / Achievements</p>
+                                        </div>
+                                        <div class="col-md-12 px-0 text-md-left">
+                                            <p class="basic-title mb-0 font-18">4 of 6</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                        <div class="pgbarouter">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 54%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="text-center mt-1">
+                                                <p class="text-white mb-0">54% Completed</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-steps-rightsidebar-column-body position-relative">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="profile-label-text mb-2 pr-lg-120">Add what you've achieved in your area(s) of expertise. </div>
+                                                <div class="text-top-detail mb-1">
+                                                    If you have not received an award or recognition, that's ok! But please do share in the description box the amount of time you have put in and the level of expertise you have achieved, and why parents should hire you to teach their child(ren).
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-0">
+                                        <div class="after-border bottom-after">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-4 mb-lg-0">
+                                                            <div class="w-100">
+                                                                <label class="profile-label-text mb-2">Title</label>
+                                                                <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-4 mb-lg-0">
+                                                            <div class="w-100">
+                                                                <label class="profile-label-text mb-2">Years of Learning Your Skill</label>
+                                                                <input type="text" class="profile-steps-input w-100 bg-white">
+                                                            </div>
+                                                            <div class="w-100 position-relative">
+                                                                <div class="profile-label-text font-14 mt-1 mb-0">Please briefly describe the amount of time you have put into learning the skill you wish to teach. </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-minus-40">
+                                                        <div class="col-lg-6 mb-4">
+                                                            <label class="profile-label-text mb-2">Associated with</label>
+                                                            <select class="custom-select profile-steps-input h-auto arrow-select py-13">
+                                                                <option value="">Select</option>
+                                                                <option value="">01</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-4">
+                                                            <label class="profile-label-text mb-2">Issuer</label>
+                                                            <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-lg-6">
+                                                            <label class="profile-label-text mb-2">Period</label>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <select class="custom-select profile-steps-input h-auto arrow-select py-13 ">
+                                                                        <option value="">Year</option>
+                                                                        <option value="">01</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="span-bar">
+                                                                    <span>-</span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <select class="custom-select profile-steps-input h-auto arrow-select py-13 ">
+                                                                        <option value="">Year</option>
+                                                                        <option value="">01</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-4">
+                                                        <div class="col-lg-6">
+                                                            <label class="profile-label-text mb-2">Description</label>
+                                                            <textarea name="" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-row-btn text-center text-lg-right px-3 mt-3 mt-lg-0">
+                                        <div class="addrow">
+                                            <button class="font-18 line-h21">
+                                                <span><svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5998 5.59999V0.799988H6.39981V5.59999H11.1998V6.39999H6.39981V11.2H5.5998V6.39999H0.799805V5.59999H5.5998Z" fill="#676767"></path>
+                                                </svg>
+                                                </span>Add More
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-steps-rightsidebar-column-footer">
+                                <div class="row">
+                                    <div class="col-12 col-md-9 text-center text-md-left  mb-3">
+                                        <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                            <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="#">BACK</a>
+                                            <input type="submit" class="primary--button py-2 px-30" value="NEXT">
+                                        </div>
+                                    </div>
+                                    <!--div class="col-12 col-md-3 text-center text-md-right">
+                                        <a href="#" class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                    </div-->
+                                    <div class="col-12 mt-2">
+                                        <div class="text-center text-md-left text-top-detail">
+                                            We recommend you set up your account at least 80%. Of course, 100% is best!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </aw-wizard-step>
                 </aw-wizard>
                 <div class="d-md-none mt-5">

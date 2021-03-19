@@ -4,10 +4,10 @@
 
         <ngx-slick-carousel class="banner-slider" #slickModal="slick-carousel" [config]="bannerSlideConfig">
             <!--each banner-->
-            <div ngxSlickItem class="banner position-relative">
+            <div ngxSlickItem *ngFor="let banner of banners" class="banner position-relative">
                 <div class="new-gutter position-relative min-h-inherit">
                     <div class="banner-img ic-svg">
-                        <img src="assets/img/slider-01-svg.svg" class="animated-hero ml-auto" alt="slider-img">
+                        <img src="{{banner.image}}" class="animated-hero ml-auto" alt="slider-img">
                     </div>
                     <div class="container position-relative min-h-inherit">
                         <div class="row mx-0">
@@ -15,14 +15,14 @@
                                 <!-- Slider Title -->
                                 <div class="main-title max-450">
                                     <h1 class="slider-header-title header-contentbox-fade">
-                                        Does your kid need a piano teacher? Swimming coach? Academic tutor?
+                                        {{banner.title}}
                                     </h1>
                                     <h3 class="slider-header-text header-contentbox-fade">
-                                        Welcome to the world's smartest mentor rolodex! Find talented individuals at your fingertips.
+                                        {{banner.description}}
                                     </h3>
                                     <div class="text-center text-lg-left talented-mentors-btn header-contentbox-fade">
-                                        <a href="#" class="primary--button mb-3 mr-3">Get Started </a>
-                                        <a href="#" class="alt--button">Video intro</a>
+                                        <a href="{{banner.button_link}}" target="_blank" class="primary--button mb-3 mr-3">{{banner.button_text}} </a>
+                                        <a href="javascript:void(0)" (click)="openYoutubePopup(banner.video_button_link)" class="alt--button">{{banner.video_button_text}}</a>
                                     </div>
                                 </div>
                                 <!--//End Slider Title -->
@@ -31,102 +31,6 @@
                     </div>
                 </div>
             </div>
-            <!--each banner-->
-
-            <!--each banner-->
-            <div ngxSlickItem class="banner position-relative">
-                <div class="new-gutter position-relative min-h-inherit">
-                    <div class="banner-img ic-svg lef0">
-                        <img src="assets/img/slide-02-01-svg.svg" class="animated-hero m-auto" alt="slider-img">
-                    </div>
-                    <div class="container position-relative min-h-inherit">
-                        <div class="row mx-0">
-                            <div class="col-12 col-md-12 px-0 pt-md-130">
-                                <!-- Slider Title -->
-                                <div class="main-title max-450 max-450-xxl  max-500-xxl box-pos-slider">
-                                    <h1 class="slider-header-title text-center header-contentbox-fade">
-                                        It takes a village.
-                                        <br> Find Yours Here.
-                                    </h1>
-                                    <h3 class="slider-header-text text-center header-contentbox-fade">
-                                        Hire talented individuals for personalized instruction. MentorDex does not charge parents a booking fee.
-                                    </h3>
-                                    <div class="text-center text-md-center talented-mentors-btn header-contentbox-fade">
-                                        <a href="#" class="primary--button mb-3 mr-3">Get Started </a>
-                                        <a href="#" class="alt--button">Video intro</a>
-                                    </div>
-                                </div>
-                                <!--//End Slider Title -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--each banner-->
-
-            <!--each banner-->
-            <div ngxSlickItem class="banner position-relative">
-                <div class="new-gutter position-relative min-h-inherit">
-                    <div class="banner-img ic-svg lef0">
-                        <div class="animated-hero w-100">
-                            <img src="assets/img/slide-04-bg.svg" class="field-abs-md animated-hero w-100" alt="slider-img">
-                            <img src="assets/img/slider-04-human.svg" class="human-abs-md animated-hero max-lg-50 ml-auto" alt="slider-img">
-                        </div>
-                        <!-- <img src="assets/img/slide-04.png" class="animated-hero w-100" alt="slider-img"> -->
-                    </div>
-                    <div class="container position-relative min-h-inherit">
-                        <div class="row mx-0">
-                            <div class="col-12 col-md-12 px-0 pt-md-130">
-                                <!-- Slider Title -->
-                                <div class="main-title max-450">
-                                    <h1 class="slider-header-title header-contentbox-fade">
-                                        Face-to-face connections. Lessons that will last a lifetime.
-                                    </h1>
-                                    <h3 class="slider-header-text header-contentbox-fade">
-                                        Help your kids pursue interests and foster talents through in-person instruction.
-                                    </h3>
-                                    <div class="text-center text-lg-left talented-mentors-btn header-contentbox-fade">
-                                        <a href="#" class="primary--button mb-3 mr-3">Get Started </a>
-                                        <a href="#" class="alt--button">Video intro</a>
-                                    </div>
-                                </div>
-                                <!--//End Slider Title -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--each banner-->
-
-            <!--each banner-->
-            <div ngxSlickItem class="banner position-relative">
-                <div class="new-gutter position-relative min-h-inherit">
-                    <div class="banner-img ic-svg max-lg-50">
-                        <img src="assets/img/slide-03.svg" class="animated-hero ml-auto my-lg-auto" alt="slider-img">
-                    </div>
-                    <div class="container position-relative min-h-inherit">
-                        <div class="row mx-0">
-                            <div class="col-12 col-md-12 px-0 pt-md-130">
-                                <!-- Slider Title -->
-                                <div class="main-title max-450">
-                                    <h1 class="slider-header-title header-contentbox-fade">
-                                        Hire Proven Pros for Your Kids On the World's Smartest Mentor Rolodex.
-                                    </h1>
-                                    <h3 class="slider-header-text header-contentbox-fade">
-                                        Find talented teachers, tutors, and trainers in your city and help your kids reach their full potential.
-                                    </h3>
-                                    <div class="text-center text-lg-left talented-mentors-btn header-contentbox-fade">
-                                        <a href="#" class="primary--button mb-3 mr-3">Get Started </a>
-                                        <a href="#" class="alt--button">Video intro</a>
-                                    </div>
-                                </div>
-                                <!--//End Slider Title -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--each banner-->
         </ngx-slick-carousel>
 
         <div class="new-gutter position-relative">
@@ -835,3 +739,25 @@
     <img src="assets/img/newsletter-svg.svg" class="newsletter-svg">
 </section>
 <!--Newsletter section ends-->
+
+
+<!-- Modal Popup of Invoice Details -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button (click)="stopYoutubeVideo()" type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <iframe width="736" height="422" [src]="getVideoLink" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
