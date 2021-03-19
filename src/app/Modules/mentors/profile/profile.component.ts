@@ -52,11 +52,14 @@ export class ProfileComponent implements OnInit {
   isHourlyRateFormSubmitted: boolean = false
   isAddSocialLinksFormSubmitted: boolean = false
   wizardStep = 0;
+  getWizardStep = 1;
+  getWizardCompleteStep = 1;
   disabled: boolean = false
   id: any = '';
   mentorProfileDetails: any = {};
   endAcademicyears: any = [];
   endEmploymentyears: any = [];
+  employmentStartYear:any = '';
 
   calculateProfilePercentage:any = 0;
   isCurrentlyWorkHereChecked: boolean = false
@@ -102,7 +105,12 @@ export class ProfileComponent implements OnInit {
   getMentorProfileDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorProfileDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorProfileDetails = response;
-      console.log(response);
+
+      if (this.mentorProfileDetails.admin_status != 'APPROVED') {
+        this.router.navigate(['/mentor/application-status']);
+      }
+
+      //console.log(response);
       this.basicDetailsForm.patchValue({
         bio: this.mentorProfileDetails.bio,
         tagline: this.mentorProfileDetails.tagline,
@@ -176,16 +184,17 @@ export class ProfileComponent implements OnInit {
           })
 
           if (employmentsArray[index].start_year != '') {
+            this.employmentStartYear = employmentsArray[index].start_year;
             this.onSelectEmploymentStartYear(employmentsArray[index].start_year, index)
           }
 
-          /*if (employmentsArray[index].end_year == 'Present') {
+          if (employmentsArray[index].end_year == 'Present') {
             //console.log('hello');
 
-            this.endyears[index] = [];
+            this.endEmploymentyears[index] = [];
             this.isCurrentlyWorkHereChecked = true;
 
-          } */
+          } 
 
         });
 
@@ -470,6 +479,8 @@ export class ProfileComponent implements OnInit {
     this.utilsService.processPostRequest('updateProfileBasicDetails', this.basicDetailsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
       this.wizard.goToNextStep();
+      this.getWizardStep = 2;
+      this.getWizardCompleteStep = 2;
     })
 
   }
@@ -493,6 +504,8 @@ export class ProfileComponent implements OnInit {
     this.utilsService.processPostRequest('updateProfileAcademicHistoryDetails', this.academicHistoryForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
       this.wizard.goToNextStep();
+      this.getWizardStep = 3;
+      this.getWizardCompleteStep = 3;
     })
   }
 
@@ -512,6 +525,8 @@ export class ProfileComponent implements OnInit {
     this.utilsService.processPostRequest('updateProfileEmploymentHistoryDetails', this.employmentHistoryForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
       this.wizard.goToNextStep();
+      this.getWizardStep = 4;
+      this.getWizardCompleteStep = 4;
     })
   }
 
@@ -630,6 +645,10 @@ export class ProfileComponent implements OnInit {
         while (startYear <= currentYear) {
           this.endEmploymentyears[i].push(startYear++);
         }
+
+        this.employmentStartYear = start_year;
+        this.isCurrentlyWorkHereChecked = false;
+
       }
     });
     //
@@ -645,6 +664,7 @@ export class ProfileComponent implements OnInit {
       })
 
       this.endEmploymentyears[formGroupIndex] = [];
+      this.isCurrentlyWorkHereChecked = true;
 
     } else {
 
@@ -653,6 +673,7 @@ export class ProfileComponent implements OnInit {
       })
 
       this.onSelectEmploymentStartYear(startYear, formGroupIndex)
+      this.isCurrentlyWorkHereChecked = false;
     }
   }
 

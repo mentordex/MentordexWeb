@@ -36,6 +36,7 @@ export class BookASlotComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
   id: any = ''
   mentorDetails: any = {};
+  public loading = false;
 
   bookASlotForm: FormGroup;
   isBookASlotFormSubmitted: boolean = false
@@ -151,8 +152,12 @@ export class BookASlotComponent implements OnInit {
 
       accept: function (file, done) {
 
+        componentObj.zone.run(() => {
+          componentObj.loading = true; //start showing page loader
+        });
 
         if ((componentObj.letterOfRecommendationPdfArray.length + 1) > 3) {
+          componentObj.loading = false; //hide showing page loader
           componentObj.utilsService.onError('You cannot upload any more files.');//hide page loader          
           this.removeFile(file);
           return false;
@@ -160,7 +165,7 @@ export class BookASlotComponent implements OnInit {
 
         const reader = new FileReader();
         reader.onload = function (event) {
-
+          componentObj.loading = true; //start showing page loader
           let base64String = reader.result
           let fileExtension = (file.name).split('.').pop();
 
@@ -183,16 +188,17 @@ export class BookASlotComponent implements OnInit {
           formData.append('folder', 'LOR');
           formData.append('fileType', file.type);
           formData.append('base64StringFile', componentObj.base64StringFile);
-          componentObj.utilsService.showPageLoader();//start showing page loader 
+          componentObj.loading = true; 
+          //componentObj.utilsService.showPageLoader();//start showing page loader 
         });
 
-
+        /* 
         this.on("totaluploadprogress", function (progress) {
           componentObj.utilsService.showPageLoader('Uploading file ' + parseInt(progress) + '%')
           if (progress >= 100) {
             componentObj.utilsService.hidePageLoader();//hide page loader
           }
-        })
+        }) */
 
         this.on("success", function (file, serverResponse) {
           console.log('serverResponse', serverResponse);
@@ -200,12 +206,14 @@ export class BookASlotComponent implements OnInit {
           componentObj.zone.run(() => {
             componentObj.letterOfRecommendationPdfArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'LOR' }));
           });
-          console.log('letterOfRecommendationPdfArray', componentObj.letterOfRecommendationPdfArray);
+          //console.log('letterOfRecommendationPdfArray', componentObj.letterOfRecommendationPdfArray);
+          componentObj.loading = false; //hide showing page loader
           this.removeFile(file);
           componentObj.utilsService.hidePageLoader();//hide page loader
         });
 
         this.on("error", function (file, serverResponse) {
+          componentObj.loading = false; //hide showing page loader
           this.removeFile(file);
           componentObj.utilsService.onError(serverResponse);//hide page loader  
           componentObj.utilsService.hidePageLoader();//hide page loader
@@ -246,11 +254,11 @@ export class BookASlotComponent implements OnInit {
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      
-       if (this.mentorDetails.admin_status == 'NEW') {
-        this.router.navigate(['/mentor/application-status']);
-      }
       this.mentorDetails = response;
+      /* if (this.mentorDetails.admin_status == 'NEW') {
+        this.router.navigate(['/mentor/application-status']);
+      } */
+      
     })
   }
 

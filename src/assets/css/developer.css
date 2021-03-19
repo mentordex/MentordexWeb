@@ -290,6 +290,31 @@ aw-wizard-navigation-bar {
     outline: 0 !important;
 }
 
+.inline-pdf-section .relative_images>span>a.video--file--icon {
+    width: 35px;
+}
+
+.selection.select2-focused:focus {
+    outline: none;
+}
+
+.select2-results__option .select2-label-content {
+    color: #6f757b;
+    font-size: 15px;
+}
+
+.select2-results__group {
+    padding: 1px !important;
+}
+
+.select2-results__option .select2-label-content:hover {
+    color: var(--color-heding);
+}
+
+.select2-results__option {
+    padding: 3px 5px !important;
+}
+
 @media only screen and (min-width: 768px) {
     .listing-category-modify ul li {
         flex: 0 0 33.33%;

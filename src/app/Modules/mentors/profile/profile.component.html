@@ -4,8 +4,8 @@
             <div class="col-md-4">
                 <div class="profile-steps-leftsidebar">
                     <ul>
-                        <li class="current-active">
-                            <a href="#">
+                        <li [class.current-active]="getWizardStep === 1">
+                            <a href="javascript:void(0)">
                                 <span class="pills-icon">
                                         <svg width="21" height="18" viewBox="0 0 21 18" fill="none">
                                             <path d="M9.45801 5.87532C9.45801 7.60449 8.06218 9.00032 6.33301 9.00032C4.60384 9.00032 3.20801 7.60449 3.20801 5.87532C3.20801 4.14616 4.60384 2.75033 6.33301 2.75033C8.06218 2.75033 9.45801 4.14616 9.45801 5.87532ZM12.583 17.3337H0.0830078V15.2503C0.0830078 12.9482 2.88509 11.0837 6.33301 11.0837C9.78092 11.0837 12.583 12.9482 12.583 15.2503V17.3337ZM20.9163 9.00032V11.0837H11.5413V9.00032H20.9163ZM20.9163 4.83366V6.91699H11.5413V4.83366H20.9163ZM20.9163 0.666992V2.75033H11.5413V0.666992H20.9163Z" fill="#384047"/>
@@ -19,7 +19,7 @@
                                     </span>
                             </a>
                         </li>
-                        <li class="">
+                        <li [class.current-active]="getWizardStep === 2">
                             <a href="#">
                                 <span class="pills-icon l-5">
                                         <svg width="25" height="21" viewBox="0 0 25 21" fill="none">
@@ -39,7 +39,7 @@
                                     </span>
                             </a>
                         </li>
-                        <li class="">
+                        <li [class.current-active]="getWizardStep === 3">
                             <a href="#">
                                 <span class="pills-icon">
                                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -63,7 +63,7 @@
                                     </span>
                             </a>
                         </li>
-                        <li class="">
+                        <li [class.current-active]="getWizardStep === 4">
                             <a href="#">
                                 <span class="pills-icon">
                                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -89,7 +89,7 @@
                                     </span>
                             </a>
                         </li>
-                        <li class="">
+                        <li [class.current-active]="getWizardStep === 5">
                             <a href="#">
                                 <span class="pills-icon">
                                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -104,7 +104,7 @@
                                     </span>
                             </a>
                         </li>
-                        <li class="">
+                        <li [class.current-active]="getWizardStep === 6">
                             <a href="#">
                                 <span class="pills-icon">
                                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -215,7 +215,7 @@
                                                                             <span *ngFor="let videoIntroudction of videoIntroudctionArray.value | keyvalue; let videoIntroudctionIndex = index;" class="img_box">
                                                                                 
         
-                                                                                <a data-toggle="tooltip" title="{{videoIntroudction.value.file_name}}" class="upload_pdf" href="{{videoIntroudction.value.file_path}}" target="_blank">
+                                                                                <a data-toggle="tooltip" title="{{videoIntroudction.value.file_name}}" class="upload_pdf video--file--icon" href="{{videoIntroudction.value.file_path}}" target="_blank">
                                                                                         <img src="assets/img/video-file.png" alt="" class="img-fluid">
                                                                                 </a>
                                                                                 <div class="pdf-delt-times">
@@ -586,7 +586,7 @@
                                                                             <label class="form-check-label text-muted">
                                                                             <input (change)="onSelectCurrentlyWorkHere($event)"
                                                                             [attr.data-formGroupIndex]="i"
-                                                                            [attr.data-startYear]="employment_start_year.value" 
+                                                                            [attr.data-startYear]="employmentStartYear" 
                                                                             type="checkbox" 
                                                                             [checked]="isCurrentlyWorkHereChecked"
                                                                             value="Present" class="form-check-input" name="currentlyWork">I currently work here<i class="input-helper"></i></label>
@@ -662,10 +662,10 @@
                                     <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
                                         <div class="pgbarouter">
                                             <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 54%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                             <div class="text-center mt-1">
-                                                <p class="text-white mb-0">54% Completed</p>
+                                                <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
                                             </div>
                                         </div>
                                     </div>

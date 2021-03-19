@@ -16,29 +16,18 @@ import { environment } from '../../../../environments/environment';
 })
 export class AboutUsComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
-
+  aboutUs:any = []
   constructor( private utilsService: UtilsService) {  }
 
   ngOnInit(): void {
-    //this.fetchBlogs();
+    this.fetchAbout();
   }
 
-  //Fetch blog listing from wordpress
-  fetchBlogs() {
-    this.utilsService.processGetRequest(`${environment.BLOG_API_ENDPOINT}/pages/27`).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log('about', response);
-      /*Object.keys(response).forEach(item => {
-         if (item < '3') {
-          this.utilsService.processGetRequest(`${environment.BLOG_API_ENDPOINT}/media/${response[item]['featured_media']}`).pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
-
-              response[item]['image'] = data['guid']['rendered']
-            //this.blogs.push(response[item]);
-          })
-
-        } 
-      });*/
+  fetchAbout() {
+    this.utilsService.processGetRequest('about/getAboutPage').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.aboutUs = response
+      console.log( this.aboutUs);
     })
-   
   }
 
   //destroy all subscription

@@ -25,6 +25,8 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { Select2Module } from "ng-select2-component";
 import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper'; // Dropzone Module
 
+import { NgxLoadingModule } from 'ngx-loading';
+
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 //import core services
@@ -66,7 +68,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         NgxIntlTelInputModule,
         Select2Module,
         DropzoneModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        NgxLoadingModule.forRoot({})
     ],
     declarations: [      
         
@@ -130,7 +133,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         NgxIntlTelInputModule,
         Select2Module,
         DropzoneModule,
-        BsDatepickerModule
+        BsDatepickerModule,
+        NgxLoadingModule
     ]
 })
 export class SharedModule {

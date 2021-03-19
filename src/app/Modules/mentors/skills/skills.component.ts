@@ -74,12 +74,13 @@ export class SkillsComponent implements OnInit {
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      
+      console.log(response);
       this.mentorDetails = response;
 
-      if (this.mentorDetails.admin_status == 'NEW') {
+       if (this.mentorDetails.admin_status == 'NEW') {
         this.router.navigate(['/mentor/application-status']);
-      }
+      } 
+      
 
       const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
       
@@ -112,7 +113,10 @@ export class SkillsComponent implements OnInit {
     this.skillsForm = this.formBuilder.group({
       userID: [''],
       category_id: ['', [Validators.required]],
-      subcategories: this.formBuilder.array([], [minLengthArray(1), maxLengthArray(3)])
+      subcategories: this.formBuilder.array([], [minLengthArray(1), maxLengthArray(3)]),
+      subcategory_id1: [''],
+      subcategory_id2: [''],
+      subcategory_id3: [''],
     });
   }
 
@@ -153,10 +157,29 @@ export class SkillsComponent implements OnInit {
   */
   onSubmitSkillsDetailsForm() {
 
+
+    
+
     if (this.skillsForm.invalid) {
       this.isSkillsFormSubmitted = true
       return false;
     } 
+
+    //console.log(this.selectedSubcategoryArray[0].id);
+
+    if(this.selectedSubcategoryArray.length == 1){
+      this.skillsForm.controls.subcategory_id1.patchValue(this.selectedSubcategoryArray[0].id);
+    }
+    if(this.selectedSubcategoryArray.length == 2){
+      this.skillsForm.controls.subcategory_id1.patchValue(this.selectedSubcategoryArray[0].id);
+      this.skillsForm.controls.subcategory_id2.patchValue(this.selectedSubcategoryArray[1].id);
+    }
+    if(this.selectedSubcategoryArray.length == 3){
+      this.skillsForm.controls.subcategory_id1.patchValue(this.selectedSubcategoryArray[0].id);
+      this.skillsForm.controls.subcategory_id2.patchValue(this.selectedSubcategoryArray[1].id);;
+      this.skillsForm.controls.subcategory_id3.patchValue(this.selectedSubcategoryArray[2].id);;
+    }
+    //console.log(this.skillsForm.value); return;
     
     this.utilsService.processPostRequest('updateSkillsDetails', this.skillsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       console.log(response);

@@ -195,6 +195,126 @@ p.errorCls span {
     color: var(--color-text) !important;
 }
 
+aw-wizard-navigation-bar {
+    display: none;
+}
+
+.overflow-hidden-img>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-dropzone--btn .dz-button:focus {
+    outline: none;
+}
+
+.remove-item i {
+    color: #938680;
+    font-size: 13px;
+}
+
+.upload-dropzone--btn label span {
+    display: inline-block;
+    vertical-align: text-top;
+    padding-top: 2px;
+}
+
+.upload-dropzone--btn .dz-button {
+    background-color: #F9F9F9;
+    padding: 7px 14px;
+    border-radius: 0px;
+    cursor: pointer;
+    margin-top: 0px;
+    border: 1px dashed #C4C4C4;
+    color: var(--color-heding);
+    font-size: 14px;
+}
+
+.modal.fade.show {
+    padding-right: 0px !important;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+    margin: 20px auto !important;
+    max-width: 800px !important;
+}
+
+.modal-content {
+    position: relative;
+    z-index: 1;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../img/whole-patternbg.png") repeat;
+    mix-blend-mode: normal;
+}
+
+.modal-header {
+    position: absolute;
+    right: -10px;
+    z-index: 9;
+    top: -18px;
+    background-color: #3bb3bd;
+    border-radius: 50%;
+    text-align: center;
+    padding: 0;
+    height: 30px;
+    width: 30px;
+    border: 0px;
+}
+
+.modal-header .close {
+    padding: 0;
+    margin: 0;
+    left: 30%;
+    position: relative;
+    color: #fff;
+    opacity: 1;
+    top: 9%;
+}
+
+.modal-header .close:hover {
+    opacity: 1 !important;
+}
+
+.modal-header .close:focus {
+    outline: 0 !important;
+}
+
+.inline-pdf-section .relative_images>span>a.video--file--icon {
+    width: 35px;
+}
+
+.selection.select2-focused:focus {
+    outline: none;
+}
+
+.select2-results__option .select2-label-content {
+    color: #6f757b;
+    font-size: 15px;
+}
+
+.select2-results__group {
+    padding: 1px !important;
+}
+
+.select2-results__option .select2-label-content:hover {
+    color: var(--color-heding);
+}
+
+.select2-results__option {
+    padding: 3px 5px !important;
+}
+
 @media only screen and (min-width: 768px) {
     .listing-category-modify ul li {
         flex: 0 0 33.33%;
