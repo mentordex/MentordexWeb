@@ -25,7 +25,7 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { Select2Module } from "ng-select2-component";
 import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper'; // Dropzone Module
 
-import { NgxLoadingModule } from 'ngx-loading';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading'; // Loading Module
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
@@ -40,6 +40,9 @@ import { AuthGuard } from '../guards/auth-guard.service';
 
 //importing guards
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
+
+import { CreditCardDirectivesModule } from 'angular-cc-library';
+
 
 //import { TwoDigitDecimaNumberDirective } from '../directives/two-digit-decima-number.directive';
 
@@ -68,8 +71,16 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         NgxIntlTelInputModule,
         Select2Module,
         DropzoneModule,
+        CreditCardDirectivesModule,
         BsDatepickerModule.forRoot(),
-        NgxLoadingModule.forRoot({})
+        NgxLoadingModule.forRoot({
+          animationType: ngxLoadingAnimationTypes.wanderingCubes,
+          backdropBackgroundColour: '#002249',
+          backdropBorderRadius: '4px',
+          primaryColour: '#002249',
+          secondaryColour: '#002249',
+          tertiaryColour: '#002249'
+        }),
     ],
     declarations: [      
         
@@ -134,6 +145,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         Select2Module,
         DropzoneModule,
         BsDatepickerModule,
+        CreditCardDirectivesModule,
         NgxLoadingModule
     ]
 })

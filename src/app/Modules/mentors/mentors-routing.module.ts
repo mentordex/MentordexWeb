@@ -8,6 +8,8 @@ import { SkillsComponent } from './skills/skills.component';
 import { BookASlotComponent } from './book-a-slot/book-a-slot.component';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PurchaseMembershipComponent } from './purchase-membership/purchase-membership.component';
+
 
 const routes: Routes = [
   {
@@ -49,6 +51,11 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     data: { title: 'Profile' }
+  },
+  {
+    path: 'purchase-membership',
+    component: PurchaseMembershipComponent,
+    data: { title: 'Purchase Membership' }
   }
 
 ];

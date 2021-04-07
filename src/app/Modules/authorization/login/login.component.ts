@@ -94,6 +94,8 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/mentor/basic-details/']);
             }else if(response.body.admin_status == 'NEW'){
               this.router.navigate(['/mentor/application-status/']);
+            }else if(response.body.admin_status == 'APPROVED'){
+              this.router.navigate(['/mentor/profile/']);
             }else{
               this.router.navigate(['/']);
             }

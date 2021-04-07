@@ -286,6 +286,7 @@
                             </div>
                         </form>
                     </aw-wizard-step>
+
                     <aw-wizard-step stepTitle="Academic History">
                         <form [formGroup]="academicHistoryForm">
                             <div class="profile-steps-rightsidebar">
@@ -588,8 +589,8 @@
                                                                             [attr.data-formGroupIndex]="i"
                                                                             [attr.data-startYear]="employmentStartYear" 
                                                                             type="checkbox" 
-                                                                            [checked]="isCurrentlyWorkHereChecked"
-                                                                            value="Present" class="form-check-input" name="currentlyWork">I currently work here<i class="input-helper"></i></label>
+                                                                            [checked]="isCurrentlyWorkHereChecked[i] ? isCurrentlyWorkHereChecked[i] : false"
+                                                                            value="Present" class="form-check-input" formControlName="currently_work_here">I currently work here<i class="input-helper"></i></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -648,140 +649,386 @@
                     </aw-wizard-step>
 
                     <aw-wizard-step stepTitle="Achievements">
-                        <div class="profile-steps-rightsidebar-column">
-                            <div class="profile-steps-rightsidebar-column-header">
-                                <div class="row">
-                                    <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
-                                        <div class="col-md-12 px-0">
-                                            <p class="basic-title">Training / Achievements</p>
-                                        </div>
-                                        <div class="col-md-12 px-0 text-md-left">
-                                            <p class="basic-title mb-0 font-18">4 of 6</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
-                                        <div class="pgbarouter">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <form [formGroup]="achievementsForm">
+                            <div class="profile-steps-rightsidebar-column">
+                                <div class="profile-steps-rightsidebar-column-header">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                            <div class="col-md-12 px-0">
+                                                <p class="basic-title">Training / Achievements</p>
                                             </div>
-                                            <div class="text-center mt-1">
-                                                <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                            <div class="col-md-12 px-0 text-md-left">
+                                                <p class="basic-title mb-0 font-18">4 of 6</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                            <div class="pgbarouter">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div class="text-center mt-1">
+                                                    <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="profile-steps-rightsidebar-column-body position-relative">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="profile-label-text mb-2 pr-lg-120">Add what you've achieved in your area(s) of expertise. </div>
-                                                <div class="text-top-detail mb-1">
-                                                    If you have not received an award or recognition, that's ok! But please do share in the description box the amount of time you have put in and the level of expertise you have achieved, and why parents should hire you to teach their child(ren).
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mb-0">
-                                        <div class="after-border bottom-after">
+                                <div class="profile-steps-rightsidebar-column-body position-relative">
+                                    <div class="row">
+                                        <div class="col-12">
                                             <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 mb-4 mb-lg-0">
-                                                            <div class="w-100">
-                                                                <label class="profile-label-text mb-2">Title</label>
-                                                                <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-4 mb-lg-0">
-                                                            <div class="w-100">
-                                                                <label class="profile-label-text mb-2">Years of Learning Your Skill</label>
-                                                                <input type="text" class="profile-steps-input w-100 bg-white">
-                                                            </div>
-                                                            <div class="w-100 position-relative">
-                                                                <div class="profile-label-text font-14 mt-1 mb-0">Please briefly describe the amount of time you have put into learning the skill you wish to teach. </div>
-                                                            </div>
-                                                        </div>
+                                                <div class="col-12">
+                                                    <div class="profile-label-text mb-2 pr-lg-120">Add what you've achieved in your area(s) of expertise. </div>
+                                                    <div class="text-top-detail mb-1">
+                                                        If you have not received an award or recognition, that's ok! But please do share in the description box the amount of time you have put in and the level of expertise you have achieved, and why parents should hire you to teach their child(ren).
                                                     </div>
-                                                    <div class="row mt-minus-40">
-                                                        <div class="col-lg-6 mb-4">
-                                                            <label class="profile-label-text mb-2">Associated with</label>
-                                                            <select class="custom-select profile-steps-input h-auto arrow-select py-13">
-                                                                <option value="">Select</option>
-                                                                <option value="">01</option>
-                                                            </select>
-                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div formArrayName="achievements" class="col-12 mb-0">
+                                            <div *ngFor="let achievement of achievements().controls; let i=index" [formGroupName]="i" class="after-border bottom-after">
+
+                                                <ng-container *ngIf="achievements().controls.length > 1 ">
+
+                                                    <div class="addrow text-right mb-3">
+                                                        <button (click)="removeAchievement(i)" class="font-18 line-h21">
+                                                        <span class="remove-item"><i class="fa fa-minus"></i></span>Remove
+                                                    </button>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6 mb-4">
-                                                            <label class="profile-label-text mb-2">Issuer</label>
-                                                            <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-3">
-                                                        <div class="col-lg-6">
-                                                            <label class="profile-label-text mb-2">Period</label>
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <select class="custom-select profile-steps-input h-auto arrow-select py-13 ">
-                                                                        <option value="">Year</option>
-                                                                        <option value="">01</option>
-                                                                    </select>
+
+                                                </ng-container>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 mb-4 mb-lg-0">
+                                                                <div class="w-100">
+                                                                    <label class="profile-label-text mb-2">Title</label>
+                                                                    <input formControlName="title" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                    <p class="errorCls" *ngIf="achievement.get('title').touched || isAchievementsFormSubmitted">
+                                                                        <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Title " [errors]="achievement.get('title').errors"></app-form-validation-errors>
+                                                                    </p>
                                                                 </div>
-                                                                <div class="span-bar">
-                                                                    <span>-</span>
+                                                            </div>
+                                                            <div class="col-lg-6 mb-4 mb-lg-0">
+                                                                <div class="w-100">
+                                                                    <label class="profile-label-text mb-2">Years of Learning Your Skill</label>
+                                                                    <input formControlName="years_of_learning" type="text" class="profile-steps-input w-100 bg-white">
+                                                                    <p class="errorCls" *ngIf="achievement.get('years_of_learning').touched || isAchievementsFormSubmitted">
+                                                                        <app-form-validation-errors minLength=1 maxLength=20 errorPrefix="Years of Learning Your Skill " [errors]="achievement.get('years_of_learning').errors"></app-form-validation-errors>
+                                                                    </p>
                                                                 </div>
-                                                                <div class="col-6">
-                                                                    <select class="custom-select profile-steps-input h-auto arrow-select py-13 ">
-                                                                        <option value="">Year</option>
-                                                                        <option value="">01</option>
-                                                                    </select>
+                                                                <div class="w-100 position-relative">
+                                                                    <div class="profile-label-text font-14 mt-1 mb-0">Please briefly describe the amount of time you have put into learning the skill you wish to teach. </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row mb-4">
-                                                        <div class="col-lg-6">
-                                                            <label class="profile-label-text mb-2">Description</label>
-                                                            <textarea name="" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
+                                                        <div class="row mt-minus-40">
+                                                            <div class="col-lg-6 mb-4">
+                                                                <label class="profile-label-text mb-2">Associated with</label>
+                                                                <input formControlName="associated_with" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                <p class="errorCls" *ngIf="achievement.get('associated_with').touched || isAchievementsFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Associated with
+                                                                    " [errors]="achievement.get('associated_with').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 mb-4">
+                                                                <label class="profile-label-text mb-2">Issuer</label>
+                                                                <input formControlName="issuer" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                <p class="errorCls" *ngIf="achievement.get('issuer').touched || isAchievementsFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Issuer
+                                                                    " [errors]="achievement.get('issuer').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-lg-6">
+                                                                <label class="profile-label-text mb-2">Period</label>
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <select #achievement_start_year (change)="onSelectAchievementStartYear(achievement_start_year.value, i)" formControlName="start_year" class="custom-select arrow-select">
+                                                                            <option disabled selected value="">From</option>
+                                                                            <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                                                                        </select>
+                                                                        <p class="errorCls" *ngIf="achievement.get('start_year').touched || isAchievementsFormSubmitted">
+                                                                            <app-form-validation-errors errorPrefix="Year " [errors]="achievement.get('start_year').errors"></app-form-validation-errors>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="span-bar">
+                                                                        <span>-</span>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <select formControlName="end_year" class="custom-select arrow-select">
+                                                                            <option disabled selected value="">To</option>
+                                                                            <option *ngFor="let year of endAchievementyears[i]" [value]="year">{{year}}</option>
+                                                                        </select>
+                                                                        <p class="errorCls" *ngIf="achievement.get('end_year').touched || isAcademicHistoryFormSubmitted">
+                                                                            <app-form-validation-errors errorPrefix="Year " [errors]="achievement.get('end_year').errors"></app-form-validation-errors>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-4">
+                                                            <div class="col-lg-6">
+                                                                <label class="profile-label-text mb-2">Description</label>
+                                                                <textarea formControlName="description" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
+                                                                <p class="errorCls" *ngIf="achievement.get('description').touched || isAchievementsFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=500 errorPrefix="Description
+                                                                    " [errors]="achievement.get('description').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="add-row-btn text-center text-lg-right px-3 mt-3 mt-lg-0">
-                                        <div class="addrow">
-                                            <button class="font-18 line-h21">
+                                        <ng-container *ngIf="achievements().controls.length <= 2 ">
+                                            <div class="add-row-btn text-center text-lg-right px-3 mt-3 mt-lg-0">
+                                                <div class="addrow">
+                                                    <button (click)="addAchievement()" class="font-18 line-h21">
                                                 <span><svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5998 5.59999V0.799988H6.39981V5.59999H11.1998V6.39999H6.39981V11.2H5.5998V6.39999H0.799805V5.59999H5.5998Z" fill="#676767"></path>
                                                 </svg>
                                                 </span>Add More
                                             </button>
-                                        </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="profile-steps-rightsidebar-column-footer">
-                                <div class="row">
-                                    <div class="col-12 col-md-9 text-center text-md-left  mb-3">
-                                        <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                            <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="#">BACK</a>
-                                            <input type="submit" class="primary--button py-2 px-30" value="NEXT">
+                                <div class="profile-steps-rightsidebar-column-footer">
+                                    <div class="row">
+                                        <div class="col-12 col-md-9 text-center text-md-left  mb-3">
+                                            <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                                <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                <input [disabled]="achievementsForm.invalid" (click)="onSubmitAchievementsForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!--div class="col-12 col-md-3 text-center text-md-right">
+                                        <!--div class="col-12 col-md-3 text-center text-md-right">
                                         <a href="#" class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
                                     </div-->
-                                    <div class="col-12 mt-2">
-                                        <div class="text-center text-md-left text-top-detail">
-                                            We recommend you set up your account at least 80%. Of course, 100% is best!
+                                        <div class="col-12 mt-2">
+                                            <div class="text-center text-md-left text-top-detail">
+                                                We recommend you set up your account at least 80%. Of course, 100% is best!
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+                    </aw-wizard-step>
+
+                    <aw-wizard-step stepTitle="Hourly Rate">
+                        <form [formGroup]="hourlyRateForm">
+                            <div class="profile-steps-rightsidebar">
+                                <div class="profile-steps-rightsidebar-column">
+                                    <div class="profile-steps-rightsidebar-column-header">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                                <div class="col-md-12 px-0">
+                                                    <p class="basic-title">Hourly Rate</p>
+                                                </div>
+                                                <div class="col-md-12 px-0 text-md-left">
+                                                    <p class="basic-title mb-0 font-18">5 of 6</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                                <div class="pgbarouter">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="text-center mt-1">
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-body position-relative">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-12 col-xl-9">
+                                                        <div class="text-top-detail mb-35">
+                                                            Parents will see this rate on your profile while searching for a mentor. You can edit your rates at any time.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-0">
+                                                <div class="w-100">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 mb-4">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="w-100">
+                                                                        <label class="profile-label-text mb-3">Hourly Rate</label>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="hourly-ratebox flex-shrink-0">
+                                                                                <select class="custom-select profile-steps-input h-auto arrow-select py-13 bg-f3-select rate-dropbox flex-shrink-0">
+                                                                                <option value="">$</option>
+                                                                            </select>
+                                                                                <input formControlName="hourly_rate" class="flex-shrink-0" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                                            </div>
+                                                                            <span class="color-text flex-shrink-0 ml-2 font-weight-lighter font-weight-lighter">/ Hour</span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--div class="col-12 col-lg-8">
+                                                        <label class="profile-label-text mb-3">Google Calendar <a href="#" class="gc-link ml-4">Link</a></label>
+                                                        <div class="text-top-detail font-14">
+                                                            Parents will see this rate on your profile while searching for a mentor. You can edit your rates at any time.
+                                                        </div>
+                                                    </div-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-footer">
+                                        <div class="row">
+                                            <div class="col-12 col-md-9 text-center text-md-left  mb-3">
+                                                <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <input [disabled]="hourlyRateForm.invalid" (click)="onSubmitHourlyRateForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
+                                                </div>
+                                            </div>
+                                            <!--div class="col-12 col-md-3 text-center text-md-right">
+                                            <a href="#" class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                        </div-->
+                                            <div class="col-12 mt-2">
+                                                <div class="text-center text-md-left text-top-detail">
+                                                    We recommend you set up your account at least 80%. Of course, 100% is best!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </aw-wizard-step>
+
+                    <aw-wizard-step stepTitle="Social Links">
+                        <form [formGroup]="addSocialLinksForm">
+                            <div class="profile-steps-rightsidebar">
+                                <div class="profile-steps-rightsidebar-column">
+                                    <div class="profile-steps-rightsidebar-column-header">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                                <div class="col-md-12 px-0">
+                                                    <p class="basic-title">Add Social Links</p>
+                                                </div>
+                                                <div class="col-md-12 px-0 text-md-left">
+                                                    <p class="basic-title mb-0 font-18">6 of 6</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                                <div class="pgbarouter">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="text-center mt-1">
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-body position-relative">
+                                        <div class="row">
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-12 col-xl-9">
+                                                        <div class="text-top-detail mb-2">
+                                                            Add your social links
+                                                        </div>
+                                                        <div class="text-top-detail font-14 font-italic mb-1">
+                                                            (Optional, but it is recommended you share at least one.)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-0">
+                                                <div class="w-100">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-4">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label class="profile-label-text mb-2">Personal Website</label>
+                                                                    <input formControlName="website" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+                                                                    <div class="text-top-detail font-14 font-italic mt-1">
+                                                                        Your Homepage, Blog, or Company site
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <label class="profile-label-text mb-2">Social Profiles</label>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <ul class="social-crearelinks">
+                                                                        <li>
+                                                                            <a href="#" class="twitter-bg connect-button">
+                                                                                <span class="ico-fa"><i class="fa fa-twitter"></i></span>
+                                                                                <span class="connect-text">Connect</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="linkedin-bg connect-button">
+                                                                                <span class="ico-fa"><i class="fa fa-linkedin"></i></span>
+                                                                                <span class="connect-text">Connect</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="facebook-bg connect-button">
+                                                                                <span class="ico-fa"><i class="fa fa-facebook"></i></span>
+                                                                                <span class="connect-text">Connect</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="instagram-bg connect-button">
+                                                                                <span class="ico-fa"><i class="fa fa-instagram"></i></span>
+                                                                                <span class="connect-text">Connect</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-footer">
+                                        <div class="row">
+                                            <div class="col-12 text-center text-md-left mb-3">
+                                                <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <input [disabled]="addSocialLinksForm.invalid" (click)="onSubmitAddSocialLinksForm()" type="submit" class="primary--button py-2 px-30" value="Complete Setup">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-2">
+                                                <div class="text-center text-md-left text-top-detail">
+                                                    We recommend you set up your account at least 80%. Of course, 100% is best!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </aw-wizard-step>
                 </aw-wizard>
                 <div class="d-md-none mt-5">

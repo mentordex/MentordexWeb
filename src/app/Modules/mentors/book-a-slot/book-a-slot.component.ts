@@ -72,12 +72,13 @@ export class BookASlotComponent implements OnInit {
   }
 
   private checkQueryParam() {
+    
     this.id = localStorage.getItem('x-user-ID');
     this.getMentorDetailsByToken(this.id);
     this.bookASlotForm.patchValue({
       userID: this.id
     });
-
+    
   }
 
   //initalize Basic Detailsform
@@ -152,12 +153,10 @@ export class BookASlotComponent implements OnInit {
 
       accept: function (file, done) {
 
-        componentObj.zone.run(() => {
-          componentObj.loading = true; //start showing page loader
-        });
+        
 
         if ((componentObj.letterOfRecommendationPdfArray.length + 1) > 3) {
-          componentObj.loading = false; //hide showing page loader
+          
           componentObj.utilsService.onError('You cannot upload any more files.');//hide page loader          
           this.removeFile(file);
           return false;
@@ -165,7 +164,7 @@ export class BookASlotComponent implements OnInit {
 
         const reader = new FileReader();
         reader.onload = function (event) {
-          componentObj.loading = true; //start showing page loader
+         
           let base64String = reader.result
           let fileExtension = (file.name).split('.').pop();
 
@@ -188,8 +187,8 @@ export class BookASlotComponent implements OnInit {
           formData.append('folder', 'LOR');
           formData.append('fileType', file.type);
           formData.append('base64StringFile', componentObj.base64StringFile);
-          componentObj.loading = true; 
-          //componentObj.utilsService.showPageLoader();//start showing page loader 
+         
+          componentObj.utilsService.showPageLoader();//start showing page loader 
         });
 
         /* 
@@ -207,13 +206,13 @@ export class BookASlotComponent implements OnInit {
             componentObj.letterOfRecommendationPdfArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'LOR' }));
           });
           //console.log('letterOfRecommendationPdfArray', componentObj.letterOfRecommendationPdfArray);
-          componentObj.loading = false; //hide showing page loader
+          
           this.removeFile(file);
           componentObj.utilsService.hidePageLoader();//hide page loader
         });
 
         this.on("error", function (file, serverResponse) {
-          componentObj.loading = false; //hide showing page loader
+         
           this.removeFile(file);
           componentObj.utilsService.onError(serverResponse);//hide page loader  
           componentObj.utilsService.hidePageLoader();//hide page loader
@@ -255,9 +254,9 @@ export class BookASlotComponent implements OnInit {
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorDetails = response;
-      /* if (this.mentorDetails.admin_status == 'NEW') {
+       if (this.mentorDetails.admin_status == 'NEW') {
         this.router.navigate(['/mentor/application-status']);
-      } */
+      } 
       
     })
   }
@@ -286,14 +285,12 @@ export class BookASlotComponent implements OnInit {
   getAvailableSlotsByDay(day, getSelectedDate): void {
 
     this.utilsService.processPostRequest('dayTimeslot/getAvailableSlots', { day: day, getSelectedDate: getSelectedDate }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      //console.log('response', response);
-      let getSlots = response['slots'];
-      if (getSlots == false) {
+      console.log('response', response);
+      let getSlots = response;
+      if ('slots' in getSlots) {
         this.getAvailableSlots = [];
       } else {
-        this.getAvailableSlots = getSlots.filter(function (item) {
-          return item.isChecked !== false;
-        });
+        this.getAvailableSlots = getSlots;
       }
       //console.log('response', this.getAvailableSlots);
     })

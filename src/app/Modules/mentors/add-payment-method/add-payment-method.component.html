@@ -1,0 +1,217 @@
+<div class="modal fade" #exampleModal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog max-900">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <button type="button" class="close modal-close-btn d-none d-md-inline-block" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path d="M1.40039 1.40869L20.6004 20.6087M1.40039 20.6087L20.6004 1.40869" stroke="#384047" stroke-width="2"/>
+                    </svg>
+                </span>
+              </button>
+                <div class="profile-steps-rightsidebar-column-header d-block d-md-none">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <p class="basic-title">Membership plan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-md-0">
+                    <div class="col-md-5 px-md-0 d-none d-md-block">
+                        <div class="modalleftbar">
+                            <img src="assets/img/stripe-img.svg" alt="stripe-img">
+                            <p class="billing-method-left-text mt-3">Add your billing method</p>
+                        </div>
+                    </div>
+                    <div class="col-md-7 px-md-0">
+                        <div class="columnbar-order">
+                            <aw-wizard #wizard [defaultStepIndex]="wizardStep">
+                                <aw-wizard-step stepTitle="Payment Details">
+                                    <form [formGroup]="addPaymentWizard">
+                                        <div formGroupName="payment_details" class="modal-rightbar order-1 pb-0">
+                                            <div class="w-100 mb-4">
+                                                <label class="mordern-radiobox-label">
+                                                    <input type="radio" name="dark2">
+                                                    <span class="design"></span>
+                                                    <span class="text font-18px">Payment Card</span>
+                                                </label>
+                                            </div>
+                                            <div class="w-100 mb-4">
+                                                <label class="profile-label-text mb-2 font-1rem">Card Number</label>
+                                                <div class="position-relative">
+                                                    <span class="atmcard-icon">
+                                                        <svg width="26" height="21" viewBox="0 0 26 21" fill="none">
+                                                            <path d="M24.375 0.97998H1.625C1.14102 0.97998 0.75 1.371 0.75 1.85498V6.22998H25.25V1.85498C25.25 1.371 24.859 0.97998 24.375 0.97998ZM0.75 19.355C0.75 19.839 1.14102 20.23 1.625 20.23H24.375C24.859 20.23 25.25 19.839 25.25 19.355V8.63623H0.75V19.355ZM16.582 14.3237C16.582 14.2034 16.6805 14.105 16.8008 14.105H21.3125C21.4328 14.105 21.5312 14.2034 21.5312 14.3237V16.2925C21.5312 16.4128 21.4328 16.5112 21.3125 16.5112H16.8008C16.6805 16.5112 16.582 16.4128 16.582 16.2925V14.3237Z" fill="#3BB3BD"/>
+                                                        </svg>                                    
+                                                    </span>
+                                                    <input type="text" class="profile-steps-input w-100 bg-white px-5 cardNumber" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('credit_card_number').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('credit_card_number').errors }"
+                                                        formControlName="credit_card_number" autocomplete="cc-number" id="cc-number" ccNumber/>
+
+                                                    <span class="lock-icon">
+                                                        <svg width="16" height="21" viewBox="0 0 16 21" fill="none">
+                                                            <path d="M8 0.60498C5.243 0.60498 3 2.84798 3 5.60498V8.60498H2C1.46957 8.60498 0.960859 8.81569 0.585786 9.19077C0.210714 9.56584 0 10.0745 0 10.605V18.605C0 19.1354 0.210714 19.6441 0.585786 20.0192C0.960859 20.3943 1.46957 20.605 2 20.605H14C14.5304 20.605 15.0391 20.3943 15.4142 20.0192C15.7893 19.6441 16 19.1354 16 18.605V10.605C16 10.0745 15.7893 9.56584 15.4142 9.19077C15.0391 8.81569 14.5304 8.60498 14 8.60498H13V5.60498C13 2.84798 10.757 0.60498 8 0.60498ZM5 5.60498C5 3.95098 6.346 2.60498 8 2.60498C9.654 2.60498 11 3.95098 11 5.60498V8.60498H5V5.60498ZM9 16.328V18.605H7V16.328C6.65039 16.1278 6.36966 15.8263 6.19483 15.4633C6.02 15.1004 5.95928 14.6929 6.02068 14.2948C6.08208 13.8966 6.26272 13.5264 6.53876 13.2329C6.81481 12.9395 7.17332 12.7366 7.567 12.651C7.85942 12.5863 8.16262 12.5881 8.45425 12.6563C8.74587 12.7244 9.01849 12.8571 9.25198 13.0447C9.48548 13.2322 9.67391 13.4697 9.80337 13.7398C9.93283 14.0098 10 14.3055 10 14.605C9.99943 14.9547 9.90669 15.2981 9.73113 15.6006C9.55557 15.9031 9.30339 16.154 9 16.328Z" fill="#3BB3BD"/>
+                                                        </svg>                                    
+                                                    </span>
+
+
+                                                    <p class="error_label" *ngIf="addPaymentWizard.controls.payment_details.get('credit_card_number').touched || isPaymentDetailsSubmitted">
+                                                        <app-form-validation-errors errorPrefix="Credit card number " [errors]="addPaymentWizard.controls.payment_details.get('credit_card_number').errors"></app-form-validation-errors>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-sm-4">
+                                                <div class="col-sm-6 mb-4 mb-sm-0">
+                                                    <label class="profile-label-text mb-2 font-1rem">First Name</label>
+                                                    <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white" formControlName="credit_card_first_name" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('credit_card_first_name').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('credit_card_first_name').errors }">
+
+                                                    <p *ngIf="addPaymentWizard.controls.payment_details.get('credit_card_first_name').touched || isPaymentDetailsSubmitted">
+                                                        <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="First Name " [errors]="addPaymentWizard.controls.payment_details.get('credit_card_first_name').errors"></app-form-validation-errors>
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-6 mb-4 mb-sm-0">
+                                                    <label class="profile-label-text mb-2 font-1rem">Last Name</label>
+                                                    <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white" formControlName="credit_card_last_name" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('credit_card_last_name').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('credit_card_last_name').errors }">
+
+                                                    <p *ngIf="addPaymentWizard.controls.payment_details.get('credit_card_last_name').touched || isPaymentDetailsSubmitted">
+                                                        <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="Last Name " [errors]="addPaymentWizard.controls.payment_details.get('credit_card_last_name').errors"></app-form-validation-errors>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-md-5">
+                                                <div class="col-md-6 mb-4 mb-md-0">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label class="profile-label-text mb-2 font-1rem">Expires On</label>
+                                                        </div>
+                                                        <div class="col-6">
+
+
+                                                            <select class="select_dropdown selectpicker profile-steps-input w-100 mt-md-60 expiry bg-white" #expiry_month formControlName="expiry_month" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('expiry_month').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('expiry_month').errors }">    
+                                                                <option value="">Month</option>
+                                                                <option *ngFor="let month of months;" value="{{month.value}}">{{month.name}}</option> 
+                                                        </select>
+
+                                                            <p class="error_msg" *ngIf="addPaymentWizard.controls.payment_details.get('expiry_month').touched || isPaymentDetailsSubmitted">
+                                                                <app-form-validation-errors errorPrefix="Month " [errors]="addPaymentWizard.controls.payment_details.get('expiry_month').errors"></app-form-validation-errors>
+                                                            </p>
+
+
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <select class="profile-steps-input w-100 mt-md-60 bg-white select_dropdown selectpicker" #expiry_year formControlName="expiry_year" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('expiry_year').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('expiry_year').errors }">         
+                                                                <option value="">Year</option>
+                                                                <option *ngFor="let year of yearRange;" value="{{year.value}}">{{year.value}}</option> 
+                                                            </select>
+
+                                                            <p class="error_msg" *ngIf="addPaymentWizard.controls.payment_details.get('expiry_year').touched || isPaymentDetailsSubmitted">
+                                                                <app-form-validation-errors errorPrefix="Year " [errors]="addPaymentWizard.controls.payment_details.get('expiry_year').errors"></app-form-validation-errors>
+                                                            </p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-4 mb-md-0">
+                                                    <label class="profile-label-text mb-2 font-1rem">CVV 
+                                                        <span>
+                                                            <svg width="18" height="17" viewBox="0 0 18 17" fill="none">
+
+                                                    <path d="M9.00033 0.271484C7.35215 0.271484 5.74099 0.760226 4.37058 1.6759C3.00017 2.59158 1.93206 3.89307 1.30133 5.41579C0.670603 6.93851 0.505575 8.61406 0.827119 10.2306C1.14866 11.8471 1.94234 13.3319 3.10777 14.4974C4.27321 15.6628 5.75807 16.4565 7.37458 16.778C8.99109 17.0996 10.6666 16.9345 12.1894 16.3038C13.7121 15.6731 15.0136 14.605 15.9292 13.2346C16.8449 11.8642 17.3337 10.253 17.3337 8.60482C17.3337 7.51047 17.1181 6.42684 16.6993 5.41579C16.2805 4.40474 15.6667 3.48608 14.8929 2.71226C14.1191 1.93844 13.2004 1.32461 12.1894 0.905822C11.1783 0.487032 10.0947 0.271484 9.00033 0.271484ZM9.00033 13.6048C8.83551 13.6048 8.67439 13.5559 8.53735 13.4644C8.40031 13.3728 8.2935 13.2427 8.23043 13.0904C8.16736 12.9381 8.15085 12.7706 8.18301 12.6089C8.21516 12.4473 8.29453 12.2988 8.41107 12.1822C8.52762 12.0657 8.6761 11.9863 8.83775 11.9542C8.9994 11.922 9.16696 11.9385 9.31923 12.0016C9.4715 12.0647 9.60165 12.1715 9.69322 12.3085C9.78479 12.4455 9.83366 12.6067 9.83366 12.7715C9.83366 12.9925 9.74586 13.2045 9.58958 13.3607C9.4333 13.517 9.22134 13.6048 9.00033 13.6048ZM9.83366 9.30482V10.2715C9.83366 10.4925 9.74586 10.7045 9.58958 10.8607C9.4333 11.017 9.22134 11.1048 9.00033 11.1048C8.77932 11.1048 8.56735 11.017 8.41107 10.8607C8.25479 10.7045 8.167 10.4925 8.167 10.2715V8.60482C8.167 8.3838 8.25479 8.17184 8.41107 8.01556C8.56735 7.85928 8.77932 7.77148 9.00033 7.77148C9.24756 7.77148 9.48923 7.69817 9.69479 7.56082C9.90035 7.42347 10.0606 7.22825 10.1552 6.99984C10.2498 6.77143 10.2745 6.5201 10.2263 6.27762C10.1781 6.03515 10.059 5.81242 9.88421 5.6376C9.7094 5.46279 9.48667 5.34373 9.24419 5.2955C9.00172 5.24727 8.75038 5.27203 8.52198 5.36664C8.29357 5.46124 8.09834 5.62146 7.96099 5.82702C7.82364 6.03258 7.75033 6.27426 7.75033 6.52148C7.75033 6.7425 7.66253 6.95446 7.50625 7.11074C7.34997 7.26702 7.13801 7.35482 6.917 7.35482C6.69598 7.35482 6.48402 7.26702 6.32774 7.11074C6.17146 6.95446 6.08366 6.7425 6.08366 6.52148C6.08148 5.98007 6.23004 5.44873 6.51272 4.98696C6.79539 4.52519 7.20101 4.15122 7.68418 3.90691C8.16734 3.66259 8.70897 3.55759 9.24843 3.60365C9.78788 3.6497 10.3039 3.84501 10.7386 4.16769C11.1734 4.49038 11.5097 4.9277 11.71 5.43071C11.9103 5.93371 11.9667 6.48254 11.8727 7.01575C11.7788 7.54896 11.5383 8.0455 11.1782 8.44978C10.8181 8.85406 10.3525 9.15012 9.83366 9.30482Z" fill="#384047"/>
+                                                    </svg>
+
+                                                    </span>
+                                                </label>
+                                                    <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white" id="cc-cvc" formControlName="cvc_number" type="tel" autocomplete="off" ccCvc [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('cvc_number').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('cvc_number').errors }"
+                                                    />
+
+                                                    <p class="error_msg" *ngIf="addPaymentWizard.controls.payment_details.get('cvc_number').touched || isPaymentDetailsSubmitted">
+                                                        <app-form-validation-errors errorPrefix="CVC " patternError="Must enter valid cvc." [isPrice]=true minLength=3 maxLength=4 [errors]="addPaymentWizard.controls.payment_details.get('cvc_number').errors"></app-form-validation-errors>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-md-right order-3 order-md-2 mt-3 mt-md-0 text-center mb-4 mb-md-5 cpx-4">
+                                            <div class="d-flex justify-content-between justify-content-md-end w-100">
+
+                                                <input type="submit" [disabled]="addPaymentWizard.invalid" (click)="validateAddPaymentMethodWizard()" class="primary--button py-2 px-30" value="Continue">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </aw-wizard-step>
+                                <aw-wizard-step stepTitle="Address Details">
+                                    <form [formGroup]="addAddressWizard">
+                                        <div formGroupName="billing_details" class="modal-rightbar order-1 pb-0">
+                                            <div class="row mb-sm-4">
+                                                <div class="col-lg-6 mb-4 mb-sm-0">
+                                                    <label class="profile-label-text mb-2 font-1rem">Country</label>
+                                                    <select formControlName="country" #country class="custom-select profile-steps-input h-auto arrow-select py-13">
+                                                        <option selected disabled value="">Select Country</option>
+                                                        <option *ngFor="let country of countries;" value="{{country.title}}">{{country.title}}</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-sm-4">
+                                                <div class="col-sm-12 mb-4 mb-sm-0">
+                                                    <label class="profile-label-text mb-2 font-1rem">Address</label>
+                                                    <input type="text" class="profile-steps-input w-100 mb-2 bg-white" formControlName="address1" [ngClass]="{ 'is-invalid': (addAddressWizard.controls.billing_details.get('address1').touched || isAddressDetailsSubmitted) && addAddressWizard.controls.billing_details.get('address1').errors }">
+
+                                                    <p *ngIf="addAddressWizard.controls.billing_details.get('address1').touched || isAddressDetailsSubmitted">
+                                                        <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Address " [errors]="addAddressWizard.controls.billing_details.get('address1').errors"></app-form-validation-errors>
+                                                    </p>
+
+                                                    <input type="text" class="profile-steps-input w-100 bg-white" formControlName="address1" [ngClass]="{ 'is-invalid': (addAddressWizard.controls.billing_details.get('address2').touched || isAddressDetailsSubmitted)
+                                                    && addAddressWizard.controls.billing_details.get('address2').errors }">
+
+                                                    <p *ngIf="addAddressWizard.controls.billing_details.get('address2').touched || isAddressDetailsSubmitted">
+                                                        <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Address " [errors]="addAddressWizard.controls.billing_details.get('address2').errors"></app-form-validation-errors>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-sm-4">
+                                                <div class="col-sm-12 mb-4 mb-sm-0">
+                                                    <label class="profile-label-text mb-2 font-1rem">City</label>
+                                                    <input type="text" class="profile-steps-input w-100 mb-2 bg-white" formControlName="city" [ngClass]="{ 'is-invalid': (addAddressWizard.controls.billing_details.get('city').touched || isAddressDetailsSubmitted) && addAddressWizard.controls.billing_details.get('city').errors }">
+
+                                                    <p *ngIf="addAddressWizard.controls.billing_details.get('city').touched || isAddressDetailsSubmitted">
+                                                        <app-form-validation-errors minLength=2 maxLength=50 errorPrefix="City " patternError="Must contain only characters." [errors]="addAddressWizard.controls.billing_details.get('city').errors"></app-form-validation-errors>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-sm-4">
+                                                <div class="col-sm-12 mb-4 mb-sm-0">
+                                                    <label class="profile-label-text mb-2 font-1rem">State</label>
+                                                    <input type="text" class="profile-steps-input w-100 mb-2 bg-white" formControlName="state" [ngClass]="{ 'is-invalid': (addAddressWizard.controls.billing_details.get('state').touched || isAddressDetailsSubmitted) && addAddressWizard.controls.billing_details.get('state').errors }">
+
+                                                    <p *ngIf="addAddressWizard.controls.billing_details.get('state').touched || isAddressDetailsSubmitted">
+                                                        <app-form-validation-errors minLength=2 maxLength=50 errorPrefix="State " patternError="Must contain only characters." [errors]="addAddressWizard.controls.billing_details.get('state').errors"></app-form-validation-errors>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-sm-4">
+                                                <div class="col-10 col-md-6 mb-4 mb-sm-0">
+                                                    <label class="profile-label-text mb-2 font-1rem">Zipcode </label>
+                                                    <input type="text" class="profile-steps-input w-100 mb-2 bg-white" formControlName="zipcode" [ngClass]="{ 'is-invalid': (addAddressWizard.controls.billing_details.get('zipcode').touched || isAddressDetailsSubmitted) && addAddressWizard.controls.billing_details.get('zipcode').errors }">
+
+                                                    <p *ngIf="addAddressWizard.controls.billing_details.get('zipcode').touched || isAddressDetailsSubmitted">
+                                                        <app-form-validation-errors minLength=5 maxLength=6 errorPrefix="Zipcode " [errors]="addAddressWizard.controls.billing_details.get('zipcode').errors"></app-form-validation-errors>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-md-right order-3 order-md-2 mt-3 mt-md-0 text-center mb-4 mb-md-5 cpx-4">
+                                            <div class="d-flex justify-content-between justify-content-md-end w-100">
+                                                <button type="button" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" awPreviousStep>Back</button>
+                                                <input type="submit" [disabled]="addAddressWizard.invalid" (click)="validateAddAddressWizard()" class="primary--button py-2 px-30" value="Buy">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </aw-wizard-step>
+
+
+                            </aw-wizard>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

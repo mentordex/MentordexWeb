@@ -41,4 +41,20 @@ export class CustomValidators {
     }
   }
 
+  static creditCardExpiryValidator(control: AbstractControl) {
+    let today, someday;
+    const expiryMonth: string = control.get('expiry_month').value;
+    const expiryYear: string = control.get('expiry_year').value;
+    if(expiryMonth && expiryYear){
+      today = new Date();
+      someday = new Date();
+      someday.setFullYear(expiryYear, expiryMonth, 1);
+      if (someday < today) {
+        control.get('expiry_month').setErrors({ creditCardExpired: true });      
+      }else{
+        control.get('expiry_month').setErrors(null);   
+      }
+    }  
+  }
+
 }
