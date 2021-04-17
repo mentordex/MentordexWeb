@@ -1,0 +1,435 @@
+<!--Parent section starts-->
+<section class="pt-125 py-65 bg-md-f8f8f8">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-11 mx-auto">
+                <div class="profile-steps-rightsidebar-column">
+                    <div class="dashboard-list-wrapper">
+                        <form [formGroup]="bookARequestForm">
+                            <div class="dashboard-parent-profile-header px-2">
+                                <div class="dashboard-parent-profile-header-content">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="dashboard-parent-profile-header-content-autor mb-0">
+                                                Send Booking Request to {{mentorProfileDetails?.first_name}} {{mentorProfileDetails?.last_name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-parent-profile-body px-4">
+                                <div class="row my-3">
+                                    <div class="col-md-12">
+                                        <p class="mobile-pagetop-heading mb-3">Job Details</p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-lg-6 mb-4">
+                                                <label for="" class="profile-label-text">Job Title</label>
+                                                <input type="text" class="special--inputs w-100 little-cs-input" placeholder="Enter the job title">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-2">
+                                        <div class="row">
+                                            <div class="col-lg-4 mb-4">
+                                                <label for="" class="profile-label-text">Job Category</label>
+                                                <select class="custom-select arrow-select green-select py-2 h-auto">
+                                           <option value="">Academics</option>
+                                           <option value="">Math</option>
+                                       </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="mobile-pagetop-heading mb-3">Job Category</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-lg-5 col-xl-4 mb-4 mb-lg-0">
+                                                <p class="subject-category-title mb-3">General Subjects</p>
+                                                <div class="subject-category-box">
+                                                    <ul>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">Biology</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">English</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">Chemistry</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">Physics</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">Coding</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">History</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">Economics</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">Literatures</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">Science</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark">
+                                                        <span class="design"></span>
+                                                        <span class="text">Writing</span>
+                                                    </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-3 col-xl-4 mb-4 mb-lg-0">
+                                                <p class="subject-category-title mb-3">Foreign Language</p>
+                                                <div class="subject-category-box li-100">
+                                                    <ul>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark1">
+                                                        <span class="design"></span>
+                                                        <span class="text">American Sign Language</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark1">
+                                                        <span class="design"></span>
+                                                        <span class="text">Chinese</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark1">
+                                                        <span class="design"></span>
+                                                        <span class="text">French</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark1">
+                                                        <span class="design"></span>
+                                                        <span class="text">Korean</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark1">
+                                                        <span class="design"></span>
+                                                        <span class="text">Latin</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark1">
+                                                        <span class="design"></span>
+                                                        <span class="text">Portueguese</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark1">
+                                                        <span class="design"></span>
+                                                        <span class="text">Spanish</span>
+                                                    </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4 mb-4 mb-lg-0">
+                                                <p class="subject-category-title mb-3">Math</p>
+                                                <div class="subject-category-box li-100">
+                                                    <ul>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark2">
+                                                        <span class="design"></span>
+                                                        <span class="text">Elementary School math</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark2">
+                                                        <span class="design"></span>
+                                                        <span class="text">Middle school (but not algebra)</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark2">
+                                                        <span class="design"></span>
+                                                        <span class="text">Algebra</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark2">
+                                                        <span class="design"></span>
+                                                        <span class="text">Calculus</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark2">
+                                                        <span class="design"></span>
+                                                        <span class="text">Geometry</span>
+                                                    </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="mordern-radiobox-label">
+                                                        <input type="radio" name="dark2">
+                                                        <span class="design"></span>
+                                                        <span class="text">Trigonometry</span>
+                                                    </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <div class="border--padding-row">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <p class="mobile-pagetop-heading mb-3">Job Description</p>
+                                                    <textarea name="" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none" placeholder="Get started on the right foot by setting clear expectations"></textarea>
+                                                </div>
+                                                <div class="col-12 mt-3">
+
+                                                    <div class="uploadImages position-relative csuploadfile-outer">
+                                                        <div class="dropzone dropzone-container" [dropzone]="jobFileConfiguration" [disabled]="disabled"></div>
+
+                                                        <span class="profile-label-text d-inline-block ml-2"><small class="font-italic">(optional)</small></span>
+                                                    </div>
+
+
+                                                    <div *ngIf="checkObjectLength(jobFileArray.value) > 0" class="inner_box">
+
+                                                        <div class="box_outer inline-pdf-section">
+                                                            <span class="relative_images">
+                                                                    <span *ngFor="let jobFile of jobFileArray.value | keyvalue; let offerInHandsIndex = index;" class="img_box">
+                                                                        
+
+                                                                        <a data-toggle="tooltip" title="{{jobFile.value.file_name}}" class="upload_pdf" *ngIf="jobFile.value.file_mimetype == 'application/pdf'" href="{{jobFile.value.file_path}}" target="_blank">
+                                                                                <img src="assets/img/pdf_icon.png" alt="" class="img-fluid">
+                                                                            </a>
+                                                                            <div class="pdf-delt-times">
+
+                                                                            <i (click)="removeFile(jobFile.key, 'Jobs',jobFile.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
+                                                                        </div>
+                                                                    </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="border--padding-row">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <p class="mobile-pagetop-heading mb-2">Payment</p>
+                                                    <p class="text-top-detail font-normal">How much would you like to pay to the mentor?</p>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="hourly-ratebox flex-shrink-0">
+                                                            <select class="custom-select profile-steps-input h-auto arrow-select py-13 bg-f3-select rate-dropbox flex-shrink-0">
+                                                        <option value="">$</option>
+                                                    </select>
+                                                            <input class="flex-shrink-0" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                        </div>
+                                                        <span class="color-heading flex-shrink-0 ml-2 font--500">/ Hour</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="border--padding-row">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <p class="mobile-pagetop-heading mb-3">Service Period</p>
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <bs-datepicker-inline [minDate]="minDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="minDate"></bs-datepicker-inline>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-11 mt-3">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-xl-5">
+                                                            <p class="text-top-detail color-heading mb-2">Length of Lesson</p>
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
+                                                                        <option value="">00</option>
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                        </div>
+                                                                        <div class="span-bar">
+                                                                            <span>-</span>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
+                                                                        <option value="">45</option>
+                                                                        <option value="">00</option>
+                                                                    </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
+                                                                        <option value="">01</option>
+                                                                        <option value="">02</option>
+                                                                    </select>
+                                                                        </div>
+                                                                        <div class="span-bar">
+                                                                            <span>-</span>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
+                                                                        <option value="">00</option>
+                                                                        <option value="">04</option>
+                                                                    </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-xl-5 mx-auto">
+                                                            <p class="text-top-detail color-heading mb-2">Length of Lesson</p>
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
+                                                                        <option value="">00</option>
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                        </div>
+                                                                        <div class="span-bar">
+                                                                            <span>-</span>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
+                                                                        <option value="">45</option>
+                                                                        <option value="">00</option>
+                                                                    </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
+                                                                        <option value="">01</option>
+                                                                        <option value="">02</option>
+                                                                    </select>
+                                                                        </div>
+                                                                        <div class="span-bar">
+                                                                            <span>-</span>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
+                                                                        <option value="">00</option>
+                                                                        <option value="">04</option>
+                                                                    </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="border--padding-row">
+                                            <button for="attachment" class="primary--button cursor-pointer d-inline-block py-1 px-4">
+                                        <span class="vertical-align-txt-bottom">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                                <path d="M6.74939 0.650879V13.6509M0.24939 7.15088H13.2494" stroke="white" stroke-width="1.5"/>
+                                            </svg>  
+                                        </span>                             
+                                        Add Blling
+                                    </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100 border--padding-row py-2 px-4">
+                                <div class="small-checkboxes">
+                                    <div class="form-check check-opacity mb-3">
+                                        <label class="form-check-label text-muted ln-25">
+                                <input type="checkbox" class="form-check-input" name="category">Yes, I understand and agree to the Terms of Service, including User Agreement and Privacy Policy.<i class="input-helper"></i></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-steps-rightsidebar-column-footer bg-f8-footer">
+                                <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="#">Cancel</a>
+                                    <input data-toggle="modal" data-target="#exampleModal" type="submit" class="primary--button py-2 px-30" value="Request Booking">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--Parent section ends-->

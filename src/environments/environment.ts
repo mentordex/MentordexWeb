@@ -22,6 +22,8 @@ export const environment = {
     "SAVING-INFO":"Saving information. Please Wait...",
     "PASSWORD-UPDATED":"Password has been updated successfully.",
     "EMAIL-SENT":"We have sent the password reset instructions to your email ID.",
+    "PAYMENT-METHOD-SUCCESSFULL":"Your payment method added successfully.",
+    "ADD-YOUR-BILLING-METHOD":"Add your billing method to send booking request to mentor.",
   }
 
 };
