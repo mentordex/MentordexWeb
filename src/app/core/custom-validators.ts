@@ -28,4 +28,33 @@ export class CustomValidators {
     };
   }
 
+  static passwordEmailOrNameValidator(control: AbstractControl) {
+    const password: string = control.get('password').value; // get password from our password form control
+    const email: string = control.get('email').value; // get password from our confirmPassword form control
+    const first_name: string = control.get('first_name').value; // get password from our confirmPassword form control
+    // compare is the password math
+    if (password === email) {
+      // if they don't match, set an error in our confirmPassword form control
+      control.get('password').setErrors({ NoPassswordMatchWithEmailOrName: true });
+    }else{
+      control.get('password').setErrors({ NoPassswordMatchWithEmailOrName: false });
+    }
+  }
+
+  static creditCardExpiryValidator(control: AbstractControl) {
+    let today, someday;
+    const expiryMonth: string = control.get('expiry_month').value;
+    const expiryYear: string = control.get('expiry_year').value;
+    if(expiryMonth && expiryYear){
+      today = new Date();
+      someday = new Date();
+      someday.setFullYear(expiryYear, expiryMonth, 1);
+      if (someday < today) {
+        control.get('expiry_month').setErrors({ creditCardExpired: true });      
+      }else{
+        control.get('expiry_month').setErrors(null);   
+      }
+    }  
+  }
+
 }

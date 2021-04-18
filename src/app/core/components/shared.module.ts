@@ -13,6 +13,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { TagifyModule } from 'ngx-tagify'; 
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -22,6 +23,11 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LeftNavigationComponent } from './left-navigation/left-navigation.component';
 import { AlertComponent } from './alert/alert.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
+import { Select2Module } from "ng-select2-component";
+import { DropzoneModule, DropzoneConfigInterface, DROPZONE_CONFIG } from 'ngx-dropzone-wrapper'; // Dropzone Module
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading'; // Loading Module
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ReadMoreModule } from 'ng-readmore';
 
 //import core services
 import { TitleService, AuthService, PageLoaderService, AlertService, UtilsService } from '../services';
@@ -35,7 +41,16 @@ import { AuthGuard } from '../guards/auth-guard.service';
 //importing guards
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
+import { CreditCardDirectivesModule } from 'angular-cc-library';
+
+
 //import { TwoDigitDecimaNumberDirective } from '../directives/two-digit-decima-number.directive';
+
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  acceptedFiles: '.jpg, .png, .jpeg, .pdf',
+  createImageThumbnails: true
+};
 
 
 @NgModule({
@@ -53,7 +68,21 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
         NgbModule,
         NgxMasonryModule,
         TagifyModule.forRoot(),
-        NgxIntlTelInputModule
+        NgxIntlTelInputModule,
+        Select2Module,
+        DropzoneModule,
+        CreditCardDirectivesModule,
+        BsDatepickerModule.forRoot(),
+        NgxLoadingModule.forRoot({
+          animationType: ngxLoadingAnimationTypes.wanderingCubes,
+          backdropBackgroundColour: '#002249',
+          backdropBorderRadius: '4px',
+          primaryColour: '#002249',
+          secondaryColour: '#002249',
+          tertiaryColour: '#002249'
+        }),
+        FlatpickrModule.forRoot(),
+        ReadMoreModule
     ],
     declarations: [      
         
@@ -114,7 +143,14 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
         NgbModule,
         NgxMasonryModule,
         TagifyModule,
-        NgxIntlTelInputModule
+        NgxIntlTelInputModule,
+        Select2Module,
+        DropzoneModule,
+        BsDatepickerModule,
+        CreditCardDirectivesModule,
+        NgxLoadingModule,
+        FlatpickrModule,
+        ReadMoreModule
     ]
 })
 export class SharedModule {

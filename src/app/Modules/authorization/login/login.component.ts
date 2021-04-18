@@ -73,27 +73,41 @@ export class LoginComponent implements OnInit {
 
 
     this.authService.login(this.loginForm.value).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
+      //console.log(response); return;
+
       if (response.body.verify_phone == false) {
         this.router.navigate(['/mentor/verify-phone/' + response.body._id]);
       } else {
-        this.utilsService.onResponse(environment.MESSGES['LOGIN-SUCCESS'], true);//show page loader  
+          
         this.authService.isLoggedIn(true);
         localStorage.setItem('x-user-ID', response.body._id)
         localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))
         localStorage.setItem('x-user-type', response.body.role)
         
         if(response.body.role == 'MENTOR'){
-
+          this.utilsService.onResponse(environment.MESSGES['LOGIN-SUCCESS'], true);//show page loader
           // Check if a active Mentor or Not
           if (response.body.is_active == false) {
-            this.router.navigate(['/mentor/basic-details/']);
+
+            if(response.body.admin_status == 'PENDING'){
+              this.router.navigate(['/mentor/basic-details/']);
+            }else if(response.body.admin_status == 'NEW'){
+              this.router.navigate(['/mentor/application-status/']);
+            }else if(response.body.admin_status == 'APPROVED'){
+              this.router.navigate(['/mentor/profile/']);
+            }else{
+              this.router.navigate(['/']);
+            }
+            
           }else{
             this.router.navigate(['/home']);
           }
 
         }else{
-
-          this.router.navigate(['/home']);
+          const responseMessage = 'Great!! ' + response.body.first_name + ', welcome to your dashboard.'
+          this.utilsService.onResponse(responseMessage, true);//show page loader 
+          this.router.navigate(['/parent/search']);
         }
       }
 

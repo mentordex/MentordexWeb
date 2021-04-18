@@ -1,0 +1,24 @@
+ngb-rating {
+ 
+  color:#3BB3BD;
+}
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 30px;
+    color: #d3d3d3;
+  }
+  .full {
+    color:#3BB3BD;
+  }
+  .half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color:#3BB3BD;
+  }
+  .mentorcards-pagination-footer ul li a.disabled {
+    color: #cacaca;
+    cursor: default;
+  }
+  

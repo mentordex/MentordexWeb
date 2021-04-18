@@ -4,15 +4,19 @@ export const environment = {
   BLOG_API_ENDPOINT:'http://18.218.99.213/mentordex/blog/wp-json/wp/v2',
   TOKEN_NAME:"x-mentordex-auth-token",
   MESSGES:{
-    "CHECKING-AUTHORIZATION":"Checking Authorization. Please Wait..",
+    "CHECKING-AUTHORIZATION":"Please Wait..",
     "LOGIN-SUCCESS":"You have loggedin successfully.",
-    "LOGOUT-SUCCESS":"You have been loggedout successfully.",
-    "REGISTERD-SUCCESSFULLY":"Account has been registered successfully. Please do login now.",
+    "LOGOUT-SUCCESS":"You are successfully logged out.",
+    "REGISTERED-SUCCESSFULLY":"Great! Thank you for registering with us. Please verify your email and mobile number.",
+    "PARENT-REGISTERED-SUCCESSFULLY":"Thank You for Registering!.",
+    "RESEND-EMAIL-VERIFICATION":"The verification link has been sent to your email.",
+    "RESEND-PHONE-VERIFICATION":"OTP has been sent to your phone.",
+    "PHONE-VERIFICATION-SUCCESS":"Phone number has been verified successfully.",
     "EMAIL-SUCCESS":"Account is authorized. Please enter password more for login.",
     "EMAIL-AUTHORIZED":"Email has been authorized successfully.",
     "SAVING-INFO":"Saving information. Please Wait...",
     "PASSWORD-UPDATED":"Password has been updated successfully.",
-    "EMAIL-SENT":"Email has been sent successfully. Please check your inbox.",
+    "EMAIL-SENT":"We have sent the password reset instructions to your email ID.",
   }
 
 };

@@ -1,44 +1,41 @@
 <!--Hero banner area starts-->
 <section class="hero-banner bg-fdfdfd mt-75">
     <header>
-        <div class="banner-slider">
 
-            <ngx-slick-carousel  #slickModalBanner="slick-carousel" [config]="bannerSlideConfig">
-                <div ngxSlickItem *ngFor="let banner of banners" class="banner position-relative">
-                    <div class="new-gutter position-relative min-h-inherit">
-                        <div class="banner-img ic-svg">
-                            <img src="{{banner.image}}" class="animated-hero ml-auto" alt="slider-img">
-                        </div>
-                        <div class="container position-relative min-h-inherit">
-                            <div class="row mx-0">
-                                <div class="col-12 col-12-6 px-0 pt-md-130">
-                                    <!-- Slider Title -->
-                                    <div class="main-title max-450">
-                                        <h1 class="slider-header-title header-contentbox-fade">
-                                            {{banner.title}}
-                                        </h1>
-                                        <h3 class="slider-header-text header-contentbox-fade">
-                                            {{banner.description}}
-                                        </h3>
-                                        <div class="text-center text-lg-left talented-mentors-btn header-contentbox-fade">
-                                            <a href="#" class="primary--button mb-3 mr-3">Get Started </a>
-                                            <a href="#" class="alt--button">Video intro</a>
-                                        </div>
+        <ngx-slick-carousel class="banner-slider" #slickModal="slick-carousel" [config]="bannerSlideConfig">
+            <!--each banner-->
+            <div ngxSlickItem *ngFor="let banner of banners" class="banner position-relative">
+                <div class="new-gutter position-relative min-h-inherit">
+                    <div class="banner-img ic-svg">
+                        <img src="{{banner.image}}" class="animated-hero ml-auto" alt="slider-img">
+                    </div>
+                    <div class="container position-relative min-h-inherit">
+                        <div class="row mx-0">
+                            <div class="col-12 col-12-6 px-0 pt-md-130">
+                                <!-- Slider Title -->
+                                <div class="main-title max-450">
+                                    <h1 class="slider-header-title header-contentbox-fade">
+                                        {{banner.title}}
+                                    </h1>
+                                    <h3 class="slider-header-text header-contentbox-fade">
+                                        {{banner.description}}
+                                    </h3>
+                                    <div class="text-center text-lg-left talented-mentors-btn header-contentbox-fade">
+                                        <a href="{{banner.button_link}}" target="_blank" class="primary--button mb-3 mr-3">{{banner.button_text}} </a>
+                                        <a href="javascript:void(0)" (click)="openYoutubePopup(banner.video_button_link)" class="alt--button">{{banner.video_button_text}}</a>
                                     </div>
-                                    <!--//End Slider Title -->
                                 </div>
+                                <!--//End Slider Title -->
                             </div>
                         </div>
                     </div>
                 </div>
-            </ngx-slick-carousel>
+            </div>
+        </ngx-slick-carousel>
 
-            
-
-        </div>
         <div class="new-gutter position-relative">
             <div class="banner-arrow ic-svg">
-                <div (click)="previousBanner()" class="prev-banner mr-2">
+                <div (click)="prevBanner()" class="prev-banner mr-2">
                     <span class="fa fa-angle-left" aria-hidden="true"></span>
                 </div>
                 <div (click)="nextBanner()" class="next-banner">
@@ -382,108 +379,40 @@
             </div>
             <div class="col-md-7 col-lg-6 order-md-1">
                 <div class="row">
-                    <div class="col-sm-6 mb-35">
+                    <div *ngFor="let firstFourCity of firstFourCities;let index=index" class="col-sm-6 mb-35">
                         <div class="city-cardBox" data-tilt>
-                            <a href="#" class="box-rendered">
+                            <a class="box-rendered">
                                 <span class="sr-only">layer anchor</span>
                             </a>
                             <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/image 10.png" alt="cityImg">
+                                <img [src]="firstFourCity.image" alt="cityImg">
                             </div>
                             <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Atlanta, GA</p>
-                                <span class="testimonials-author-city">58220 Tutors</span>
+                                <p class="testimonials-author-name">{{firstFourCity.title}}, {{ firstFourCity.state['0'].title }}</p>
+                                <span class="testimonials-author-city">{{ firstFourCity.zipcodes['0'].value }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-35">
-                        <div class="city-cardBox" data-tilt>
-                            <a href="#" class="box-rendered">
-                                <span class="sr-only">layer anchor</span>
-                            </a>
-                            <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/image 11.png" alt="cityImg">
-                            </div>
-                            <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Auburn, AL</p>
-                                <span class="testimonials-author-city">58220 Tutors</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mb-35">
-                        <div class="city-cardBox" data-tilt>
-                            <a href="#" class="box-rendered">
-                                <span class="sr-only">layer anchor</span>
-                            </a>
-                            <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/image 12.png" alt="cityImg">
-                            </div>
-                            <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Birmingham, AL</p>
-                                <span class="testimonials-author-city">58220 Tutors</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mb-35">
-                        <div class="city-cardBox" data-tilt>
-                            <a href="#" class="box-rendered">
-                                <span class="sr-only">layer anchor</span>
-                            </a>
-                            <div class="city-cardBox-thumbnail">
-                                <img src="assets/img/Mask Group.png" alt="cityImg">
-                            </div>
-                            <div class="city-cardBox-desc">
-                                <p class="testimonials-author-name">Jacksonville, FL</p>
-                                <span class="testimonials-author-city">58220 Tutors</span>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
+            <div *ngFor="let lastThreeCity of lastThreeCities;let index=index" class="col-sm-6 col-md-4 col-lg-3 mb-35">
                 <div class="city-cardBox" data-tilt>
-                    <a href="#" class="box-rendered">
+                    <a class="box-rendered">
                         <span class="sr-only">layer anchor</span>
                     </a>
                     <div class="city-cardBox-thumbnail">
-                        <img src="assets/img/image 14.png" alt="cityImg">
+                        <img [src]="lastThreeCity.image" alt="cityImg">
                     </div>
                     <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Nashville, TN</p>
-                        <span class="testimonials-author-city">58220 Tutors</span>
+                        <p class="testimonials-author-name">{{lastThreeCity.title}}, {{ lastThreeCity.state['0'].title }}</p>
+                        <span class="testimonials-author-city">{{ lastThreeCity.zipcodes['0'].value }}</span>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox" data-tilt>
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail">
-                        <img src="assets/img/image 15.png" alt="cityImg">
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Northwest Arkansas</p>
-                        <span class="testimonials-author-city">58220 Tutors</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
-                <div class="city-cardBox" data-tilt>
-                    <a href="#" class="box-rendered">
-                        <span class="sr-only">layer anchor</span>
-                    </a>
-                    <div class="city-cardBox-thumbnail">
-                        <img src="assets/img/image 16.png" alt="cityImg">
-                    </div>
-                    <div class="city-cardBox-desc">
-                        <p class="testimonials-author-name">Tallahassee, FL</p>
-                        <span class="testimonials-author-city">58220 Tutors</span>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-sm-6 col-md-4 col-lg-3 mb-35">
                 <div class="city-cardBox" data-tilt>
                     <a href="#" class="box-rendered">
@@ -540,15 +469,16 @@
         <div class="col-12 px-0">
             <div class="sliderOuter position-relative">
                 <div class="text-center text-right mb-4 mb-md-0 pos-icon-slider">
-                    <div class="prev mr-3">
+                    <div (click)="nextTestimonials()" class="prev mr-3">
                         <span class="fa fa-angle-left" aria-hidden="true"></span>
                     </div>
-                    <div class="next">
+                    <div (click)="prevTestimonials()" class="next">
                         <span class="fa fa-angle-right" aria-hidden="true"></span>
                     </div>
                 </div>
-                <div class="slider-carousel">
-                    <div class="testimonials-inner slick-slideshow__slide">
+
+                <ngx-slick-carousel class="slider-carousel" #testimonialsModal="slick-carousel" [config]="testimonialsSlideConfig">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -567,7 +497,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -586,7 +516,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -605,7 +535,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -624,7 +554,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -643,7 +573,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -662,7 +592,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -681,7 +611,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
                             <div class="testimonials-inner-box-star">
                                 <img src="assets/img/star.png" alt="star">
@@ -700,7 +630,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ngx-slick-carousel>
+
             </div>
         </div>
     </div>
@@ -758,7 +689,7 @@
         </div>
         <div class="responsive-blog-slider">
 
-            <ngx-slick-carousel class="responsive-blog-slider-inner" #slickModal="slick-carousel" [config]="slideConfig">
+            <ngx-slick-carousel class="responsive-blog-slider-inner" #blogsModal="slick-carousel" [config]="slideConfig">
                 <div ngxSlickItem *ngFor="let blog of blogs" class="blog-cards hover-blogbox">
                     <a target="_blank" href="{{blog.link}}" class="box-rendered">
                         <span class="sr-only">layer anchor</span>
@@ -808,3 +739,25 @@
     <img src="assets/img/newsletter-svg.svg" class="newsletter-svg">
 </section>
 <!--Newsletter section ends-->
+
+
+<!-- Modal Popup of Invoice Details -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button (click)="stopYoutubeVideo()" type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <iframe width="736" height="422" [src]="getVideoLink" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

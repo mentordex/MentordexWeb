@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, FormControl, AbstractControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -14,7 +14,14 @@ import { CustomValidators } from '../../../core/custom-validators';
 //import enviornment
 import { environment } from '../../../../environments/environment';
 
+export const minLengthArray = (min: number) => {
+  return (c: AbstractControl): { [key: string]: any } => {
+    if (c.value.length >= min)
+      return null;
 
+    return { MinLengthArray: true };
+  }
+}
 
 export const atLeastOne = (validator: ValidatorFn) => (
   group: FormGroup,
@@ -39,6 +46,8 @@ const getMonth = (idx) => {
 
   return month;
 }
+
+
 
 @Component({
   selector: 'app-basic-details',
@@ -71,6 +80,10 @@ export class BasicDetailsComponent implements OnInit {
 
   zipcodeArray = [{ id: 1, value: '70510', city_id: 1 }, { id: 2, value: '70511', city_id: 1 }, { id: 3, value: '36201', city_id: 2 }, { id: 4, value: '36204', city_id: 2 }, { id: 5, value: '36027', city_id: 3 }, { id: 6, value: '99726', city_id: 4 }, { id: 7, value: '56258', city_id: 5 }, { id: 8, value: '92877', city_id: 6 }, { id: 9, value: '92880', city_id: 6 }, { id: 10, value: '46140', city_id: 7 }, { id: 11, value: '33125', city_id: 8 }, { id: 12, value: '33129', city_id: 8 }, { id: 13, value: '33601', city_id: 9 }, { id: 14, value: '33605', city_id: 9 }, { id: 15, value: '73065', city_id: 10 }, { id: 16, value: '73072', city_id: 10 }, { id: 17, value: '95695', city_id: 11 }, { id: 18, value: '95776', city_id: 11 }];
 
+  validUrl = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+
+  
+
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit(): void {
@@ -86,7 +99,7 @@ export class BasicDetailsComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       phone: ['', Validators.required],
       gender: ['', Validators.required],
-      primary_language: new FormControl([{ value: '' }], Validators.compose([Validators.required, Validators.minLength(1)])),
+      primary_language: new FormControl([{ value: '' }], minLengthArray(1)),
       dob: this.formBuilder.group({
         year: ['', Validators.required],
         month: ['', Validators.required],
@@ -99,9 +112,9 @@ export class BasicDetailsComponent implements OnInit {
       city_id: [{ value: '' }, [Validators.required]],
       zipcode: [{ value: '' }, Validators.required],
       social_links: this.formBuilder.group({
-        linkedin_url: [''],
-        twitter_url: [''],
-        instagram_url: [''],
+        linkedin_url: ['', [Validators.pattern(this.validUrl)]],
+        twitter_url: ['', [Validators.pattern(this.validUrl)]],
+        instagram_url: ['', [Validators.pattern(this.validUrl)]],
       }, { validator: atLeastOne(Validators.required) }),
     });
   }
@@ -123,6 +136,9 @@ export class BasicDetailsComponent implements OnInit {
       this.mentorDetails = response;
       //console.log(this.mentorDetails);
 
+      if (this.mentorDetails.admin_status == 'NEW') {
+        this.router.navigate(['/mentor/application-status']);
+      }
 
       if (this.mentorDetails.country_id != '') {
         this.getStateListing(this.mentorDetails.country_id);
@@ -158,11 +174,14 @@ export class BasicDetailsComponent implements OnInit {
    * on Submit Basic Details
   */
   onSubmitBasicDetailsForm() {
-
+    
     if (this.basicDetailsForm.invalid) {
       this.isBasicDetailsFormSubmitted = true
       return false;
     }
+
+    /*console.log(this.basicDetailsForm.controls.primary_language);
+    return;*/
 
     //console.log('basicDetailsForm', this.basicDetailsForm.value);
     this.utilsService.processPostRequest('updateBasicDetails', this.basicDetailsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {

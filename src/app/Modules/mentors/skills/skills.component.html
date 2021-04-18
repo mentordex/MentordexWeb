@@ -22,7 +22,7 @@
                             </a>
                         </li>
                         <li class="current-active">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <span class="pills-icon">
                                         <svg width="18" height="19" viewBox="0 0 18 19" fill="none">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 1.0625C4.5 0.913316 4.44074 0.770242 4.33525 0.664752C4.22976 0.559263 4.08668 0.5 3.9375 0.5C3.78832 0.5 3.64524 0.559263 3.53975 0.664752C3.43426 0.770242 3.375 0.913316 3.375 1.0625V1.625H2.25C1.65326 1.625 1.08097 1.86205 0.65901 2.28401C0.237053 2.70597 0 3.27826 0 3.875L0 5H18V3.875C18 3.27826 17.7629 2.70597 17.341 2.28401C16.919 1.86205 16.3467 1.625 15.75 1.625H14.625V1.0625C14.625 0.913316 14.5657 0.770242 14.4602 0.664752C14.3548 0.559263 14.2117 0.5 14.0625 0.5C13.9133 0.5 13.7702 0.559263 13.6648 0.664752C13.5593 0.770242 13.5 0.913316 13.5 1.0625V1.625H4.5V1.0625ZM0 6.125H18V16.25C18 16.8467 17.7629 17.419 17.341 17.841C16.919 18.2629 16.3467 18.5 15.75 18.5H2.25C1.65326 18.5 1.08097 18.2629 0.65901 17.841C0.237053 17.419 0 16.8467 0 16.25V6.125ZM12.2108 10.4608C12.3164 10.3551 12.3757 10.2119 12.3757 10.0625C12.3757 9.91313 12.3164 9.76987 12.2108 9.66425C12.1051 9.55863 11.9619 9.49929 11.8125 9.49929C11.6631 9.49929 11.5199 9.55863 11.4142 9.66425L8.4375 12.6421L7.14825 11.3517C7.09595 11.2995 7.03386 11.258 6.96553 11.2297C6.8972 11.2014 6.82396 11.1868 6.75 11.1868C6.67604 11.1868 6.6028 11.2014 6.53447 11.2297C6.46614 11.258 6.40405 11.2995 6.35175 11.3517C6.29945 11.404 6.25797 11.4661 6.22966 11.5345C6.20136 11.6028 6.18679 11.676 6.18679 11.75C6.18679 11.824 6.20136 11.8972 6.22966 11.9655C6.25797 12.0339 6.29945 12.096 6.35175 12.1483L8.03925 13.8358C8.0915 13.8881 8.15357 13.9297 8.22191 13.9581C8.29025 13.9864 8.36351 14.001 8.4375 14.001C8.51149 14.001 8.58475 13.9864 8.65309 13.9581C8.72143 13.9297 8.7835 13.8881 8.83575 13.8358L12.2108 10.4608Z" fill="#384047"/>
@@ -37,7 +37,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <span class="pills-icon">
                                         <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M4.38523 14.829C4.29127 14.7574 4.19928 14.6833 4.10938 14.6067C4.17359 14.7096 4.26771 14.7895 4.38523 14.829Z" fill="#384047" fill-opacity="0.7"/>
@@ -123,16 +123,16 @@
                                                                 <div class="small-checkboxes">
                                                                     <div class="form-check check-opacity mb-3">
                                                                         <label class="form-check-label text-muted">
-                                                                    <input type="checkbox" class="form-check-input" name="subcategory" [attr.data-subCategoryName]="subcategory.title"  (change)="onCheckboxChange($event)" value="{{subcategory._id}}">{{subcategory.title}}<i class="input-helper"></i></label>
+                                                                    <input type="checkbox" class="form-check-input" name="subcategory" [checked]="checkSubcategory(subcategory._id)"  [attr.data-subCategoryName]="subcategory.title"  (change)="onCheckboxChange($event)" value="{{subcategory._id}}">{{subcategory.title}}<i class="input-helper"></i></label>
                                                                     </div>
                                                                 </div>
                                                             </li>
 
                                                         </ul>
 
-                                                        <p class="errorCls" *ngIf="skillsForm.controls.subcategories.hasError('MinLengthArray')">
+                                                        <!--p class="errorCls" *ngIf="skillsForm.controls.subcategories.hasError('MinLengthArray')">
                                                             <span>Select atleast 1 specialization.</span>
-                                                        </p>
+                                                        </p-->
 
                                                         <p class="errorCls" *ngIf="skillsForm.controls.subcategories.hasError('MaxLengthArray')">
                                                             <span>You can select max 3 specializations.</span>

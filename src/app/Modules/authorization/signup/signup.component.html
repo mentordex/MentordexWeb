@@ -1,7 +1,7 @@
 <!--inner section login starts-->
 
 <aw-wizard #wizard [defaultStepIndex]="wizardStep">
-    <aw-wizard-step stepTitle="signupStep1">      
+    <aw-wizard-step stepTitle="signupStep1">
         <form [formGroup]="signupStep1Form">
             <!--inner section login starts-->
             <section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
@@ -135,10 +135,11 @@
                                                     <ngx-intl-tel-input 
                                                         [cssClass]="'elementor--text special--inputs w-100'" 
                                                         [preferredCountries]="preferredCountries"
+                                                        [onlyCountries]="onlyCountries"
                                                         [enableAutoCountrySelect]="false" 
                                                         [enablePlaceholder]="true" 
                                                         [customPlaceholder]="'Mobile Number'" 
-                                                        [searchCountryFlag]="true"
+                                                        [searchCountryFlag]="false"
                                                         [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
                                                         [selectFirstCountry]="false" 
                                                         [selectedCountryISO]="CountryISO.UnitedStates"
@@ -150,7 +151,7 @@
                                                     </ngx-intl-tel-input>
 
                                                     <p class="errorCls" *ngIf="signupStep2Form.controls.phone.hasError('validatePhoneNumber')">
-                                                        <span>Invalid Phone Number.</span>
+                                                        <span>Invalid Mobile Number.</span>
                                                     </p>
             
                                                     <p class="errorCls" *ngIf="signupStep2Form.controls.phone.touched || isSignupStep2FormSubmitted">
@@ -161,10 +162,12 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="country_id" #country (change)="getStateListing(country.value)" class="custom-select special--select special--inputs w-100">
+                                                <!--select formControlName="country_id" #country (change)="getStateListing(country.value)" class="custom-select special--select special--inputs w-100">
                                                     <option disabled selected value="">Country</option>
                                                     <option *ngFor="let country of countries;" value="{{country._id}}">{{country.title}}</option>
-                                                </select>
+                                                </select -->
+
+                                                <select2 [data]="countries" [displaySearchStatus]="'always'" (update)="getStateListing($event)" [placeholder]="'Country'" formControlName="country_id" class="custom-dropdown"></select2>
 
                                                 <p class="errorCls" *ngIf="signupStep2Form.controls.country_id.touched || isSignupStep2FormSubmitted">
                                                     <app-form-validation-errors errorPrefix="Country " [errors]="signupStep2Form.get('country_id').errors"></app-form-validation-errors>
@@ -173,10 +176,12 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="state_id" #state (change)="getCityListing(state.value)" class="custom-select special--select special--inputs w-100">
+                                                <!--select formControlName="state_id" #state (change)="getCityListing(state.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">State</option>
                                                     <option *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
-                                                </select>
+                                                </select -->
+
+                                                <select2 [data]="states" [displaySearchStatus]="'always'" (update)="onUpdateState($event)" [placeholder]="'State'" class="custom-dropdown" formControlName="state_id"></select2>
 
                                                 <p class="errorCls" *ngIf="signupStep2Form.controls.state_id.touched || isSignupStep2FormSubmitted">
                                                     <app-form-validation-errors errorPrefix="State " [errors]="signupStep2Form.get('state_id').errors"></app-form-validation-errors>
@@ -185,10 +190,12 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-4">
-                                                <select formControlName="city_id" #city (change)="getZipcodeListing(city.value)" class="custom-select special--select special--inputs w-100">
+                                                <!--select formControlName="city_id" #city (change)="getZipcodeListing(city.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">City</option>
                                                     <option *ngFor="let city of cities;" value="{{city._id}}">{{city.title}}</option>
-                                                </select>
+                                                </select-->
+
+                                                <select2 [data]="cities" [displaySearchStatus]="'always'" (update)="onUpdateCity($event)" [placeholder]="'City'" class="custom-dropdown" formControlName="city_id"></select2>
 
                                                 <p class="errorCls" *ngIf="signupStep2Form.controls.city_id.touched || isSignupStep2FormSubmitted">
                                                     <app-form-validation-errors errorPrefix="City " [errors]="signupStep2Form.get('city_id').errors"></app-form-validation-errors>
@@ -197,11 +204,13 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="single-form-row mb-3 mb-md-4">
-                                                <select formControlName="zipcode" class="custom-select special--select special--inputs w-100">
+                                                <!--select formControlName="zipcode" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">Zipcode</option>
                                                     <option *ngFor="let zipcode of zipcodes;" value="{{zipcode.value}}">{{zipcode.value}}</option>
                                                     
-                                                </select>
+                                                </select-->
+                                                <select2 [data]="zipcodes" [displaySearchStatus]="'always'" class="custom-dropdown" [placeholder]="'Zipcode'" formControlName="zipcode"></select2>
+
                                                 <p class="errorCls" *ngIf="signupStep2Form.controls.zipcode.touched || isSignupStep2FormSubmitted">
                                                     <app-form-validation-errors errorPrefix="Zipcode " [errors]="signupStep2Form.get('zipcode').errors"></app-form-validation-errors>
                                                 </p>
@@ -251,7 +260,7 @@
 
 
                                             <p class="errorCls" *ngIf="signupStep2Form.controls.agree_terms.touched || isSignupStep2FormSubmitted">
-                                                <app-form-validation-errors errorPrefix="Accept Ts & Cs " [errors]="signupStep2Form.get('agree_terms').errors"></app-form-validation-errors>
+                                                <app-form-validation-errors errorPrefix="Accepting our terms & conditions and privacy policy  " [errors]="signupStep2Form.get('agree_terms').errors"></app-form-validation-errors>
                                             </p>
                                         </div>
                                     </div>
@@ -371,25 +380,30 @@
                                             <div class="single-form-row mb-4">
                                                 <select formControlName="state_id" #state2 (change)="getCityListing(state2.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">State</option>
-                                                    <option [selected]="state._id == parentDetails.state_id" *ngFor="let state of states;" value="{{state._id}}">{{state.title}}</option> 
+                                                    <option [selected]="state._id == parentDetails.state_id" *ngFor="let state of states2;" value="{{state._id}}">{{state.title}}</option> 
                                                 </select>
+
+                                                <!--select2 [data]="states" [displaySearchStatus]="'always'" class="custom-dropdown" [value]="stateValue" (update)="onUpdateState($event)" [placeholder]="'State'" formControlName="state_id"></select2-->
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="single-form-row mb-4">
                                                 <select formControlName="city_id" #city2 (change)="getZipcodeListing(city2.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">City</option>
-                                                    <option [selected]="city._id == parentDetails.city_id" *ngFor="let city of cities;" value="{{city._id}}">{{city.title}}</option>
+                                                    <option [selected]="city._id == parentDetails.city_id" *ngFor="let city of cities2;" value="{{city._id}}">{{city.title}}</option>
                                                 </select>
+
+                                                <!--select2 [data]="cities" [displaySearchStatus]="'always'" class="custom-dropdown" [value]="cityValue" (update)="onUpdateCity($event)" [placeholder]="'City'" formControlName="city_id"></select2-->
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="single-form-row mb-4">
                                                 <select formControlName="zipcode" class="custom-select special--select special--inputs w-100">
                                                     <option value="">Zipcode</option>
-                                                    <option [selected]="zipcode.value == parentDetails.zipcode" *ngFor="let zipcode of zipcodes;" value="{{zipcode.value}}">{{zipcode.value}}</option>
+                                                    <option [selected]="zipcode.value == parentDetails.zipcode" *ngFor="let zipcode of zipcodes2;" value="{{zipcode.value}}">{{zipcode.value}}</option>
                                                     
                                                 </select>
+                                                <!--select2 [data]="zipcodes" [displaySearchStatus]="'always'" class="custom-dropdown" [value]="zipcodeValue" [placeholder]="'Zipcode'" formControlName="zipcode"></select2-->
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
