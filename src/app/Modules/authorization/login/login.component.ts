@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
         }else{
           const responseMessage = 'Great!! ' + response.body.first_name + ', welcome to your dashboard.'
           this.utilsService.onResponse(responseMessage, true);//show page loader 
-          this.router.navigate(['/parent/dashboard']);
+          this.router.navigate(['/parent/search']);
         }
       }
 

@@ -9,7 +9,10 @@ import { BookASlotComponent } from './book-a-slot/book-a-slot.component';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PurchaseMembershipComponent } from './purchase-membership/purchase-membership.component';
+import { PurchaseMembershipSuccessComponent } from './purchase-membership-success/purchase-membership-success.component';
 
+
+import { AuthGuard } from '../../core/guards/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -30,32 +33,44 @@ const routes: Routes = [
   {
     path: 'basic-details',
     component: BasicDetailsComponent,
-    data: { title: 'Basic Details' }
+    data: { title: 'Basic Details' },
+    canActivate: [AuthGuard]
   },
   {
     path: 'skills',
     component: SkillsComponent,
-    data: { title: 'Skills' }
+    data: { title: 'Skills' },
+    canActivate: [AuthGuard]
   },
   {
     path: 'book-a-slot',
     component: BookASlotComponent,
-    data: { title: 'Book a Slot' }
+    data: { title: 'Book a Slot' },
+    canActivate: [AuthGuard]
   },
   {
     path: 'application-status',
     component: ApplicationStatusComponent,
-    data: { title: 'Application Status' }
+    data: { title: 'Application Status' },
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    data: { title: 'Profile' }
+    data: { title: 'Profile' },
+    canActivate: [AuthGuard]
   },
   {
     path: 'purchase-membership',
     component: PurchaseMembershipComponent,
-    data: { title: 'Purchase Membership' }
+    data: { title: 'Purchase Membership' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'purchase-membership-success',
+    component: PurchaseMembershipSuccessComponent,
+    data: { title: 'Purchase Membership Success' },
+    canActivate: [AuthGuard]
   }
 
 ];

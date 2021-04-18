@@ -43,6 +43,9 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
 import { CreditCardDirectivesModule } from 'angular-cc-library';
 
+import { ReadMoreModule } from 'ng-readmore';
+
+
 
 //import { TwoDigitDecimaNumberDirective } from '../directives/two-digit-decima-number.directive';
 
@@ -72,6 +75,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         Select2Module,
         DropzoneModule,
         CreditCardDirectivesModule,
+        ReadMoreModule,
         BsDatepickerModule.forRoot(),
         NgxLoadingModule.forRoot({
           animationType: ngxLoadingAnimationTypes.wanderingCubes,
@@ -146,6 +150,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         DropzoneModule,
         BsDatepickerModule,
         CreditCardDirectivesModule,
+        ReadMoreModule,
         NgxLoadingModule
     ]
 })

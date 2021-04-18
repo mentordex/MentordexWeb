@@ -29,10 +29,10 @@ export class MentorProfileComponent implements OnInit {
   mentorId: any = '';
   mentorProfileDetails: any = {};
   profileImagePath: any = 'assets/img/image.png';
-  getVideoLink:any = '';
-  getVideoType:any = '';
+  getVideoLink: any = '';
+  getVideoType: any = '';
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom:DomSanitizer) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) { }
 
   ngOnInit(): void {
     this.checkQueryParam();
@@ -44,18 +44,18 @@ export class MentorProfileComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.mentorId = params['id'];
 
-      
+
 
       this.zone.run(() => {
         this.getMentorProfileDetailsById(this.id, this.mentorId);
       });
 
-      //console.log(this.priceValuationForm.value);
+      //console.log(this.getMentorProfileDetailsById.value);
 
     });
 
-    
-   
+
+
 
   }
 
@@ -81,21 +81,31 @@ export class MentorProfileComponent implements OnInit {
     })
   }
 
-  public openVideoIntroPopup(video_link): void { 
-    this.getVideoLink =  this.dom.bypassSecurityTrustResourceUrl(video_link); 
+  public openVideoIntroPopup(video_link): void {
+    //this.getVideoLink = this.dom.bypassSecurityTrustResourceUrl(video_link);
+    this.getVideoLink = video_link;
     //console.log(this.getVideoLink);
-    if(this.getVideoLink != ""){
+    if (this.getVideoLink != "") {
       $('#videoModal').modal('show')
     }
-    
+
   }
 
-  public submitMentorBookingRequest(): void { 
+  public submitMentorBookingRequest(): void {
     // check Parent has added the billing method or not.
     this.utilsService.processPostRequest('checkBillingMethodExists', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      
+
 
     })
+  }
+
+  /**
+* set check object array length.
+* @param object
+*  @return number
+*/
+  public checkObjectLength(object): number {
+    return Object.keys(object).length;
   }
 
   //destroy all subscription

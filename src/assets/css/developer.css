@@ -315,6 +315,87 @@ aw-wizard-navigation-bar {
     padding: 3px 5px !important;
 }
 
+.deafult-card--appearence {
+    font-size: 12px;
+    margin-bottom: 0px;
+    font-weight: 600;
+    background: var(--color-primary);
+    display: inline-block;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.dz-inline-zone .dropzone-container {
+    display: inline-block;
+}
+
+.readmore--expand--btn {
+    margin-bottom: 10px;
+}
+
+.readmore--expand--btn p {
+    margin-bottom: 0px !important;
+}
+
+.readmore--expand--btn small {
+    font-size: 100%;
+    margin: 0px;
+    display: inline-block;
+    height: 10px;
+}
+
+ngb-rating:focus {
+    outline: none;
+}
+
+ngb-rating {
+    color: #3BB3BD;
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 30px;
+    color: #d3d3d3;
+}
+
+.full {
+    color: #3BB3BD;
+}
+
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: #3BB3BD;
+}
+
+.cursor--pointer {
+    cursor: pointer !important;
+}
+
+.focus--none:focus {
+    outline: none !important;
+}
+
+ngb-rating * {
+    font-size: 23px !important;
+}
+
+.readmore--expand--btn small a {
+    color: var(--color-primary) !important;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.readmore--expand--btn small a:hover,
+.readmore--expand--btn small a:focus {
+    color: var(--color-primary) !important;
+    font-weight: 500;
+    text-decoration: none;
+}
+
 @media only screen and (min-width: 768px) {
     .listing-category-modify ul li {
         flex: 0 0 33.33%;

@@ -7,10 +7,11 @@ import { AddPaymentMethodComponent } from './add-payment-method/add-payment-meth
 import { BillingMethodsComponent } from './billing-methods/billing-methods.component';
 import { MentorProfileComponent } from './mentor-profile/mentor-profile.component';
 import { BookingRequestComponent } from './booking-request/booking-request.component';
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, AddPaymentMethodComponent, BillingMethodsComponent, MentorProfileComponent, BookingRequestComponent],
+  declarations: [DashboardComponent, AddPaymentMethodComponent, BillingMethodsComponent, MentorProfileComponent, BookingRequestComponent, SearchComponent],
   imports: [
     CommonModule,
     ParentsRoutingModule,

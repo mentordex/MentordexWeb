@@ -155,9 +155,9 @@ export class AddPaymentMethodComponent implements OnInit {
     var mergePaymentData = Object.assign(this.addPaymentWizard.value, this.addAddressWizard.value);
     //console.log(mergePaymentData); return;
     this.utilsService.processPostRequest('buySubscription', mergePaymentData, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
-      //this.utilsService.onResponse('Your information updated successfully.', true);
-      //this.router.navigate(['/mentor/skills']);
+      //console.log(response);
+      this.close();
+      this.router.navigate(['/mentor/purchase-membership-success']);
     })
 
   }

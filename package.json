@@ -28,6 +28,7 @@
     "intl-tel-input": "^17.0.3",
     "jquery": "^3.5.1",
     "masonry-layout": "^4.2.2",
+    "ng-readmore": "^1.0.0",
     "ng-select2-component": "^7.2.0",
     "ng6-toastr-notifications": "^1.0.4",
     "ngx-bootstrap": "^6.2.0",
@@ -50,7 +51,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.5",
-    "@angular/cli": "~11.0.5",
+    "@angular/cli": "^11.2.9",
     "@angular/compiler-cli": "~11.0.5",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",

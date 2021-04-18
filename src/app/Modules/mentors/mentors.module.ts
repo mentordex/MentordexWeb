@@ -13,10 +13,11 @@ import { ApplicationStatusComponent } from './application-status/application-sta
 import { ProfileComponent } from './profile/profile.component';
 import { PurchaseMembershipComponent } from './purchase-membership/purchase-membership.component';
 import { AddPaymentMethodComponent } from './add-payment-method/add-payment-method.component';
+import { PurchaseMembershipSuccessComponent } from './purchase-membership-success/purchase-membership-success.component';
 
 
 @NgModule({
-  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent],
+  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent],
   imports: [
     CommonModule,
     MentorsRoutingModule,

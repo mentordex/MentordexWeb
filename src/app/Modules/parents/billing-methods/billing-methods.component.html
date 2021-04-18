@@ -37,11 +37,11 @@
 
                                             <div *ngFor="let paymentArray of paymentDetailsArray; let i = index" class="each-credit-card-item">
                                                 <div class="row mx-0 align-items-center">
-                                                    <div class="pr-0 each-credit-card-logo">
+                                                    <div class="px-1 col-12 each-credit-card-logo">
                                                         {{paymentArray?.card_type}}
                                                         <!--img src="./img/logos_mastercard.svg" class="img-fluid" alt="masatercard-logo"-->
                                                     </div>
-                                                    <div class="px-1 each-credit-number">
+                                                    <div class="px-1 col-12 each-credit-number">
                                                         <p class="profile-label-text font--16 mb-0">xxxx xxxx xxxx {{paymentArray?.credit_card_number}}</p>
                                                     </div>
                                                 </div>
@@ -55,6 +55,13 @@
                                                         <p class="profile-label-text font-14 mb-0">{{paymentArray?.card_holder_name}}</p>
                                                     </div>
                                                 </div>
+                                                <ng-container *ngIf="paymentArray.default">
+                                                    <div class="row">
+                                                        <div class="col-12 text-left mt-3">
+                                                            <p class="deafult-card--appearence">Default</p>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
                                             </div>
                                         </ng-container>
                                         <ng-template #noCardsAvailable>

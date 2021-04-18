@@ -1,0 +1,4 @@
+.mentorcards-pagination-footer ul li a.disabled {
+    color: #cacaca;
+    cursor: default;
+}

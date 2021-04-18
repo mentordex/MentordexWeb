@@ -88,7 +88,11 @@ export class ProfileComponent implements OnInit {
 
   private checkQueryParam() {
     this.id = localStorage.getItem('x-user-ID');
+
+    
+
     this.getMentorProfileDetailsByToken(this.id);
+
     this.basicDetailsForm.patchValue({
       userID: this.id
     });
@@ -121,164 +125,169 @@ export class ProfileComponent implements OnInit {
   getMentorProfileDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorProfileDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorProfileDetails = response;
+      //console.log(this.mentorProfileDetails);
+      if (this.mentorProfileDetails.admin_status == 'APPROVED') {
 
-      if (this.mentorProfileDetails.admin_status != 'APPROVED') {
+        this.basicDetailsForm.patchValue({
+          bio: this.mentorProfileDetails.bio,
+          tagline: this.mentorProfileDetails.tagline,
+          servicable_zipcodes: this.mentorProfileDetails.servicable_zipcodes
+        });
+
+        if (this.mentorProfileDetails.bio && this.mentorProfileDetails.bio != "") {
+          //console.log('sssss')
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+        }
+
+        if (this.mentorProfileDetails.tagline && this.mentorProfileDetails.tagline != "") {
+          //console.log('hellwefo')
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+        }
+
+        if (this.mentorProfileDetails.servicable_zipcodes && this.mentorProfileDetails.servicable_zipcodes != "") {
+          //console.log('hello')
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+        }
+
+        if (this.mentorProfileDetails.profile_image.length > 0) {
+          //console.log('pello')
+          this.profileImageArray.push(new FormControl(this.mentorProfileDetails.profile_image[0]));
+
+          this.profileImagePath = this.mentorProfileDetails.profile_image[0].file_path;
+
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+
+        }
+
+        if (this.mentorProfileDetails.introduction_video.length > 0) {
+          //console.log('yello')
+          this.videoIntroudctionArray.push(new FormControl(this.mentorProfileDetails.introduction_video[0]));
+
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+        }
+
+        if (this.mentorProfileDetails.academics.length > 0) {
+          //console.log('ayello')
+
+          this.mentorProfileDetails.academics.forEach((element, index, academicsArray) => {
+            this.addAcademic();
+            this.academics().at(index).patchValue({
+              institution_name: academicsArray[index].institution_name,
+              grade: academicsArray[index].grade,
+              area_of_study: academicsArray[index].area_of_study,
+              degree: academicsArray[index].degree,
+              start_year: academicsArray[index].start_year,
+              end_year: academicsArray[index].end_year,
+            })
+
+            if (academicsArray[index].start_year != '') {
+              this.onSelectAcademicStartYear(academicsArray[index].start_year, index)
+            }
+
+          });
+
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
+
+        } else {
+          this.addAcademic();
+        }
+
+
+        if (this.mentorProfileDetails.employments.length > 0) {
+          //console.log('aysello')
+          this.mentorProfileDetails.employments.forEach((element, index, employmentsArray) => {
+            this.addEmployment();
+            this.employments().at(index).patchValue({
+              company: employmentsArray[index].company,
+              state: employmentsArray[index].state,
+              city: employmentsArray[index].city,
+              title: employmentsArray[index].title,
+              description: employmentsArray[index].description,
+              start_year: employmentsArray[index].start_year,
+              end_year: employmentsArray[index].end_year,
+            })
+
+            if (employmentsArray[index].start_year != '') {
+              this.employmentStartYear = employmentsArray[index].start_year;
+              this.onSelectEmploymentStartYear(employmentsArray[index].start_year, index)
+            }
+
+            if (employmentsArray[index].end_year == 'Present') {
+              //console.log('hello');
+
+              this.endEmploymentyears[index] = [];
+              this.isCurrentlyWorkHereChecked[index] = true;
+
+              this.employments().at(index).patchValue({
+                currently_work_here: true
+              })
+
+
+            }
+
+          });
+
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
+        } else {
+          this.addEmployment();
+        }
+
+
+        if (this.mentorProfileDetails.achievements.length > 0) {
+          //console.log('aysddello')
+          this.mentorProfileDetails.achievements.forEach((element, index, achievementsArray) => {
+            this.addAchievement();
+            this.achievements().at(index).patchValue({
+              title: achievementsArray[index].title,
+              years_of_learning: achievementsArray[index].years_of_learning,
+              associated_with: achievementsArray[index].associated_with,
+              issuer: achievementsArray[index].issuer,
+              start_year: achievementsArray[index].start_year,
+              end_year: achievementsArray[index].end_year,
+              description: achievementsArray[index].description,
+            })
+
+            if (achievementsArray[index].start_year != '') {
+              this.onSelectAchievementStartYear(achievementsArray[index].start_year, index)
+            }
+
+
+          });
+
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
+
+        } else {
+          this.addAchievement();
+        }
+
+
+        this.hourlyRateForm.patchValue({
+          hourly_rate: this.mentorProfileDetails.hourly_rate,
+        });
+
+
+
+        this.addSocialLinksForm.patchValue({
+          website: this.mentorProfileDetails.website,
+        });
+
+        if (this.mentorProfileDetails.hourly_rate && this.mentorProfileDetails.hourly_rate != "") {
+          //console.log('ayssello')
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+        }
+
+        if (this.mentorProfileDetails.website && this.mentorProfileDetails.website != "") {
+          //console.log('ayselslo')
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+        }
+
+
+      }
+      else {
         this.router.navigate(['/mentor/application-status']);
       }
 
-      console.log(response);
-      this.basicDetailsForm.patchValue({
-        bio: this.mentorProfileDetails.bio,
-        tagline: this.mentorProfileDetails.tagline,
-        servicable_zipcodes: this.mentorProfileDetails.servicable_zipcodes
-      });
 
-      if (this.mentorProfileDetails.bio && this.mentorProfileDetails.bio != "") {
-        //console.log('sssss')
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
-      }
-
-      if (this.mentorProfileDetails.tagline && this.mentorProfileDetails.tagline != "") {
-        //console.log('hellwefo')
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
-      }
-
-      if (this.mentorProfileDetails.servicable_zipcodes && this.mentorProfileDetails.servicable_zipcodes != "") {
-        //console.log('hello')
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
-      }
-
-      if (this.mentorProfileDetails.profile_image.length > 0) {
-        //console.log('pello')
-        this.profileImageArray.push(new FormControl(this.mentorProfileDetails.profile_image[0]));
-
-        this.profileImagePath = this.mentorProfileDetails.profile_image[0].file_path;
-
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
-
-      }
-
-      if (this.mentorProfileDetails.introduction_video.length > 0) {
-        //console.log('yello')
-        this.videoIntroudctionArray.push(new FormControl(this.mentorProfileDetails.introduction_video[0]));
-
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
-      }
-
-      if (this.mentorProfileDetails.academics.length > 0) {
-        this.mentorProfileDetails.academics.forEach((element, index, academicsArray) => {
-          this.addAcademic();
-          this.academics().at(index).patchValue({
-            institution_name: academicsArray[index].institution_name,
-            grade: academicsArray[index].grade,
-            area_of_study: academicsArray[index].area_of_study,
-            degree: academicsArray[index].degree,
-            start_year: academicsArray[index].start_year,
-            end_year: academicsArray[index].end_year,
-          })
-
-          if (academicsArray[index].start_year != '') {
-            this.onSelectAcademicStartYear(academicsArray[index].start_year, index)
-          }
-
-        });
-
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
-
-      } else {
-        this.addAcademic();
-      }
-
-
-      if (this.mentorProfileDetails.employments.length > 0) {
-
-        this.mentorProfileDetails.employments.forEach((element, index, employmentsArray) => {
-          this.addEmployment();
-          this.employments().at(index).patchValue({
-            company: employmentsArray[index].company,
-            state: employmentsArray[index].state,
-            city: employmentsArray[index].city,
-            title: employmentsArray[index].title,
-            description: employmentsArray[index].description,
-            start_year: employmentsArray[index].start_year,
-            end_year: employmentsArray[index].end_year,
-          })
-
-          if (employmentsArray[index].start_year != '') {
-            this.employmentStartYear = employmentsArray[index].start_year;
-            this.onSelectEmploymentStartYear(employmentsArray[index].start_year, index)
-          }
-
-          if (employmentsArray[index].end_year == 'Present') {
-            //console.log('hello');
-
-            this.endEmploymentyears[index] = [];
-            this.isCurrentlyWorkHereChecked[index] = true;
-
-            this.employments().at(index).patchValue({
-              currently_work_here: true
-            })
-
-
-          }
-
-        });
-
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
-      } else {
-        this.addEmployment();
-      }
-
-
-      if (this.mentorProfileDetails.achievements.length > 0) {
-        this.mentorProfileDetails.achievements.forEach((element, index, achievementsArray) => {
-          this.addAchievement();
-          this.achievements().at(index).patchValue({
-            title: achievementsArray[index].title,
-            years_of_learning: achievementsArray[index].years_of_learning,
-            associated_with: achievementsArray[index].associated_with,
-            issuer: achievementsArray[index].issuer,
-            start_year: achievementsArray[index].start_year,
-            end_year: achievementsArray[index].end_year,
-            description: achievementsArray[index].description,
-          })
-
-          if (achievementsArray[index].start_year != '') {
-            this.onSelectAchievementStartYear(achievementsArray[index].start_year, index)
-          }
-
-
-        });
-
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
-
-      } else {
-        this.addAchievement();
-      }
-
-
-      this.hourlyRateForm.patchValue({
-        hourly_rate: this.mentorProfileDetails.hourly_rate,
-      });
-
-      
-
-      this.addSocialLinksForm.patchValue({
-        website: this.mentorProfileDetails.website,
-      });
-
-      if (this.mentorProfileDetails.hourly_rate && this.mentorProfileDetails.hourly_rate != "") {
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
-      }
-
-      if (this.mentorProfileDetails.website && this.mentorProfileDetails.website != "") {
-        this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
-      }
-
-
-      //console.log(this.calculateProfilePercentage);
-
-      //console.log(this.academicHistoryForm.value);
     })
   }
 
@@ -420,7 +429,7 @@ export class ProfileComponent implements OnInit {
         })
 
         this.on("success", function (file, serverResponse) {
-          console.log('serverResponse', serverResponse);
+          //console.log('serverResponse', serverResponse);
 
           componentObj.zone.run(() => {
             componentObj.profileImageArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'profile_image' }));
@@ -564,7 +573,7 @@ export class ProfileComponent implements OnInit {
       //console.log('1')
       this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
     }
-    
+
 
     if (this.basicDetailsForm.controls.servicable_zipcodes.value) {
       //console.log('3')
@@ -602,8 +611,8 @@ export class ProfileComponent implements OnInit {
     }
 
 
-    console.log(this.academics().length);
-    console.log(this.academics());
+    //console.log(this.academics().length);
+    //console.log(this.academics());
 
     if (this.academics().length > 0) {
 
@@ -702,10 +711,7 @@ export class ProfileComponent implements OnInit {
     //console.log(this.achievementsForm.value); return;
 
     this.utilsService.processPostRequest('updateProfileSocialLinksDetails', this.addSocialLinksForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      //console.log(response);
-      //this.wizard.goToNextStep();
-      //this.getWizardStep = 6;
-      //this.getWizardCompleteStep = 6;
+      
       this.router.navigate(['/mentor/purchase-membership']);
     })
   }

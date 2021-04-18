@@ -4427,7 +4427,8 @@ span.flatpickr-weekday {
 
 .atmcard-icon {
     position: absolute;
-    top: 50%;
+    /* top: 50%; */
+    top: 23px;
     transform: translateY(-50%);
     left: 12px;
 }
@@ -4435,7 +4436,8 @@ span.flatpickr-weekday {
 .lock-icon {
     position: absolute;
     right: 12px;
-    top: 50%;
+    /* top: 50%; */
+    top: 23px;
     transform: translateY(-50%);
 }
 

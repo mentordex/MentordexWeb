@@ -57,6 +57,18 @@ export class HeaderComponent implements OnInit {
       //check the page url and change title/name on routed page
       if (event instanceof NavigationEnd) {
 
+        if (localStorage.getItem(environment.TOKEN_NAME)) {        
+    
+          if (localStorage.getItem("x-user-type")=="MENTOR" && event.url.includes('parent')) {
+            this.router.navigate(['/']);
+            return false;
+          }else if(localStorage.getItem("x-user-type")=="PARENT" && event.url.includes('mentor')){
+            this.router.navigate(['/parent/search']);
+            return false;
+          }
+        }
+
+
         if (event.url == '/' || event.url == '/home' || (event.url).includes('quick-links')) {
           //console.log('home');
           this.zone.run(() => {

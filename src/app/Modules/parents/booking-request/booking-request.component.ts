@@ -41,6 +41,12 @@ export class BookingRequestComponent implements OnInit {
   getCurrentDay: any = '';
   getCurrentDate: any = '';
 
+  slots: any = [];
+
+  paymentDetails: any = {};
+  paymentDetailsArray: any = [];
+  isPaymentMethodModalOpen: boolean = false;
+
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) {
     this.minDate = new Date();
     this.maxDate = new Date();
@@ -49,12 +55,13 @@ export class BookingRequestComponent implements OnInit {
     this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
     this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
 
-   }
+  }
 
   ngOnInit(): void {
     this.initalizeBookARequestForm();
     this.checkQueryParam();
     this.jobFileDropzoneInit();
+    this.initalizeTimeSlots();
   }
 
   private checkQueryParam() {
@@ -62,34 +69,51 @@ export class BookingRequestComponent implements OnInit {
 
     this.activatedRoute.params.subscribe((params) => {
       this.mentorId = params['id'];
-
-
-
       this.zone.run(() => {
         this.getMentorProfileDetailsById(this.id, this.mentorId);
       });
-
       //console.log(this.priceValuationForm.value);
-
     });
 
-
-
-
+    this.getPaymentDetailsByToken(this.id);
   }
 
   //initalize Book Requestform
   private initalizeBookARequestForm() {
     this.bookARequestForm = this.formBuilder.group({
-      userID: [''],
+      parent_id: [''],
+      mentor_id: [''],
       job_title: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
-      job_description: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
+      job_description: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2000)])],
       category_id: ['', [Validators.required]],
+      hourly_rate: ['', [Validators.required]],
       subcategory_id: ['', [Validators.required]],
-      appointment_date: ['', [Validators.required]],
-      appointment_time: ['', [Validators.required]],
-      job_file: this.formBuilder.array([])
+      booking_date: ['', [Validators.required]],
+      booking_time: ['', [Validators.required]],
+      job_file: this.formBuilder.array([]),
+      agree_terms: [false, Validators.requiredTrue],
+      payment_method_added: [false, Validators.requiredTrue],
     });
+  }
+
+  /**
+ * Validate Payment Method.
+ */
+  validateBookARequestForm() {
+
+    this.isbookARequestFormSubmitted = true;
+
+    // stop here if form is invalid
+    if (this.bookARequestForm.invalid) {
+      return;
+    }
+    //console.log(this.bookARequestForm.value); return;
+    this.utilsService.processPostRequest('jobs/newBookingRequest', this.bookARequestForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log(response);
+      this.utilsService.onResponse(environment.MESSGES['BOOKING-REQUEST-SENT'], true);
+      this.router.navigate(['/parent/search']);
+    })
+
   }
 
   /**
@@ -98,8 +122,13 @@ export class BookingRequestComponent implements OnInit {
   getMentorProfileDetailsById(id, mentorId): void {
     this.utilsService.processPostRequest('getMentorProfileDetailsById', { userID: id, mentorId: mentorId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorProfileDetails = response;
-      console.log(this.mentorProfileDetails);
-
+      this.bookARequestForm.patchValue({
+        hourly_rate: this.mentorProfileDetails.hourly_rate,
+        category_id: this.mentorProfileDetails.category_id,
+        parent_id: id,
+        mentor_id: mentorId,
+      });
+      //console.log(this.mentorProfileDetails);
     })
   }
 
@@ -109,8 +138,8 @@ export class BookingRequestComponent implements OnInit {
     let selectedDate = new Date(value);
 
 
-    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth()+1) + '/' + selectedDate.getFullYear();
-    this.bookARequestForm.controls.appointment_date.patchValue(formatDate);
+    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+    this.bookARequestForm.controls.booking_date.patchValue(formatDate);
 
     let selectedDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()];
 
@@ -198,7 +227,7 @@ export class BookingRequestComponent implements OnInit {
 
 
         this.on("success", function (file, serverResponse) {
-          console.log('serverResponse', serverResponse);
+          //console.log('serverResponse', serverResponse);
 
           componentObj.zone.run(() => {
             componentObj.jobFileArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'Jobs' }));
@@ -241,8 +270,62 @@ export class BookingRequestComponent implements OnInit {
     const params = { fileKey: file_key }
 
     this.utilsService.processPostRequest('deleteObject', params, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
     })
+  }
+
+  initalizeTimeSlots() {
+    for (var i = 0; i < 24; i++) {
+      var timeFormat = (i <= 11) ? 'AM' : 'PM'
+      i = (i < 9) ? parseInt(`0${i}`) : i;
+
+
+      if (i < 9) {
+        var j = (i == 0) ? '12' : `0${i}`
+        this.slots.push({ slot: `${j}:00 ${timeFormat} - 0${i + 1}:00 ${timeFormat}`, isChecked: false })
+      } else if (i == 9) {
+        this.slots.push({ slot: `0${i}:00 ${timeFormat} - ${i + 1}:00 ${timeFormat}`, isChecked: false })
+      } else {
+        this.slots.push({ slot: `${i}:00 ${timeFormat} - ${i + 1}:00 ${timeFormat}`, isChecked: false })
+      }
+
+    }
+  }
+
+  /**
+   * get Mentor Details By Token
+  */
+  getPaymentDetailsByToken(id): void {
+    this.utilsService.processPostRequest('getSavedPaymentMethod', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.paymentDetails = response;
+      //console.log(this.paymentDetails.payment_details);
+      this.paymentDetailsArray = this.paymentDetails.payment_details;
+      if(this.paymentDetailsArray.length > 0){
+        this.bookARequestForm.patchValue({
+          payment_method_added: true
+        });
+      }else{
+        this.bookARequestForm.patchValue({
+          payment_method_added: false
+        });
+      }
+
+      this.paymentDetailsArray = this.paymentDetailsArray.filter(function (item) {
+        return item.default === true;
+      });
+    })
+  }
+
+  showPaymentMethodPopup(): void {
+
+    this.isPaymentMethodModalOpen = true;
+    //this.selectedPriceId = priceId
+  }
+
+  hidePaymentMethodPopup(isOpened: boolean): void {
+    // console.log('carDetails', isOpened);
+    this.isPaymentMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
+    this.getPaymentDetailsByToken(this.id);
   }
 
   /**
@@ -252,6 +335,11 @@ export class BookingRequestComponent implements OnInit {
 */
   public checkObjectLength(object): number {
     return Object.keys(object).length;
+  }
+
+  //destroy all subscription
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 
 }

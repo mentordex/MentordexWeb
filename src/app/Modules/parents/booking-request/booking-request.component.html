@@ -27,208 +27,38 @@
                                         <div class="row">
                                             <div class="col-lg-6 mb-4">
                                                 <label for="" class="profile-label-text">Job Title</label>
-                                                <input type="text" class="special--inputs w-100 little-cs-input" placeholder="Enter the job title">
+                                                <input type="text" formControlName="job_title" class="special--inputs w-100 little-cs-input" placeholder="Enter the job title">
+
+                                                <p class="errorCls" *ngIf="bookARequestForm.controls.job_title.touched || isbookARequestFormSubmitted">
+                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Job Title " [errors]="bookARequestForm.get('job_title').errors"></app-form-validation-errors>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 mb-2">
                                         <div class="row">
                                             <div class="col-lg-4 mb-4">
-                                                <label for="" class="profile-label-text">Job Category</label>
-                                                <select class="custom-select arrow-select green-select py-2 h-auto">
-                                           <option value="">Academics</option>
-                                           <option value="">Math</option>
-                                       </select>
+                                                <label for="" class="profile-label-text">Job Category</label> {{mentorProfileDetails?.category?.title}}
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <p class="mobile-pagetop-heading mb-3">Job Category</p>
+                                        <p class="mobile-pagetop-heading mb-3">Select Speciality</p>
                                     </div>
                                     <div class="col-12">
                                         <div class="row">
-                                            <div class="col-lg-5 col-xl-4 mb-4 mb-lg-0">
-                                                <p class="subject-category-title mb-3">General Subjects</p>
-                                                <div class="subject-category-box">
-                                                    <ul>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">Biology</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">English</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">Chemistry</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">Physics</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">Coding</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">History</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">Economics</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">Literatures</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">Science</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark">
-                                                        <span class="design"></span>
-                                                        <span class="text">Writing</span>
-                                                    </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                            <div class="col-lg-4 col-xl-4 mb-4 mb-lg-0">
+                                                <select formControlName="subcategory_id" class="custom-select arrow-select green-select py-2 h-auto">
+                                                    <option disabled selected value="">Select</option>
+                                                    <option *ngFor="let subcategory of mentorProfileDetails.subcategories;let i = index" [value]="subcategory.value">{{subcategory.name}}</option>
+                                                </select>
+
+                                                <p class="errorCls" *ngIf="bookARequestForm.controls.subcategory_id.touched || isbookARequestFormSubmitted">
+                                                    <app-form-validation-errors errorPrefix="Speciality " [errors]="bookARequestForm.get('subcategory_id').errors"></app-form-validation-errors>
+                                                </p>
                                             </div>
-                                            <div class="col-md-6 col-lg-3 col-xl-4 mb-4 mb-lg-0">
-                                                <p class="subject-category-title mb-3">Foreign Language</p>
-                                                <div class="subject-category-box li-100">
-                                                    <ul>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark1">
-                                                        <span class="design"></span>
-                                                        <span class="text">American Sign Language</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark1">
-                                                        <span class="design"></span>
-                                                        <span class="text">Chinese</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark1">
-                                                        <span class="design"></span>
-                                                        <span class="text">French</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark1">
-                                                        <span class="design"></span>
-                                                        <span class="text">Korean</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark1">
-                                                        <span class="design"></span>
-                                                        <span class="text">Latin</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark1">
-                                                        <span class="design"></span>
-                                                        <span class="text">Portueguese</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark1">
-                                                        <span class="design"></span>
-                                                        <span class="text">Spanish</span>
-                                                    </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-4 col-xl-4 mb-4 mb-lg-0">
-                                                <p class="subject-category-title mb-3">Math</p>
-                                                <div class="subject-category-box li-100">
-                                                    <ul>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark2">
-                                                        <span class="design"></span>
-                                                        <span class="text">Elementary School math</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark2">
-                                                        <span class="design"></span>
-                                                        <span class="text">Middle school (but not algebra)</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark2">
-                                                        <span class="design"></span>
-                                                        <span class="text">Algebra</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark2">
-                                                        <span class="design"></span>
-                                                        <span class="text">Calculus</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark2">
-                                                        <span class="design"></span>
-                                                        <span class="text">Geometry</span>
-                                                    </label>
-                                                        </li>
-                                                        <li>
-                                                            <label class="mordern-radiobox-label">
-                                                        <input type="radio" name="dark2">
-                                                        <span class="design"></span>
-                                                        <span class="text">Trigonometry</span>
-                                                    </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-12 mt-4">
@@ -236,11 +66,15 @@
                                             <div class="row">
                                                 <div class="col-lg-8">
                                                     <p class="mobile-pagetop-heading mb-3">Job Description</p>
-                                                    <textarea name="" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none" placeholder="Get started on the right foot by setting clear expectations"></textarea>
+                                                    <textarea formControlName="job_description" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none" placeholder="Get started on the right foot by setting clear expectations"></textarea>
+
+                                                    <p class="errorCls" *ngIf="bookARequestForm.controls.job_description.touched || isbookARequestFormSubmitted">
+                                                        <app-form-validation-errors minLength=2 maxLength=2000 errorPrefix="Job Description " [errors]="bookARequestForm.get('job_description').errors"></app-form-validation-errors>
+                                                    </p>
                                                 </div>
                                                 <div class="col-12 mt-3">
 
-                                                    <div class="uploadImages position-relative csuploadfile-outer">
+                                                    <div class="uploadImages position-relative csuploadfile-outer dz-inline-zone">
                                                         <div class="dropzone dropzone-container" [dropzone]="jobFileConfiguration" [disabled]="disabled"></div>
 
                                                         <span class="profile-label-text d-inline-block ml-2"><small class="font-italic">(optional)</small></span>
@@ -279,9 +113,9 @@
                                                     <div class="d-flex align-items-center">
                                                         <div class="hourly-ratebox flex-shrink-0">
                                                             <select class="custom-select profile-steps-input h-auto arrow-select py-13 bg-f3-select rate-dropbox flex-shrink-0">
-                                                        <option value="">$</option>
-                                                    </select>
-                                                            <input class="flex-shrink-0" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                                <option value="">$</option>
+                                                            </select>
+                                                            <input formControlName="hourly_rate" readonly="true" class="flex-shrink-0" type="text">
                                                         </div>
                                                         <span class="color-heading flex-shrink-0 ml-2 font--500">/ Hour</span>
                                                     </div>
@@ -306,99 +140,62 @@
                                                 <div class="col-xl-11 mt-3">
                                                     <div class="row">
                                                         <div class="col-lg-6 col-xl-5">
-                                                            <p class="text-top-detail color-heading mb-2">Length of Lesson</p>
+                                                            <p class="text-top-detail color-heading mb-2">Time</p>
                                                             <div class="row">
-                                                                <div class="col-lg-6">
+                                                                <div class="col-lg-12">
                                                                     <div class="row">
-                                                                        <div class="col-6">
-                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
-                                                                        <option value="">00</option>
-                                                                        <option value=""></option>
-                                                                    </select>
+                                                                        <div class="col-8">
+                                                                            <select formControlName="booking_time" class="custom-select arrow-select green-select mb-3 mb-lg-0 font-14">
+                                                                                <option disabled selected value="">Select</option>
+                                                                                <option *ngFor="let slot of slots;let i = index" [value]="slot.slot">{{slot.slot}}</option>
+                                                                            </select>
+
+                                                                            <p class="errorCls" *ngIf="bookARequestForm.controls.booking_time.touched || isbookARequestFormSubmitted">
+                                                                                <app-form-validation-errors errorPrefix="Time " [errors]="bookARequestForm.get('booking_time').errors"></app-form-validation-errors>
+                                                                            </p>
                                                                         </div>
-                                                                        <div class="span-bar">
-                                                                            <span>-</span>
-                                                                        </div>
-                                                                        <div class="col-6">
-                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
-                                                                        <option value="">45</option>
-                                                                        <option value="">00</option>
-                                                                    </select>
-                                                                        </div>
+
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="row">
-                                                                        <div class="col-6">
-                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
-                                                                        <option value="">01</option>
-                                                                        <option value="">02</option>
-                                                                    </select>
-                                                                        </div>
-                                                                        <div class="span-bar">
-                                                                            <span>-</span>
-                                                                        </div>
-                                                                        <div class="col-6">
-                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
-                                                                        <option value="">00</option>
-                                                                        <option value="">04</option>
-                                                                    </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6 col-xl-5 mx-auto">
-                                                            <p class="text-top-detail color-heading mb-2">Length of Lesson</p>
-                                                            <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <div class="row">
-                                                                        <div class="col-6">
-                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
-                                                                        <option value="">00</option>
-                                                                        <option value=""></option>
-                                                                    </select>
-                                                                        </div>
-                                                                        <div class="span-bar">
-                                                                            <span>-</span>
-                                                                        </div>
-                                                                        <div class="col-6">
-                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
-                                                                        <option value="">45</option>
-                                                                        <option value="">00</option>
-                                                                    </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="row">
-                                                                        <div class="col-6">
-                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
-                                                                        <option value="">01</option>
-                                                                        <option value="">02</option>
-                                                                    </select>
-                                                                        </div>
-                                                                        <div class="span-bar">
-                                                                            <span>-</span>
-                                                                        </div>
-                                                                        <div class="col-6">
-                                                                            <select class="custom-select arrow-select green-select mb-3 mb-lg-0">
-                                                                        <option value="">00</option>
-                                                                        <option value="">04</option>
-                                                                    </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="border--padding-row">
-                                            <button for="attachment" class="primary--button cursor-pointer d-inline-block py-1 px-4">
+                                    <ng-container *ngIf="paymentDetailsArray.length > 0; else noCardsAvailable">
+                                        <div class="col-12">
+                                            <p class="mobile-pagetop-heading mb-2">Your Billing Method</p>
+                                            <div *ngFor="let paymentArray of paymentDetailsArray; let i = index" class="each-credit-card-item">
+                                                <div class="row mx-0 align-items-center">
+                                                    <div class="pr-0 each-credit-card-logo">
+                                                        {{paymentArray?.card_type}}
+                                                        <!--img src="./img/logos_mastercard.svg" class="img-fluid" alt="masatercard-logo"-->
+                                                    </div>
+                                                    <div class="px-1 each-credit-number">
+                                                        <p class="profile-label-text font--16 mb-0">xxxx xxxx xxxx {{paymentArray?.credit_card_number}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-5 mb-2 mb-sm-0">
+                                                        <p class="each-credit-card-label">Expires on</p>
+                                                        <p class="profile-label-text font-14 mb-0">{{paymentArray?.exp_month}}/{{paymentArray?.exp_year}}</p>
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <p class="each-credit-card-label">Name</p>
+                                                        <p class="profile-label-text font-14 mb-0">{{paymentArray?.card_holder_name}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-template #noCardsAvailable>
+                                        <div class="col-12">
+                                            <div class="border--padding-row">
+                                                <button (click)="showPaymentMethodPopup()" for="attachment" class="primary--button cursor-pointer d-inline-block py-1 px-4">
                                         <span class="vertical-align-txt-bottom">
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                                                 <path d="M6.74939 0.650879V13.6509M0.24939 7.15088H13.2494" stroke="white" stroke-width="1.5"/>
@@ -406,22 +203,28 @@
                                         </span>                             
                                         Add Blling
                                     </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </ng-template>
+
                                 </div>
                             </div>
                             <div class="w-100 border--padding-row py-2 px-4">
                                 <div class="small-checkboxes">
                                     <div class="form-check check-opacity mb-3">
                                         <label class="form-check-label text-muted ln-25">
-                                <input type="checkbox" class="form-check-input" name="category">Yes, I understand and agree to the Terms of Service, including User Agreement and Privacy Policy.<i class="input-helper"></i></label>
+                                        <input formControlName="agree_terms" type="checkbox" class="form-check-input" name="category">Yes, I understand and agree to the Terms of Service, including User Agreement and Privacy Policy.<i class="input-helper"></i></label>
+
+                                        <p class="errorCls" *ngIf="bookARequestForm.controls.agree_terms.touched || isbookARequestFormSubmitted">
+                                            <app-form-validation-errors errorPrefix="Accepting our terms & conditions and privacy policy  " [errors]="bookARequestForm.get('agree_terms').errors"></app-form-validation-errors>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="profile-steps-rightsidebar-column-footer bg-f8-footer">
                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
                                     <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="#">Cancel</a>
-                                    <input data-toggle="modal" data-target="#exampleModal" type="submit" class="primary--button py-2 px-30" value="Request Booking">
+                                    <input [disabled]="bookARequestForm.invalid" (click)="validateBookARequestForm()" type="submit" class="primary--button py-2 px-30" value="Request Booking">
                                 </div>
                             </div>
                         </form>
@@ -432,4 +235,6 @@
     </div>
 
 </section>
+
+<app-add-payment-method (showPaymentMethodPopup)="showPaymentMethodPopup()" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen"></app-add-payment-method>
 <!--Parent section ends-->

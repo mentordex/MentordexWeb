@@ -74,7 +74,7 @@ export class SkillsComponent implements OnInit {
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
       this.mentorDetails = response;
 
        if (this.mentorDetails.admin_status == 'NEW') {
@@ -124,7 +124,8 @@ export class SkillsComponent implements OnInit {
     const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
 
     if (e.target.checked) {
-      subcategories.push(new FormControl(e.target.value));
+      subcategories.push(new FormControl({ value: e.target.value, name: e.target.getAttribute('data-subCategoryName') }));
+      //subcategories.push(new FormControl(e.target.value));
 
       //console.log(e.target.getAttribute('data-subCategoryName'));
       this.selectedSubcategoryArray.push({ id: e.target.value, name: e.target.getAttribute('data-subCategoryName') });
@@ -133,7 +134,8 @@ export class SkillsComponent implements OnInit {
 
       let i: number = 0;
       subcategories.controls.forEach((item: FormControl) => {
-        if (item.value == e.target.value) {
+        //console.log(item);
+        if (item.value.value == e.target.value) {
           subcategories.removeAt(i);
           return;
         }
@@ -182,7 +184,7 @@ export class SkillsComponent implements OnInit {
     //console.log(this.skillsForm.value); return;
     
     this.utilsService.processPostRequest('updateSkillsDetails', this.skillsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
       //this.utilsService.onResponse('Your information updated successfully.', true);
       this.router.navigate(['/mentor/book-a-slot']);
     })
@@ -193,7 +195,8 @@ export class SkillsComponent implements OnInit {
 
     let i: number = 0;
     subcategories.controls.forEach((item: FormControl) => {
-      if (item.value == subCategoryId) {
+      //console.log(item)
+      if (item.value.value == subCategoryId) {
         subcategories.removeAt(i);
         return;
       }

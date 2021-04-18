@@ -200,7 +200,7 @@ export class BookASlotComponent implements OnInit {
         }) */
 
         this.on("success", function (file, serverResponse) {
-          console.log('serverResponse', serverResponse);
+          //console.log('serverResponse', serverResponse);
 
           componentObj.zone.run(() => {
             componentObj.letterOfRecommendationPdfArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'LOR' }));
@@ -244,7 +244,7 @@ export class BookASlotComponent implements OnInit {
     const params = { fileKey : file_key }
 
     this.utilsService.processPostRequest('deleteObject', params, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
     })
   } 
 
@@ -285,7 +285,7 @@ export class BookASlotComponent implements OnInit {
   getAvailableSlotsByDay(day, getSelectedDate): void {
 
     this.utilsService.processPostRequest('dayTimeslot/getAvailableSlots', { day: day, getSelectedDate: getSelectedDate }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log('response', response);
+      //console.log('response', response);
       let getSlots = response;
       if ('slots' in getSlots) {
         this.getAvailableSlots = [];

@@ -137,7 +137,7 @@ export class AddPaymentMethodComponent implements OnInit {
     //this.wizard.goToNextStep();
 
     this.utilsService.processPostRequest('addYourPaymentMethod', this.addPaymentWizard.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
       this.utilsService.onResponse(environment.MESSGES['PAYMENT-METHOD-SUCCESSFULL'], true);
       this.close();
       //this.utilsService.onResponse('Your information updated successfully.', true);
@@ -162,7 +162,7 @@ export class AddPaymentMethodComponent implements OnInit {
     var mergePaymentData = Object.assign(this.addPaymentWizard.value, this.addAddressWizard.value);
     //console.log(mergePaymentData); return;
     this.utilsService.processPostRequest('buySubscription', mergePaymentData, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
       //this.utilsService.onResponse('Your information updated successfully.', true);
       //this.router.navigate(['/mentor/skills']);
     })

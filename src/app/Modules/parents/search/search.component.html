@@ -1,0 +1,449 @@
+<!--Parent section starts-->
+<div *ngIf="isLoading" class="loader loader-default is-active" data-blink [attr.data-text]=" 'Fetching Records' "></div>
+<section class="pt-125 py-65 bg-md-f8f8f8">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-5 col-xl-4">
+                <button class="filter--btn">
+                    <i class="fa fa-filter" aria-hidden="true"></i>
+                    Filter
+                </button>
+                <div class="profile-steps-rightsidebar-column">
+                    <div class="filter-bg bg-white px-xl-4">
+                        <div class="filterbar-parent pt-0">
+                            <svg class="mr-2" width="17" height="18" viewBox="0 0 17 18" fill="none">
+                                <path d="M8.38923 17.4375H6.75V8.92364L0.84375 1.89239V0.5625H16.875V1.8848L11.25 8.91605V14.5767L8.38923 17.4375ZM7.875 16.3125H7.92327L10.125 14.1108V8.52145L15.5921 1.6875H2.14102L7.875 8.51386V16.3125Z" fill="#384047"/>
+                            </svg> Filter
+                        </div>
+                        <div class="filterbar-parent">
+                            <span class="heading-filktrbar-title mb-2">Location</span>
+                            <div class="position-relative w-100">
+                                <button (click)="applySearch()" class="search--btn" type="button">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M7.875 14.625C11.6029 14.625 14.625 11.6029 14.625 7.875C14.625 4.14708 11.6029 1.125 7.875 1.125C4.14708 1.125 1.125 4.14708 1.125 7.875C1.125 11.6029 4.14708 14.625 7.875 14.625Z" stroke="#3BB3BD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12.9375 12.9375L16.875 16.875" stroke="#3BB3BD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <input type="text" [(ngModel)]="location" name="location" class="navbar-serach-input w-100 pl-5" placeholder="Search location">
+                            </div>
+                        </div>
+                        <div class="filterbar-accordionbox">
+                            <div>
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Category
+                                      </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li *ngFor="let category of categories">
+                                                    <span (click)="fetchSubcategories(category)">{{category?.title}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Specialities
+                                      </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li *ngFor="let subcategory of subcategories">
+                                                    <span (click)="filterRecords(subcategory,'subcategory')">{{subcategory?.title}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="card">
+                                  <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Availibility
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseThree" class="collapse show" aria-labelledby="headingThree">
+                                    <div class="card-body">
+                                        <div class="d-block">
+                                            <p class="filterbar-subtext">Select date</p>
+                                            <input type="text" 
+                                            mwlFlatpickr
+                                            [(ngModel)]="rangeValue"
+                                            [altInput]="true"
+                                            [convertModelValue]="true"
+                                            [inline]="true"
+                                            mode="range"
+                                            class="d-none">
+                                        </div>
+                                        <div class="d-block mt-3 mb-2">
+                                            <p class="filterbar-subtext">Select date</p>
+                                            <div class="row position-relative filterbar-cs-select">
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <div class="col-6 pr-1">
+                                                            <select class="custom-select arrow-select">
+                                                                <option value="">HH</option>
+                                                                <option value="">01</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-6 pl-1">
+                                                            <select class="custom-select arrow-select">
+                                                                <option value="">MM</option>
+                                                                <option value="">01</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span class="span-bar"><span>-</span></span>
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <div class="col-6 pr-1">
+                                                            <select class="custom-select arrow-select">
+                                                                <option value="">HH</option>
+                                                                <option value="">01</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-6 pl-1">
+                                                            <select class="custom-select arrow-select">
+                                                                <option value="">MM</option>
+                                                                <option value="">01</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>-->
+                                <div class="card">
+                                    <div class="card-header" id="headingFour">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            Hourly Rate
+                                          </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseFour" class="collapse show" aria-labelledby="headingFour">
+                                        <div class="card-body hourly-rate">
+                                            <ul>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input [(ngModel)]="hourlyRate" value="Any" type="radio" (change)="filterByHourlyRate('Any',0,0)" name="hourlyRate">
+                                                        <span class="design"></span>
+                                                        <span class="text">Any hourly rate</span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input [(ngModel)]="hourlyRate" value="$10 & below" type="radio" (change)="filterByHourlyRate('$10 & below',0,10)" name="hourlyRate">
+                                                        <span class="design"></span>
+                                                        <span class="text">$10 & below</span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input [(ngModel)]="hourlyRate" value="$10 - $30"  type="radio" (change)="filterByHourlyRate('$10 - $30',10,30)" name="hourlyRate">
+                                                        <span class="design"></span>
+                                                        <span class="text">$10 - $30</span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input [(ngModel)]="hourlyRate" value="$30 - $60" type="radio" (change)="filterByHourlyRate('$30 - $60',30,60)" name="hourlyRate">
+                                                        <span class="design"></span>
+                                                        <span class="text">$30 - $60</span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input [(ngModel)]="hourlyRate" value="$60 & above" type="radio" (change)="filterByHourlyRate('$60 & above',60,1000000000000000000)" name="hourlyRate">
+                                                        <span class="design"></span>
+                                                        <span class="text">$60 & above</span>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingFive">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                            Rating
+                                          </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseFive" class="collapse show" aria-labelledby="headingFive">
+                                        <div class="card-body hourly-rate">
+                                            <ul>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input [(ngModel)]="rating" value="Any" (click)="filterRecords('Any','rating')" type="radio" name="rating">
+                                                        <span class="design"></span>
+                                                        <span class="text">
+                                                            Any Rating
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input type="radio" [(ngModel)]="rating" value="4" (click)="filterRecords('4','rating')" name="rating">
+                                                        <span class="design"></span>
+                                                        <span class="text">
+                                                            <div class="d-inline-star">
+                                                                <svg width="98" height="17" viewBox="0 0 98 17" fill="none">
+                                                                    <path d="M16.5435 5.89552L11.5845 5.17481L9.36774 0.680671C9.3072 0.557624 9.20759 0.458015 9.08454 0.397468C8.77595 0.245124 8.40095 0.372078 8.24665 0.680671L6.02985 5.17481L1.07087 5.89552C0.934149 5.91505 0.809149 5.9795 0.713446 6.07716C0.597746 6.19607 0.53399 6.35606 0.536188 6.52196C0.538385 6.68787 0.606356 6.84611 0.725165 6.96192L4.31306 10.46L3.4654 15.3994C3.44552 15.5143 3.45824 15.6325 3.5021 15.7405C3.54597 15.8486 3.61923 15.9422 3.71358 16.0107C3.80793 16.0792 3.91959 16.1199 4.03591 16.1282C4.15222 16.1365 4.26853 16.1121 4.37165 16.0576L8.8072 13.7256L13.2427 16.0576C13.3638 16.1221 13.5045 16.1436 13.6392 16.1201C13.9791 16.0615 14.2076 15.7393 14.149 15.3994L13.3013 10.46L16.8892 6.96192C16.9869 6.86622 17.0513 6.74122 17.0709 6.6045C17.1236 6.2627 16.8853 5.9463 16.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M36.5435 5.89552L31.5845 5.17481L29.3677 0.680671C29.3072 0.557624 29.2076 0.458015 29.0845 0.397468C28.7759 0.245124 28.4009 0.372078 28.2466 0.680671L26.0299 5.17481L21.0709 5.89552C20.9341 5.91505 20.8091 5.9795 20.7134 6.07716C20.5977 6.19607 20.534 6.35606 20.5362 6.52196C20.5384 6.68787 20.6064 6.84611 20.7252 6.96192L24.3131 10.46L23.4654 15.3994C23.4455 15.5143 23.4582 15.6325 23.5021 15.7405C23.546 15.8486 23.6192 15.9422 23.7136 16.0107C23.8079 16.0792 23.9196 16.1199 24.0359 16.1282C24.1522 16.1365 24.2685 16.1121 24.3716 16.0576L28.8072 13.7256L33.2427 16.0576C33.3638 16.1221 33.5045 16.1436 33.6392 16.1201C33.9791 16.0615 34.2076 15.7393 34.149 15.3994L33.3013 10.46L36.8892 6.96192C36.9869 6.86622 37.0513 6.74122 37.0709 6.6045C37.1236 6.2627 36.8853 5.9463 36.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M56.5435 5.89552L51.5845 5.17481L49.3677 0.680671C49.3072 0.557624 49.2076 0.458015 49.0845 0.397468C48.7759 0.245124 48.4009 0.372078 48.2466 0.680671L46.0299 5.17481L41.0709 5.89552C40.9341 5.91505 40.8091 5.9795 40.7134 6.07716C40.5977 6.19607 40.534 6.35606 40.5362 6.52196C40.5384 6.68787 40.6064 6.84611 40.7252 6.96192L44.3131 10.46L43.4654 15.3994C43.4455 15.5143 43.4582 15.6325 43.5021 15.7405C43.546 15.8486 43.6192 15.9422 43.7136 16.0107C43.8079 16.0792 43.9196 16.1199 44.0359 16.1282C44.1522 16.1365 44.2685 16.1121 44.3716 16.0576L48.8072 13.7256L53.2427 16.0576C53.3638 16.1221 53.5045 16.1436 53.6392 16.1201C53.9791 16.0615 54.2076 15.7393 54.149 15.3994L53.3013 10.46L56.8892 6.96192C56.9869 6.86622 57.0513 6.74122 57.0709 6.6045C57.1236 6.2627 56.8853 5.9463 56.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M76.5435 5.89552L71.5845 5.17481L69.3677 0.680671C69.3072 0.557624 69.2076 0.458015 69.0845 0.397468C68.7759 0.245124 68.4009 0.372078 68.2466 0.680671L66.0299 5.17481L61.0709 5.89552C60.9341 5.91505 60.8091 5.9795 60.7134 6.07716C60.5977 6.19607 60.534 6.35606 60.5362 6.52196C60.5384 6.68787 60.6064 6.84611 60.7252 6.96192L64.3131 10.46L63.4654 15.3994C63.4455 15.5143 63.4582 15.6325 63.5021 15.7405C63.546 15.8486 63.6192 15.9422 63.7136 16.0107C63.8079 16.0792 63.9196 16.1199 64.0359 16.1282C64.1522 16.1365 64.2685 16.1121 64.3716 16.0576L68.8072 13.7256L73.2427 16.0576C73.3638 16.1221 73.5045 16.1436 73.6392 16.1201C73.9791 16.0615 74.2076 15.7393 74.149 15.3994L73.3013 10.46L76.8892 6.96192C76.9869 6.86622 77.0513 6.74122 77.0709 6.6045C77.1236 6.2627 76.8853 5.9463 76.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M96.5435 5.89552L91.5845 5.17481L89.3677 0.680671C89.3072 0.557624 89.2076 0.458015 89.0845 0.397468C88.7759 0.245124 88.4009 0.372078 88.2466 0.680671L86.0299 5.17481L81.0709 5.89552C80.9341 5.91505 80.8091 5.9795 80.7134 6.07716C80.5977 6.19607 80.534 6.35606 80.5362 6.52196C80.5384 6.68787 80.6064 6.84611 80.7252 6.96192L84.3131 10.46L83.4654 15.3994C83.4455 15.5143 83.4582 15.6325 83.5021 15.7405C83.546 15.8486 83.6192 15.9422 83.7136 16.0107C83.8079 16.0792 83.9196 16.1199 84.0359 16.1282C84.1522 16.1365 84.2685 16.1121 84.3716 16.0576L88.8072 13.7256L93.2427 16.0576C93.3638 16.1221 93.5045 16.1436 93.6392 16.1201C93.9791 16.0615 94.2076 15.7393 94.149 15.3994L93.3013 10.46L96.8892 6.96192C96.9869 6.86622 97.0513 6.74122 97.0709 6.6045C97.1236 6.2627 96.8853 5.9463 96.5435 5.89552Z" fill="#C4C4C4"/>
+                                                            </svg>             
+                                                            </div>
+                                                            <span>& up</span>
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input [(ngModel)]="rating" value="3"  (click)="filterRecords('3','rating')" type="radio" name="rating">
+                                                        <span class="design"></span>
+                                                        <span class="text">
+                                                            <div class="d-inline-star">
+                                                                <svg width="98" height="17" viewBox="0 0 98 17" fill="none">
+                                                                    <path d="M16.5435 5.89552L11.5845 5.17481L9.36774 0.680671C9.3072 0.557624 9.20759 0.458015 9.08454 0.397468C8.77595 0.245124 8.40095 0.372078 8.24665 0.680671L6.02985 5.17481L1.07087 5.89552C0.934149 5.91505 0.809149 5.9795 0.713446 6.07716C0.597746 6.19607 0.53399 6.35606 0.536188 6.52196C0.538385 6.68787 0.606356 6.84611 0.725165 6.96192L4.31306 10.46L3.4654 15.3994C3.44552 15.5143 3.45824 15.6325 3.5021 15.7405C3.54597 15.8486 3.61923 15.9422 3.71358 16.0107C3.80793 16.0792 3.91959 16.1199 4.03591 16.1282C4.15222 16.1365 4.26853 16.1121 4.37165 16.0576L8.8072 13.7256L13.2427 16.0576C13.3638 16.1221 13.5045 16.1436 13.6392 16.1201C13.9791 16.0615 14.2076 15.7393 14.149 15.3994L13.3013 10.46L16.8892 6.96192C16.9869 6.86622 17.0513 6.74122 17.0709 6.6045C17.1236 6.2627 16.8853 5.9463 16.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M36.5435 5.89552L31.5845 5.17481L29.3677 0.680671C29.3072 0.557624 29.2076 0.458015 29.0845 0.397468C28.7759 0.245124 28.4009 0.372078 28.2466 0.680671L26.0299 5.17481L21.0709 5.89552C20.9341 5.91505 20.8091 5.9795 20.7134 6.07716C20.5977 6.19607 20.534 6.35606 20.5362 6.52196C20.5384 6.68787 20.6064 6.84611 20.7252 6.96192L24.3131 10.46L23.4654 15.3994C23.4455 15.5143 23.4582 15.6325 23.5021 15.7405C23.546 15.8486 23.6192 15.9422 23.7136 16.0107C23.8079 16.0792 23.9196 16.1199 24.0359 16.1282C24.1522 16.1365 24.2685 16.1121 24.3716 16.0576L28.8072 13.7256L33.2427 16.0576C33.3638 16.1221 33.5045 16.1436 33.6392 16.1201C33.9791 16.0615 34.2076 15.7393 34.149 15.3994L33.3013 10.46L36.8892 6.96192C36.9869 6.86622 37.0513 6.74122 37.0709 6.6045C37.1236 6.2627 36.8853 5.9463 36.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M56.5435 5.89552L51.5845 5.17481L49.3677 0.680671C49.3072 0.557624 49.2076 0.458015 49.0845 0.397468C48.7759 0.245124 48.4009 0.372078 48.2466 0.680671L46.0299 5.17481L41.0709 5.89552C40.9341 5.91505 40.8091 5.9795 40.7134 6.07716C40.5977 6.19607 40.534 6.35606 40.5362 6.52196C40.5384 6.68787 40.6064 6.84611 40.7252 6.96192L44.3131 10.46L43.4654 15.3994C43.4455 15.5143 43.4582 15.6325 43.5021 15.7405C43.546 15.8486 43.6192 15.9422 43.7136 16.0107C43.8079 16.0792 43.9196 16.1199 44.0359 16.1282C44.1522 16.1365 44.2685 16.1121 44.3716 16.0576L48.8072 13.7256L53.2427 16.0576C53.3638 16.1221 53.5045 16.1436 53.6392 16.1201C53.9791 16.0615 54.2076 15.7393 54.149 15.3994L53.3013 10.46L56.8892 6.96192C56.9869 6.86622 57.0513 6.74122 57.0709 6.6045C57.1236 6.2627 56.8853 5.9463 56.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M76.5435 5.89552L71.5845 5.17481L69.3677 0.680671C69.3072 0.557624 69.2076 0.458015 69.0845 0.397468C68.7759 0.245124 68.4009 0.372078 68.2466 0.680671L66.0299 5.17481L61.0709 5.89552C60.9341 5.91505 60.8091 5.9795 60.7134 6.07716C60.5977 6.19607 60.534 6.35606 60.5362 6.52196C60.5384 6.68787 60.6064 6.84611 60.7252 6.96192L64.3131 10.46L63.4654 15.3994C63.4455 15.5143 63.4582 15.6325 63.5021 15.7405C63.546 15.8486 63.6192 15.9422 63.7136 16.0107C63.8079 16.0792 63.9196 16.1199 64.0359 16.1282C64.1522 16.1365 64.2685 16.1121 64.3716 16.0576L68.8072 13.7256L73.2427 16.0576C73.3638 16.1221 73.5045 16.1436 73.6392 16.1201C73.9791 16.0615 74.2076 15.7393 74.149 15.3994L73.3013 10.46L76.8892 6.96192C76.9869 6.86622 77.0513 6.74122 77.0709 6.6045C77.1236 6.2627 76.8853 5.9463 76.5435 5.89552Z" fill="#C4C4C4"/>
+                                                                    <path d="M96.5435 5.89552L91.5845 5.17481L89.3677 0.680671C89.3072 0.557624 89.2076 0.458015 89.0845 0.397468C88.7759 0.245124 88.4009 0.372078 88.2466 0.680671L86.0299 5.17481L81.0709 5.89552C80.9341 5.91505 80.8091 5.9795 80.7134 6.07716C80.5977 6.19607 80.534 6.35606 80.5362 6.52196C80.5384 6.68787 80.6064 6.84611 80.7252 6.96192L84.3131 10.46L83.4654 15.3994C83.4455 15.5143 83.4582 15.6325 83.5021 15.7405C83.546 15.8486 83.6192 15.9422 83.7136 16.0107C83.8079 16.0792 83.9196 16.1199 84.0359 16.1282C84.1522 16.1365 84.2685 16.1121 84.3716 16.0576L88.8072 13.7256L93.2427 16.0576C93.3638 16.1221 93.5045 16.1436 93.6392 16.1201C93.9791 16.0615 94.2076 15.7393 94.149 15.3994L93.3013 10.46L96.8892 6.96192C96.9869 6.86622 97.0513 6.74122 97.0709 6.6045C97.1236 6.2627 96.8853 5.9463 96.5435 5.89552Z" fill="#C4C4C4"/>
+                                                            </svg>             
+                                                            </div>
+                                                            <span>& up</span>
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label class="mordern-radiobox-label my-0">
+                                                        <input type="radio" [(ngModel)]="rating" value="2" (click)="filterRecords('2','rating')" name="rating">
+                                                        <span class="design"></span>
+                                                        <span class="text">
+                                                            <div class="d-inline-star">
+                                                                <svg width="98" height="17" viewBox="0 0 98 17" fill="none">
+                                                                    <path d="M16.5435 5.89552L11.5845 5.17481L9.36774 0.680671C9.3072 0.557624 9.20759 0.458015 9.08454 0.397468C8.77595 0.245124 8.40095 0.372078 8.24665 0.680671L6.02985 5.17481L1.07087 5.89552C0.934149 5.91505 0.809149 5.9795 0.713446 6.07716C0.597746 6.19607 0.53399 6.35606 0.536188 6.52196C0.538385 6.68787 0.606356 6.84611 0.725165 6.96192L4.31306 10.46L3.4654 15.3994C3.44552 15.5143 3.45824 15.6325 3.5021 15.7405C3.54597 15.8486 3.61923 15.9422 3.71358 16.0107C3.80793 16.0792 3.91959 16.1199 4.03591 16.1282C4.15222 16.1365 4.26853 16.1121 4.37165 16.0576L8.8072 13.7256L13.2427 16.0576C13.3638 16.1221 13.5045 16.1436 13.6392 16.1201C13.9791 16.0615 14.2076 15.7393 14.149 15.3994L13.3013 10.46L16.8892 6.96192C16.9869 6.86622 17.0513 6.74122 17.0709 6.6045C17.1236 6.2627 16.8853 5.9463 16.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M36.5435 5.89552L31.5845 5.17481L29.3677 0.680671C29.3072 0.557624 29.2076 0.458015 29.0845 0.397468C28.7759 0.245124 28.4009 0.372078 28.2466 0.680671L26.0299 5.17481L21.0709 5.89552C20.9341 5.91505 20.8091 5.9795 20.7134 6.07716C20.5977 6.19607 20.534 6.35606 20.5362 6.52196C20.5384 6.68787 20.6064 6.84611 20.7252 6.96192L24.3131 10.46L23.4654 15.3994C23.4455 15.5143 23.4582 15.6325 23.5021 15.7405C23.546 15.8486 23.6192 15.9422 23.7136 16.0107C23.8079 16.0792 23.9196 16.1199 24.0359 16.1282C24.1522 16.1365 24.2685 16.1121 24.3716 16.0576L28.8072 13.7256L33.2427 16.0576C33.3638 16.1221 33.5045 16.1436 33.6392 16.1201C33.9791 16.0615 34.2076 15.7393 34.149 15.3994L33.3013 10.46L36.8892 6.96192C36.9869 6.86622 37.0513 6.74122 37.0709 6.6045C37.1236 6.2627 36.8853 5.9463 36.5435 5.89552Z" fill="#3BB3BD"/>
+                                                                    <path d="M56.5435 5.89552L51.5845 5.17481L49.3677 0.680671C49.3072 0.557624 49.2076 0.458015 49.0845 0.397468C48.7759 0.245124 48.4009 0.372078 48.2466 0.680671L46.0299 5.17481L41.0709 5.89552C40.9341 5.91505 40.8091 5.9795 40.7134 6.07716C40.5977 6.19607 40.534 6.35606 40.5362 6.52196C40.5384 6.68787 40.6064 6.84611 40.7252 6.96192L44.3131 10.46L43.4654 15.3994C43.4455 15.5143 43.4582 15.6325 43.5021 15.7405C43.546 15.8486 43.6192 15.9422 43.7136 16.0107C43.8079 16.0792 43.9196 16.1199 44.0359 16.1282C44.1522 16.1365 44.2685 16.1121 44.3716 16.0576L48.8072 13.7256L53.2427 16.0576C53.3638 16.1221 53.5045 16.1436 53.6392 16.1201C53.9791 16.0615 54.2076 15.7393 54.149 15.3994L53.3013 10.46L56.8892 6.96192C56.9869 6.86622 57.0513 6.74122 57.0709 6.6045C57.1236 6.2627 56.8853 5.9463 56.5435 5.89552Z" fill="#C4C4C4"/>
+                                                                    <path d="M76.5435 5.89552L71.5845 5.17481L69.3677 0.680671C69.3072 0.557624 69.2076 0.458015 69.0845 0.397468C68.7759 0.245124 68.4009 0.372078 68.2466 0.680671L66.0299 5.17481L61.0709 5.89552C60.9341 5.91505 60.8091 5.9795 60.7134 6.07716C60.5977 6.19607 60.534 6.35606 60.5362 6.52196C60.5384 6.68787 60.6064 6.84611 60.7252 6.96192L64.3131 10.46L63.4654 15.3994C63.4455 15.5143 63.4582 15.6325 63.5021 15.7405C63.546 15.8486 63.6192 15.9422 63.7136 16.0107C63.8079 16.0792 63.9196 16.1199 64.0359 16.1282C64.1522 16.1365 64.2685 16.1121 64.3716 16.0576L68.8072 13.7256L73.2427 16.0576C73.3638 16.1221 73.5045 16.1436 73.6392 16.1201C73.9791 16.0615 74.2076 15.7393 74.149 15.3994L73.3013 10.46L76.8892 6.96192C76.9869 6.86622 77.0513 6.74122 77.0709 6.6045C77.1236 6.2627 76.8853 5.9463 76.5435 5.89552Z" fill="#C4C4C4"/>
+                                                                    <path d="M96.5435 5.89552L91.5845 5.17481L89.3677 0.680671C89.3072 0.557624 89.2076 0.458015 89.0845 0.397468C88.7759 0.245124 88.4009 0.372078 88.2466 0.680671L86.0299 5.17481L81.0709 5.89552C80.9341 5.91505 80.8091 5.9795 80.7134 6.07716C80.5977 6.19607 80.534 6.35606 80.5362 6.52196C80.5384 6.68787 80.6064 6.84611 80.7252 6.96192L84.3131 10.46L83.4654 15.3994C83.4455 15.5143 83.4582 15.6325 83.5021 15.7405C83.546 15.8486 83.6192 15.9422 83.7136 16.0107C83.8079 16.0792 83.9196 16.1199 84.0359 16.1282C84.1522 16.1365 84.2685 16.1121 84.3716 16.0576L88.8072 13.7256L93.2427 16.0576C93.3638 16.1221 93.5045 16.1436 93.6392 16.1201C93.9791 16.0615 94.2076 15.7393 94.149 15.3994L93.3013 10.46L96.8892 6.96192C96.9869 6.86622 97.0513 6.74122 97.0709 6.6045C97.1236 6.2627 96.8853 5.9463 96.5435 5.89552Z" fill="#C4C4C4"/>
+                                                            </svg>             
+                                                            </div>
+                                                            <span>& up</span>
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-lg-7 col-xl-8">
+                <div class="profile-steps-rightsidebar-column">
+                    <div class="dashboard-list-wrapper">
+                        <div class="dashboard-list-header">
+                            <div class="row align-items-start">
+                                <div class="col-sm-6 col-md-12 col-lg-8 col-xl-9 mb-md-4 mb-lg-0">
+                                    <div class="dashboard-header-searchbox">
+                                        <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+                                            <input type="text" formControlName="search" class="w-100 pr-5" placeholder="Search Mentor">
+                                            <button [disabled]="searchForm.invalid" type="submit" class="btn-sb-submit">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                                <path d="M8.06787 14.624C11.7958 14.624 14.8179 11.6019 14.8179 7.87402C14.8179 4.1461 11.7958 1.12402 8.06787 1.12402C4.33995 1.12402 1.31787 4.1461 1.31787 7.87402C1.31787 11.6019 4.33995 14.624 8.06787 14.624Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M13.1304 12.9365L17.0679 16.874" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-12 col-lg-4 col-xl-3 ml-auto mt-4 mt-sm-0">
+                                    <select class="custom-select arrow-select green-select" (change)="sortRecords($event)">
+                                        <option value="">Sort</option>
+                                        <option value="created_at,desc">Newest</option>
+                                        <option value="created_at,asc">Oldest</option> 
+                                        <option value="first_name,asc">Name(Desc)</option> 
+                                        <option value="first_name,desc">Name(Asc)</option>
+                                        <option value="hourly_rate,asc">Hourly Rate(High to Low)</option>
+                                        <option value="hourly_rate,desc">Hourly Rate(Low to High)</option>
+                                        
+                                    </select>
+                                </div>
+                                <div *ngIf="filters.length>0" class="col-12">
+                                    <div class="search-delt-dashboard">
+                                        <span *ngFor="let filter of filters; let index=index">
+                                           
+                                            <div *ngIf="filter?.filter=='category'">
+                                                Category:{{filter?.name}}
+                                                <button class="deltsearch-tags" (click)="removeFilter(index, 'category')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                            </div>
+                                            <div *ngIf="filter?.filter=='subcategory'">
+                                                Speciality:{{filter?.name}}
+                                                <button class="deltsearch-tags" (click)="removeFilter(index,'subcategory')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                            </div>
+                                            <div *ngIf="filter?.filter=='search'">
+                                                Search:{{filter?.name}}
+                                                <button class="deltsearch-tags" (click)="removeFilter(index,'search')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                            </div>
+
+                                            <div *ngIf="filter?.filter=='hourly_rate'">
+                                                Hourly:{{filter?.name}}
+                                                <button class="deltsearch-tags" (click)="removeFilter(index,'hourly_rate')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                            </div>
+
+                                            <div *ngIf="filter?.filter=='rating'">
+                                                Rating:{{filter?.name}}
+                                                <button class="deltsearch-tags" (click)="removeFilter(index,'rating')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                            </div>
+                                            <div *ngIf="filter?.filter=='location'">
+                                                Loaction:{{filter?.name}}
+                                                <button class="deltsearch-tags" (click)="removeFilter(index,'location')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                            </div>
+                                            
+                                        </span>
+
+                                        <button *ngIf="filters.length>0" (click)="clearFilters()" class="clear--filters">
+                                            Clear filters
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-list-body">
+
+                            <div *ngIf="filters.length<=0" class="parents-mentors-tab small-dashboard-tab">
+                                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active" id="pills-recommended-tab" data-toggle="pill" href="#pills-recommended" role="tab" aria-controls="pills-recommended" aria-selected="false">Recommended Mentors</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link " id="pills-Saved-tab" data-toggle="pill" href="#pills-Saved" role="tab" aria-controls="pills-Saved" aria-selected="true">Saved</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div *ngIf="results.length>0" class="mentorfound--text">
+                                {{totalRecords}} Mentor<span *ngIf="results.length>1">s</span> found
+                            </div>
+                            <div *ngIf="results.length<=0" class="search-nothing-dashboard">
+                                <div class="mx-auto d-blcok text-center mb-3">
+                                    <img src="assets/img/search-error.svg" alt="search-error">
+                                </div>
+                                <p class="mobile-pagetop-heading mb-2 text-center mx-auto max-400">We didn't find any mentors based on the search keyword.</p>
+                                <p class="mobile-pagetop-subheading d-block text-center max-400 mx-auto">Please try adjusting the search keywords or filters.</p>
+                            </div>
+                            <div *ngIf="results.length>0" class="mentorcards-outer">
+                                <ul>
+                                    <li *ngFor="let mentor of results | paginate: { id: 'listing', itemsPerPage: pagination.size, currentPage: pagination.pageNumber, totalItems: totalRecords }">
+                                        <div class="dashboard-mentorcards">
+                                            <div class="dashboard-mentorcards-profile">
+
+                                                <img alt="mentor-profile-pic" src="{{mentor?.profile_image[0]?.file_path}}" onerror="this.src='assets/img/default-image.jpg'">
+                                            </div>
+                                            <div class="dashboard-mentorcards-desc">
+                                                <div class="row mb-1">
+                                                    <div routerLink="/parent/profile-view/{{mentor?._id}}" class="col-lg-8 focus--none cursor--pointer">
+                                                        <p class="dashboard-mentorcards-desc--mentorname">{{mentor?.first_name}} {{mentor?.last_name}}</p>
+                                                        <span class="dashboard-mentorcards-desc--exp">{{mentor?.tagline}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 text-xl-right">
+                                                        <ngb-rating [starTemplate]="t" [max]="5" [rate]="mentor?.rating || 0" [readonly]="true"></ngb-rating>
+                                                        <ng-template #t let-fill="fill">
+                                                            <span class="star" [class.full]="fill === 100">
+                                                              <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                                                            </span>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-10 mb-2">
+                                                        <p *ngIf="(mentor?.bio)" class="dashboard-mentorcards-desc--exp readmore--expand--btn">
+
+                                                            <app-read-more [text]="mentor?.bio" maxLength="30"></app-read-more>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-xl-8 pr-xl-0 mb-2">
+                                                        <div class="row">
+                                                            <div class="col-lg-auto pr-0">
+                                                                <span class="points--text">Skills : </span>
+                                                            </div>
+                                                            <div class="col-lg-10">
+                                                                <div class="dashboard-mentorcards-desc--tags">
+                                                                    <ul>
+                                                                        <li *ngIf="mentor?.subcategory1[0]?.title">{{mentor?.subcategory1[0]?.title}}</li>
+                                                                        <li *ngIf="mentor?.subcategory2[0]?.title">{{mentor?.subcategory2[0]?.title}}</li>
+                                                                        <li *ngIf="mentor?.subcategory3[0]?.title">{{mentor?.subcategory3[0]?.title}}</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 mb-2 text-xl-right">
+                                                        <span class="points--text">Hourly Rate : </span>
+                                                        <span class="points--amount" *ngIf="!mentor?.hourly_rate">N/A</span>
+                                                        <span class="points--amount" *ngIf="mentor?.hourly_rate">${{mentor?.hourly_rate || '0'}}/hr</span>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <span class="points--text">Jobs Completed : 0</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+
+
+                                <pagination-template class="mentorcards-pagination-footer" #p="paginationApi" id="listing" maxSize="9" autoHide="true" (pageChange)="nextpage($event)">
+                                    <ul>
+                                        <li class="previous"><a [class.disabled]="p.isFirstPage()" href="javascript:void(0)" (click)="p.previous()"><i class="fa fa-angle-left mr-2"></i>Previous</a></li>
+
+
+
+                                        <li *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                                            <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+
+                                            <a *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+
+                                        </li>
+
+
+                                        <li class="forward"><a [class.disabled]="p.isLastPage()" href="javascript:void(0)" (click)="p.next()">Next<i class="fa fa-angle-right ml-2"></i></a></li>
+                                    </ul>
+
+                                </pagination-template>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--Parent section ends-->
