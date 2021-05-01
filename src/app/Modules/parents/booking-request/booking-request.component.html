@@ -141,24 +141,40 @@
                                                     <div class="row">
                                                         <div class="col-lg-6 col-xl-5">
                                                             <p class="text-top-detail color-heading mb-2">Time</p>
-                                                            <div class="row">
-                                                                <div class="col-lg-12">
-                                                                    <div class="row">
-                                                                        <div class="col-8">
-                                                                            <select formControlName="booking_time" class="custom-select arrow-select green-select mb-3 mb-lg-0 font-14">
+                                                            <ng-container *ngIf="getAvailableSlots.length > 0; else noSlotsAvailable">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="row">
+                                                                            <div class="col-8">
+
+                                                                                <select formControlName="booking_time" class="custom-select arrow-select green-select mb-3 mb-lg-0 font-14">
                                                                                 <option disabled selected value="">Select</option>
-                                                                                <option *ngFor="let slot of slots;let i = index" [value]="slot.slot">{{slot.slot}}</option>
+                                                                                <option *ngFor="let slot of getAvailableSlots;let i = index" [value]="slot.value">{{slot.value}}</option>
                                                                             </select>
 
-                                                                            <p class="errorCls" *ngIf="bookARequestForm.controls.booking_time.touched || isbookARequestFormSubmitted">
-                                                                                <app-form-validation-errors errorPrefix="Time " [errors]="bookARequestForm.get('booking_time').errors"></app-form-validation-errors>
-                                                                            </p>
-                                                                        </div>
+                                                                                <p class="errorCls" *ngIf="bookARequestForm.controls.booking_time.touched || isbookARequestFormSubmitted">
+                                                                                    <app-form-validation-errors errorPrefix="Time " [errors]="bookARequestForm.get('booking_time').errors"></app-form-validation-errors>
+                                                                                </p>
+                                                                            </div>
 
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-template #noSlotsAvailable>
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="row">
+                                                                            <div class="col-8">
+                                                                                <div class="no-slots-available">
+                                                                                    <span>No Slots Available</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-
-                                                            </div>
+                                                            </ng-template>
                                                         </div>
 
                                                     </div>

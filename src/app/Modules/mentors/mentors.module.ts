@@ -14,10 +14,15 @@ import { ProfileComponent } from './profile/profile.component';
 import { PurchaseMembershipComponent } from './purchase-membership/purchase-membership.component';
 import { AddPaymentMethodComponent } from './add-payment-method/add-payment-method.component';
 import { PurchaseMembershipSuccessComponent } from './purchase-membership-success/purchase-membership-success.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MyMembershipComponent } from './my-membership/my-membership.component';
+import { MyMembershipPlanComponent } from './my-membership-plan/my-membership-plan.component';
+import { BillingMethodsComponent } from './billing-methods/billing-methods.component';
+import { AddPaymentMethodPopupComponent } from './add-payment-method-popup/add-payment-method-popup.component';
 
 
 @NgModule({
-  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent],
+  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent, DashboardComponent, MyMembershipComponent, MyMembershipPlanComponent, BillingMethodsComponent, AddPaymentMethodPopupComponent],
   imports: [
     CommonModule,
     MentorsRoutingModule,

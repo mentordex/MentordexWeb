@@ -113,6 +113,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+angular-cc-library
+MIT
+
 bootstrap
 MIT
 The MIT License (MIT)
@@ -485,6 +488,9 @@ SOFTWARE.
 
 
 masonry-layout
+MIT
+
+ng-readmore
 MIT
 
 ng-select2-component

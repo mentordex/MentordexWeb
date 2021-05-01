@@ -31,14 +31,22 @@ export class SearchComponent implements OnInit {
   isLoading: boolean = false
 
   filters: any = []
+  slots: any = []
+  slot: any = '';
   filterWithKeyValue = {}
-  currentDate: Date = new Date();
-  rangeValue: { from: Date; to: Date } = {
-    from: new Date(),
-    to: (new Date() as any)
-  };
+  minDate: Date;
+  maxDate: Date;
+  selectedDate: any = ''
+  counter: any = 0
+  constructor(private utilsService: UtilsService, private formBuilder: FormBuilder) {
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.minDate.setDate(this.minDate.getDate());
+    this.maxDate.setDate(this.maxDate.getDate() + 30);
+    this.selectedDate = new Date();
+    this.filterWithKeyValue['date'] = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
 
-  constructor(private utilsService: UtilsService, private formBuilder: FormBuilder,) { }
+  }
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
@@ -48,13 +56,106 @@ export class SearchComponent implements OnInit {
     this.fetchResults()
   }
 
+  initalizeTimeSlots() {
+    for (var i = 0; i < 12; i++) {
+      var amTimeFormat = 'AM';
+      var pmTimeFormat = 'PM';
+      i = (i < 9) ? parseInt(`0${i}`) : i;
+
+
+      if (i < 9) {
+        var j = (i == 0) ? '12' : `0${i}`
+        this.slots.push({ slot: `${j}:00 ${amTimeFormat} - 0${i + 1}:00 ${amTimeFormat}`, isChecked: false })
+      } else if (i == 9) {
+        this.slots.push({ slot: `0${i}:00 ${amTimeFormat} - ${i + 1}:00 ${amTimeFormat}`, isChecked: false })
+      } else {
+        if (i >= 11) {
+          this.slots.push({ slot: `${i}:00 ${amTimeFormat} - ${i + 1}:00 ${pmTimeFormat}`, isChecked: false })
+        } else {
+          this.slots.push({ slot: `${i}:00 ${amTimeFormat} - ${i + 1}:00 ${amTimeFormat}`, isChecked: false })
+        }
+
+      }
+
+    }
+
+    for (var i = 0; i < 12; i++) {
+      var amTimeFormat = 'AM';
+      var pmTimeFormat = 'PM';
+      i = (i < 9) ? parseInt(`0${i}`) : i;
+
+
+      if (i < 9) {
+        var j = (i == 0) ? '12' : `0${i}`
+        this.slots.push({ slot: `${j}:00 ${pmTimeFormat} - 0${i + 1}:00 ${pmTimeFormat}`, isChecked: false })
+      } else if (i == 9) {
+        this.slots.push({ slot: `0${i}:00 ${pmTimeFormat} - ${i + 1}:00 ${pmTimeFormat}`, isChecked: false })
+      } else {
+        if (i >= 11) {
+          this.slots.push({ slot: `${i}:00 ${pmTimeFormat} - ${i + 1}:00 ${amTimeFormat}`, isChecked: false })
+        } else {
+          this.slots.push({ slot: `${i}:00 ${pmTimeFormat} - ${i + 1}:00 ${pmTimeFormat}`, isChecked: false })
+        }
+
+      }
+
+    }
+
+    console.log(this.slots);
+
+  }
+  onChangeTimeslot(event) {
+    this.slot = event.target.value
+
+    if (this.slot) {
+
+      let index = this.filters.findIndex(x => x.filter == "slot");
+      if (index != -1) {
+        this.filters[index] = { filter: 'slot', id: '', name: this.slot }
+        this.filterWithKeyValue['slot'] = this.slot
+      } else {
+        this.filters.push({ filter: 'slot', id: '', name: this.slot })
+        this.filterWithKeyValue['slot'] = this.slot
+      }
+
+    } else {
+      let slotindex = this.filters.findIndex(x => x.filter == "slot");
+      if (slotindex != -1) {
+        this.removeFilter(slotindex, 'slot')
+      }
+    }
+    this.fetchResults()
+  }
+
+  onDateChange(value: Date): void {
+    console.log('value', value)
+
+    if (value) {
+
+
+      this.initalizeTimeSlots()
+      this.slot = '';
+      let selectedDate = new Date(value);
+      this.filterWithKeyValue['date'] = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+
+      let slotindex = this.filters.findIndex(x => x.filter == "slot");
+      if (slotindex != -1) {
+        this.removeFilter(slotindex, 'slot')
+      }
+
+
+      this.fetchResults()
+    }
+
+
+  }
+
   fetchCategories() {
 
     this.utilsService.processGetRequest('category/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.categories = response
     })
   }
-
   fetchSubcategories(category) {
     let index = this.filters.findIndex(x => x.filter == "category");
     if (index != -1) {
@@ -84,7 +185,11 @@ export class SearchComponent implements OnInit {
       this.results = response['records']
       this.totalRecords = response['total_records']
       this.isLoading = false
-    })
+    },
+      error => {
+        this.isLoading = false
+      })
+    this.isLoading = false
   }
 
   onSearch() {
@@ -104,7 +209,6 @@ export class SearchComponent implements OnInit {
     this.pagination['search'] = this.searchForm.get('search').value
     this.fetchResults()
   }
-  
   sortRecords(event) {
     if (event.target.value) {
       let sortOption = (event.target.value).split(",");
@@ -250,6 +354,14 @@ export class SearchComponent implements OnInit {
     if (type == 'location') {
       this.location = ''
     }
+    if (type == 'date') {
+      this.location = ''
+      this.slots = []
+      this.slot = ''
+    }
+    if (type == 'slot') {
+      this.slot = ''
+    }
 
 
     this.fetchResults()
@@ -257,6 +369,8 @@ export class SearchComponent implements OnInit {
 
   clearFilters() {
     this.filters = []
+    this.slot = ''
+    this.slots = []
     this.filterWithKeyValue = {}
     this.subcategories = []
     this.pagination.search = ''
@@ -264,7 +378,10 @@ export class SearchComponent implements OnInit {
     this.rating = ''
     this.hourlyRate = ''
     this.location = ''
+    this.selectedDate = new Date()
+    this.filterWithKeyValue['date'] = this.selectedDate
     this.fetchResults()
   }
 
 }
+

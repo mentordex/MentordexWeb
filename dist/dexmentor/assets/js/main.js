@@ -127,6 +127,7 @@ $(document).ready(function() {
 
 
     //card input 
+    /*
     if ($('.cardNumber').length > 0) {
         new Cleave('.cardNumber', {
             blocks: [4, 4, 4, 4],
@@ -139,6 +140,8 @@ $(document).ready(function() {
             datePattern: ['m', 'y']
         });
     };
+
+    */
     var $grid;
     if ($('.grid').length > 0) {
         // init Masonry

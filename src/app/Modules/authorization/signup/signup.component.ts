@@ -86,6 +86,10 @@ export class SignupComponent implements OnInit {
   cities: Select2Data = [];
   zipcodes: Select2Data = [];
 
+  countryArrayListing: any = [];
+  stateArrayListing: any = [];
+  cityArrayListing: any = [];
+
   states2: any = [];
   cities2: any = [];
   zipcodes2: any = [];
@@ -173,12 +177,25 @@ export class SignupComponent implements OnInit {
       ])
       ],
       phone: [undefined, [Validators.required]],
+      country: this.formBuilder.group({
+        country_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      state: this.formBuilder.group({
+        state_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      city: this.formBuilder.group({
+        city_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
       country_id: ['', [Validators.required]],
       state_id: [{ value: '' }, [Validators.required]],
       city_id: [{ value: '' }, [Validators.required]],
       zipcode: [{ value: '' }, [Validators.required]],
       role: ['', [Validators.required]],
       agree_terms: [false, Validators.requiredTrue],
+      newsletter: [false],
     });
   }
 
@@ -186,6 +203,18 @@ export class SignupComponent implements OnInit {
   private initalizeSignupStep3Form() {
     this.signupStep3Form = this.formBuilder.group({
       user_id: [''],
+      country: this.formBuilder.group({
+        country_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      state: this.formBuilder.group({
+        state_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      city: this.formBuilder.group({
+        city_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
       country_id: [''],
       state_id: [{ value: '' }],
       city_id: [{ value: '' }],
@@ -263,7 +292,7 @@ export class SignupComponent implements OnInit {
     //return;
 
     this.utilsService.processSignupRequest('signup', this.signupStep2Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      //console.log('response', response);
+
 
       if (this.signupStep2Form.get('role').value == 'PARENT') {
 
@@ -275,12 +304,7 @@ export class SignupComponent implements OnInit {
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
 
           this.router.navigate(['/authorization/signup/' + response.body['_id']]))
-        /*this.zone.run(() => {
-          this.authService.isLoggedIn(true); // Parent Login
-        });
 
-        //this.utilsService.onResponse(environment.MESSGES['PARENT-REGISTERED-SUCCESSFULLY'], true);
-        this.wizard.goToNextStep();*/
 
       } else {
 
@@ -294,7 +318,7 @@ export class SignupComponent implements OnInit {
   }
 
   getParentDetailsByToken(id): void {
-    this.utilsService.processPostRequest('getMentorDetails', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+    this.utilsService.processPostRequest('getParentDetails', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.parentDetails = response;
 
       //console.log(this.parentDetails);
@@ -321,7 +345,21 @@ export class SignupComponent implements OnInit {
         country_id: this.parentDetails.country_id,
         state_id: this.parentDetails.state_id,
         city_id: this.parentDetails.city_id,
-        zipcode: this.parentDetails.zipcode,
+        zipcode: this.parentDetails.zipcode
+      });
+
+      this.signupStep3Form.controls.country.patchValue({
+        country_id: this.parentDetails.country.country_id,
+        value: this.parentDetails.country.value
+      });
+
+      this.signupStep3Form.controls.state.patchValue({
+        state_id: this.parentDetails.state.state_id,
+        value: this.parentDetails.state.value
+      });
+      this.signupStep3Form.controls.city.patchValue({
+        city_id: this.parentDetails.city.city_id,
+        value: this.parentDetails.city.value
       });
 
       //console.log(this.signupStep3Form.value)
@@ -460,7 +498,10 @@ export class SignupComponent implements OnInit {
       countryArray.push({ options: countryArrayOptions })
 
       this.countries = JSON.parse(JSON.stringify(countryArray));
-      //this.countries = response;
+      this.countryArrayListing = countriesArray;
+
+      //console.log(this.countries)
+
     })
 
     this.resetAllControls('all');
@@ -470,7 +511,12 @@ export class SignupComponent implements OnInit {
    * get All States
    */
   getStateListing(event: Select2UpdateEvent<string>) {
+
+    //console.log('event', event);
+
     let countryId = event.value
+
+    //console.log(event.options)
     this.resetAllControls('state');
 
 
@@ -495,12 +541,30 @@ export class SignupComponent implements OnInit {
 
       this.states = JSON.parse(JSON.stringify(stateArray));
 
+      this.stateArrayListing = statesArray;
 
       if (this.states.length > 0) {
         this.enableStateControl();
       } else {
         this.resetAllControls('state');
       }
+
+      //console.log(this.stateArrayListing);
+
+
+      this.countryArrayListing = this.countryArrayListing.filter(function (item) {
+        return item._id === countryId;
+      });
+
+      //console.log(this.countryArrayListing);
+
+      this.signupStep2Form.controls.country.patchValue({
+        country_id: this.countryArrayListing[0]._id,
+        value: this.countryArrayListing[0].title
+      });
+
+      //console.log(this.signupStep2Form.controls.country.value);
+
     })
 
   }
@@ -537,11 +601,31 @@ export class SignupComponent implements OnInit {
       this.cities = JSON.parse(JSON.stringify(cityArray));
 
 
+      this.cityArrayListing = citiesArray;
+
+
       if (this.cities.length > 0) {
         this.enableCityControl();
       } else {
         this.resetAllControls('city');
       }
+
+
+
+      this.stateArrayListing = this.stateArrayListing.filter(function (item) {
+        return item._id === stateId;
+      });
+
+
+      //console.log(this.stateArrayListing);
+
+      this.signupStep2Form.controls.state.patchValue({
+        state_id: this.stateArrayListing[0]._id,
+        value: this.stateArrayListing[0].title
+      });
+
+      //console.log(this.stateArrayListing);
+
     })
   }
 
@@ -599,7 +683,7 @@ export class SignupComponent implements OnInit {
 
 
       this.states2 = response;
-
+      //console.log(this.states2);
 
       if (this.states2.length > 0) {
         this.enableStateControl();
@@ -631,6 +715,20 @@ export class SignupComponent implements OnInit {
       } else {
         this.resetAllControls('city');
       }
+
+
+      //console.log(this.states2);
+      this.states2 = this.states2.filter(function (item) {
+        return item._id === stateId;
+      });
+
+      this.signupStep3Form.controls.state.patchValue({
+        state_id: this.states2[0]._id,
+        value: this.states2[0].title
+      });
+
+
+
     })
 
 
@@ -658,6 +756,18 @@ export class SignupComponent implements OnInit {
       } else {
         this.resetZipcodeControl();
       }
+
+      this.cities2 = this.cities2.filter(function (item) {
+        return item._id === cityId;
+      });
+
+      this.signupStep3Form.controls.city.patchValue({
+        state_id: this.cities2[0]._id,
+        value: this.cities2[0].title
+      });
+
+
+
     })
 
 
@@ -701,6 +811,19 @@ export class SignupComponent implements OnInit {
       } else {
         this.resetZipcodeControl();
       }
+
+
+      this.cityArrayListing = this.cityArrayListing.filter(function (item) {
+        return item._id === cityId;
+      });
+
+      this.signupStep2Form.controls.city.patchValue({
+        city_id: this.cityArrayListing[0]._id,
+        value: this.cityArrayListing[0].title
+      });
+
+      //console.log(this.cityArrayListing);
+
     })
 
 
@@ -787,6 +910,12 @@ export class SignupComponent implements OnInit {
   resetStateControl(): void {
     let stateControl = this.signupStep2Form.controls.state_id;
     let stateControl2 = this.signupStep3Form.controls.state_id;
+
+    this.signupStep2Form.controls.state.patchValue({
+      state_id: '',
+        value: ''
+    });
+
     stateControl.disable(); stateControl.setValue('');
     stateControl2.disable(); stateControl2.setValue('');
 
@@ -815,6 +944,12 @@ export class SignupComponent implements OnInit {
   resetCityControl(): void {
     let cityControl = this.signupStep2Form.controls.city_id;
     let cityControl2 = this.signupStep3Form.controls.city_id;
+
+    this.signupStep2Form.controls.city.patchValue({
+      city_id: '',
+        value: ''
+    });
+
     cityControl.disable(); cityControl.setValue('');
     cityControl2.disable(); cityControl2.setValue('');
 

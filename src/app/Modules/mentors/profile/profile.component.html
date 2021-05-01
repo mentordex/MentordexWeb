@@ -363,7 +363,7 @@
                                                                 <div class="row">
                                                                     <div class="col-6">
                                                                         <select #academic_start_year (change)="onSelectAcademicStartYear(academic_start_year.value, i)" formControlName="start_year" class="custom-select arrow-select">
-                                                                        <option disabled selected value="">From</option>
+                                                                        <option selected value="">From</option>
                                                                         <option *ngFor="let year of years" [value]="year">{{year}}</option>
                                                                     </select>
                                                                         <p class="errorCls" *ngIf="academic.get('start_year').touched || isAcademicHistoryFormSubmitted">
@@ -375,7 +375,7 @@
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <select formControlName="end_year" class="custom-select arrow-select">
-                                                                        <option disabled selected value="">To</option>
+                                                                        <option selected value="">To</option>
                                                                         <option *ngFor="let year of endAcademicyears[i]" [value]="year">{{year}}</option>
                                                                     </select>
                                                                         <p class="errorCls" *ngIf="academic.get('end_year').touched || isAcademicHistoryFormSubmitted">
@@ -883,12 +883,50 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!--div class="col-12 col-lg-8">
-                                                        <label class="profile-label-text mb-3">Google Calendar <a href="#" class="gc-link ml-4">Link</a></label>
-                                                        <div class="text-top-detail font-14">
-                                                            Parents will see this rate on your profile while searching for a mentor. You can edit your rates at any time.
+                                                        <div class="col-12 col-lg-8">
+                                                            <label class="profile-label-text mb-3">Select Your Availability </label>
+                                                            <div class="text-top-detail font-14">
+                                                                Parents will see this availability on your profile while searching for a mentor. You can edit your availability at any time.
+                                                            </div>
+
+                                                            <div class="col-xl-6 bdr-date-right mb-4">
+                                                                <bs-datepicker-inline [minDate]="minDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="minDate"></bs-datepicker-inline>
+
+                                                            </div>
+
+                                                            <div class="col-xl-6 pl-lg-4 mb-4">
+                                                                <div class="availtime--box">
+                                                                    <div class="profile-label-text mb-3">Available Time</div>
+                                                                    <ng-container *ngIf="slots.length > 0; else noSlotsAvailable">
+                                                                        <div class="list-style-ul">
+                                                                            <ul>
+                                                                                <li *ngFor="let availableSlot of slots let i=index">
+                                                                                    <div class="choose-category-wrapper time-slots">
+                                                                                        <label>
+                                                                                        <input [checked]="availableSlot.isChecked" (change)="onCheckboxChange($event)" [value]="availableSlot.slot" type="checkbox" class="card-input-element">   
+                                                                                        <div class="category-innebox">
+                                                                                            <p class="category-heading-text">{{availableSlot.slot}}</p>
+                                                                                        </div>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </li>
+
+                                                                            </ul>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                    <ng-template #noSlotsAvailable>
+                                                                        <div class="no-slots-available">
+                                                                            <span>No Slots Available</span>
+                                                                        </div>
+                                                                    </ng-template>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-xl-6 pl-lg-4 mb-4">
+                                                                <input (click)="onSubmitSaveAndAddMore()" type="submit" class="primary--button py-2 px-30" value="Save and Add More">
+                                                            </div>
                                                         </div>
-                                                    </div-->
                                                     </div>
                                                 </div>
                                             </div>

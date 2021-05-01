@@ -22,6 +22,7 @@
     "@ng-bootstrap/ng-bootstrap": "^9.0.1",
     "angular-archwizard": "^6.1.0",
     "angular-cc-library": "^2.1.2",
+    "angularx-social-login": "^3.5.5",
     "bootstrap": "^4.5.3",
     "flatpickr": "^4.6.9",
     "google-libphonenumber": "^3.2.16",

@@ -72,6 +72,10 @@ export class BasicDetailsComponent implements OnInit {
   cities: any = [];
   zipcodes: any = [];
 
+  countryArrayListing: any = [];
+  stateArrayListing: any = [];
+  cityArrayListing: any = [];
+
   countryArray = [{ id: 1, value: 'US' }];
 
   stateArray = [{ id: 1, value: 'Alabama', country_id: 1 }, { id: 2, value: 'Alaska', country_id: 1 }, { id: 3, value: 'California', country_id: 1 }, { id: 4, value: 'Florida', country_id: 1 }, { id: 5, value: 'Washington', country_id: 1 }];
@@ -107,6 +111,18 @@ export class BasicDetailsComponent implements OnInit {
       }),
       address1: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
       address2: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(100)])],
+      country: this.formBuilder.group({
+        country_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      state: this.formBuilder.group({
+        state_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      city: this.formBuilder.group({
+        city_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
       country_id: [{ value: '' }, [Validators.required]],
       state_id: [{ value: '' }, [Validators.required]],
       city_id: [{ value: '' }, [Validators.required]],
@@ -167,6 +183,22 @@ export class BasicDetailsComponent implements OnInit {
         social_links: this.mentorDetails.social_links ? this.mentorDetails.social_links: {},
       });
 
+      this.basicDetailsForm.controls.country.patchValue({
+        country_id: this.mentorDetails.country.country_id,
+        value: this.mentorDetails.country.value
+      });
+
+      this.basicDetailsForm.controls.state.patchValue({
+        state_id: this.mentorDetails.state.state_id,
+        value: this.mentorDetails.state.value
+      });
+      this.basicDetailsForm.controls.city.patchValue({
+        city_id: this.mentorDetails.city.city_id,
+        value: this.mentorDetails.city.value
+      });
+
+      //console.log(this.basicDetailsForm.value)
+
     })
   }
 
@@ -180,12 +212,13 @@ export class BasicDetailsComponent implements OnInit {
       return false;
     }
 
-    /*console.log(this.basicDetailsForm.controls.primary_language);
-    return;*/
+
+    //console.log(this.basicDetailsForm.value);
+    //return;
 
     //console.log('basicDetailsForm', this.basicDetailsForm.value);
     this.utilsService.processPostRequest('updateBasicDetails', this.basicDetailsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
       //this.utilsService.onResponse('Your information updated successfully.', true);
       this.router.navigate(['/mentor/skills']);
     })
@@ -227,10 +260,11 @@ export class BasicDetailsComponent implements OnInit {
 
     this.utilsService.processGetRequest('country/listing', false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.countries = response;
+      this.countryArrayListing = response;
     })
 
     //this.countries = this.countryArray;
-    this.resetAllControls('all');
+    //this.resetAllControls('all');
   }
 
   /**
@@ -248,23 +282,29 @@ export class BasicDetailsComponent implements OnInit {
       return;
     }
 
-    /* this.states = this.stateArray.filter(function (el) {
-      return el.country_id == countryId;
-    });
-
-    if (this.states.length > 0) {
-      this.enableStateControl();
-    } else {
-      this.resetAllControls('state');
-    }*/
-
     this.utilsService.processPostRequest('state/listing', { country_id: countryId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.states = response;
+      this.stateArrayListing = response;
+
+
       if (this.states.length > 0) {
         this.enableStateControl();
       } else {
         this.resetAllControls('state');
       }
+
+      this.countryArrayListing = this.countryArrayListing.filter(function (item) {
+        return item._id === countryId;
+      });
+
+      //console.log(this.stateArrayListing);
+
+      this.basicDetailsForm.controls.country.patchValue({
+        country_id: this.countryArrayListing[0]._id,
+        value: this.countryArrayListing[0].title
+      });
+
+      //console.log(this.basicDetailsForm.controls.country.value)
     })
 
   }
@@ -275,31 +315,36 @@ export class BasicDetailsComponent implements OnInit {
   getCityListing(stateId) {
     //let stateId = event.target.value
     this.resetAllControls('city');
+    this.stateArrayListing = this.states;
 
     // check State ID Empty or not
     if (stateId == '') {
-      console.log('stateId', stateId)
+      //console.log('stateId', stateId)
       this.resetAllControls('city');
       return;
     }
 
-    /* this.cities = this.cityArray.filter(function (el) {
-      return el.state_id == stateId;
-    });
-
-    if (this.cities.length > 0) {
-      this.enableCityControl();
-    } else {
-      this.resetAllControls('city');
-    } */
-
     this.utilsService.processPostRequest('city/listing', { state_id: stateId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.cities = response;
+      this.cityArrayListing = response;
+      //console.log(this.cityArrayListing);
       if (this.cities.length > 0) {
         this.enableCityControl();
       } else {
         this.resetAllControls('city');
       }
+      //console.log(this.stateArrayListing);
+      this.stateArrayListing = this.stateArrayListing.filter(function (item) {
+        return item._id === stateId;
+      });
+  
+      this.basicDetailsForm.controls.state.patchValue({
+        state_id: this.stateArrayListing[0]._id,
+        value: this.stateArrayListing[0].title
+      });
+
+      //console.log(this.basicDetailsForm.controls.state.value)
+
     })
 
   }
@@ -310,6 +355,7 @@ export class BasicDetailsComponent implements OnInit {
   getZipcodeListing(cityId) {
     //let cityId = event.target.value;
     this.resetZipcodeControl();
+    this.cityArrayListing = this.cities;
 
     // check State ID Empty or not
     if (cityId == "") {
@@ -324,17 +370,25 @@ export class BasicDetailsComponent implements OnInit {
       } else {
         this.resetZipcodeControl();
       }
+
+      this.cityArrayListing = this.cityArrayListing.filter(function (item) {
+        return item._id === cityId;
+      });
+
+
+      //console.log(this.stateArrayListing);
+
+      this.basicDetailsForm.controls.city.patchValue({
+        city_id: this.cityArrayListing[0]._id,
+        value: this.cityArrayListing[0].title
+      });
+
+      //console.log(this.basicDetailsForm.controls.city.value)
+
+
     });
 
-    /*this.zipcodes = this.zipcodeArray.filter(function (el) {
-      return el.city_id == cityId;
-    });
-
-    if (this.zipcodes.length > 0) {
-      this.enableZipcodeControl();
-    } else {
-      this.resetZipcodeControl();
-    } */
+    
 
   }
 
@@ -342,18 +396,22 @@ export class BasicDetailsComponent implements OnInit {
   * Reset All Control
   */
   resetAllControls(value): void {
+
     if (value == 'state') {
+      //console.log(value)
       this.resetStateControl();
       this.resetCityControl();
       this.resetZipcodeControl();
     }
 
     if (value == 'city') {
+      //console.log(value)
       this.resetCityControl();
       this.resetZipcodeControl();
     }
 
     if (value == 'all') {
+      //console.log(value)
       this.resetStateControl();
       this.resetCityControl();
       this.resetZipcodeControl();
@@ -366,7 +424,12 @@ export class BasicDetailsComponent implements OnInit {
   */
   resetStateControl(): void {
     let stateControl = this.basicDetailsForm.controls.state_id;
-    stateControl.disable(); stateControl.setValue(''); this.states = [];
+    stateControl.disable(); stateControl.patchValue(''); this.states = []; this.stateArrayListing = [];
+
+    this.basicDetailsForm.controls.state.patchValue({
+      state_id: '',
+        value: ''
+    });
   }
 
   /**
@@ -374,7 +437,12 @@ export class BasicDetailsComponent implements OnInit {
   */
   resetCityControl(): void {
     let cityControl = this.basicDetailsForm.controls.city_id;
-    cityControl.disable(); cityControl.setValue(''); this.cities = [];
+    cityControl.disable(); cityControl.patchValue(''); this.cities = []; this.cityArrayListing = [];
+
+    this.basicDetailsForm.controls.city.patchValue({
+      city_id: '',
+        value: ''
+    });
   }
 
   /**
@@ -382,7 +450,7 @@ export class BasicDetailsComponent implements OnInit {
   */
   resetZipcodeControl() {
     let zipcodeControl = this.basicDetailsForm.controls.zipcode;
-    zipcodeControl.disable(); zipcodeControl.setValue(''); this.zipcodes = [];
+    zipcodeControl.disable(); zipcodeControl.patchValue(''); this.zipcodes = [];
   }
 
   /**
@@ -390,7 +458,7 @@ export class BasicDetailsComponent implements OnInit {
   */
   enableStateControl(): void {
     let stateControl = this.basicDetailsForm.controls.state_id;
-    stateControl.enable();
+    stateControl.enable(); 
   }
 
   /**

@@ -10,7 +10,8 @@ import { ApplicationStatusComponent } from './application-status/application-sta
 import { ProfileComponent } from './profile/profile.component';
 import { PurchaseMembershipComponent } from './purchase-membership/purchase-membership.component';
 import { PurchaseMembershipSuccessComponent } from './purchase-membership-success/purchase-membership-success.component';
-
+import { MyMembershipPlanComponent } from './my-membership-plan/my-membership-plan.component';
+import { BillingMethodsComponent } from './billing-methods/billing-methods.component';
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
 
@@ -70,6 +71,18 @@ const routes: Routes = [
     path: 'purchase-membership-success',
     component: PurchaseMembershipSuccessComponent,
     data: { title: 'Purchase Membership Success' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'my-membership-plan',
+    component: MyMembershipPlanComponent,
+    data: { title: 'My Membership Plan' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'billing-methods',
+    component: BillingMethodsComponent,
+    data: { title: 'My Billing Method' },
     canActivate: [AuthGuard]
   }
 

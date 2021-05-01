@@ -42,6 +42,7 @@ export class BookingRequestComponent implements OnInit {
   getCurrentDate: any = '';
 
   slots: any = [];
+  getAvailableSlots: any = [];
 
   paymentDetails: any = {};
   paymentDetailsArray: any = [];
@@ -147,7 +148,25 @@ export class BookingRequestComponent implements OnInit {
     let getSelectedMonth = selectedDate.getMonth() + 1;
     let getSelectedDate = selectedDate.getDate();
     //this.getCurrentDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()]
-    //this.getAvailableSlotsByDay(selectedDay, formatDate);
+    this.getAvailableSlotsByDate(selectedDay, formatDate);
+  }
+
+  /**
+   * get Available Slots By Date
+  */
+  getAvailableSlotsByDate(day, getSelectedDate): void {
+
+    this.utilsService.processPostRequest('getMentorSlotsByDate', { userID: this.id, day: day, getSelectedDate: getSelectedDate, mentorId: this.mentorId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log('response', response);
+      let getSlots = response;
+      if ('slots' in getSlots) {
+        this.getAvailableSlots = [];
+      } else {
+        this.getAvailableSlots = getSlots['availableSlots'];
+      }
+      //console.log('response', this.getAvailableSlots);
+    })
+
   }
 
   get jobFileArray(): FormArray {
@@ -293,18 +312,18 @@ export class BookingRequestComponent implements OnInit {
   }
 
   /**
-   * get Mentor Details By Token
+   * get Parent Details By Token
   */
   getPaymentDetailsByToken(id): void {
     this.utilsService.processPostRequest('getSavedPaymentMethod', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.paymentDetails = response;
       //console.log(this.paymentDetails.payment_details);
       this.paymentDetailsArray = this.paymentDetails.payment_details;
-      if(this.paymentDetailsArray.length > 0){
+      if (this.paymentDetailsArray.length > 0) {
         this.bookARequestForm.patchValue({
           payment_method_added: true
         });
-      }else{
+      } else {
         this.bookARequestForm.patchValue({
           payment_method_added: false
         });

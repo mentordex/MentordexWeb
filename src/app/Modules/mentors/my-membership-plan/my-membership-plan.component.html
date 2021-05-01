@@ -1,0 +1,144 @@
+<!--Parent section starts-->
+<section class="pt-125 py-65 bg-md-f8f8f8">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-xl-9 mx-auto">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center mb-5">
+                        <h2 class="mentor-memebership--title">Membership plan</h2>
+                    </div>
+                    <div class="col-12 col-md-6 col--lg-5 mb-4 mb-md-0">
+                        <p class="text-top-detail color-heading font-20-xs font--500">
+                            Current Plan
+                        </p>
+                        <div class="profile-steps-rightsidebar-column border-radius-4 overflow-hidden">
+                            <div class="dashboard-list-wrapper">
+                                <div class="dashboard-list-body p-4">
+                                    <div class="mentorcards-outer notification--mesgouter">
+                                        <p class="text-top-detail color-heading font-18-xs mb-0">
+                                            Monthly
+                                        </p>
+                                        <div class="mentor-memebership--box">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <p class="text-top-detail font-16-xs mb-2">
+                                                        Subscription renewal date
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-8">
+                                                            <p class="text-top-detail color-heading font-18-xs font--500 mb-2">
+                                                                23 Nov, 2020
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <p class="text-top-detail color--primary font-16-xs mb-2">
+                                                                9 days left
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4">
+                                                <div class="col-lg-12">
+                                                    <p class="text-top-detail color--primary font-16-xs mb-2">
+                                                        What you’ll be charged
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <p class="text-top-detail color-heading font-18-xs font--500 mb-1">
+                                                                USD $50 (including tax)
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 offset-xl-1 col--lg-5">
+                        <p class="text-top-detail color-heading font-20-xs font--500">
+                            Payment Method
+                        </p>
+                        <div class="profile-steps-rightsidebar-column border-radius-4 overflow-hidden">
+                            <div class="dashboard-list-wrapper">
+                                <div class="dashboard-list-body p-4">
+                                    <div class="mentorcards-outer notification--mesgouter">
+                                        <p class="text-top-detail color-heading font-18-xs mb-0">
+                                            Credit Card
+                                        </p>
+                                        <div class="mentor-memebership--box">
+                                            <ng-container *ngIf="paymentDetailsArray.length > 0; else noCardsAvailable">
+                                                <div *ngFor="let paymentArray of paymentDetailsArray; let i = index" class="each-credit-card-item">
+
+                                                    <div class="row mx-0 align-items-center">
+                                                        <div class="pr-0 each-credit-card-logo">
+                                                            {{paymentArray?.card_type}}
+                                                            <!--img src="./img/logos_mastercard.svg" class="img-fluid" alt="masatercard-logo"-->
+                                                        </div>
+                                                        <div class="px-1 each-credit-number">
+                                                            <p class="profile-label-text font--16 mb-0">xxxx xxxx xxxx {{paymentArray?.credit_card_number}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-5 mb-2 mb-sm-0">
+                                                            <p class="each-credit-card-label">Expires on</p>
+                                                            <p class="profile-label-text font-14 mb-0">{{paymentArray?.exp_month}}/{{paymentArray?.exp_year}}</p>
+                                                        </div>
+                                                        <div class="col-7">
+                                                            <p class="each-credit-card-label">Name</p>
+                                                            <p class="profile-label-text font-14 mb-0">{{paymentArray?.card_holder_name}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <ng-template #noCardsAvailable>
+                                                <div class="each-credit-card-item">
+                                                    <div class="no-slots-available">
+                                                        <span>No Cards Found.</span>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button role="button" type="button" class="primary--button-bordered py-1">Update Payment Method</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="p-4">
+                            <button (click)="cancelYourSubscription()" role="button" type="button" class="btn--transparent color--primary">Cancel Subscription</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="profile-steps-rightsidebar-column-header text-center border-radius-4">
+                            <p class="dashboard-mentorcards-desc--mentorname font--500 font-20-xs text-white text-center">
+                                Switch to annual subscription and save 20%
+                            </p>
+                            <p class="dashboard-mentorcards-desc--mentorname font-18-xs text-white text-center">
+                                $500/year ($50/month)
+                            </p>
+                            <p class="dashboard-mentorcards-desc--mentorname max-400 mx-auto font-14 text-white text-center line-height-normal mt-3 mb-4">
+                                We will adjust the amount we charge you according to the remaining days on your current subscription.
+                            </p>
+                            <button role="button" type="button" class="primary--button py-2">Switch to Annual</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--Parent section ends-->

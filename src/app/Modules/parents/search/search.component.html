@@ -65,68 +65,39 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="card">
-                                  <div class="card-header" id="headingThree">
-                                    <h2 class="mb-0">
-                                      <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                         Availibility
                                       </button>
-                                    </h2>
-                                  </div>
-                                  <div id="collapseThree" class="collapse show" aria-labelledby="headingThree">
-                                    <div class="card-body">
-                                        <div class="d-block">
-                                            <p class="filterbar-subtext">Select date</p>
-                                            <input type="text" 
-                                            mwlFlatpickr
-                                            [(ngModel)]="rangeValue"
-                                            [altInput]="true"
-                                            [convertModelValue]="true"
-                                            [inline]="true"
-                                            mode="range"
-                                            class="d-none">
-                                        </div>
-                                        <div class="d-block mt-3 mb-2">
-                                            <p class="filterbar-subtext">Select date</p>
-                                            <div class="row position-relative filterbar-cs-select">
-                                                <div class="col-6">
-                                                    <div class="row">
-                                                        <div class="col-6 pr-1">
-                                                            <select class="custom-select arrow-select">
-                                                                <option value="">HH</option>
-                                                                <option value="">01</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-6 pl-1">
-                                                            <select class="custom-select arrow-select">
-                                                                <option value="">MM</option>
-                                                                <option value="">01</option>
-                                                            </select>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseThree" class="collapse show" aria-labelledby="headingThree">
+                                        <div class="card-body">
+
+                                            <div class="d-block">
+                                                <!--<p class="filterbar-subtext">Select date</p>-->
+                                                <bs-datepicker-inline [minDate]="minDate" [maxDate]="maxDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="selectedDate"></bs-datepicker-inline>
+                                            </div>
+                                            <div *ngIf="slots.length>0" class="d-block mt-3 mb-2">
+                                                <p class="filterbar-subtext">Time Slots</p>
+
+                                                <div class="row position-relative filterbar-cs-select">
+                                                    <div class="col-10">
+                                                        <div class="row">
+                                                            <select [(ngModel)]="slot" name="slot" class="custom-select arrow-select green-select" (change)="onChangeTimeslot($event)">
+                                                            <option value="">Select Slot</option>
+                                                            <option *ngFor="let slot of slots" value="{{slot?.slot}}">{{slot?.slot}}</option>
+                                                        </select>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <span class="span-bar"><span>-</span></span>
-                                                <div class="col-6">
-                                                    <div class="row">
-                                                        <div class="col-6 pr-1">
-                                                            <select class="custom-select arrow-select">
-                                                                <option value="">HH</option>
-                                                                <option value="">01</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-6 pl-1">
-                                                            <select class="custom-select arrow-select">
-                                                                <option value="">MM</option>
-                                                                <option value="">01</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                  </div>
-                                </div>-->
+                                </div>
                                 <div class="card">
                                     <div class="card-header" id="headingFour">
                                         <h2 class="mb-0">
@@ -321,9 +292,37 @@
                                                 Loaction:{{filter?.name}}
                                                 <button class="deltsearch-tags" (click)="removeFilter(index,'location')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
                                             </div>
+
+                                            <!--<div *ngIf="filter?.filter=='date'">
+                                                Availibility:{{filter?.name}}
+                                                <button class="deltsearch-tags" (click)="removeFilter(index,'date')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                            </div>-->
+                                            <div *ngIf="filter?.filter=='slot'">
+                                                Timeslot:{{filter?.name}}
+                                                <button class="deltsearch-tags" (click)="removeFilter(index,'slot')"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                            </div>
                                             
                                         </span>
-
+                                        <!--<span>
+                                            Availability: 12th Dec - 20 Dec
+                                            <button class="deltsearch-tags"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                        </span>
+                                        <span>
+                                            Time: 5 PM - 7PM
+                                            <button class="deltsearch-tags"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                        </span>
+                                        <span>
+                                            $60 & above
+                                            <button class="deltsearch-tags"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                        </span>
+                                        <span>
+                                            Language: English
+                                            <button class="deltsearch-tags"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                        </span>
+                                        <span>
+                                            Language: Spanish
+                                            <button class="deltsearch-tags"><img src="assets/img/deltcross-icon.svg" alt="delticon"></button>
+                                        </span>-->
                                         <button *ngIf="filters.length>0" (click)="clearFilters()" class="clear--filters">
                                             Clear filters
                                         </button>
@@ -364,7 +363,7 @@
                                             </div>
                                             <div class="dashboard-mentorcards-desc">
                                                 <div class="row mb-1">
-                                                    <div routerLink="/parent/profile-view/{{mentor?._id}}" class="col-lg-8 focus--none cursor--pointer">
+                                                    <div style="cursor:pointer" routerLink="/profile-view/{{mentor?._id}}" class="col-lg-8">
                                                         <p class="dashboard-mentorcards-desc--mentorname">{{mentor?.first_name}} {{mentor?.last_name}}</p>
                                                         <span class="dashboard-mentorcards-desc--exp">{{mentor?.tagline}}</span>
                                                     </div>
@@ -379,7 +378,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-10 mb-2">
-                                                        <p *ngIf="(mentor?.bio)" class="dashboard-mentorcards-desc--exp readmore--expand--btn">
+                                                        <p *ngIf="(mentor?.bio)" class="dashboard-mentorcards-desc--exp">
 
                                                             <app-read-more [text]="mentor?.bio" maxLength="30"></app-read-more>
                                                         </p>
@@ -406,7 +405,7 @@
                                                         <span class="points--amount" *ngIf="mentor?.hourly_rate">${{mentor?.hourly_rate || '0'}}/hr</span>
                                                     </div>
                                                     <div class="col-12">
-                                                        <span class="points--text">Jobs Completed : 0</span>
+                                                        <span class="points--text">Jobs Completed : 12</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -415,7 +414,14 @@
                                 </ul>
                             </div>
                             <div>
-
+                                <!--<pagination-controls class="mentorcards-pagination-footer" (pageChange)="nextpage($event)" id="listing"  maxSize="9"
+                               directionLinks="true"
+                               autoHide="true"
+                               responsive="true"
+                               previousLabel="Previous"
+                               nextLabel="Next"
+                               screenReaderPaginationLabel="Pagination"
+                               screenReaderPageLabel="page"></pagination-controls>-->
 
                                 <pagination-template class="mentorcards-pagination-footer" #p="paginationApi" id="listing" maxSize="9" autoHide="true" (pageChange)="nextpage($event)">
                                     <ul>
@@ -436,7 +442,16 @@
 
                                 </pagination-template>
 
-
+                                <!--<ul>
+                                    <li class="previous"><a href="#"><i class="fa fa-angle-left mr-2"></i>Previous</a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">6</a></li>
+                                    <li class="forward"><a href="#">Next<i class="fa fa-angle-right ml-2"></i></a></li>
+                                </ul>-->
                             </div>
                         </div>
                     </div>

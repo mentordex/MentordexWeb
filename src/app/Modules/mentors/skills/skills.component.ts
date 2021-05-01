@@ -48,7 +48,12 @@ export class SkillsComponent implements OnInit {
   selectedSubcategories: any = [];
   selectedCategoryName: any = '';
 
-  
+
+  subcategory1Array: any = [];
+  subcategory2Array: any = [];
+  subcategory3Array: any = [];
+
+
 
   skillsForm: FormGroup;
   isSkillsFormSubmitted: boolean = false
@@ -74,16 +79,99 @@ export class SkillsComponent implements OnInit {
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      //console.log(response);
+      console.log(response);
       this.mentorDetails = response;
 
-       if (this.mentorDetails.admin_status == 'NEW') {
+      if (this.mentorDetails.admin_status == 'NEW') {
         this.router.navigate(['/mentor/application-status']);
-      } 
+      }
+
+      if('category1' in this.mentorDetails){
+
+        this.skillsForm.controls.category1.patchValue({
+          category_id: this.mentorDetails.category1.category_id,
+          value: this.mentorDetails.category1.value
+        })
+
+
+        this.utilsService.processPostRequest('subcategory/listing', { category_id: this.mentorDetails.category1.category_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+          this.subcategory1Array = response;
+          
+          this.subcategory1Array.forEach(element => {
+
+            if (this.mentorDetails.subcategory1.subcategory_id.indexOf(element._id) > -1) {
+              this.skillsForm.controls.subcategory1.patchValue({
+                subcategory_id: this.mentorDetails.subcategory1.subcategory_id,
+                value: this.mentorDetails.subcategory1.value
+              })
+
+              this.selectedSubcategoryArray.push({ id: element._id, name: element.title });
+            }
+
+          });
+
+        })
+      }
+
+      if('category2' in this.mentorDetails){
+
+        this.skillsForm.controls.category2.patchValue({
+          category_id: this.mentorDetails.category2.category_id,
+          value: this.mentorDetails.category2.value
+        })
+
+
+        this.utilsService.processPostRequest('subcategory/listing', { category_id: this.mentorDetails.category2.category_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+          this.subcategory2Array = response;
+          
+          this.subcategory2Array.forEach(element => {
+
+            if (this.mentorDetails.subcategory2.subcategory_id.indexOf(element._id) > -1) {
+              this.skillsForm.controls.subcategory2.patchValue({
+                subcategory_id: this.mentorDetails.subcategory2.subcategory_id,
+                value: this.mentorDetails.subcategory2.value
+              })
+
+              this.selectedSubcategoryArray.push({ id: element._id, name: element.title });
+            }
+
+          });
+
+        })
+      }
+
+      if('category3' in this.mentorDetails){
+
+        this.skillsForm.controls.category3.patchValue({
+          category_id: this.mentorDetails.category3.category_id,
+          value: this.mentorDetails.category3.value
+        })
+
+
+        this.utilsService.processPostRequest('subcategory/listing', { category_id: this.mentorDetails.category3.category_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+          this.subcategory3Array = response;
+          
+          this.subcategory3Array.forEach(element => {
+
+            if (this.mentorDetails.subcategory3.subcategory_id.indexOf(element._id) > -1) {
+              this.skillsForm.controls.subcategory3.patchValue({
+                subcategory_id: this.mentorDetails.subcategory3.subcategory_id,
+                value: this.mentorDetails.subcategory3.value
+              })
+
+              this.selectedSubcategoryArray.push({ id: element._id, name: element.title });
+            }
+
+          });
+
+        })
+      }
+
       
 
+      /*
       const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
-      
+
       this.skillsForm.patchValue({
         category_id: this.mentorDetails.category_id ? this.mentorDetails.category_id : ''
       });
@@ -95,15 +183,16 @@ export class SkillsComponent implements OnInit {
       if (this.mentorDetails.category_id) {
         this.utilsService.processPostRequest('subcategory/listing', { category_id: this.mentorDetails.category_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
           this.subcategoryArray = response;
-          
+
           this.subcategoryArray.forEach(element => {
-            if(this.mentorDetails.subcategories.indexOf(element._id) > -1){
+            if (this.mentorDetails.subcategories.indexOf(element._id) > -1) {
               this.selectedSubcategoryArray.push({ id: element._id, name: element.title });
             }
           });
 
         })
       }
+      */
 
     })
   }
@@ -112,11 +201,35 @@ export class SkillsComponent implements OnInit {
   private initalizeSkillsForm() {
     this.skillsForm = this.formBuilder.group({
       userID: [''],
-      category_id: ['', [Validators.required]],
-      subcategories: this.formBuilder.array([], [minLengthArray(1), maxLengthArray(3)]),
-      subcategory_id1: [''],
-      subcategory_id2: [''],
-      subcategory_id3: [''],
+      //category_id: ['', [Validators.required]],
+      category1: this.formBuilder.group({
+        category_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      category2: this.formBuilder.group({
+        category_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      category3: this.formBuilder.group({
+        category_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      subcategory1: this.formBuilder.group({
+        subcategory_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      subcategory2: this.formBuilder.group({
+        subcategory_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      subcategory3: this.formBuilder.group({
+        subcategory_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      //subcategories: this.formBuilder.array([], [minLengthArray(1), maxLengthArray(3)]),
+      //subcategory_id1: [''],
+      //subcategory_id2: [''],
+      //subcategory_id3: [''],
     });
   }
 
@@ -154,35 +267,49 @@ export class SkillsComponent implements OnInit {
     //console.log(this.selectedSubcategoryArray);
   }
 
+  onSubcateory1Change(e) {
+    this.skillsForm.controls.subcategory1.patchValue({ subcategory_id: e.target.value, value: e.target.getAttribute('data-subCategoryName') });
+    //console.log(this.skillsForm.controls.subcategory1.value);
+  }
+
+  onSubcateory2Change(e) {
+    this.skillsForm.controls.subcategory2.patchValue({ subcategory_id: e.target.value, value: e.target.getAttribute('data-subCategoryName') });
+  }
+
+  onSubcateory3Change(e) {
+    this.skillsForm.controls.subcategory3.patchValue({ subcategory_id: e.target.value, value: e.target.getAttribute('data-subCategoryName') });
+  }
+
   /**
    * on Submit Basic Details
   */
   onSubmitSkillsDetailsForm() {
 
 
-    
+
 
     if (this.skillsForm.invalid) {
       this.isSkillsFormSubmitted = true
       return false;
-    } 
+    }
 
     //console.log(this.selectedSubcategoryArray[0].id);
-
-    if(this.selectedSubcategoryArray.length == 1){
+    /*
+    if (this.selectedSubcategoryArray.length == 1) {
       this.skillsForm.controls.subcategory_id1.patchValue(this.selectedSubcategoryArray[0].id);
     }
-    if(this.selectedSubcategoryArray.length == 2){
+    if (this.selectedSubcategoryArray.length == 2) {
       this.skillsForm.controls.subcategory_id1.patchValue(this.selectedSubcategoryArray[0].id);
       this.skillsForm.controls.subcategory_id2.patchValue(this.selectedSubcategoryArray[1].id);
     }
-    if(this.selectedSubcategoryArray.length == 3){
+    if (this.selectedSubcategoryArray.length == 3) {
       this.skillsForm.controls.subcategory_id1.patchValue(this.selectedSubcategoryArray[0].id);
       this.skillsForm.controls.subcategory_id2.patchValue(this.selectedSubcategoryArray[1].id);;
       this.skillsForm.controls.subcategory_id3.patchValue(this.selectedSubcategoryArray[2].id);;
     }
+    */
     //console.log(this.skillsForm.value); return;
-    
+
     this.utilsService.processPostRequest('updateSkillsDetails', this.skillsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
       //this.utilsService.onResponse('Your information updated successfully.', true);
@@ -237,7 +364,6 @@ export class SkillsComponent implements OnInit {
 
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
         this.subcategoryArray = response;
-
       })
     }
 
@@ -245,6 +371,113 @@ export class SkillsComponent implements OnInit {
 
   checkSubcategory(id) {
     return this.selectedSubcategoryArray.some(t => t.id === id);
+  }
+
+
+  /**
+   * get all sub categories
+   */
+  getSubcategory1Listing(event) {
+    let categoryID = event.target.value
+
+    this.subcategory1Array = [];
+    //this.selectedSubcategoryArray = [];
+    //const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
+    //subcategories.clear();
+
+    let subcategory1Control = this.skillsForm.controls.subcategory1.patchValue({
+      subcategory_id: '',
+      value: ''
+    });
+
+
+    if (categoryID) {
+
+      this.selectedCategoryName = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
+
+
+      this.skillsForm.controls.category1.patchValue({
+        category_id: categoryID,
+        value: this.selectedCategoryName[0]
+      })
+
+      //console.log(this.skillsForm.controls.category1.value);
+
+      this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        this.subcategory1Array = response;
+
+      })
+    }
+
+  }
+
+  /**
+   * get all sub categories
+   */
+  getSubcategory2Listing(event) {
+    let categoryID = event.target.value
+
+    this.subcategory2Array = [];
+    //this.selectedSubcategoryArray = [];
+    //const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
+    //subcategories.clear();
+
+    let subcategory2Control = this.skillsForm.controls.subcategory1.patchValue({
+      subcategory_id: '',
+      value: ''
+    });
+
+
+    if (categoryID) {
+
+      this.selectedCategoryName = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
+
+
+      this.skillsForm.controls.category2.patchValue({
+        category_id: categoryID,
+        value: this.selectedCategoryName[0]
+      })
+
+      this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        this.subcategory2Array = response;
+      })
+    }
+
+  }
+
+  /**
+   * get all sub categories
+   */
+  getSubcategory3Listing(event) {
+    let categoryID = event.target.value
+
+    this.subcategory3Array = [];
+    //this.selectedSubcategoryArray = [];
+    //const subcategories: FormArray = this.skillsForm.get('subcategories') as FormArray;
+    //subcategories.clear();
+
+    let subcategory3Control = this.skillsForm.controls.subcategory1.patchValue({
+      subcategory_id: '',
+      value: ''
+    });
+
+
+    if (categoryID) {
+
+      this.selectedCategoryName = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
+
+
+      this.skillsForm.controls.category3.patchValue({
+        category_id: categoryID,
+        value: this.selectedCategoryName[0]
+      })
+
+      this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        this.subcategory3Array = response;
+
+      })
+    }
+
   }
 
 

@@ -71,7 +71,26 @@ export class ProfileComponent implements OnInit {
   public videoConfiguration: DropzoneConfigInterface;
   base64StringFile: any;
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  minDate: Date;
+  maxDate: Date;
+  getCurrentDay: any = '';
+  getCurrentDate: any = '';
+  getSelectedDate: any = '';
+
+  slots: any = [];
+  selectedAvailabilityArray: any = [];
+  selectedSlotsArray: any = [];
+  selectedSlot: boolean = false;
+
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.minDate.setDate(this.minDate.getDate());
+    this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
+    this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
+    this.getSelectedDate = this.getCurrentDate;
+    //this.hourlyRateForm.controls.availability.get('date').patchValue(this.getCurrentDate);
+  }
 
   ngOnInit(): void {
 
@@ -83,13 +102,14 @@ export class ProfileComponent implements OnInit {
     this.initalizeAddSocialLinksForm();
     this.videoIntroductionDropzoneInit();
     this.profileImageDropzoneInit();
+    this.initalizeTimeSlots();
     this.checkQueryParam();
   }
 
   private checkQueryParam() {
     this.id = localStorage.getItem('x-user-ID');
 
-    
+
 
     this.getMentorProfileDetailsByToken(this.id);
 
@@ -233,6 +253,13 @@ export class ProfileComponent implements OnInit {
         }
 
 
+        /* if ('availability' in this.mentorProfileDetails && this.mentorProfileDetails.availability.length > 0) {
+          this.addAvailability();
+        } else {
+          this.addAvailability();
+        } */
+
+
         if (this.mentorProfileDetails.achievements.length > 0) {
           //console.log('aysddello')
           this.mentorProfileDetails.achievements.forEach((element, index, achievementsArray) => {
@@ -333,6 +360,7 @@ export class ProfileComponent implements OnInit {
     this.hourlyRateForm = this.formBuilder.group({
       userID: [''],
       hourly_rate: [''],
+      availability: this.formBuilder.array([])
     });
   }
 
@@ -611,11 +639,10 @@ export class ProfileComponent implements OnInit {
     }
 
 
-    //console.log(this.academics().length);
+    //console.log(this.checkProperties(this.academics()));
     //console.log(this.academics());
-
+    //return;
     if (this.academics().length > 0) {
-
       this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
     }
 
@@ -685,7 +712,7 @@ export class ProfileComponent implements OnInit {
       this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
     }
 
-    //console.log(this.achievementsForm.value); return;
+    //console.log(this.hourlyRateForm.value); return;
 
     this.utilsService.processPostRequest('updateProfileHourlyRateDetails', this.hourlyRateForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
@@ -711,7 +738,7 @@ export class ProfileComponent implements OnInit {
     //console.log(this.achievementsForm.value); return;
 
     this.utilsService.processPostRequest('updateProfileSocialLinksDetails', this.addSocialLinksForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      
+
       this.router.navigate(['/mentor/purchase-membership']);
     })
   }
@@ -907,6 +934,128 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  availability(): FormArray {
+    return this.hourlyRateForm.get("availability") as FormArray
+  }
+
+  newAvailability(): FormGroup {
+    return this.formBuilder.group({
+      date: [''],
+      slots: this.formBuilder.array([])
+    })
+  }
+
+  addAvailability() {
+    this.availability().push(this.newAvailability());
+  }
+
+  initalizeTimeSlots() {
+    for (var i = 0; i < 12; i++) {
+      var amTimeFormat = 'AM';
+      var pmTimeFormat = 'PM';
+      i = (i < 9) ? parseInt(`0${i}`) : i;
+
+
+      if (i < 9) {
+        var j = (i == 0) ? '12' : `0${i}`
+        this.slots.push({ slot: `${j}:00 ${amTimeFormat} - 0${i + 1}:00 ${amTimeFormat}`, isChecked: false })
+      } else if (i == 9) {
+        this.slots.push({ slot: `0${i}:00 ${amTimeFormat} - ${i + 1}:00 ${amTimeFormat}`, isChecked: false })
+      } else {
+        if (i >= 11) {
+          this.slots.push({ slot: `${i}:00 ${amTimeFormat} - ${i + 1}:00 ${pmTimeFormat}`, isChecked: false })
+        } else {
+          this.slots.push({ slot: `${i}:00 ${amTimeFormat} - ${i + 1}:00 ${amTimeFormat}`, isChecked: false })
+        }
+
+      }
+
+    }
+
+    for (var i = 0; i < 12; i++) {
+      var amTimeFormat = 'AM';
+      var pmTimeFormat = 'PM';
+      i = (i < 9) ? parseInt(`0${i}`) : i;
+
+
+      if (i < 9) {
+        var j = (i == 0) ? '12' : `0${i}`
+        this.slots.push({ slot: `${j}:00 ${pmTimeFormat} - 0${i + 1}:00 ${pmTimeFormat}`, isChecked: false })
+      } else if (i == 9) {
+        this.slots.push({ slot: `0${i}:00 ${pmTimeFormat} - ${i + 1}:00 ${pmTimeFormat}`, isChecked: false })
+      } else {
+        if (i >= 11) {
+          this.slots.push({ slot: `${i}:00 ${pmTimeFormat} - ${i + 1}:00 ${amTimeFormat}`, isChecked: false })
+        } else {
+          this.slots.push({ slot: `${i}:00 ${pmTimeFormat} - ${i + 1}:00 ${pmTimeFormat}`, isChecked: false })
+        }
+
+      }
+
+    }
+
+    console.log(this.slots);
+
+  }
+
+  onCheckboxChange(e) {
+    //const slots: FormArray = this.availability().get('slots') as FormArray;
+    if (e.target.checked) {
+      //slots.push(new FormControl({ value: e.target.value, isChecked: true }));
+      this.selectedSlotsArray.push({ value: e.target.value, isChecked: true });
+    } else {
+      /* let i: number = 0;
+      slots.controls.forEach((item: FormControl) => {
+        //console.log(item);
+        if (item.value.value == e.target.value) {
+          slots.removeAt(i);
+          return;
+        }
+        i++;
+      }); */
+
+      this.selectedSlotsArray = this.selectedSlotsArray.filter(function (item) {
+        return item.value !== e.target.value;
+      });
+    }
+
+    //console.log(slots);
+  }
+
+  onDateChange(value: Date): void {
+    let selectedDate = new Date(value);
+    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+    this.getSelectedDate = formatDate;
+    //this.hourlyRateForm.controls.availability.get('date').patchValue(formatDate);
+  }
+
+  onSubmitSaveAndAddMore(): void {
+    if (this.selectedSlotsArray.length > 0) {
+      let found = this.selectedAvailabilityArray.some(el => el.date === this.getSelectedDate);
+      if (!found) {
+        this.availability().push(new FormControl({
+          date: this.getSelectedDate,
+          slots: this.selectedSlotsArray
+        }))
+
+        this.selectedAvailabilityArray.push({
+          date: this.getSelectedDate,
+          slots: this.selectedSlotsArray
+        })
+
+        this.slots.forEach(child => {
+          child.isChecked = false
+        })
+
+      }
+
+
+    }
+    //console.log(this.availability().value);
+    //console.log(this.selectedAvailabilityArray);
+  }
+
+
   /**
 * set check object array length.
 * @param object
@@ -915,6 +1064,15 @@ export class ProfileComponent implements OnInit {
   public checkObjectLength(object): number {
     return Object.keys(object).length;
   }
+
+  public checkProperties(obj) {
+    for (var key in obj) {
+      if (obj[key] !== null && obj[key] != "")
+        return false;
+    }
+    return true;
+  }
+
 
   //destroy all subscription
   public ngOnDestroy(): void {

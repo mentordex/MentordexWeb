@@ -252,7 +252,7 @@
                                     <div>
                                         <div class="form-check check-opacity mb-3">
                                             <label class="form-check-label text-muted">
-                                            <input type="checkbox" class="form-check-input" name="remember">Yes! Send me genuinely useful emails every now and then to help me get the most out of MentorDex.<i class="input-helper"></i></label>
+                                            <input type="checkbox" formControlName="newsletter" class="form-check-input" name="remember">Yes! Send me genuinely useful emails every now and then to help me get the most out of MentorDex.<i class="input-helper"></i></label>
                                         </div>
                                         <div class="form-check check-opacity mb-0">
                                             <label class="form-check-label text-muted">
@@ -380,7 +380,7 @@
                                             <div class="single-form-row mb-4">
                                                 <select formControlName="state_id" #state2 (change)="getCityListing(state2.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">State</option>
-                                                    <option [selected]="state._id == parentDetails.state_id" *ngFor="let state of states2;" value="{{state._id}}">{{state.title}}</option> 
+                                                    <option [attr.data-stateName]="state.title" [selected]="state._id == parentDetails.state_id" *ngFor="let state of states2;" value="{{state._id}}">{{state.title}}</option> 
                                                 </select>
 
                                                 <!--select2 [data]="states" [displaySearchStatus]="'always'" class="custom-dropdown" [value]="stateValue" (update)="onUpdateState($event)" [placeholder]="'State'" formControlName="state_id"></select2-->
@@ -390,7 +390,7 @@
                                             <div class="single-form-row mb-4">
                                                 <select formControlName="city_id" #city2 (change)="getZipcodeListing(city2.value)" class="custom-select special--select special--inputs w-100">
                                                     <option selected value="">City</option>
-                                                    <option [selected]="city._id == parentDetails.city_id" *ngFor="let city of cities2;" value="{{city._id}}">{{city.title}}</option>
+                                                    <option [attr.data-stateName]="city.title" [selected]="city._id == parentDetails.city_id" *ngFor="let city of cities2;" value="{{city._id}}">{{city.title}}</option>
                                                 </select>
 
                                                 <!--select2 [data]="cities" [displaySearchStatus]="'always'" class="custom-dropdown" [value]="cityValue" (update)="onUpdateCity($event)" [placeholder]="'City'" formControlName="city_id"></select2-->
