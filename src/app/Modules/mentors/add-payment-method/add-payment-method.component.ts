@@ -29,7 +29,8 @@ export class AddPaymentMethodComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
   @Input() isOpen: any;
-  @Input() membershipDetails: any;
+  @Input() membershipPriceId: any;
+  @Input() membershipId: any;
   @ViewChild('exampleModal') exampleModal: ElementRef;
 
   @Output() onClose: EventEmitter<any> = new EventEmitter<any>();
@@ -79,6 +80,7 @@ export class AddPaymentMethodComponent implements OnInit {
     this.addPaymentWizard = this.formBuilder.group({
       userID: [''],
       priceId: [''],
+      membershipId: [''],
       payment_details: this.formBuilder.group({
         credit_card_first_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern('^[a-zA-Z ]*$')])],
         credit_card_last_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern('^[a-zA-Z ]*$')])],
@@ -167,9 +169,11 @@ export class AddPaymentMethodComponent implements OnInit {
     if (this.isOpen) {
       
       $(this.exampleModal.nativeElement).modal({ backdrop: 'static', keyboard: false, show: true });
-      //console.log(this.membershipDetails);
+      //console.log(this.membershipPriceId);
+      //console.log(this.membershipId);
       this.addPaymentWizard.patchValue({
-        priceId: this.membershipDetails
+        priceId: this.membershipPriceId,
+        membershipId: this.membershipId
       });
     }
   }

@@ -1,0 +1,1082 @@
+<section class="pt-125 py-65 bg-md-f8f8f8 min-h-100vh">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-steps-leftsidebar">
+                    <ul>
+                        <li [class.current-active]="getWizardStep === 1">
+                            <a href="javascript:void(0)">
+                                <span class="pills-icon">
+                                        <svg width="21" height="18" viewBox="0 0 21 18" fill="none">
+                                            <path d="M9.45801 5.87532C9.45801 7.60449 8.06218 9.00032 6.33301 9.00032C4.60384 9.00032 3.20801 7.60449 3.20801 5.87532C3.20801 4.14616 4.60384 2.75033 6.33301 2.75033C8.06218 2.75033 9.45801 4.14616 9.45801 5.87532ZM12.583 17.3337H0.0830078V15.2503C0.0830078 12.9482 2.88509 11.0837 6.33301 11.0837C9.78092 11.0837 12.583 12.9482 12.583 15.2503V17.3337ZM20.9163 9.00032V11.0837H11.5413V9.00032H20.9163ZM20.9163 4.83366V6.91699H11.5413V4.83366H20.9163ZM20.9163 0.666992V2.75033H11.5413V0.666992H20.9163Z" fill="#384047"/>
+                                        </svg>
+                                    </span>
+                                <span class="pills-text">Basic Details</span>
+                                <span class="pills-activeIcon">
+                                        <svg width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 8C0.5 3.58172 4.08172 0 8.5 0C12.9183 0 16.5 3.58172 16.5 8C16.5 12.4183 12.9183 16 8.5 16C4.08172 16 0.5 12.4183 0.5 8ZM8.04325 11.4247L12.6498 5.66647L11.8169 5.00013L7.89013 9.90859L5.10812 7.59025L4.42526 8.40969L8.04325 11.4247Z" fill="#C4C4C4"/>
+                                        </svg>                                            
+                                    </span>
+                            </a>
+                        </li>
+                        <li [class.current-active]="getWizardStep === 2">
+                            <a href="#">
+                                <span class="pills-icon l-5">
+                                        <svg width="25" height="21" viewBox="0 0 25 21" fill="none">
+                                            <path d="M22.7539 14.8948H15.4297C14.2329 14.8948 13.1685 15.4719 12.5 16.3625C11.8315 15.4719 10.7671 14.8948 9.57031 14.8948H2.24609C1.8418 14.8948 1.51367 15.2229 1.51367 15.6272V16.3596H7.65576C9.36924 16.3596 11.0739 16.699 12.5 17.6497C13.9257 16.6993 15.6301 16.3596 17.3442 16.3596H23.4863V15.6272C23.4863 15.2229 23.1582 14.8948 22.7539 14.8948Z" fill="#384047"/>
+                                            <path d="M11.1253 20.2711C10.3136 19.6196 9.14619 19.2893 7.65552 19.2893H0.732422C0.32793 19.2893 0 18.9614 0 18.5569C0 18.1524 0.32793 17.8245 0.732422 17.8245H7.65552C9.48799 17.8245 10.9639 18.2633 12.0422 19.1287C12.3095 19.3432 12.6904 19.3433 12.9578 19.1287C14.0361 18.2633 15.512 17.8245 17.3445 17.8245H24.2676C24.6721 17.8245 25 18.1524 25 18.5569C25 18.9614 24.6721 19.2893 24.2676 19.2893H17.3445C15.8538 19.2893 14.6864 19.6196 13.8746 20.2711C13.077 20.9113 11.9316 20.9182 11.1253 20.2711Z" fill="#384047"/>
+                                            <path d="M17.627 7.65845V9.76782C17.627 10.0452 17.4702 10.2991 17.2222 10.4231L13.9829 12.0422C13.624 12.2219 13.2954 12.4534 13.0063 12.7297C12.7231 13.0002 12.2769 13.0002 11.9937 12.7297C11.7046 12.4534 11.376 12.2219 11.0171 12.0422L7.77783 10.4231C7.52978 10.2991 7.37305 10.0452 7.37305 9.76782V7.65845L11.8965 8.95092C12.2832 9.06152 12.7028 9.06557 13.1035 8.95092L17.627 7.65845Z" fill="#384047"/>
+                                            <path d="M20.5566 6.82166V11.2328C20.5566 11.6371 20.2285 11.9652 19.8242 11.9652C19.4199 11.9652 19.0918 11.6371 19.0918 11.2328V7.24011L20.5566 6.82166Z" fill="#384047"/>
+                                            <path d="M12.299 7.54241L2.04511 4.61272C1.33974 4.41121 1.33852 3.40613 2.04511 3.20422L12.299 0.274536C12.4305 0.236938 12.5699 0.236938 12.7014 0.274536L22.9553 3.20422C23.6607 3.40574 23.6619 4.41081 22.9553 4.61272L12.7014 7.54241C12.5705 7.57981 12.431 7.5801 12.299 7.54241Z" fill="#384047"/>
+                                            </svg>
+                                               
+                                    </span>
+                                <span class="pills-text">Academic History</span>
+                                <span class="pills-activeIcon">
+                                        <svg width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 8C0.5 3.58172 4.08172 0 8.5 0C12.9183 0 16.5 3.58172 16.5 8C16.5 12.4183 12.9183 16 8.5 16C4.08172 16 0.5 12.4183 0.5 8ZM8.04325 11.4247L12.6498 5.66647L11.8169 5.00013L7.89013 9.90859L5.10812 7.59025L4.42526 8.40969L8.04325 11.4247Z" fill="#C4C4C4"/>
+                                        </svg>                                            
+                                    </span>
+                            </a>
+                        </li>
+                        <li [class.current-active]="getWizardStep === 3">
+                            <a href="#">
+                                <span class="pills-icon">
+                                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                            <g clip-path="url(#clip0)">
+                                            <path d="M15.6247 6.77075C15.0497 6.77075 14.583 6.30409 14.583 5.72909V4.16659H10.4163V5.72909C10.4163 6.30409 9.94967 6.77075 9.37467 6.77075C8.79967 6.77075 8.33301 6.30409 8.33301 5.72909V4.16659C8.33301 3.01763 9.26738 2.08325 10.4163 2.08325H14.583C15.732 2.08325 16.6663 3.01763 16.6663 4.16659V5.72909C16.6663 6.30409 16.1997 6.77075 15.6247 6.77075Z" fill="#384047"/>
+                                            <path d="M13.2396 16.0208C13.0521 16.0937 12.7812 16.1458 12.5 16.1458C12.2187 16.1458 11.9479 16.0937 11.6979 16L0 12.1041V20.052C0 21.6354 1.28125 22.9166 2.86458 22.9166H22.1354C23.7188 22.9166 25 21.6354 25 20.052V12.1041L13.2396 16.0208Z" fill="#384047"/>
+                                            <path d="M25 8.07284V10.4583L12.75 14.5416C12.6667 14.5728 12.5833 14.5833 12.5 14.5833C12.4167 14.5833 12.3333 14.5728 12.25 14.5416L0 10.4583V8.07284C0 6.4895 1.28125 5.20825 2.86458 5.20825H22.1354C23.7188 5.20825 25 6.4895 25 8.07284Z" fill="#384047"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0">
+                                            <rect width="25" height="25" fill="white"/>
+                                            </clipPath>
+                                            </defs>
+                                        </svg>                                               
+                                    </span>
+                                <span class="pills-text">Employment History</span>
+                                <span class="pills-activeIcon">
+                                        <svg width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 8C0.5 3.58172 4.08172 0 8.5 0C12.9183 0 16.5 3.58172 16.5 8C16.5 12.4183 12.9183 16 8.5 16C4.08172 16 0.5 12.4183 0.5 8ZM8.04325 11.4247L12.6498 5.66647L11.8169 5.00013L7.89013 9.90859L5.10812 7.59025L4.42526 8.40969L8.04325 11.4247Z" fill="#C4C4C4"/>
+                                        </svg>                                            
+                                    </span>
+                            </a>
+                        </li>
+                        <li [class.current-active]="getWizardStep === 4">
+                            <a href="#">
+                                <span class="pills-icon">
+                                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                            <g clip-path="url(#clip0)">
+                                            <path d="M17.6653 7.27515C18.9842 4.30387 19.3822 3.4476 20.8923 0H18.7784L15.9062 6.46221C16.5212 6.67853 17.1098 6.95147 17.6653 7.27515Z" fill="#384047"/>
+                                            <path d="M12.5003 5.88235C13.1741 5.88235 13.8328 5.94779 14.4708 6.07206L17.1695 0H15.0104C14.2551 1.7102 13.2741 3.93113 12.4969 5.69083L9.97772 0H7.83105L10.5297 6.07206C11.1677 5.94779 11.8264 5.88235 12.5003 5.88235Z" fill="#384047"/>
+                                            <path d="M9.09367 6.46221L6.22156 0H4.08984L7.33117 7.27721C7.88774 6.95265 8.47744 6.67902 9.09367 6.46221Z" fill="#384047"/>
+                                            <path d="M12.5003 7.35303C7.63499 7.35303 3.67676 11.3113 3.67676 16.1766C3.67676 21.0419 7.63499 25.0001 12.5003 25.0001C17.3656 25.0001 21.3238 21.0419 21.3238 16.1766C21.3238 11.3113 17.3656 7.35303 12.5003 7.35303ZM9.67181 20.2135L10.212 17.064L7.92372 14.8334L11.0861 14.3739L12.5003 11.5084L13.9146 14.3739L17.0769 14.8334L14.7886 17.064L15.3288 20.2135L12.5003 18.7265L9.67181 20.2135ZM12.5003 17.065L13.3756 17.5252L13.2085 16.5505L13.9166 15.8602L12.938 15.718L12.5003 14.8312L12.0626 15.718L11.084 15.8602L11.7922 16.5505L11.6249 17.5252L12.5003 17.065Z" fill="#384047"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0">
+                                            <rect width="25" height="25" fill="white"/>
+                                            </clipPath>
+                                            </defs>
+                                            </svg>
+                                                                                           
+                                    </span>
+                                <span class="pills-text">Achievements</span>
+                                <span class="pills-activeIcon">
+                                        <svg width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 8C0.5 3.58172 4.08172 0 8.5 0C12.9183 0 16.5 3.58172 16.5 8C16.5 12.4183 12.9183 16 8.5 16C4.08172 16 0.5 12.4183 0.5 8ZM8.04325 11.4247L12.6498 5.66647L11.8169 5.00013L7.89013 9.90859L5.10812 7.59025L4.42526 8.40969L8.04325 11.4247Z" fill="#C4C4C4"/>
+                                        </svg>                                            
+                                    </span>
+                            </a>
+                        </li>
+                        <li [class.current-active]="getWizardStep === 5">
+                            <a href="#">
+                                <span class="pills-icon">
+                                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                            <path d="M21.3389 3.66113C18.9779 1.3002 15.8389 0 12.5 0C9.16113 0 6.02207 1.3002 3.66113 3.66113C1.3002 6.02207 0 9.16113 0 12.5C0 15.8389 1.30024 18.9779 3.66113 21.3389C6.02202 23.6999 9.16113 25 12.5 25C15.8389 25 18.9779 23.6998 21.3389 21.3389C23.6998 18.9779 25 15.8389 25 12.5C25 9.16113 23.6998 6.02212 21.3389 3.66113ZM12.5 11.7188C14.4385 11.7188 16.0156 13.2958 16.0156 15.2344C16.0156 16.8397 14.9337 18.1962 13.461 18.6154C13.3552 18.6455 13.2812 18.7407 13.2812 18.8507V19.5092C13.2812 19.9299 12.958 20.2918 12.5377 20.3116C12.0891 20.3327 11.7188 19.9752 11.7188 19.5312V18.8505C11.7188 18.7408 11.6452 18.6456 11.5397 18.6156C10.0733 18.1986 8.99419 16.8522 8.98442 15.2562C8.98184 14.8302 9.3168 14.4657 9.74268 14.4535C10.1846 14.4408 10.5469 14.7953 10.5469 15.2344C10.5469 16.3575 11.4999 17.2623 12.6396 17.1826C13.6017 17.1154 14.3811 16.336 14.4482 15.3739C14.5278 14.2341 13.6231 13.2812 12.5 13.2812C10.5615 13.2812 8.98438 11.7042 8.98438 9.76562C8.98438 8.1603 10.0663 6.80376 11.539 6.38462C11.6448 6.35449 11.7188 6.25933 11.7188 6.14932V5.49082C11.7188 5.07012 12.042 4.70815 12.4623 4.68838C12.9109 4.66728 13.2812 5.02476 13.2812 5.46875V6.14946C13.2812 6.25918 13.3548 6.35439 13.4603 6.38442C14.9267 6.80142 16.0058 8.14775 16.0156 9.7438C16.0182 10.1698 15.6832 10.5343 15.2573 10.5465C14.8154 10.5592 14.4531 10.2047 14.4531 9.76562C14.4531 8.64248 13.5001 7.7377 12.3604 7.81738C11.3983 7.88462 10.6189 8.66401 10.5518 9.62612C10.4722 10.7659 11.3769 11.7188 12.5 11.7188Z" fill="#384047" fill-opacity="0.7"/>
+                                            </svg>                                                                                          
+                                    </span>
+                                <span class="pills-text">Hourly Rate</span>
+                                <span class="pills-activeIcon">
+                                        <svg width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 8C0.5 3.58172 4.08172 0 8.5 0C12.9183 0 16.5 3.58172 16.5 8C16.5 12.4183 12.9183 16 8.5 16C4.08172 16 0.5 12.4183 0.5 8ZM8.04325 11.4247L12.6498 5.66647L11.8169 5.00013L7.89013 9.90859L5.10812 7.59025L4.42526 8.40969L8.04325 11.4247Z" fill="#C4C4C4"/>
+                                        </svg>                                            
+                                    </span>
+                            </a>
+                        </li>
+                        <li [class.current-active]="getWizardStep === 6">
+                            <a href="#">
+                                <span class="pills-icon">
+                                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip0)">
+                                            <path d="M23.1604 4.1666C23.1604 6.03638 21.6448 7.55215 19.775 7.55215C17.9052 7.55215 16.3896 6.03638 16.3896 4.1666C16.3896 2.29702 17.9052 0.78125 19.775 0.78125C21.6448 0.78125 23.1604 2.29702 23.1604 4.1666Z" fill="#384047" fill-opacity="0.7"/>
+                                            <path d="M19.775 8.3334C17.477 8.3334 15.6084 6.46458 15.6084 4.1666C15.6084 1.86882 17.477 0 19.775 0C22.073 0 23.9416 1.86882 23.9416 4.1666C23.9416 6.46458 22.073 8.3334 19.775 8.3334ZM19.775 1.5625C18.3386 1.5625 17.1709 2.73132 17.1709 4.1666C17.1709 5.60207 18.3386 6.7709 19.775 6.7709C21.2114 6.7709 22.3791 5.60207 22.3791 4.1666C22.3791 2.73132 21.2114 1.5625 19.775 1.5625Z" fill="#384047" fill-opacity="0.7"/>
+                                            <path d="M23.1604 20.8333C23.1604 22.7029 21.6448 24.2187 19.775 24.2187C17.9052 24.2187 16.3896 22.7029 16.3896 20.8333C16.3896 18.9635 17.9052 17.4478 19.775 17.4478C21.6448 17.4478 23.1604 18.9635 23.1604 20.8333Z" fill="#384047" fill-opacity="0.7"/>
+                                            <path d="M19.775 24.9999C17.477 24.9999 15.6084 23.1311 15.6084 20.8333C15.6084 18.5353 17.477 16.6665 19.775 16.6665C22.073 16.6665 23.9416 18.5353 23.9416 20.8333C23.9416 23.1311 22.073 24.9999 19.775 24.9999ZM19.775 18.229C18.3386 18.229 17.1709 19.3978 17.1709 20.8333C17.1709 22.2686 18.3386 23.4374 19.775 23.4374C21.2114 23.4374 22.3791 22.2686 22.3791 20.8333C22.3791 19.3978 21.2114 18.229 19.775 18.229Z" fill="#384047" fill-opacity="0.7"/>
+                                            <path d="M8.57754 12.5001C8.57754 14.3699 7.06177 15.8855 5.19199 15.8855C3.32241 15.8855 1.80664 14.3699 1.80664 12.5001C1.80664 10.6303 3.32241 9.11475 5.19199 9.11475C7.06177 9.11475 8.57754 10.6303 8.57754 12.5001Z" fill="#384047" fill-opacity="0.7"/>
+                                            <path d="M5.19199 16.6667C2.89421 16.6667 1.02539 14.7981 1.02539 12.5001C1.02539 10.2021 2.89421 8.3335 5.19199 8.3335C7.48997 8.3335 9.35879 10.2021 9.35879 12.5001C9.35879 14.7981 7.48997 16.6667 5.19199 16.6667ZM5.19199 9.896C3.75557 9.896 2.58789 11.0646 2.58789 12.5001C2.58789 13.9356 3.75557 15.1042 5.19199 15.1042C6.62861 15.1042 7.79629 13.9356 7.79629 12.5001C7.79629 11.0646 6.62861 9.896 5.19199 9.896Z" fill="#384047" fill-opacity="0.7"/>
+                                            <path d="M7.6511 12.0001C7.28852 12.0001 6.93642 11.8115 6.74473 11.4741C6.46035 10.9751 6.63544 10.3386 7.1344 10.0531L16.7999 4.54275C17.2989 4.25627 17.9353 4.43136 18.2209 4.93223C18.5053 5.43119 18.3302 6.06768 17.8312 6.35321L8.16552 11.8635C8.00301 11.9562 7.82601 12.0001 7.6511 12.0001Z" fill="#384047" fill-opacity="0.7"/>
+                                            <path d="M17.3155 20.5939C17.1404 20.5939 16.9634 20.55 16.8009 20.4573L7.13524 14.947C6.63627 14.6626 6.46137 14.0261 6.74576 13.526C7.029 13.0261 7.66643 12.8501 8.16654 13.1365L17.8322 18.6469C18.3312 18.9313 18.5061 19.5677 18.2217 20.0679C18.029 20.4053 17.677 20.5939 17.3155 20.5939Z" fill="#384047" fill-opacity="0.7"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0">
+                                            <rect width="25" height="25" fill="white"/>
+                                            </clipPath>
+                                            </defs>
+                                            </svg>                                                                                          
+                                    </span>
+                                <span class="pills-text">Add Social Links</span>
+                                <span class="pills-activeIcon">
+                                        <svg width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 8C0.5 3.58172 4.08172 0 8.5 0C12.9183 0 16.5 3.58172 16.5 8C16.5 12.4183 12.9183 16 8.5 16C4.08172 16 0.5 12.4183 0.5 8ZM8.04325 11.4247L12.6498 5.66647L11.8169 5.00013L7.89013 9.90859L5.10812 7.59025L4.42526 8.40969L8.04325 11.4247Z" fill="#C4C4C4"/>
+                                        </svg>                                            
+                                    </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <aw-wizard #wizard [defaultStepIndex]="wizardStep">
+                    <aw-wizard-step stepTitle="BasicDetails">
+                        <form [formGroup]="basicDetailsForm">
+                            <div class="profile-steps-rightsidebar">
+                                <div class="profile-steps-rightsidebar-column">
+                                    <div class="profile-steps-rightsidebar-column-header">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                                <div class="col-md-12 px-0">
+                                                    <p class="basic-title">Basic Details</p>
+                                                </div>
+                                                <div class="col-md-12 px-0 text-md-left">
+                                                    <p class="basic-title mb-0 font-18">1 of 6</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                                <div class="pgbarouter">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="text-center mt-1">
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-body pb-0">
+                                        <div class="row">
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="profile-label-text mb-2">Select available Date and Time in the Calendar</div>
+                                                        <div class="text-top-detail mb-1">
+                                                            Please upload a high-resolution photo clearly showing your face.
+                                                        </div>
+                                                        <div class="text-top-detail font-14">
+                                                            Pro tip: make sure your face takes up at least 60% of the frame.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-4">
+                                                <div class="row align-items-center flex-column flex-md-row">
+                                                    <div class="dynamic-img-upload ml-2 ml-lg-0 mb-4 mb-md-0 overflow-hidden overflow-hidden-img">
+                                                        <img [src]="profileImagePath" alt="default-img" />
+                                                    </div>
+                                                    <div class="csuploadfile upload-dropzone--btn flex-shrink-0 ml-3 ml-lg-4">
+                                                        <div class="dropzone dropzone-container" [dropzone]="profileImageConfiguration" [disabled]="disabled"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="profile-label-text mb-2">Video Introduction</div>
+                                                        <div class="text-top-detail">
+                                                            Record and upload a quick video introduction (30 seconds maximum).
+                                                            <br>Have fun and be yourself!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="mt-1 text-center text-md-left">
+                                                            <div class="csuploadfile upload-dropzone--btn">
+                                                                <div class="dropzone dropzone-container" [dropzone]="videoConfiguration" [disabled]="disabled"></div>
+                                                            </div>
+
+                                                            <div *ngIf="checkObjectLength(videoIntroudctionArray.value) > 0" class="inner_box">
+
+                                                                <div class="box_outer inline-pdf-section">
+                                                                    <span class="relative_images">
+                                                                            <span *ngFor="let videoIntroudction of videoIntroudctionArray.value | keyvalue; let videoIntroudctionIndex = index;" class="img_box">
+                                                                                
+        
+                                                                                <a data-toggle="tooltip" title="{{videoIntroudction.value.file_name}}" class="upload_pdf video--file--icon" href="{{videoIntroudction.value.file_path}}" target="_blank">
+                                                                                        <img src="assets/img/video-file.png" alt="" class="img-fluid">
+                                                                                </a>
+                                                                                <div class="pdf-delt-times">
+                                                                                    <i (click)="removeFile(videoIntroudction.key, 'introduction_video',videoIntroudction.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
+                                                                                </div>
+                                                                            </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-md-8 col-lg-7">
+                                                        <label for="" class="profile-label-text">Tagline <small class="font-italic">(optional)</small></label>
+                                                        <input type="text" formControlName="tagline" class="profile-steps-input w-100 bg-white">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-md-8 col-lg-7">
+                                                        <label for="" class="profile-label-text">Servicable Zipcodes</label>
+                                                        <tagify name="servicable_zipcodes" formControlName="servicable_zipcodes"></tagify>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-lg-9">
+                                                        <label for="" class="profile-label-text">Quick Bio</label>
+                                                        <div class="text-top-detail mb-2">
+                                                            <span class="d-block">Introduce and describe yourself to parents</span> <span class="font-italic">(your potential employers)</span> in a paragraph or so.
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-lg-7">
+                                                        <textarea formControlName="bio" rows="4" class="profile-steps-input w-100 bg-white resize-none" placeholder="Introduce & describe yourself to parents."></textarea>
+
+                                                        <p class="errorCls" *ngIf="basicDetailsForm.controls.bio.touched || isBasicDetailsFormSubmitted">
+                                                            <app-form-validation-errors minLength=30 maxLength=500 errorPrefix="Quick Bio " [errors]="basicDetailsForm.get('bio').errors"></app-form-validation-errors>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-footer">
+                                        <div class="row">
+                                            <div class="col-12 col-md-9 text-center text-md-left mb-3 mb-lg-0">
+                                                <input [disabled]="basicDetailsForm.invalid" (click)="onSubmitBasicDetailsForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
+                                            </div>
+                                            <!--div class="col-12 col-md-3 text-center text-md-right">
+                                                <a href="javascript:void(0)" awNextStep class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                            </div-->
+                                            <div class="col-12 mt-2">
+                                                <div class="text-center text-md-left text-top-detail">
+                                                    We recommend you set up your account at least 80%. Of course, 100% is best!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </aw-wizard-step>
+
+                    <aw-wizard-step stepTitle="Academic History">
+                        <form [formGroup]="academicHistoryForm">
+                            <div class="profile-steps-rightsidebar">
+                                <div class="profile-steps-rightsidebar-column">
+                                    <div class="profile-steps-rightsidebar-column-header">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                                <div class="col-md-12 px-0">
+                                                    <p class="basic-title">Academic History</p>
+                                                </div>
+                                                <div class="col-md-12 px-0 text-md-left">
+                                                    <p class="basic-title mb-0 font-18">2 of 6</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                                <div class="pgbarouter">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="text-center mt-1">
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-body position-relative">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="profile-label-text mb-2">Please select your degree or school level</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div formArrayName="academics" class="col-12 mb-0">
+                                                <div *ngFor="let academic of academics().controls; let i=index" [formGroupName]="i" class="after-border bottom-after">
+
+                                                    <ng-container *ngIf="academics().controls.length > 1 ">
+
+                                                        <div class="addrow text-right mb-3">
+                                                            <button (click)="removeAcademic(i)" class="font-18 line-h21">
+                                                            <span class="remove-item"><i class="fa fa-minus"></i></span>Remove
+                                                        </button>
+                                                        </div>
+
+                                                    </ng-container>
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="profile-label-text mb-2">High School/College/University Name</div>
+                                                            <div class="font-italic text-top-detail font-13 mb-1">
+                                                                Please list in order of the institution you currently attend or most recently attended first.
+                                                            </div>
+                                                            <div class="w-100 mb-4">
+                                                                <input type="text" formControlName="institution_name" class="profile-steps-input w-100 bg-white">
+
+                                                                <p class="errorCls" *ngIf="academic.get('institution_name').touched || isAcademicHistoryFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="High School/College/University Name " [errors]="academic.get('institution_name').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                            <div class="w-100 mb-4">
+                                                                <label class="profile-label-text mb-2">Area of study</label>
+                                                                <input type="text" formControlName="area_of_study" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                <p class="errorCls" *ngIf="academic.get('area_of_study').touched || isAcademicHistoryFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Area of study " [errors]="academic.get('area_of_study').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                            <div class="w-100 mb-4">
+                                                                <label class="profile-label-text mb-2">Period</label>
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <select #academic_start_year (change)="onSelectAcademicStartYear(academic_start_year.value, i)" formControlName="start_year" class="custom-select arrow-select">
+                                                                        <option selected value="">From</option>
+                                                                        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                                                                    </select>
+                                                                        <p class="errorCls" *ngIf="academic.get('start_year').touched || isAcademicHistoryFormSubmitted">
+                                                                            <app-form-validation-errors errorPrefix="Year " [errors]="academic.get('start_year').errors"></app-form-validation-errors>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="span-bar">
+                                                                        <span>-</span>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <select formControlName="end_year" class="custom-select arrow-select">
+                                                                        <option selected value="">To</option>
+                                                                        <option *ngFor="let year of endAcademicyears[i]" [value]="year">{{year}}</option>
+                                                                    </select>
+                                                                        <p class="errorCls" *ngIf="academic.get('end_year').touched || isAcademicHistoryFormSubmitted">
+                                                                            <app-form-validation-errors errorPrefix="Year " [errors]="academic.get('end_year').errors"></app-form-validation-errors>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label class="profile-label-text mb-2">Grade Level</label>
+                                                            <div class="w-100 mt-lg-115 mb-4">
+                                                                <input type="text" formControlName="grade" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                <p class="errorCls" *ngIf="academic.get('grade').touched || isAcademicHistoryFormSubmitted">
+                                                                    <app-form-validation-errors errorPrefix="Grade Level " [errors]="academic.get('grade').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                            <div class="w-100 mb-4">
+                                                                <label class="profile-label-text mb-2">Degree</label>
+                                                                <input type="text" formControlName="degree" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                <p class="errorCls" *ngIf="academic.get('degree').touched || isAcademicHistoryFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Degree " [errors]="academic.get('degree').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <ng-container *ngIf="academics().controls.length <= 2 ">
+                                                <div class="add-row-btn text-center text-lg-right px-3 mt-3 mt-lg-0">
+                                                    <div class="addrow">
+                                                        <button (click)="addAcademic()" class="font-18 line-h21">
+                                                    <span><svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5998 5.59999V0.799988H6.39981V5.59999H11.1998V6.39999H6.39981V11.2H5.5998V6.39999H0.799805V5.59999H5.5998Z" fill="#676767"></path>
+                                                    </svg>
+                                                    </span>Add More
+                                                </button>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-footer">
+                                        <div class="row">
+                                            <div class="col-12 col-md-9 text-center text-md-left  mb-3">
+                                                <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+
+                                                    <input type="submit" [disabled]="academicHistoryForm.invalid" (click)="onSubmitAcademicHistoryForm()" class="primary--button py-2 px-30" value="NEXT">
+                                                </div>
+                                            </div>
+                                            <!--div class="col-12 col-md-3 text-center text-md-right">
+                                                <a href="javascript:void(0)" awNextStep class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                            </div-->
+                                            <div class="col-12 mt-2">
+                                                <div class="text-center text-md-left text-top-detail">
+                                                    We recommend you set up your account at least 80%. Of course, 100% is best!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </aw-wizard-step>
+
+                    <aw-wizard-step stepTitle="Employment History">
+                        <form [formGroup]="employmentHistoryForm">
+                            <div class="profile-steps-rightsidebar">
+                                <div class="profile-steps-rightsidebar-column">
+                                    <div class="profile-steps-rightsidebar-column-header">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                                <div class="col-md-12 px-0">
+                                                    <p class="basic-title">Employment History</p>
+                                                </div>
+                                                <div class="col-md-12 px-0 text-md-left">
+                                                    <p class="basic-title mb-0 font-18">3 of 6</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                                <div class="pgbarouter">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="text-center mt-1">
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-body position-relative">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="profile-label-text mb-2">Add your past work experience</div>
+                                                        <div class="text-top-detail mb-1">
+                                                            Please list job where you currently work or most recently worked first.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div formArrayName="employments" class="col-12 mb-0">
+                                                <div *ngFor="let employment of employments().controls; let i=index" [formGroupName]="i" class="after-border bottom-after">
+
+
+                                                    <ng-container *ngIf="employments().controls.length > 1 ">
+
+                                                        <div class="addrow text-right mb-3">
+                                                            <button (click)="removeEmployment(i)" class="font-18 line-h21">
+                                                            <span class="remove-item"><i class="fa fa-minus"></i></span>Remove
+                                                        </button>
+                                                        </div>
+
+                                                    </ng-container>
+
+
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 mb-4">
+                                                                    <label class="profile-label-text mb-2">Company</label>
+                                                                    <input formControlName="company" type="text" class="profile-steps-input w-100 bg-white">
+
+
+                                                                    <p class="errorCls" *ngIf="employment.get('company').touched || isEmploymentHistoryFormSubmitted">
+                                                                        <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Company " [errors]="employment.get('company').errors"></app-form-validation-errors>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-4">
+                                                                <div class="col-lg-6 mb-4 mb-lg-0">
+                                                                    <div class="w-100 mb-4">
+                                                                        <label class="profile-label-text mb-2">Location/City</label>
+                                                                        <input formControlName="city" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                        <p class="errorCls" *ngIf="employment.get('city').touched || isEmploymentHistoryFormSubmitted">
+                                                                            <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Location/City " [errors]="employment.get('city').errors"></app-form-validation-errors>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6 mb-4 mb-lg-0">
+                                                                    <div class="w-100 mb-4">
+                                                                        <label class="profile-label-text mb-2">State</label>
+
+                                                                        <input formControlName="state" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                        <p class="errorCls" *ngIf="employment.get('state').touched || isEmploymentHistoryFormSubmitted">
+                                                                            <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="State " [errors]="employment.get('state').errors"></app-form-validation-errors>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-6 mb-4">
+                                                                    <label class="profile-label-text mb-2">Title</label>
+                                                                    <input formControlName="title" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                    <p class="errorCls" *ngIf="employment.get('title').touched || isEmploymentHistoryFormSubmitted">
+                                                                        <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Title " [errors]="employment.get('title').errors"></app-form-validation-errors>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-6">
+                                                                    <label class="profile-label-text mb-2">Period</label>
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <select #employment_start_year formControlName="start_year" (change)="onSelectEmploymentStartYear(employment_start_year.value, i)" class="custom-select profile-steps-input h-auto arrow-select py-13 ">
+                                                                                <option disabled selected value="">From</option>
+                                                                        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                                                                            </select>
+
+                                                                            <p class="errorCls" *ngIf="employment.get('start_year').touched || isEmploymentHistoryFormSubmitted">
+                                                                                <app-form-validation-errors errorPrefix="From Year " [errors]="employment.get('start_year').errors"></app-form-validation-errors>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="span-bar">
+                                                                            <span>-</span>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <select formControlName="end_year" class="custom-select profile-steps-input h-auto arrow-select py-13 ">
+                                                                                <option disabled selected value="">To</option>
+                                                                        <option *ngFor="let year of endEmploymentyears[i]" [value]="year">{{year}}</option>
+                                                                            </select>
+
+                                                                            <p class="errorCls" *ngIf="employment.get('end_year').touched || isEmploymentHistoryFormSubmitted">
+                                                                                <app-form-validation-errors errorPrefix="To Year " [errors]="employment.get('end_year').errors"></app-form-validation-errors>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-6">
+                                                                    <div class="small-checkboxes">
+                                                                        <div class="form-check check-opacity mb-3">
+                                                                            <label class="form-check-label text-muted">
+                                                                            <input (change)="onSelectCurrentlyWorkHere($event)"
+                                                                            [attr.data-formGroupIndex]="i"
+                                                                            [attr.data-startYear]="employmentStartYear" 
+                                                                            type="checkbox" 
+                                                                            [checked]="isCurrentlyWorkHereChecked[i] ? isCurrentlyWorkHereChecked[i] : false"
+                                                                            value="Present" class="form-check-input" formControlName="currently_work_here">I currently work here<i class="input-helper"></i></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-4">
+                                                                <div class="col-lg-6">
+                                                                    <label class="profile-label-text mb-2">Description</label>
+                                                                    <textarea formControlName="description" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
+
+                                                                    <p class="errorCls" *ngIf="employment.get('description').touched || isEmploymentHistoryFormSubmitted">
+                                                                        <app-form-validation-errors minLength=2 maxLength=200 errorPrefix="Description " [errors]="employment.get('description').errors"></app-form-validation-errors>
+                                                                    </p>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ng-container *ngIf="employments().controls.length <= 2 ">
+                                                <div class="add-row-btn text-center text-lg-right px-3 mt-3 mt-lg-0">
+                                                    <div class="addrow">
+                                                        <button (click)="addEmployment()" class="font-18 line-h21">
+                                                        <span><svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5998 5.59999V0.799988H6.39981V5.59999H11.1998V6.39999H6.39981V11.2H5.5998V6.39999H0.799805V5.59999H5.5998Z" fill="#676767"></path>
+                                                        </svg>
+                                                        </span>Add More
+                                                    </button>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-footer">
+                                        <div class="row">
+                                            <div class="col-12 col-md-9 text-center text-md-left  mb-3">
+                                                <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" awPreviousStep href="javascript:void(0)">BACK</a>
+                                                    <input [disabled]="employmentHistoryForm.invalid" (click)="onSubmitEmploymentHistoryForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
+                                                </div>
+                                            </div>
+                                            <!--div class="col-12 col-md-3 text-center text-md-right">
+                                                <a href="javascript:void(0)" awNextStep class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                            </div-->
+                                            <div class="col-12 mt-2">
+                                                <div class="text-center text-md-left text-top-detail">
+                                                    We recommend you set up your account at least 80%. Of course, 100% is best!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </aw-wizard-step>
+
+                    <aw-wizard-step stepTitle="Achievements">
+                        <form [formGroup]="achievementsForm">
+                            <div class="profile-steps-rightsidebar-column">
+                                <div class="profile-steps-rightsidebar-column-header">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                            <div class="col-md-12 px-0">
+                                                <p class="basic-title">Training / Achievements</p>
+                                            </div>
+                                            <div class="col-md-12 px-0 text-md-left">
+                                                <p class="basic-title mb-0 font-18">4 of 6</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                            <div class="pgbarouter">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div class="text-center mt-1">
+                                                    <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profile-steps-rightsidebar-column-body position-relative">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="profile-label-text mb-2 pr-lg-120">Add what you've achieved in your area(s) of expertise. </div>
+                                                    <div class="text-top-detail mb-1">
+                                                        If you have not received an award or recognition, that's ok! But please do share in the description box the amount of time you have put in and the level of expertise you have achieved, and why parents should hire you to teach their child(ren).
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div formArrayName="achievements" class="col-12 mb-0">
+                                            <div *ngFor="let achievement of achievements().controls; let i=index" [formGroupName]="i" class="after-border bottom-after">
+
+                                                <ng-container *ngIf="achievements().controls.length > 1 ">
+
+                                                    <div class="addrow text-right mb-3">
+                                                        <button (click)="removeAchievement(i)" class="font-18 line-h21">
+                                                        <span class="remove-item"><i class="fa fa-minus"></i></span>Remove
+                                                    </button>
+                                                    </div>
+
+                                                </ng-container>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 mb-4 mb-lg-0">
+                                                                <div class="w-100">
+                                                                    <label class="profile-label-text mb-2">Title</label>
+                                                                    <input formControlName="title" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                    <p class="errorCls" *ngIf="achievement.get('title').touched || isAchievementsFormSubmitted">
+                                                                        <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Title " [errors]="achievement.get('title').errors"></app-form-validation-errors>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 mb-4 mb-lg-0">
+                                                                <div class="w-100">
+                                                                    <label class="profile-label-text mb-2">Years of Learning Your Skill</label>
+                                                                    <input formControlName="years_of_learning" type="text" class="profile-steps-input w-100 bg-white">
+                                                                    <p class="errorCls" *ngIf="achievement.get('years_of_learning').touched || isAchievementsFormSubmitted">
+                                                                        <app-form-validation-errors minLength=1 maxLength=20 errorPrefix="Years of Learning Your Skill " [errors]="achievement.get('years_of_learning').errors"></app-form-validation-errors>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="w-100 position-relative">
+                                                                    <div class="profile-label-text font-14 mt-1 mb-0">Please briefly describe the amount of time you have put into learning the skill you wish to teach. </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-minus-40">
+                                                            <div class="col-lg-6 mb-4">
+                                                                <label class="profile-label-text mb-2">Associated with</label>
+                                                                <input formControlName="associated_with" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                <p class="errorCls" *ngIf="achievement.get('associated_with').touched || isAchievementsFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Associated with
+                                                                    " [errors]="achievement.get('associated_with').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 mb-4">
+                                                                <label class="profile-label-text mb-2">Issuer</label>
+                                                                <input formControlName="issuer" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+
+                                                                <p class="errorCls" *ngIf="achievement.get('issuer').touched || isAchievementsFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=100 errorPrefix="Issuer
+                                                                    " [errors]="achievement.get('issuer').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-lg-6">
+                                                                <label class="profile-label-text mb-2">Period</label>
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <select #achievement_start_year (change)="onSelectAchievementStartYear(achievement_start_year.value, i)" formControlName="start_year" class="custom-select arrow-select">
+                                                                            <option disabled selected value="">From</option>
+                                                                            <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                                                                        </select>
+                                                                        <p class="errorCls" *ngIf="achievement.get('start_year').touched || isAchievementsFormSubmitted">
+                                                                            <app-form-validation-errors errorPrefix="Year " [errors]="achievement.get('start_year').errors"></app-form-validation-errors>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="span-bar">
+                                                                        <span>-</span>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <select formControlName="end_year" class="custom-select arrow-select">
+                                                                            <option disabled selected value="">To</option>
+                                                                            <option *ngFor="let year of endAchievementyears[i]" [value]="year">{{year}}</option>
+                                                                        </select>
+                                                                        <p class="errorCls" *ngIf="achievement.get('end_year').touched || isAcademicHistoryFormSubmitted">
+                                                                            <app-form-validation-errors errorPrefix="Year " [errors]="achievement.get('end_year').errors"></app-form-validation-errors>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-4">
+                                                            <div class="col-lg-6">
+                                                                <label class="profile-label-text mb-2">Description</label>
+                                                                <textarea formControlName="description" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
+                                                                <p class="errorCls" *ngIf="achievement.get('description').touched || isAchievementsFormSubmitted">
+                                                                    <app-form-validation-errors minLength=2 maxLength=500 errorPrefix="Description
+                                                                    " [errors]="achievement.get('description').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ng-container *ngIf="achievements().controls.length <= 2 ">
+                                            <div class="add-row-btn text-center text-lg-right px-3 mt-3 mt-lg-0">
+                                                <div class="addrow">
+                                                    <button (click)="addAchievement()" class="font-18 line-h21">
+                                                <span><svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5998 5.59999V0.799988H6.39981V5.59999H11.1998V6.39999H6.39981V11.2H5.5998V6.39999H0.799805V5.59999H5.5998Z" fill="#676767"></path>
+                                                </svg>
+                                                </span>Add More
+                                            </button>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="profile-steps-rightsidebar-column-footer">
+                                    <div class="row">
+                                        <div class="col-12 col-md-9 text-center text-md-left  mb-3">
+                                            <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                                <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                <input [disabled]="achievementsForm.invalid" (click)="onSubmitAchievementsForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
+                                            </div>
+                                        </div>
+                                        <!--div class="col-12 col-md-3 text-center text-md-right">
+                                        <a href="#" class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                    </div-->
+                                        <div class="col-12 mt-2">
+                                            <div class="text-center text-md-left text-top-detail">
+                                                We recommend you set up your account at least 80%. Of course, 100% is best!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </aw-wizard-step>
+
+                    <aw-wizard-step stepTitle="Hourly Rate">
+                        <form [formGroup]="hourlyRateForm">
+                            <div class="profile-steps-rightsidebar">
+                                <div class="profile-steps-rightsidebar-column">
+                                    <div class="profile-steps-rightsidebar-column-header">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                                <div class="col-md-12 px-0">
+                                                    <p class="basic-title">Hourly Rate</p>
+                                                </div>
+                                                <div class="col-md-12 px-0 text-md-left">
+                                                    <p class="basic-title mb-0 font-18">5 of 6</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                                <div class="pgbarouter">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="text-center mt-1">
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-body position-relative">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-12 col-xl-9">
+                                                        <div class="text-top-detail mb-35">
+                                                            Parents will see this rate on your profile while searching for a mentor. You can edit your rates at any time.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-0">
+                                                <div class="w-100">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 mb-4">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="w-100">
+                                                                        <label class="profile-label-text mb-3">Hourly Rate</label>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="hourly-ratebox flex-shrink-0">
+                                                                                <select class="custom-select profile-steps-input h-auto arrow-select py-13 bg-f3-select rate-dropbox flex-shrink-0">
+                                                                                <option value="">$</option>
+                                                                            </select>
+                                                                                <input formControlName="hourly_rate" class="flex-shrink-0" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                                            </div>
+                                                                            <span class="color-text flex-shrink-0 ml-2 font-weight-lighter font-weight-lighter">/ Hour</span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-8">
+                                                            <label class="profile-label-text mb-3">Select Your Availability </label>
+                                                            <div class="text-top-detail font-14">
+                                                                Parents will see this availability on your profile while searching for a mentor. You can edit your availability at any time.
+                                                            </div>
+
+                                                            <div class="col-xl-6 bdr-date-right mb-4">
+                                                                <bs-datepicker-inline [minDate]="minDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="minDate"></bs-datepicker-inline>
+
+                                                            </div>
+
+                                                            <div class="col-xl-6 pl-lg-4 mb-4">
+                                                                <div class="availtime--box">
+                                                                    <div class="profile-label-text mb-3">Available Time</div>
+                                                                    <ng-container *ngIf="slots.length > 0; else noSlotsAvailable">
+                                                                        <div class="list-style-ul">
+                                                                            <ul>
+                                                                                <li *ngFor="let availableSlot of slots let i=index">
+                                                                                    <div class="choose-category-wrapper time-slots">
+                                                                                        <label>
+                                                                                        <input [checked]="availableSlot.isChecked" (change)="onCheckboxChange($event)" [value]="availableSlot.slot" type="checkbox" class="card-input-element">   
+                                                                                        <div class="category-innebox">
+                                                                                            <p class="category-heading-text">{{availableSlot.slot}}</p>
+                                                                                        </div>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </li>
+
+                                                                            </ul>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                    <ng-template #noSlotsAvailable>
+                                                                        <div class="no-slots-available">
+                                                                            <span>No Slots Available</span>
+                                                                        </div>
+                                                                    </ng-template>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-xl-6 pl-lg-4 mb-4">
+                                                                <input (click)="onSubmitSaveAndAddMore()" type="submit" class="primary--button py-2 px-30" value="Save and Add More">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-footer">
+                                        <div class="row">
+                                            <div class="col-12 col-md-9 text-center text-md-left  mb-3">
+                                                <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <input [disabled]="hourlyRateForm.invalid" (click)="onSubmitHourlyRateForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
+                                                </div>
+                                            </div>
+                                            <!--div class="col-12 col-md-3 text-center text-md-right">
+                                            <a href="#" class="color-070D1D text-uppercase font-16 d-inline-block">skip</a>
+                                        </div-->
+                                            <div class="col-12 mt-2">
+                                                <div class="text-center text-md-left text-top-detail">
+                                                    We recommend you set up your account at least 80%. Of course, 100% is best!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </aw-wizard-step>
+
+                    <aw-wizard-step stepTitle="Social Links">
+                        <form [formGroup]="addSocialLinksForm">
+                            <div class="profile-steps-rightsidebar">
+                                <div class="profile-steps-rightsidebar-column">
+                                    <div class="profile-steps-rightsidebar-column-header">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-9 mb-4 mb-lg-0">
+                                                <div class="col-md-12 px-0">
+                                                    <p class="basic-title">Add Social Links</p>
+                                                </div>
+                                                <div class="col-md-12 px-0 text-md-left">
+                                                    <p class="basic-title mb-0 font-18">6 of 6</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+                                                <div class="pgbarouter">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProfilePercentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="text-center mt-1">
+                                                        <p class="text-white mb-0">{{calculateProfilePercentage}}% Completed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-body position-relative">
+                                        <div class="row">
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-12 col-xl-9">
+                                                        <div class="text-top-detail mb-2">
+                                                            Add your social links
+                                                        </div>
+                                                        <div class="text-top-detail font-14 font-italic mb-1">
+                                                            (Optional, but it is recommended you share at least one.)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-0">
+                                                <div class="w-100">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-4">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label class="profile-label-text mb-2">Personal Website</label>
+                                                                    <input formControlName="website" type="text" class="profile-steps-input w-100 mt-md-60 bg-white">
+                                                                    <div class="text-top-detail font-14 font-italic mt-1">
+                                                                        Your Homepage, Blog, or Company site
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <label class="profile-label-text mb-2">Social Profiles</label>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <ul class="social-crearelinks">
+                                                                        <li>
+                                                                            <a href="#" class="twitter-bg connect-button">
+                                                                                <span class="ico-fa"><i class="fa fa-twitter"></i></span>
+                                                                                <span class="connect-text">Connect</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="linkedin-bg connect-button">
+                                                                                <span class="ico-fa"><i class="fa fa-linkedin"></i></span>
+                                                                                <span class="connect-text">Connect</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="facebook-bg connect-button">
+                                                                                <span class="ico-fa"><i class="fa fa-facebook"></i></span>
+                                                                                <span class="connect-text">Connect</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="instagram-bg connect-button">
+                                                                                <span class="ico-fa"><i class="fa fa-instagram"></i></span>
+                                                                                <span class="connect-text">Connect</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-steps-rightsidebar-column-footer">
+                                        <div class="row">
+                                            <div class="col-12 text-center text-md-left mb-3">
+                                                <div class="d-flex justify-content-between justify-content-md-start w-100">
+                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">Back to Profile</a>
+                                                    <input [disabled]="addSocialLinksForm.invalid" (click)="onSubmitAddSocialLinksForm()" type="submit" class="primary--button py-2 px-30" value="Save & Update">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-2">
+                                                <div class="text-center text-md-left text-top-detail">
+                                                    We recommend you set up your account at least 80%. Of course, 100% is best!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </aw-wizard-step>
+                </aw-wizard>
+                <div class="d-md-none mt-5">
+                    <div class="text-center">
+                        <a href="#" class="alt--button font-w-500 py-2">LOG OUT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>

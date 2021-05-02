@@ -219,6 +219,30 @@ export class SignupComponent implements OnInit {
       state_id: [{ value: '' }],
       city_id: [{ value: '' }],
       zipcode: [{ value: '' }],
+      category1: this.formBuilder.group({
+        category_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      category2: this.formBuilder.group({
+        category_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      category3: this.formBuilder.group({
+        category_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      subcategory1: this.formBuilder.group({
+        subcategory_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      subcategory2: this.formBuilder.group({
+        subcategory_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
+      subcategory3: this.formBuilder.group({
+        subcategory_id: ['', [Validators.required]],
+        value: ['', [Validators.required]],
+      }),
       category_id1: [''],
       subcategory_id1: [''],
       category_id2: [''],
@@ -234,18 +258,25 @@ export class SignupComponent implements OnInit {
     });
 
     this.selectedSubCategory1Value = event.target.value;
+
+    this.signupStep3Form.controls.subcategory1.patchValue({ subcategory_id: event.target.value, value: event.target.getAttribute('data-subCategoryName') });
   }
 
   selectSubcategory2(event) {
     this.signupStep3Form.patchValue({
       subcategory_id2: event.target.value
     });
+
+    this.signupStep3Form.controls.subcategory2.patchValue({ subcategory_id: event.target.value, value: event.target.getAttribute('data-subCategoryName') });
   }
 
   selectSubcategory3(event) {
     this.signupStep3Form.patchValue({
       subcategory_id3: event.target.value
     });
+
+    this.signupStep3Form.controls.subcategory3.patchValue({ subcategory_id: event.target.value, value: event.target.getAttribute('data-subCategoryName') });
+
   }
 
   //Authorizing Submit form
@@ -369,6 +400,8 @@ export class SignupComponent implements OnInit {
 
   onSignupStep3FormSubmit() {
 
+    //console.log(this.signupStep3Form.value); return;
+
     this.utilsService.processPostRequest('updateParentInfo', this.signupStep3Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse('Your information updated successfully.', true);
       this.router.navigate(['/parent/dashboard']);
@@ -400,6 +433,12 @@ export class SignupComponent implements OnInit {
 
       this.selectedCategory1Name = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
 
+
+      this.signupStep3Form.controls.category1.patchValue({
+        category_id: categoryID,
+        value: this.selectedCategory1Name[0]
+      })
+
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
         this.subcategories1 = response;
 
@@ -414,6 +453,11 @@ export class SignupComponent implements OnInit {
         });
 
       })
+    }else{
+      this.signupStep3Form.controls.category1.patchValue({
+        category_id: '',
+        value: ''
+      })
     }
 
   }
@@ -427,7 +471,15 @@ export class SignupComponent implements OnInit {
     if (categoryID) {
 
       this.selectedCategory2Name = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
+
+      this.signupStep3Form.controls.category2.patchValue({
+        category_id: categoryID,
+        value: this.selectedCategory2Name[0]
+      })
+
+
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        
 
         this.subcategories2 = response;
 
@@ -459,6 +511,11 @@ export class SignupComponent implements OnInit {
     if (categoryID) {
       this.selectedCategory3Name = [event.target.options[event.target.selectedIndex].getAttribute('data-categoryName')];
 
+      this.signupStep3Form.controls.category3.patchValue({
+        category_id: categoryID,
+        value: this.selectedCategory3Name[0]
+      })
+
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
         this.subcategories3 = response;
 
@@ -479,6 +536,8 @@ export class SignupComponent implements OnInit {
     }
 
   }
+
+  
   /**
    * get All Countries
    */
@@ -683,6 +742,7 @@ export class SignupComponent implements OnInit {
 
 
       this.states2 = response;
+      this.stateArrayListing = response;
       //console.log(this.states2);
 
       if (this.states2.length > 0) {
@@ -701,6 +761,10 @@ export class SignupComponent implements OnInit {
 
     //let stateId = event.target.value
     this.resetAllControls('city');
+
+    this.stateArrayListing = this.states2;
+
+
     // check State ID Empty or not
     if (stateId == '') {
       this.resetAllControls('city');
@@ -709,7 +773,11 @@ export class SignupComponent implements OnInit {
 
 
     this.utilsService.processPostRequest('city/listing', { state_id: stateId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      
       this.cities2 = response;
+      this.cityArrayListing = response;
+
+
       if (this.cities2.length > 0) {
         this.enableCityControl();
       } else {
@@ -718,13 +786,13 @@ export class SignupComponent implements OnInit {
 
 
       //console.log(this.states2);
-      this.states2 = this.states2.filter(function (item) {
+      this.stateArrayListing = this.stateArrayListing.filter(function (item) {
         return item._id === stateId;
       });
 
       this.signupStep3Form.controls.state.patchValue({
-        state_id: this.states2[0]._id,
-        value: this.states2[0].title
+        state_id: this.stateArrayListing[0]._id,
+        value: this.stateArrayListing[0].title
       });
 
 
@@ -741,7 +809,7 @@ export class SignupComponent implements OnInit {
   getZipcodeListing(cityId) {
     //let cityId = event.target.value
     this.resetZipcodeControl();
-
+    this.cityArrayListing = this.cities2;
 
     // check State ID Empty or not
     if (cityId == "") {
@@ -757,16 +825,14 @@ export class SignupComponent implements OnInit {
         this.resetZipcodeControl();
       }
 
-      this.cities2 = this.cities2.filter(function (item) {
+      this.cityArrayListing = this.cityArrayListing.filter(function (item) {
         return item._id === cityId;
       });
 
       this.signupStep3Form.controls.city.patchValue({
-        state_id: this.cities2[0]._id,
-        value: this.cities2[0].title
+        city_id: this.cityArrayListing[0]._id,
+        value: this.cityArrayListing[0].title
       });
-
-
 
     })
 

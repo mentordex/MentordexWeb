@@ -27,23 +27,37 @@ export class PurchaseMembershipComponent implements OnInit {
 
   isPaymentMethodModalOpen: boolean = false;
   selectedPriceId: any = '';
-  
+  selectedMembershipId: any = '';
+  membershipPlans:any = [];
 
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getMembershipListing();
   }
 
-  showPaymentMethodPopup(priceId): void {
-    console.log('priceDetails', priceId);
+  /**
+   * get All Mmebership Plans
+   */
+  getMembershipListing() {
+    this.utilsService.processGetRequest('membership/getMembershipPlans', false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log(response);
+      this.membershipPlans = response;
+    })
+  }
+
+  showPaymentMethodPopup(priceId, membershipId): void {
+    //console.log('priceDetails', priceId); console.log('membershipId', membershipId); return;
     this.isPaymentMethodModalOpen = true;
     this.selectedPriceId = priceId
+    this.selectedMembershipId = membershipId
   }
 
   hidePaymentMethodPopup(isOpened: boolean): void {
     // console.log('carDetails', isOpened);
     this.isPaymentMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
     this.selectedPriceId = '';
+    this.selectedMembershipId = '';
   }
 
   //destroy all subscription

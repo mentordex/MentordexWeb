@@ -466,7 +466,7 @@
                                                         <ul>
                                                             <li *ngFor="let subcategory of subcategories1">
                                                                 <label class="mordern-radiobox-label">
-                                                                    <input type="radio" value="{{subcategory._id}}" (change)="selectSubcategory1($event)" name="subcategory_id1">
+                                                                    <input type="radio" value="{{subcategory._id}}" [attr.data-subCategoryName]="subcategory.title" (change)="selectSubcategory1($event)" name="subcategory_id1">
                                                                     <span class="design"></span>
                                                                     <span class="text">{{subcategory.title}}</span>
                                                                 </label>
@@ -486,7 +486,7 @@
                                                         <ul>
                                                             <li *ngFor="let subcategory of subcategories2">
                                                                 <label class="mordern-radiobox-label">
-                                                                    <input type="radio" value="{{subcategory._id}}" (change)="selectSubcategory2($event)" name="subcategory_id2">
+                                                                    <input type="radio" value="{{subcategory._id}}" [attr.data-subCategoryName]="subcategory.title" (change)="selectSubcategory2($event)" name="subcategory_id2">
                                                                     <span class="design"></span>
                                                                     <span class="text">{{subcategory.title}}</span>
                                                                 </label>
@@ -506,7 +506,7 @@
                                                         <ul>
                                                             <li *ngFor="let subcategory of subcategories3">
                                                                 <label class="mordern-radiobox-label">
-                                                                    <input type="radio" value="{{subcategory._id}}" (change)="selectSubcategory3($event)" name="subcategory_id3">
+                                                                    <input type="radio" value="{{subcategory._id}}" [attr.data-subCategoryName]="subcategory.title" (change)="selectSubcategory3($event)" name="subcategory_id3">
                                                                     <span class="design"></span>
                                                                     <span class="text">{{subcategory.title}}</span>
                                                                 </label>

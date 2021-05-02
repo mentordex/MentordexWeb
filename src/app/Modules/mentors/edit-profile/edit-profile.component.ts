@@ -28,11 +28,12 @@ export const minLengthArray = (min: number) => {
 }
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+
+export class EditProfileComponent implements OnInit {
 
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
@@ -733,7 +734,7 @@ export class ProfileComponent implements OnInit {
 
     this.utilsService.processPostRequest('updateProfileSocialLinksDetails', this.addSocialLinksForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
 
-      this.router.navigate(['/mentor/purchase-membership']);
+      this.router.navigate(['/mentor/my-profile']);
     })
   }
 
@@ -1076,5 +1077,6 @@ export class ProfileComponent implements OnInit {
   public ngOnDestroy(): void {
     this.onDestroy$.next();
   }
+
 
 }

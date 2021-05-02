@@ -76,6 +76,9 @@ export class BasicDetailsComponent implements OnInit {
   stateArrayListing: any = [];
   cityArrayListing: any = [];
 
+  checkAdminStatus:any = ['NEW', 'APPROVED', 'RESCHEDULED', 'IN-PROCESS', 'REJECTED'];
+
+
   countryArray = [{ id: 1, value: 'US' }];
 
   stateArray = [{ id: 1, value: 'Alabama', country_id: 1 }, { id: 2, value: 'Alaska', country_id: 1 }, { id: 3, value: 'California', country_id: 1 }, { id: 4, value: 'Florida', country_id: 1 }, { id: 5, value: 'Washington', country_id: 1 }];
@@ -152,7 +155,7 @@ export class BasicDetailsComponent implements OnInit {
       this.mentorDetails = response;
       //console.log(this.mentorDetails);
 
-      if (this.mentorDetails.admin_status == 'NEW') {
+      if (this.checkAdminStatus.indexOf(this.mentorDetails.admin_status) > -1) {
         this.router.navigate(['/mentor/application-status']);
       }
 

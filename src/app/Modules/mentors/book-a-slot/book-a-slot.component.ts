@@ -51,6 +51,8 @@ export class BookASlotComponent implements OnInit {
 
   getAvailableSlots: any = [];
 
+  checkAdminStatus:any = ['NEW', 'APPROVED', 'RESCHEDULED', 'IN-PROCESS', 'REJECTED'];
+
   public letterOfRecommendationConfiguration: DropzoneConfigInterface;
 
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private zone: NgZone) {
@@ -254,7 +256,7 @@ export class BookASlotComponent implements OnInit {
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorDetails = response;
-       if (this.mentorDetails.admin_status == 'NEW') {
+      if (this.checkAdminStatus.indexOf(this.mentorDetails.admin_status) > -1) {
         this.router.navigate(['/mentor/application-status']);
       } 
       

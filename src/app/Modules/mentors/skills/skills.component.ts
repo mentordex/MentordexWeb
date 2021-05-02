@@ -58,6 +58,8 @@ export class SkillsComponent implements OnInit {
   skillsForm: FormGroup;
   isSkillsFormSubmitted: boolean = false
 
+  checkAdminStatus:any = ['NEW', 'APPROVED', 'RESCHEDULED', 'IN-PROCESS', 'REJECTED'];
+
   constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
 
   ngOnInit(): void {
@@ -79,10 +81,10 @@ export class SkillsComponent implements OnInit {
   */
   getMentorDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
       this.mentorDetails = response;
 
-      if (this.mentorDetails.admin_status == 'NEW') {
+      if (this.checkAdminStatus.indexOf(this.mentorDetails.admin_status) > -1) {
         this.router.navigate(['/mentor/application-status']);
       }
 

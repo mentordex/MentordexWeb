@@ -13,60 +13,15 @@
                         </div>
                         <div class="profile-steps-rightsidebar-column-body position-relative">
                             <div class="row pt-3 pt-md-5">
-                                <div class="col-md-6 col-lg-4 mb-4">
+
+                                <div *ngFor="let membership of membershipPlans; let i = index" class="col-md-6 col-lg-4  mb-4">
                                     <div class="planbox">
-                                        <div class="planbox-header">
-                                            <p class="planbox--time d-block">Monthly</p>
-                                            <p class="planbox--price d-block">$9.99</p>
-                                        </div>
-                                        <div class="planbox-body">
-                                            <p class="third-party-join__reg-option">
-                                                <span class="third-party-join__line"></span>
-                                                <span class="third-party-join__content">
-                                                    <span class="new-mentordex-txt px-2 bg-white">FEATURES</span>
-                                                </span>
-                                            </p>
-                                            <div class="planbox-listpoints">
-                                                <ul>
-                                                    <li>
-                                                        <span>
-                                                                <svg width="21" height="22" viewBox="0 0 21 22" fill="none">
-                                                                <path d="M6.19108 11.0721L10.1911 14.4054L15.5244 7.73877M10.8577 20.4054C5.70309 20.4054 1.52441 16.2268 1.52441 11.0721C1.52441 5.91744 5.70309 1.73877 10.8577 1.73877C16.0124 1.73877 20.1911 5.91744 20.1911 11.0721C20.1911 16.2268 16.0124 20.4054 10.8577 20.4054Z" stroke="#676767" stroke-width="1.5"/>
-                                                                </svg>
-                                                            </span> Adding chat to your application has traditionally been a rather complicated process.
-                                                    </li>
-                                                    <li>
-                                                        <span>
-                                                                <svg width="21" height="22" viewBox="0 0 21 22" fill="none">
-                                                                <path d="M6.19108 11.0721L10.1911 14.4054L15.5244 7.73877M10.8577 20.4054C5.70309 20.4054 1.52441 16.2268 1.52441 11.0721C1.52441 5.91744 5.70309 1.73877 10.8577 1.73877C16.0124 1.73877 20.1911 5.91744 20.1911 11.0721C20.1911 16.2268 16.0124 20.4054 10.8577 20.4054Z" stroke="#676767" stroke-width="1.5"/>
-                                                                </svg>
-                                                            </span> Adding chat to your application has traditionally been a rather complicated process.
-                                                    </li>
-                                                    <li>
-                                                        <span>
-                                                                <svg width="21" height="22" viewBox="0 0 21 22" fill="none">
-                                                                <path d="M6.19108 11.0721L10.1911 14.4054L15.5244 7.73877M10.8577 20.4054C5.70309 20.4054 1.52441 16.2268 1.52441 11.0721C1.52441 5.91744 5.70309 1.73877 10.8577 1.73877C16.0124 1.73877 20.1911 5.91744 20.1911 11.0721C20.1911 16.2268 16.0124 20.4054 10.8577 20.4054Z" stroke="#676767" stroke-width="1.5"/>
-                                                                </svg>
-                                                            </span> Adding chat to your application has traditionally been a rather complicated process.
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="planbox-footer">
-                                            <div class="text-center">
-                                                <a href="javascript:void(0)" (click)="showPaymentMethodPopup('price_1Icqc6HECcgldbM7YNHcnHnt')" class="buy-plan-btn">Buy plan</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 mt-md-minus-35 mb-4">
-                                    <div class="planbox recommended-planbox">
-                                        <div class="recommended-planbox-bar text-center">
+                                        <!--div class="recommended-planbox-bar text-center">
                                             RECOMMENDED
-                                        </div>
+                                        </div-->
                                         <div class="planbox-header">
-                                            <p class="planbox--time d-block">Quarterly</p>
-                                            <p class="planbox--price d-block">$24.99</p>
+                                            <p class="planbox--time d-block">{{membership.title}}</p>
+                                            <p class="planbox--price d-block">${{membership.price}}</p>
                                         </div>
                                         <div class="planbox-body">
                                             <p class="third-party-join__reg-option">
@@ -103,57 +58,12 @@
                                         </div>
                                         <div class="planbox-footer">
                                             <div class="text-center">
-                                                <a href="javascript:void(0)" (click)="showPaymentMethodPopup('price_1IcqdHHECcgldbM7zdGCBB88')" class="buy-plan-btn">Buy plan</a>
+                                                <a href="javascript:void(0)" (click)="showPaymentMethodPopup(membership.price_id, membership._id)" class="buy-plan-btn">Buy plan</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-lg-4 mb-4">
-                                    <div class="planbox">
-                                        <div class="planbox-header">
-                                            <p class="planbox--time d-block">Yearly</p>
-                                            <p class="planbox--price d-block">$89.99</p>
-                                        </div>
-                                        <div class="planbox-body">
-                                            <p class="third-party-join__reg-option">
-                                                <span class="third-party-join__line"></span>
-                                                <span class="third-party-join__content">
-                                                    <span class="new-mentordex-txt px-2 bg-white">FEATURES</span>
-                                                </span>
-                                            </p>
-                                            <div class="planbox-listpoints">
-                                                <ul>
-                                                    <li>
-                                                        <span>
-                                                                <svg width="21" height="22" viewBox="0 0 21 22" fill="none">
-                                                                <path d="M6.19108 11.0721L10.1911 14.4054L15.5244 7.73877M10.8577 20.4054C5.70309 20.4054 1.52441 16.2268 1.52441 11.0721C1.52441 5.91744 5.70309 1.73877 10.8577 1.73877C16.0124 1.73877 20.1911 5.91744 20.1911 11.0721C20.1911 16.2268 16.0124 20.4054 10.8577 20.4054Z" stroke="#676767" stroke-width="1.5"/>
-                                                                </svg>
-                                                            </span> Adding chat to your application has traditionally been a rather complicated process.
-                                                    </li>
-                                                    <li>
-                                                        <span>
-                                                                <svg width="21" height="22" viewBox="0 0 21 22" fill="none">
-                                                                <path d="M6.19108 11.0721L10.1911 14.4054L15.5244 7.73877M10.8577 20.4054C5.70309 20.4054 1.52441 16.2268 1.52441 11.0721C1.52441 5.91744 5.70309 1.73877 10.8577 1.73877C16.0124 1.73877 20.1911 5.91744 20.1911 11.0721C20.1911 16.2268 16.0124 20.4054 10.8577 20.4054Z" stroke="#676767" stroke-width="1.5"/>
-                                                                </svg>
-                                                            </span> Adding chat to your application has traditionally been a rather complicated process.
-                                                    </li>
-                                                    <li>
-                                                        <span>
-                                                                <svg width="21" height="22" viewBox="0 0 21 22" fill="none">
-                                                                <path d="M6.19108 11.0721L10.1911 14.4054L15.5244 7.73877M10.8577 20.4054C5.70309 20.4054 1.52441 16.2268 1.52441 11.0721C1.52441 5.91744 5.70309 1.73877 10.8577 1.73877C16.0124 1.73877 20.1911 5.91744 20.1911 11.0721C20.1911 16.2268 16.0124 20.4054 10.8577 20.4054Z" stroke="#676767" stroke-width="1.5"/>
-                                                                </svg>
-                                                            </span> Adding chat to your application has traditionally been a rather complicated process.
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="planbox-footer">
-                                            <div class="text-center">
-                                                <a href="javascript:void(0)" (click)="showPaymentMethodPopup('price_1IcqdkHECcgldbM7RsrqW00a')" class="buy-plan-btn">Buy plan</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
@@ -173,4 +83,4 @@
     </div>
 </section>
 
-<app-add-payment-method (showPaymentMethodPopup)="showPaymentMethodPopup($event)" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen" [membershipDetails]="selectedPriceId"></app-add-payment-method>
+<app-add-payment-method (showPaymentMethodPopup)="showPaymentMethodPopup(selectedPriceId, selectedMembershipId)" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen" [membershipPriceId]="selectedPriceId" [membershipId]="selectedMembershipId"></app-add-payment-method>

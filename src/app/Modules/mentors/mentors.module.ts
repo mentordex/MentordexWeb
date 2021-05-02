@@ -19,10 +19,11 @@ import { MyMembershipComponent } from './my-membership/my-membership.component';
 import { MyMembershipPlanComponent } from './my-membership-plan/my-membership-plan.component';
 import { BillingMethodsComponent } from './billing-methods/billing-methods.component';
 import { AddPaymentMethodPopupComponent } from './add-payment-method-popup/add-payment-method-popup.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 
 @NgModule({
-  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent, DashboardComponent, MyMembershipComponent, MyMembershipPlanComponent, BillingMethodsComponent, AddPaymentMethodPopupComponent],
+  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent, DashboardComponent, MyMembershipComponent, MyMembershipPlanComponent, BillingMethodsComponent, AddPaymentMethodPopupComponent, EditProfileComponent],
   imports: [
     CommonModule,
     MentorsRoutingModule,

@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
             }else if(response.body.admin_status == 'APPROVED'){
               this.router.navigate(['/mentor/profile/']);
             }else{
-              this.router.navigate(['/']);
+              this.router.navigate(['/home']);
             }
             
           }else{
