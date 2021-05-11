@@ -476,161 +476,185 @@
                         <span class="fa fa-angle-right" aria-hidden="true"></span>
                     </div>
                 </div>
-
                 <ngx-slick-carousel class="slider-carousel" #testimonialsModal="slick-carousel" [config]="testimonialsSlideConfig">
-                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                    <div ngxSlickItem *ngFor="let review of reviews" class="testimonials-inner slick-slideshow__slide">
                         <div class="testimonials-inner-box">
-                            <div class="testimonials-inner-box-star">
-                                <img src="assets/img/star.png" alt="star">
-                            </div>
+                            <ngb-rating [starTemplate]="t" [max]="5" [rate]="review?.rating || 0" [readonly]="true"></ngb-rating>
+
+                            <ng-template #t let-fill="fill">
+                                <span class="star" [class.full]="fill === 100">
+                                    <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                                </span>
+                            </ng-template>
                             <div class="testimonials-inner-box-content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                                {{review?.review}}
                             </div>
                             <div class="testimonials-inner-box-desc">
                                 <div class="testimonials-pic">
-                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                    <img src="{{review?.image}}" onerror="this.src='assets/img/client-pic.png'" alt="client-pic">
                                 </div>
                                 <div class="testimonials-author">
-                                    <p class="testimonials-author-name">Name of the user</p>
-                                    <span class="testimonials-author-city">City name</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
-                        <div class="testimonials-inner-box">
-                            <div class="testimonials-inner-box-star">
-                                <img src="assets/img/star.png" alt="star">
-                            </div>
-                            <div class="testimonials-inner-box-content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
-                            </div>
-                            <div class="testimonials-inner-box-desc">
-                                <div class="testimonials-pic">
-                                    <img src="assets/img/client-pic.png" alt="client-pic">
-                                </div>
-                                <div class="testimonials-author">
-                                    <p class="testimonials-author-name">Name of the user Two</p>
-                                    <span class="testimonials-author-city">City name</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
-                        <div class="testimonials-inner-box">
-                            <div class="testimonials-inner-box-star">
-                                <img src="assets/img/star.png" alt="star">
-                            </div>
-                            <div class="testimonials-inner-box-content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
-                            </div>
-                            <div class="testimonials-inner-box-desc">
-                                <div class="testimonials-pic">
-                                    <img src="assets/img/client-pic.png" alt="client-pic">
-                                </div>
-                                <div class="testimonials-author">
-                                    <p class="testimonials-author-name">Name of the user Three</p>
-                                    <span class="testimonials-author-city">City name</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
-                        <div class="testimonials-inner-box">
-                            <div class="testimonials-inner-box-star">
-                                <img src="assets/img/star.png" alt="star">
-                            </div>
-                            <div class="testimonials-inner-box-content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
-                            </div>
-                            <div class="testimonials-inner-box-desc">
-                                <div class="testimonials-pic">
-                                    <img src="assets/img/client-pic.png" alt="client-pic">
-                                </div>
-                                <div class="testimonials-author">
-                                    <p class="testimonials-author-name">Name of the user four</p>
-                                    <span class="testimonials-author-city">City name</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
-                        <div class="testimonials-inner-box">
-                            <div class="testimonials-inner-box-star">
-                                <img src="assets/img/star.png" alt="star">
-                            </div>
-                            <div class="testimonials-inner-box-content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
-                            </div>
-                            <div class="testimonials-inner-box-desc">
-                                <div class="testimonials-pic">
-                                    <img src="assets/img/client-pic.png" alt="client-pic">
-                                </div>
-                                <div class="testimonials-author">
-                                    <p class="testimonials-author-name">Name of the user</p>
-                                    <span class="testimonials-author-city">City name</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
-                        <div class="testimonials-inner-box">
-                            <div class="testimonials-inner-box-star">
-                                <img src="assets/img/star.png" alt="star">
-                            </div>
-                            <div class="testimonials-inner-box-content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
-                            </div>
-                            <div class="testimonials-inner-box-desc">
-                                <div class="testimonials-pic">
-                                    <img src="assets/img/client-pic.png" alt="client-pic">
-                                </div>
-                                <div class="testimonials-author">
-                                    <p class="testimonials-author-name">Name of the user Two</p>
-                                    <span class="testimonials-author-city">City name</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
-                        <div class="testimonials-inner-box">
-                            <div class="testimonials-inner-box-star">
-                                <img src="assets/img/star.png" alt="star">
-                            </div>
-                            <div class="testimonials-inner-box-content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
-                            </div>
-                            <div class="testimonials-inner-box-desc">
-                                <div class="testimonials-pic">
-                                    <img src="assets/img/client-pic.png" alt="client-pic">
-                                </div>
-                                <div class="testimonials-author">
-                                    <p class="testimonials-author-name">Name of the user Three</p>
-                                    <span class="testimonials-author-city">City name</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
-                        <div class="testimonials-inner-box">
-                            <div class="testimonials-inner-box-star">
-                                <img src="assets/img/star.png" alt="star">
-                            </div>
-                            <div class="testimonials-inner-box-content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
-                            </div>
-                            <div class="testimonials-inner-box-desc">
-                                <div class="testimonials-pic">
-                                    <img src="assets/img/client-pic.png" alt="client-pic">
-                                </div>
-                                <div class="testimonials-author">
-                                    <p class="testimonials-author-name">Name of the user four</p>
-                                    <span class="testimonials-author-city">City name</span>
+                                    <p class="testimonials-author-name">{{review?.name}}</p>
+                                    <span class="testimonials-author-city">{{review?.city}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </ngx-slick-carousel>
+                <!--ngx-slick-carousel class="slider-carousel" #testimonialsModal="slick-carousel" [config]="testimonialsSlideConfig">
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                        <div class="testimonials-inner-box">
+                            <div class="testimonials-inner-box-star">
+                                <img src="assets/img/star.png" alt="star">
+                            </div>
+                            <div class="testimonials-inner-box-content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                            </div>
+                            <div class="testimonials-inner-box-desc">
+                                <div class="testimonials-pic">
+                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                </div>
+                                <div class="testimonials-author">
+                                    <p class="testimonials-author-name">Name of the user</p>
+                                    <span class="testimonials-author-city">City name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                        <div class="testimonials-inner-box">
+                            <div class="testimonials-inner-box-star">
+                                <img src="assets/img/star.png" alt="star">
+                            </div>
+                            <div class="testimonials-inner-box-content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                            </div>
+                            <div class="testimonials-inner-box-desc">
+                                <div class="testimonials-pic">
+                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                </div>
+                                <div class="testimonials-author">
+                                    <p class="testimonials-author-name">Name of the user Two</p>
+                                    <span class="testimonials-author-city">City name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                        <div class="testimonials-inner-box">
+                            <div class="testimonials-inner-box-star">
+                                <img src="assets/img/star.png" alt="star">
+                            </div>
+                            <div class="testimonials-inner-box-content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                            </div>
+                            <div class="testimonials-inner-box-desc">
+                                <div class="testimonials-pic">
+                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                </div>
+                                <div class="testimonials-author">
+                                    <p class="testimonials-author-name">Name of the user Three</p>
+                                    <span class="testimonials-author-city">City name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                        <div class="testimonials-inner-box">
+                            <div class="testimonials-inner-box-star">
+                                <img src="assets/img/star.png" alt="star">
+                            </div>
+                            <div class="testimonials-inner-box-content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                            </div>
+                            <div class="testimonials-inner-box-desc">
+                                <div class="testimonials-pic">
+                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                </div>
+                                <div class="testimonials-author">
+                                    <p class="testimonials-author-name">Name of the user four</p>
+                                    <span class="testimonials-author-city">City name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                        <div class="testimonials-inner-box">
+                            <div class="testimonials-inner-box-star">
+                                <img src="assets/img/star.png" alt="star">
+                            </div>
+                            <div class="testimonials-inner-box-content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                            </div>
+                            <div class="testimonials-inner-box-desc">
+                                <div class="testimonials-pic">
+                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                </div>
+                                <div class="testimonials-author">
+                                    <p class="testimonials-author-name">Name of the user</p>
+                                    <span class="testimonials-author-city">City name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                        <div class="testimonials-inner-box">
+                            <div class="testimonials-inner-box-star">
+                                <img src="assets/img/star.png" alt="star">
+                            </div>
+                            <div class="testimonials-inner-box-content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                            </div>
+                            <div class="testimonials-inner-box-desc">
+                                <div class="testimonials-pic">
+                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                </div>
+                                <div class="testimonials-author">
+                                    <p class="testimonials-author-name">Name of the user Two</p>
+                                    <span class="testimonials-author-city">City name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                        <div class="testimonials-inner-box">
+                            <div class="testimonials-inner-box-star">
+                                <img src="assets/img/star.png" alt="star">
+                            </div>
+                            <div class="testimonials-inner-box-content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                            </div>
+                            <div class="testimonials-inner-box-desc">
+                                <div class="testimonials-pic">
+                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                </div>
+                                <div class="testimonials-author">
+                                    <p class="testimonials-author-name">Name of the user Three</p>
+                                    <span class="testimonials-author-city">City name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ngxSlickItem class="testimonials-inner slick-slideshow__slide">
+                        <div class="testimonials-inner-box">
+                            <div class="testimonials-inner-box-star">
+                                <img src="assets/img/star.png" alt="star">
+                            </div>
+                            <div class="testimonials-inner-box-content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pretium nibh efficitur arcu cursus, ac luctus diam semper. Integer ullamcorper lacinia felis sed ultrices. Ut elementum mauris ex, quis congue arcu eleifend quis.
+                            </div>
+                            <div class="testimonials-inner-box-desc">
+                                <div class="testimonials-pic">
+                                    <img src="assets/img/client-pic.png" alt="client-pic">
+                                </div>
+                                <div class="testimonials-author">
+                                    <p class="testimonials-author-name">Name of the user four</p>
+                                    <span class="testimonials-author-city">City name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ngx-slick-carousel-->
 
             </div>
         </div>

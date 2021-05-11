@@ -16,11 +16,11 @@ import { environment } from '../../../../environments/environment';
 //import custom validators
 import { CustomValidators } from '../../../core/custom-validators';
 
-
-
-
 import { SearchCountryField, TooltipLabel, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { Select2Module, Select2Utils, Select2 } from 'ng-select2-component';
+
+import { SocialAuthService } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 
 
 type Select2Data = (Select2Option)[];
@@ -113,11 +113,12 @@ export class SignupComponent implements OnInit {
   cityValue: Select2Value = '';
   zipcodeValue: Select2Value = '';
 
+  getGoogleLoginId = '';
 
 
 
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private socialAuthService: SocialAuthService) { }
 
   ngOnInit(): void {
     this.initalizeSignupStep1Form()
@@ -177,6 +178,7 @@ export class SignupComponent implements OnInit {
       ])
       ],
       phone: [undefined, [Validators.required]],
+      googleLoginId: [''],
       country: this.formBuilder.group({
         country_id: ['', [Validators.required]],
         value: ['', [Validators.required]],
@@ -250,6 +252,94 @@ export class SignupComponent implements OnInit {
       category_id3: [''],
       subcategory_id3: [''],
     });
+  }
+
+  signInWithGoogle(): void {
+    //console.log('hello');
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (userData: any) => {
+        console.log(userData)
+        console.log(userData.firstName)
+
+        this.signupStep1Form.patchValue({
+          email: userData.email
+        });
+
+        this.authService.checkGoogleLogin(this.signupStep1Form.value).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
+          if (response.body.email == false) {
+
+            this.signupStep2Form.patchValue({
+              first_name: userData.firstName,
+              last_name: userData.lastName,
+              email: userData.email,
+              googleLoginId: userData.id
+            });
+            this.getGoogleLoginId = userData.id;
+
+            // get Country Listing
+            this.getCountryListing();
+            this.updateStep2Settings();
+            this.wizard.goToNextStep();
+
+          } else {
+            if (response.body.verify_phone == false) {
+              this.router.navigate(['/mentor/verify-phone/' + response.body._id]);
+            } else {
+
+              this.authService.isLoggedIn(true);
+              localStorage.setItem('x-user-ID', response.body._id)
+              localStorage.setItem(environment.TOKEN_NAME, response.headers.get(environment.TOKEN_NAME))
+              localStorage.setItem('x-user-type', response.body.role)
+
+              if (response.body.role == 'MENTOR') {
+                this.utilsService.onResponse(environment.MESSGES['LOGIN-SUCCESS'], true);//show page loader
+                // Check if a active Mentor or Not
+                if (response.body.is_active == false) {
+
+                  if (response.body.admin_status == 'PENDING') {
+                    this.router.navigate(['/mentor/basic-details/']);
+                  } else if (response.body.admin_status == 'NEW') {
+                    this.router.navigate(['/mentor/application-status/']);
+                  } else if (response.body.admin_status == 'APPROVED' && response.body.subscription_status == 'IN-ACTIVE') {
+                    this.router.navigate(['/mentor/profile/']);
+                  } else if (response.body.admin_status == 'APPROVED' && (response.body.subscription_status == 'ACTIVE' || response.body.subscription_status == 'CANCELLED')) {
+                    this.router.navigate(['/mentor/dashboard/']);
+                  } else {
+                    this.router.navigate(['/home']);
+                  }
+
+                } else {
+                  this.router.navigate(['/home']);
+                }
+
+              } else {
+                const responseMessage = 'Great!! ' + response.body.first_name + ', welcome to your dashboard.'
+                this.utilsService.onResponse(responseMessage, true);//show page loader 
+                this.router.navigate(['/parent/search']);
+              }
+            }
+          }
+
+
+        });
+
+
+
+
+
+
+      });
+  }
+
+  updateStep2Settings(): void {
+
+    if (this.getGoogleLoginId != '') {
+      this.signupStep2Form.patchValue({
+        password: 'Test@1234'
+      });
+    }
+
   }
 
   selectSubcategory1(event) {
@@ -453,7 +543,7 @@ export class SignupComponent implements OnInit {
         });
 
       })
-    }else{
+    } else {
       this.signupStep3Form.controls.category1.patchValue({
         category_id: '',
         value: ''
@@ -479,7 +569,7 @@ export class SignupComponent implements OnInit {
 
 
       this.utilsService.processPostRequest('subcategory/listing', { category_id: categoryID }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-        
+
 
         this.subcategories2 = response;
 
@@ -537,7 +627,7 @@ export class SignupComponent implements OnInit {
 
   }
 
-  
+
   /**
    * get All Countries
    */
@@ -773,7 +863,7 @@ export class SignupComponent implements OnInit {
 
 
     this.utilsService.processPostRequest('city/listing', { state_id: stateId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      
+
       this.cities2 = response;
       this.cityArrayListing = response;
 
@@ -979,7 +1069,7 @@ export class SignupComponent implements OnInit {
 
     this.signupStep2Form.controls.state.patchValue({
       state_id: '',
-        value: ''
+      value: ''
     });
 
     stateControl.disable(); stateControl.setValue('');
@@ -1013,7 +1103,7 @@ export class SignupComponent implements OnInit {
 
     this.signupStep2Form.controls.city.patchValue({
       city_id: '',
-        value: ''
+      value: ''
     });
 
     cityControl.disable(); cityControl.setValue('');

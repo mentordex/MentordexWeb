@@ -30,6 +30,9 @@ export class HeaderComponent implements OnInit {
   loginType: String = ''
   title = '';
   userInfo;
+  getMentorSubscriptionStatus: String = 'IN-ACTIVE'
+
+  profileImagePath: any = 'assets/img/none.png';
 
   constructor(private zone: NgZone, private router: Router, private authService: AuthService, private utilsService: UtilsService) {
 
@@ -57,12 +60,12 @@ export class HeaderComponent implements OnInit {
       //check the page url and change title/name on routed page
       if (event instanceof NavigationEnd) {
 
-        if (localStorage.getItem(environment.TOKEN_NAME)) {        
-    
-          if (localStorage.getItem("x-user-type")=="MENTOR" && event.url.includes('parent')) {
+        if (localStorage.getItem(environment.TOKEN_NAME)) {
+
+          if (localStorage.getItem("x-user-type") == "MENTOR" && event.url.includes('parent')) {
             this.router.navigate(['/']);
             return false;
-          }else if(localStorage.getItem("x-user-type")=="PARENT" && event.url.includes('mentor')){
+          } else if (localStorage.getItem("x-user-type") == "PARENT" && event.url.includes('mentor')) {
             this.router.navigate(['/parent/search']);
             return false;
           }
@@ -85,7 +88,12 @@ export class HeaderComponent implements OnInit {
             this.isLoginPage = false
             this.isMentorPage = true
             this.isParentPage = false
+
+            
+
           });
+
+
 
           this.title = 'Mentor Login';
 
@@ -138,10 +146,22 @@ export class HeaderComponent implements OnInit {
   }
 
   fetchUserInfo(userID) {
-    this.utilsService.processPostRequest('getMentorDetails', { userID: userID }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+    this.utilsService.processPostRequest('getUserDetails', { userID: userID }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.userInfo = response;
+      //console.log(this.userInfo);
+      if (localStorage.getItem("x-user-type") == "MENTOR"){
+        this.getMentorSubscriptionStatus = this.userInfo.subscription_status;
+        //console.log(this.getMentorSubscriptionStatus);
+        if (this.userInfo.profile_image.length > 0) {
+          //console.log('pello')
+          this.profileImagePath = this.userInfo.profile_image[0].file_path;
+        }
+      }
+      //console.log(this.userInfo);
     })
   }
+
+
   ngOnInit() {
     //check user is loggedin or not on page refresh
     if (localStorage.getItem(environment.TOKEN_NAME)) {

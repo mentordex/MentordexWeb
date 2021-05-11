@@ -16,7 +16,7 @@
                                 <div class="dashboard-list-body p-4">
                                     <div class="mentorcards-outer notification--mesgouter">
                                         <p class="text-top-detail color-heading font-18-xs mb-0">
-                                            Monthly
+                                            {{membershipDetails?.membership?.title}}
                                         </p>
                                         <div class="mentor-memebership--box">
                                             <div class="row">
@@ -29,14 +29,14 @@
                                                     <div class="row">
                                                         <div class="col-lg-8">
                                                             <p class="text-top-detail color-heading font-18-xs font--500 mb-2">
-                                                                23 Nov, 2020
+                                                                {{membershipDetails.next_billing_date * 1000 | date:'MMM dd, YYYY'}}
                                                             </p>
                                                         </div>
-                                                        <div class="col-lg-4">
+                                                        <!--div class="col-lg-4">
                                                             <p class="text-top-detail color--primary font-16-xs mb-2">
                                                                 9 days left
                                                             </p>
-                                                        </div>
+                                                        </div-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -50,7 +50,7 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <p class="text-top-detail color-heading font-18-xs font--500 mb-1">
-                                                                USD $50 (including tax)
+                                                                USD ${{membershipDetails?.membership?.price?.$numberDecimal}} (including tax)
                                                             </p>
                                                         </div>
                                                     </div>
@@ -107,7 +107,7 @@
                                             </ng-template>
                                         </div>
                                         <div class="mt-3">
-                                            <button role="button" type="button" class="primary--button-bordered py-1">Update Payment Method</button>
+                                            <a routerLink="/mentor/billing-methods" href="javascript:void(0)" class="primary--button-bordered py-1">Update Payment Method</a>
                                         </div>
                                     </div>
                                 </div>
@@ -116,11 +116,14 @@
                     </div>
                     <div class="col-12">
                         <div class="p-4">
-                            <button (click)="cancelYourSubscription()" role="button" type="button" class="btn--transparent color--primary">Cancel Subscription</button>
+                            <ng-container *ngIf="membershipDetails.subscription_status == 'ACTIVE';"><button (click)="cancelYourSubscription()" role="button" type="button" class="btn--transparent color--primary">Cancel Subscription</button></ng-container>
+
+                            <ng-container *ngIf="membershipDetails.subscription_status == 'CANCELLED';"><button role="button" type="button" class="btn--transparent color--primary">Cancelled</button></ng-container>
+
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4">
+                <!--div class="row mt-4">
                     <div class="col-12">
                         <div class="profile-steps-rightsidebar-column-header text-center border-radius-4">
                             <p class="dashboard-mentorcards-desc--mentorname font--500 font-20-xs text-white text-center">
@@ -135,7 +138,7 @@
                             <button role="button" type="button" class="primary--button py-2">Switch to Annual</button>
                         </div>
                     </div>
-                </div>
+                </div-->
             </div>
         </div>
     </div>

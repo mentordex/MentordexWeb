@@ -35,7 +35,7 @@
                                                    <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
                                                     <path d="M14 7C14 6.08075 13.8189 5.1705 13.4672 4.32122C13.1154 3.47194 12.5998 2.70026 11.9497 2.05025C11.2997 1.40024 10.5281 0.884626 9.67879 0.532843C8.82951 0.18106 7.91925 0 7 0C6.08075 0 5.1705 0.18106 4.32122 0.532843C3.47194 0.884626 2.70026 1.40024 2.05025 2.05025C1.40024 2.70026 0.884626 3.47194 0.532843 4.32122C0.18106 5.1705 -1.36979e-08 6.08075 0 7C0 8.387 0.41 9.677 1.105 10.765H1.097C3.457 14.46 7 20 7 20L12.903 10.765H12.896C13.6164 9.64137 13.9995 8.33474 14 7ZM7 10C6.20435 10 5.44129 9.68393 4.87868 9.12132C4.31607 8.55871 4 7.79565 4 7C4 6.20435 4.31607 5.44129 4.87868 4.87868C5.44129 4.31607 6.20435 4 7 4C7.79565 4 8.55871 4.31607 9.12132 4.87868C9.68393 5.44129 10 6.20435 10 7C10 7.79565 9.68393 8.55871 9.12132 9.12132C8.55871 9.68393 7.79565 10 7 10Z" fill="white"/>
                                                     </svg>
-                                                </span> {{mentorProfileDetails?.city_value}}, {{mentorProfileDetails?.state_value}}
+                                                </span> {{mentorProfileDetails?.city?.value}}, {{mentorProfileDetails?.state?.value}}
                                                 </div>
                                                 <div class="dashboard-parent-profile-header-content-author-exp">
                                                     Jobs Completed: 0
@@ -49,8 +49,8 @@
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <div *ngIf="getVideoLink != ''" class="col-lg-4 mb-3 mb-lg-0">
-                                            <button (click)="openVideoIntroPopup(getVideoLink)" role="button" type="button" class="primary--button py-1">
+                                        <div class="col-lg-4 mb-3 mb-lg-0">
+                                            <button *ngIf="getVideoLink != ''" (click)="openVideoIntroPopup(getVideoLink)" role="button" type="button" class="primary--button py-1">
                                                 <span class="d-inline-block mr-1 v-txtb ">
                                                     <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
                                                         <path d="M10.5 0.448242C4.70156 0.448242 0 4.98768 0 10.5862C0 16.1847 4.70156 20.7241 10.5 20.7241C16.2984 20.7241 21 16.1847 21 10.5862C21 4.98768 16.2984 0.448242 10.5 0.448242ZM13.8773 10.7423L8.75859 14.3381C8.73053 14.3576 8.69745 14.3692 8.66299 14.3717C8.62853 14.3742 8.59403 14.3675 8.56327 14.3523C8.53251 14.3371 8.50668 14.314 8.48863 14.2855C8.47057 14.2571 8.46099 14.2244 8.46094 14.191V7.00395C8.46082 6.97052 8.4703 6.93771 8.48832 6.90916C8.50633 6.88061 8.53219 6.85743 8.56301 6.8422C8.59383 6.82697 8.62842 6.82028 8.66295 6.82286C8.69747 6.82545 8.73057 6.83722 8.75859 6.85686L13.8773 10.4504C13.9015 10.4669 13.9213 10.4888 13.9349 10.5142C13.9485 10.5396 13.9556 10.5678 13.9556 10.5964C13.9556 10.6249 13.9485 10.6531 13.9349 10.6785C13.9213 10.7039 13.9015 10.7258 13.8773 10.7423Z" fill="white"/>
@@ -60,10 +60,10 @@
                                         </button>
                                         </div>
                                         <div class="col-lg-8 text-md-right">
-                                            <button role="button" type="button" class="primary--button-transparent py-1  mb-2 mb-sm-0">
+                                            <!--button role="button" type="button" class="primary--button-transparent py-1  mb-2 mb-sm-0">
                                             Save Mentor
-                                        </button>
-                                            <button routerLink="/parent/booking-request/{{mentorProfileDetails?._id}}" role="button" type="button" class="primary--button py-1 mb-2 mb-sm-0 cursor--pointer">
+                                        </button-->
+                                            <button routerLink="/parent/booking-request/{{mentorProfileDetails?._id}}" role="button" type="button" class="primary--button py-1 mb-2 mr-2 mb-sm-0 cursor--pointer">
                                             Send Booking Request
                                         </button>
                                             <button role="button" type="button" class="primary--button-white py-1">
@@ -79,36 +79,42 @@
                                 <div class="col-md-6 col-lg-5 col-xl-4 px-md-0">
                                     <div class="dashboard-parent-profile-body-border">
                                         <ul class="list-unstyled">
-                                            <!--li>
+                                            <li>
                                                 <p class="dashboard-parent-profile-body--title mb-2">Availability</p>
                                                 <div>
-                                                    <input type="text" class="d-none" id="myInput">
+                                                    <bs-datepicker-inline [minDate]="minDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="minDate"></bs-datepicker-inline>
                                                 </div>
                                             </li>
+                                            <ng-container *ngIf="selectedAvailabilityArray.length > 0; else noSlotsAvailable">
+                                                <li *ngFor="let availableSlot of selectedAvailabilityArray let i=index">
+                                                    <p class="dashboard-parent-profile-body--title mb-2">{{getCurrentDay}}, {{getSelectedDate | date : 'MMM dd, YYYY'}}</p>
+                                                    <div class="choose-category-wrapper time-slots mt-3">
+                                                        <label *ngFor="let available of availableSlot.slots let j=index">
+                                                    <input type="checkbox" name="slots" class="card-input-element" disabled>   
+                                                    <div class="category-innebox">
+                                                        <p class="category-heading-text">{{available.value}}</p>
+                                                    </div>
+                                                </label>
+
+                                                    </div>
+                                                </li>
+                                            </ng-container>
+                                            <ng-template #noSlotsAvailable>
+                                                <li class="text-center">
+                                                    <div class="no-slots-available">
+                                                        <span>No Slots Available</span>
+                                                    </div>
+                                                </li>
+                                            </ng-template>
                                             <li>
-                                                <p class="dashboard-parent-profile-body--title mb-2">Thursday, August 02</p>
-                                                <div class="choose-category-wrapper time-slots mt-3">
-                                                    <label>
-                                                    <input type="checkbox" name="person" class="card-input-element" disabled>   
-                                                    <div class="category-innebox">
-                                                        <p class="category-heading-text">09:00 AM - 02:00 PM</p>
-                                                    </div>
-                                                </label>
-                                                    <label>
-                                                    <input type="checkbox" name="person" class="card-input-element" disabled>   
-                                                    <div class="category-innebox">
-                                                        <p class="category-heading-text">04:00 PM - 08:00 PM</p>
-                                                    </div>
-                                                </label>
-                                                </div>
-                                            </li-->
-                                            <li *ngIf="mentorProfileDetails.subcategories">
                                                 <p class="dashboard-parent-profile-body--title mb-2">Skills</p>
                                                 <div class="dashboard-mentorcards-desc--tags">
                                                     <ul>
-                                                        <ng-container *ngFor="let subcategory of mentorProfileDetails.subcategories">
-                                                            <li>{{subcategory.name}}</li>
-                                                        </ng-container>
+
+                                                        <li>{{mentorProfileDetails?.subcategory1?.value}}</li>
+                                                        <li>{{mentorProfileDetails?.subcategory2?.value}}</li>
+                                                        <li>{{mentorProfileDetails?.subcategory3?.value}}</li>
+
                                                     </ul>
                                                 </div>
                                             </li>
@@ -149,10 +155,12 @@
                                                 <p class="dashboard-parent-profile-body--subtitle mb-3 text--heading font--500">Letter of Recommendations</p>
                                                 <ul class="list-unstyled mb-0">
                                                     <li *ngFor="let lor of mentorProfileDetails.letter_of_recommendation" class="dashboard-parent-profile-body--subtitle mb-2">
+
                                                         <label class="upload-doc--chatbtn">
+                                                            <a target="_blank" href="{{lor.file_path}}">
                                                         <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
                                                             <path d="M11.9077 6.30932L6.03356 12.0417C4.9047 13.1433 3.09812 13.1212 1.99652 11.9923C0.89491 10.8635 0.916982 9.05691 2.04584 7.9553L8.43078 1.72449C8.76946 1.39399 9.22555 1.21157 9.69874 1.21735C10.1719 1.22313 10.6234 1.41664 10.9539 1.75532C11.2844 2.094 11.4669 2.5501 11.4611 3.02328C11.4553 3.49646 11.2618 3.94797 10.9231 4.27847L5.55975 9.51235C5.27881 9.7865 4.82465 9.78095 4.55049 9.50002C4.27634 9.21908 4.28189 8.76491 4.56282 8.49076L9.41538 3.75534L8.66768 2.98915L3.81513 7.72456C3.47645 8.05507 3.28293 8.50657 3.27715 8.97976C3.27137 9.45294 3.4538 9.90904 3.7843 10.2477C4.1148 10.5864 4.56631 10.7799 5.03949 10.7857C5.51267 10.7915 5.96877 10.609 6.30745 10.2785L11.6708 5.04466C12.7997 3.94305 12.8217 2.13648 11.7201 1.00762C10.6185 -0.121234 8.81194 -0.143305 7.68308 0.958302L1.29814 7.18911C-0.254675 8.70444 -0.285008 11.1872 1.23032 12.74C2.74566 14.2929 5.22843 14.3232 6.78125 12.8079L12.6554 7.07551L11.9077 6.30932Z" fill="#3BB3BD"/>
-                                                        </svg>                                                   
+                                                        </svg>                                             </a>      
                                                     </label> {{lor.file_name}}
                                                     </li>
 
@@ -172,14 +180,7 @@
                                                             {{mentorProfileDetails?.bio}}
                                                         </p>
                                                     </div>
-                                                    <!--div>
-                                                        <p class="dashboard-parent-profile-body--title mb-4">Teaching Methodology</p>
-                                                        <p class="dashboard-parent-profile-body--subtitle mb-35">
-                                                            My teaching experience includes having worked at one of the most highly regarded schools in the USA, Dr. Ronald McNair Academic High School, in New Jersey, where I taught literature and writing to gifted and talented students at this magnet school. All
-                                                            of my materials and instruction are fully-customized, catering to the individual needs of each learner. I also offer an initial, complimentary consultation for students to learn how my classes
-                                                            work and ask me any questions they'd like. Please let me know if you would like to arrange such a consultation and for my most recent student reviews:
-                                                        </p>
-                                                    </div-->
+
                                                 </div>
 
                                             </li>

@@ -158,8 +158,9 @@ export class AddPaymentMethodComponent implements OnInit {
     //console.log(mergePaymentData); return;
     this.utilsService.processPostRequest('buySubscription', mergePaymentData, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
+      this.utilsService.onResponse(environment.MESSGES['SUBSCRIPTION-SUCCESS'], true);
       this.close();
-      this.router.navigate(['/mentor/purchase-membership-success']);
+      this.router.navigate(['/mentor/dashboard']);
     })
 
   }

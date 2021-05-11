@@ -27,6 +27,7 @@ export class MyMembershipPlanComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
   id: any = '';
   paymentDetails: any = {};
+  membershipDetails: any = {};
   paymentDetailsArray: any = [];
 
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
@@ -63,8 +64,8 @@ export class MyMembershipPlanComponent implements OnInit {
   */
   getMembershipDetailsToken(id): void {
     this.utilsService.processPostRequest('getMentorMembershipDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
-
+      //console.log(response);
+      this.membershipDetails = response;
     })
   }
 
@@ -80,7 +81,8 @@ export class MyMembershipPlanComponent implements OnInit {
       if (result.value) {
 
         this.utilsService.processPostRequest('cancelYourSubscription', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-          console.log(response);
+          this.utilsService.onResponse(environment.MESSGES['SUBSCRIPTION-CANCEL'], true);
+          this.getMembershipDetailsToken(this.id);
 
         })
 

@@ -48,6 +48,8 @@ export class BookingRequestComponent implements OnInit {
   paymentDetailsArray: any = [];
   isPaymentMethodModalOpen: boolean = false;
 
+  selectedSpeciality: any = '';
+
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) {
     this.minDate = new Date();
     this.maxDate = new Date();
@@ -125,7 +127,7 @@ export class BookingRequestComponent implements OnInit {
       this.mentorProfileDetails = response;
       this.bookARequestForm.patchValue({
         hourly_rate: this.mentorProfileDetails.hourly_rate,
-        category_id: this.mentorProfileDetails.category_id,
+        //category_id: this.mentorProfileDetails.category_id,
         parent_id: id,
         mentor_id: mentorId,
       });
@@ -149,6 +151,13 @@ export class BookingRequestComponent implements OnInit {
     let getSelectedDate = selectedDate.getDate();
     //this.getCurrentDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()]
     this.getAvailableSlotsByDate(selectedDay, formatDate);
+  }
+
+  onCategoryChange(event):void {
+    this.bookARequestForm.patchValue({ category_id: event.target.getAttribute('data-categoryId'), subcategory_id: event.target.getAttribute('data-subCategoryId') });
+    //console.log(this.bookARequestForm.value);
+
+    this.selectedSpeciality = event.target.getAttribute('data-subCategoryValue');
   }
 
   /**

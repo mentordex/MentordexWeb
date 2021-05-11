@@ -28,11 +28,28 @@ export class MentorProfileComponent implements OnInit {
   id: any = '';
   mentorId: any = '';
   mentorProfileDetails: any = {};
-  profileImagePath: any = 'assets/img/image.png';
+  profileImagePath: any = 'assets/img/none.png';
   getVideoLink: any = '';
   getVideoType: any = '';
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) { }
+  minDate: Date;
+  maxDate: Date;
+  getCurrentDay: any = '';
+  getCurrentDate: any = '';
+  getSelectedDate: any = '';
+
+  getAvailableSlots: any = [];
+  selectedAvailabilityArray: any = [];
+
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) {
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.minDate.setDate(this.minDate.getDate());
+    this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
+    this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
+    this.getSelectedDate = this.getCurrentDate;
+    //console.log(this.getSelectedDate);
+   }
 
   ngOnInit(): void {
     this.checkQueryParam();
@@ -78,6 +95,20 @@ export class MentorProfileComponent implements OnInit {
         this.getVideoType = this.mentorProfileDetails.introduction_video[0].file_mimetype;
       }
 
+      if(this.mentorProfileDetails.availability.length > 0){
+        this.getAvailableSlots = this.mentorProfileDetails.availability;
+        let getDate = this.getSelectedDate;
+
+        //console.log(getDate);
+
+        this.selectedAvailabilityArray = this.getAvailableSlots.filter(function (item) {
+          return item.date === getDate;
+        });
+
+        //console.log(this.selectedAvailabilityArray);
+
+      }
+
     })
   }
 
@@ -98,6 +129,26 @@ export class MentorProfileComponent implements OnInit {
 
     })
   }
+
+  onDateChange(value: Date): void {
+    this.selectedAvailabilityArray = [];
+
+    let selectedDate = new Date(value);
+
+    this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
+
+    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+
+    this.getSelectedDate = formatDate;
+    
+    this.selectedAvailabilityArray = this.getAvailableSlots.filter(function (item) {
+      return item.date === formatDate;
+    });
+
+    console.log(this.selectedAvailabilityArray);
+  }
+
+  
 
   /**
 * set check object array length.

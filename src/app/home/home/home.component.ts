@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   blogs: any = []
   faqs: any = []
   banners:any = []
+  reviews:any = []
 
   firstFourCities:any = [];
   lastThreeCities:any = [];
@@ -68,7 +69,7 @@ export class HomeComponent implements OnInit {
     //slide: '.slick-slideshow__slide',
     centerMode: true,
     //centerPadding: '60px',
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     dots: false,
     infinite: true,
@@ -135,6 +136,7 @@ export class HomeComponent implements OnInit {
     this.fetchFAQs()
     this.fetchCities()
     this.fetchBanners()
+    this.fetchReviews()
   }
 
   fetchFAQs() {
@@ -186,6 +188,12 @@ export class HomeComponent implements OnInit {
     this.utilsService.processGetRequest('banner/listing').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.banners = response
       //console.log( this.banners);
+    })
+  }
+
+  fetchReviews() {
+    this.utilsService.processGetRequest('reviews').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.reviews = response
     })
   }
 

@@ -23,6 +23,13 @@ export class AuthService {
       .post('login', postedData, { observe: 'response' })
   
   } 
+
+  checkGoogleLogin(postedData): Observable<any> {
+    
+    return this.httpClient
+      .post('checkGoogleLogin', postedData, { observe: 'response' })
+  
+  }
   
   onCompleteYourApplication(postedData): Observable<any> {
     return this.httpClient

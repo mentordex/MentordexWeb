@@ -24,7 +24,18 @@ export const environment = {
     "EMAIL-SENT":"We have sent the password reset instructions to your email ID.",
     "PAYMENT-METHOD-SUCCESSFULL":"Your payment method added successfully.",
     "BOOKING-REQUEST-SENT":"Your booking request has been sent successfully.",
+    "DEFAULT-CARD-UPDATE-SUCCESS":"Your default card updated successfully.",
+    "DEFAULT-CARD-REMOVED":"Your default card has been removed successfully.",
+    "SUBSCRIPTION-SUCCESS":"Your plan has been activated successfully.",
+    "SUBSCRIPTION-CANCEL":"Your plan has been cancelled successfully.",
     "ADD-YOUR-BILLING-METHOD":"Add your billing method to send booking request to mentor.",
+  },
+  //social logins
+  SOCIAL_LOGINS: {
+    GOOGLE: {
+      GOOGLE_0AUTH_CLIENT_ID: '433287314095-ii6cjlv1g0qc38hojjq0kbpmcodop14t.apps.googleusercontent.com',
+      GOOGLE_0AUTH_CLIENT_SECRET:'us-6eJ-0e61VK5smDgsMbXJO'
+    }
   }
 
 };

@@ -55,13 +55,29 @@
                                                         <p class="profile-label-text font-14 mb-0">{{paymentArray?.card_holder_name}}</p>
                                                     </div>
                                                 </div>
-                                                <ng-container *ngIf="paymentArray.default">
-                                                    <div class="row">
-                                                        <div class="col-12 text-left mt-3">
+
+                                                <div class="row">
+                                                    <div class="col-4 text-left mt-3">
+                                                        <ng-container *ngIf="paymentArray.default">
+
                                                             <p class="deafult-card--appearence">Default</p>
-                                                        </div>
+
+                                                        </ng-container>
                                                     </div>
-                                                </ng-container>
+                                                    <div class="col-4 text-right mt-3">
+                                                        <ng-container *ngIf="!paymentArray.default">
+                                                            <p class="deafult-card--appearence">
+                                                                <a href="javascript:void(0)" class="default_card" (click)="defaultCard(paymentArray?.stripe_card_id)">Make as default</a>
+                                                            </p>
+                                                        </ng-container>
+                                                    </div>
+                                                    <div class="col-4 text-right mt-3">
+                                                        <p class="deafult-card--appearence">
+                                                            <a href="javascript:void(0)" class="default_card" (click)="removeCard(paymentArray?.stripe_card_id)">Remove</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </ng-container>
                                         <ng-template #noCardsAvailable>

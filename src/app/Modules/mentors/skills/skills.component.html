@@ -101,7 +101,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 mb-4">
-                                        <div class="row align-items-end">
+                                        <div class="row align-items-start">
                                             <div formGroupName="category1" class="col-md-4">
                                                 <select formControlName="category_id" (change)="getSubcategory1Listing($event)" class="w-100 custom-select profile-steps-input h-auto">
                                                     <option value="">Select Category</option>
@@ -156,8 +156,12 @@
                                                             <li *ngFor="let subcategory of subcategory1Array">
                                                                 <div class="small-checkboxes">
                                                                     <div class="form-check check-opacity mb-3">
-                                                                        <label class="form-check-label text-muted">
-                                                                    <input type="radio" class="form-check-input" name="subcategory1" [checked]="checkSubcategory(subcategory._id)"  [attr.data-subCategoryName]="subcategory.title"  (change)="onSubcateory1Change($event)" value="{{subcategory._id}}">{{subcategory.title}}<i class="input-helper"></i></label>
+                                                                        <label class="mordern-radiobox-label">
+                                                                    <input type="radio" class="form-check-input" name="subcategory1" [checked]="checkSubcategory(subcategory._id)"  [attr.data-subCategoryName]="subcategory.title"  (change)="onSubcateory1Change($event)" value="{{subcategory._id}}">
+                                                                    <span class="design"></span>
+                                                                    <span class="text">{{subcategory.title}}</span>
+                                                                
+                                                                </label>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -182,8 +186,14 @@
                                                             <li *ngFor="let subcategory of subcategory2Array">
                                                                 <div class="small-checkboxes">
                                                                     <div class="form-check check-opacity mb-3">
-                                                                        <label class="form-check-label text-muted">
-                                                                    <input type="radio" class="form-check-input" name="subcategory2" [checked]="checkSubcategory(subcategory._id)"  [attr.data-subCategoryName]="subcategory.title"  (change)="onSubcateory2Change($event)" value="{{subcategory._id}}">{{subcategory.title}}<i class="input-helper"></i></label>
+
+
+                                                                        <label class="mordern-radiobox-label">
+                                                                        <input type="radio" class="form-check-input" name="subcategory2" [checked]="checkSubcategory(subcategory._id)"  [attr.data-subCategoryName]="subcategory.title"  (change)="onSubcateory2Change($event)" value="{{subcategory._id}}">
+                                                                        <span class="design"></span>
+                                                                        <span class="text">{{subcategory.title}}</span>
+                                                                    
+                                                                    </label>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -208,8 +218,12 @@
                                                             <li *ngFor="let subcategory of subcategory3Array">
                                                                 <div class="small-checkboxes">
                                                                     <div class="form-check check-opacity mb-3">
-                                                                        <label class="form-check-label text-muted">
-                                                                    <input type="radio" class="form-check-input" name="subcategory3" [checked]="checkSubcategory(subcategory._id)"  [attr.data-subCategoryName]="subcategory.title"  (change)="onSubcateory3Change($event)" value="{{subcategory._id}}">{{subcategory.title}}<i class="input-helper"></i></label>
+                                                                        <label class="mordern-radiobox-label">
+                                                                            <input type="radio" class="form-check-input" name="subcategory3" [checked]="checkSubcategory(subcategory._id)"  [attr.data-subCategoryName]="subcategory.title"  (change)="onSubcateory3Change($event)" value="{{subcategory._id}}">
+                                                                            <span class="design"></span>
+                                                                            <span class="text">{{subcategory.title}}</span>
+                                                                        
+                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                             </li>

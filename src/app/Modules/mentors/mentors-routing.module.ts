@@ -13,6 +13,7 @@ import { PurchaseMembershipSuccessComponent } from './purchase-membership-succes
 import { MyMembershipPlanComponent } from './my-membership-plan/my-membership-plan.component';
 import { BillingMethodsComponent } from './billing-methods/billing-methods.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
 
@@ -78,6 +79,12 @@ const routes: Routes = [
     path: 'my-membership-plan',
     component: MyMembershipPlanComponent,
     data: { title: 'My Membership Plan' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    data: { title: 'My Dashboard' },
     canActivate: [AuthGuard]
   },
   {

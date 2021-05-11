@@ -86,7 +86,7 @@
                                                 <div class="row position-relative filterbar-cs-select">
                                                     <div class="col-10">
                                                         <div class="row">
-                                                            <select [(ngModel)]="slot" name="slot" class="custom-select arrow-select green-select" (change)="onChangeTimeslot($event)">
+                                                            <select [(ngModel)]="slot" name="slot" class="font-14 custom-select arrow-select green-select mb-3 mb-lg-0 ml-3" (change)="onChangeTimeslot($event)">
                                                             <option value="">Select Slot</option>
                                                             <option *ngFor="let slot of slots" value="{{slot?.slot}}">{{slot?.slot}}</option>
                                                         </select>
@@ -363,7 +363,7 @@
                                             </div>
                                             <div class="dashboard-mentorcards-desc">
                                                 <div class="row mb-1">
-                                                    <div style="cursor:pointer" routerLink="/profile-view/{{mentor?._id}}" class="col-lg-8">
+                                                    <div style="cursor:pointer" routerLink="/parent/profile-view/{{mentor?._id}}" class="col-lg-8">
                                                         <p class="dashboard-mentorcards-desc--mentorname">{{mentor?.first_name}} {{mentor?.last_name}}</p>
                                                         <span class="dashboard-mentorcards-desc--exp">{{mentor?.tagline}}</span>
                                                     </div>
@@ -378,7 +378,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-10 mb-2">
-                                                        <p *ngIf="(mentor?.bio)" class="dashboard-mentorcards-desc--exp">
+                                                        <p *ngIf="(mentor?.bio)" class="dashboard-mentorcards-desc--exp readmore--expand--btn">
 
                                                             <app-read-more [text]="mentor?.bio" maxLength="30"></app-read-more>
                                                         </p>
@@ -391,9 +391,9 @@
                                                             <div class="col-lg-10">
                                                                 <div class="dashboard-mentorcards-desc--tags">
                                                                     <ul>
-                                                                        <li *ngIf="mentor?.subcategory1[0]?.title">{{mentor?.subcategory1[0]?.title}}</li>
-                                                                        <li *ngIf="mentor?.subcategory2[0]?.title">{{mentor?.subcategory2[0]?.title}}</li>
-                                                                        <li *ngIf="mentor?.subcategory3[0]?.title">{{mentor?.subcategory3[0]?.title}}</li>
+                                                                        <li>{{mentor?.subcategory1?.value || 'N/A'}}</li>
+                                                                        <li>{{mentor?.subcategory2?.value || 'N/A'}}</li>
+                                                                        <li>{{mentor?.subcategory3?.value || 'N/A'}}</li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -405,7 +405,7 @@
                                                         <span class="points--amount" *ngIf="mentor?.hourly_rate">${{mentor?.hourly_rate || '0'}}/hr</span>
                                                     </div>
                                                     <div class="col-12">
-                                                        <span class="points--text">Jobs Completed : 12</span>
+                                                        <span class="points--text">Jobs Completed : N/A</span>
                                                     </div>
                                                 </div>
                                             </div>

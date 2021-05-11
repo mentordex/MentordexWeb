@@ -143,7 +143,7 @@ export class ProfileComponent implements OnInit {
     this.utilsService.processPostRequest('getMentorProfileDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorProfileDetails = response;
       //console.log(this.mentorProfileDetails);
-      if (this.mentorProfileDetails.admin_status == 'APPROVED') {
+      if (this.mentorProfileDetails.admin_status == 'APPROVED' && this.mentorProfileDetails.subscription_status == 'IN-ACTIVE') {
 
         this.basicDetailsForm.patchValue({
           bio: this.mentorProfileDetails.bio,
@@ -308,7 +308,7 @@ export class ProfileComponent implements OnInit {
 
       }
       else {
-        this.router.navigate(['/mentor/application-status']);
+        this.router.navigate(['/']);
       }
 
 
@@ -1036,17 +1036,49 @@ export class ProfileComponent implements OnInit {
           date: this.getSelectedDate,
           slots: this.selectedSlotsArray
         })
+        this.slots = [];
+        this.initalizeTimeSlots();
 
-        this.slots.forEach(child => {
-          child.isChecked = false
+        this.selectedSlotsArray = [];
+
+      }else{
+        
+        let i: number = 0;
+        this.availability().controls.forEach((item: FormControl) => {
+          //console.log(item);
+          if (item.value.date == this.getSelectedDate) {
+            this.availability().removeAt(i);
+            return;
+          }
+          i++;
+        });
+
+        this.selectedAvailabilityArray = this.selectedAvailabilityArray.filter(function (item) {
+          return item.date !== this.getSelectedDate;
+        });
+
+
+        this.availability().push(new FormControl({
+          date: this.getSelectedDate,
+          slots: this.selectedSlotsArray
+        }))
+
+        this.selectedAvailabilityArray.push({
+          date: this.getSelectedDate,
+          slots: this.selectedSlotsArray
         })
+        this.slots = [];
+        this.initalizeTimeSlots();
+
+        this.selectedSlotsArray = [];
+
 
       }
 
 
     }
-    //console.log(this.availability().value);
-    //console.log(this.selectedAvailabilityArray);
+    console.log(this.availability().value);
+    console.log(this.selectedAvailabilityArray);
   }
 
 

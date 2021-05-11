@@ -37,30 +37,57 @@
                                     </div>
                                     <div class="col-12 mb-2">
                                         <div class="row">
-                                            <div class="col-lg-4 mb-4">
+                                            <div class="col-lg-12 mb-4">
                                                 <label for="" class="profile-label-text">Job Category</label> {{mentorProfileDetails?.category?.title}}
+                                                <ng-container *ngIf="mentorProfileDetails?.category1">
+                                                    <label class="mordern-radiobox-label mr-4">
+                                                    <input type="radio" class="form-check-input" name="category_id" [attr.data-subCategoryValue]="mentorProfileDetails?.subcategory1?.value" [attr.data-subCategoryId]="mentorProfileDetails?.subcategory1?.subcategory_id"  [attr.data-categoryId]="mentorProfileDetails?.category1?.category_id"  (change)="onCategoryChange($event)" value="{{mentorProfileDetails?.category1?.value}}">
+                                                    <span class="design"></span>
+                                                    <span class="text">{{mentorProfileDetails?.category1?.value}}</span>
+                                                
+                                                </label>
+                                                </ng-container>
+                                                <ng-container *ngIf="mentorProfileDetails?.category2">
+                                                    <label class="mordern-radiobox-label mr-4">
+                                                    <input type="radio" class="form-check-input" name="category_id" [attr.data-subCategoryValue]="mentorProfileDetails?.subcategory2?.value" [attr.data-subCategoryId]="mentorProfileDetails?.subcategory2?.subcategory_id"  [attr.data-categoryId]="mentorProfileDetails?.category2?.category_id"  (change)="onCategoryChange($event)" value="{{mentorProfileDetails?.category2?.value}}">
+                                                    <span class="design"></span>
+                                                    <span class="text">{{mentorProfileDetails?.category2?.value}}</span>
+                                                
+                                                </label>
+                                                </ng-container>
+                                                <ng-container *ngIf="mentorProfileDetails?.category3">
+                                                    <label class="mordern-radiobox-label mr-4">
+                                                    <input type="radio" class="form-check-input" name="category_id" [attr.data-subCategoryValue]="mentorProfileDetails?.subcategory3?.value" [attr.data-subCategoryId]="mentorProfileDetails?.subcategory3?.subcategory_id"  [attr.data-categoryId]="mentorProfileDetails?.category3?.category_id"  (change)="onCategoryChange($event)" value="{{mentorProfileDetails?.category3?.value}}">
+                                                    <span class="design"></span>
+                                                    <span class="text">{{mentorProfileDetails?.category3?.value}}</span>
+                                                
+                                                </label>
+                                                </ng-container>
 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <p class="mobile-pagetop-heading mb-3">Select Speciality</p>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-lg-4 col-xl-4 mb-4 mb-lg-0">
-                                                <select formControlName="subcategory_id" class="custom-select arrow-select green-select py-2 h-auto">
+                                    <ng-container *ngIf="selectedSpeciality != ''">
+                                        <div class="col-12">
+                                            <p class="mobile-pagetop-heading mb-3"> Speciality</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-xl-4 mb-4 mb-lg-0">
+                                                    {{selectedSpeciality}}
+                                                    <!--select formControlName="subcategory_id" class="custom-select arrow-select green-select py-2 h-auto">
                                                     <option disabled selected value="">Select</option>
                                                     <option *ngFor="let subcategory of mentorProfileDetails.subcategories;let i = index" [value]="subcategory.value">{{subcategory.name}}</option>
                                                 </select>
 
                                                 <p class="errorCls" *ngIf="bookARequestForm.controls.subcategory_id.touched || isbookARequestFormSubmitted">
                                                     <app-form-validation-errors errorPrefix="Speciality " [errors]="bookARequestForm.get('subcategory_id').errors"></app-form-validation-errors>
-                                                </p>
-                                            </div>
+                                                </p-->
+                                                </div>
 
+                                            </div>
                                         </div>
-                                    </div>
+                                    </ng-container>
                                     <div class="col-12 mt-4">
                                         <div class="border--padding-row">
                                             <div class="row">
@@ -184,7 +211,7 @@
                                     </div>
                                     <ng-container *ngIf="paymentDetailsArray.length > 0; else noCardsAvailable">
                                         <div class="col-12">
-                                            <p class="mobile-pagetop-heading mb-2">Your Billing Method</p>
+                                            <p class="mobile-pagetop-heading mb-2">Your Billing Method <span class="change-billing-method">  (<a  href="javascript:void()" routerLink="/parent/payment-methods">Change</a>)</span></p>
                                             <div *ngFor="let paymentArray of paymentDetailsArray; let i = index" class="each-credit-card-item">
                                                 <div class="row mx-0 align-items-center">
                                                     <div class="pr-0 each-credit-card-logo">
@@ -229,7 +256,7 @@
                                 <div class="small-checkboxes">
                                     <div class="form-check check-opacity mb-3">
                                         <label class="form-check-label text-muted ln-25">
-                                        <input formControlName="agree_terms" type="checkbox" class="form-check-input" name="category">Yes, I understand and agree to the Terms of Service, including User Agreement and Privacy Policy.<i class="input-helper"></i></label>
+                                        <input formControlName="agree_terms" type="checkbox" class="form-check-input" name="agree">Yes, I understand and agree to the Terms of Service, including User Agreement and Privacy Policy.<i class="input-helper"></i></label>
 
                                         <p class="errorCls" *ngIf="bookARequestForm.controls.agree_terms.touched || isbookARequestFormSubmitted">
                                             <app-form-validation-errors errorPrefix="Accepting our terms & conditions and privacy policy  " [errors]="bookARequestForm.get('agree_terms').errors"></app-form-validation-errors>

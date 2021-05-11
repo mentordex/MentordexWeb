@@ -14,6 +14,8 @@ import { environment } from '../../../../environments/environment';
 //import custom validators
 import { CustomValidators } from '../../../core/custom-validators';
 
+import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-billing-methods',
   templateUrl: './billing-methods.component.html',
@@ -47,7 +49,7 @@ export class BillingMethodsComponent implements OnInit {
   */
   getPaymentDetailsByToken(id): void {
     this.utilsService.processPostRequest('getSavedPaymentMethod', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      this.paymentDetails = response; 
+      this.paymentDetails = response;
       //console.log(this.paymentDetails.payment_details);
       this.paymentDetailsArray = this.paymentDetails.payment_details;
     })
@@ -63,6 +65,48 @@ export class BillingMethodsComponent implements OnInit {
     // console.log('carDetails', isOpened);
     this.isPaymentMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
     this.checkQueryParam();
+  }
+
+  public defaultCard(card_id):void {
+    Swal.fire({
+      title: 'Are you sure you want to make this card default?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+
+        this.utilsService.processPostRequest('defaultCard', { userID: this.id, card_id: card_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+          this.utilsService.onResponse(environment.MESSGES['DEFAULT-CARD-UPDATE-SUCCESS'], true);
+          this.getPaymentDetailsByToken(this.id);
+
+        })
+
+      }
+    })
+  }
+
+  public removeCard(card_id): void {
+    Swal.fire({
+      title: 'Are you sure you want to remove this card default?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+
+        this.utilsService.processPostRequest('removeCard', { userID: this.id, card_id: card_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+          this.utilsService.onResponse(environment.MESSGES['DEFAULT-CARD-REMOVED'], true);
+          this.getPaymentDetailsByToken(this.id);
+
+        })
+
+      }
+    })
   }
 
   //destroy all subscription

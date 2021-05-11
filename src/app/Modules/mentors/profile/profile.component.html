@@ -169,7 +169,7 @@
                                             <div class="col-12 mb-4">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <div class="profile-label-text mb-2">Select available Date and Time in the Calendar</div>
+                                                        <div class="profile-label-text mb-2">Profile Picture</div>
                                                         <div class="text-top-detail mb-1">
                                                             Please upload a high-resolution photo clearly showing your face.
                                                         </div>
@@ -883,49 +883,80 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-12 col-lg-8">
+                                                        <div class="col-12">
                                                             <label class="profile-label-text mb-3">Select Your Availability </label>
-                                                            <div class="text-top-detail font-14">
+                                                            <div class="text-top-detail font-14 mb-3">
                                                                 Parents will see this availability on your profile while searching for a mentor. You can edit your availability at any time.
                                                             </div>
 
-                                                            <div class="col-xl-6 bdr-date-right mb-4">
-                                                                <bs-datepicker-inline [minDate]="minDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="minDate"></bs-datepicker-inline>
+                                                            <div class="row">
+                                                                <div class="col-lg-6 bdr-date-right mb-4">
+                                                                    <bs-datepicker-inline [minDate]="minDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="minDate"></bs-datepicker-inline>
 
+                                                                </div>
                                                             </div>
-
-                                                            <div class="col-xl-6 pl-lg-4 mb-4">
-                                                                <div class="availtime--box">
-                                                                    <div class="profile-label-text mb-3">Available Time</div>
-                                                                    <ng-container *ngIf="slots.length > 0; else noSlotsAvailable">
-                                                                        <div class="list-style-ul">
-                                                                            <ul>
-                                                                                <li *ngFor="let availableSlot of slots let i=index">
-                                                                                    <div class="choose-category-wrapper time-slots">
-                                                                                        <label>
+                                                            <div class="row">
+                                                                <div class="col-12 pl-lg-4 mb-4">
+                                                                    <div class="availtime--box">
+                                                                        <div class="profile-label-text mb-3">Available Time</div>
+                                                                        <ng-container *ngIf="slots.length > 0; else noSlotsAvailable">
+                                                                            <div class="list-style-ul">
+                                                                                <ul>
+                                                                                    <li *ngFor="let availableSlot of slots let i=index">
+                                                                                        <div class="choose-category-wrapper time-slots">
+                                                                                            <label>
                                                                                         <input [checked]="availableSlot.isChecked" (change)="onCheckboxChange($event)" [value]="availableSlot.slot" type="checkbox" class="card-input-element">   
                                                                                         <div class="category-innebox">
                                                                                             <p class="category-heading-text">{{availableSlot.slot}}</p>
                                                                                         </div>
                                                                                         </label>
-                                                                                    </div>
-                                                                                </li>
+                                                                                        </div>
+                                                                                    </li>
 
-                                                                            </ul>
-                                                                        </div>
-                                                                    </ng-container>
-                                                                    <ng-template #noSlotsAvailable>
-                                                                        <div class="no-slots-available">
-                                                                            <span>No Slots Available</span>
-                                                                        </div>
-                                                                    </ng-template>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                        <ng-template #noSlotsAvailable>
+                                                                            <div class="no-slots-available">
+                                                                                <span>No Slots Available</span>
+                                                                            </div>
+                                                                        </ng-template>
 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 pl-lg-4 mb-4">
+                                                                    <input (click)="onSubmitSaveAndAddMore()" type="submit" class="primary--button py-2 px-30" value="Save and Add More">
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-xl-6 pl-lg-4 mb-4">
-                                                                <input (click)="onSubmitSaveAndAddMore()" type="submit" class="primary--button py-2 px-30" value="Save and Add More">
-                                                            </div>
+                                                            <ng-container *ngIf="selectedAvailabilityArray.length > 0 ">
+                                                                <div class="row">
+                                                                    <div *ngFor="let availability of selectedAvailabilityArray; let i=index" class="col-lg-12">
+                                                                        <div class="border-separator-timeslots">
+                                                                            <label class="selected-date">Selected Date: <span>{{availability.date}}</span></label>
+                                                                            <div class="date-time-selected-slots">
+                                                                                <div class="list-style-ul">
+                                                                                    <ul>
+                                                                                        <li *ngFor="let availableSlot of availability.slots let i=index">
+                                                                                            <div class="choose-category-wrapper time-slots">
+                                                                                                <label>
+                                                                                        <input disabled="true" [checked]="availableSlot.isChecked" (change)="onCheckboxChange($event)" [value]="availableSlot.value" type="checkbox" class="card-input-element">   
+                                                                                        <div class="category-innebox">
+                                                                                            <p class="category-heading-text">{{availableSlot.value}}</p>
+                                                                                        </div>
+                                                                                        </label>
+                                                                                            </div>
+                                                                                        </li>
+
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
                                                         </div>
                                                     </div>
                                                 </div>
