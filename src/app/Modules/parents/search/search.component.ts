@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit {
     this.minDate.setDate(this.minDate.getDate());
     this.maxDate.setDate(this.maxDate.getDate() + 30);  
     this.selectedDate = new Date();    
-    this.filterWithKeyValue['date'] = this.minDate.getDate() + '/' + (this.minDate.getMonth()+1) + '/' + this.minDate.getFullYear();
+    //this.filterWithKeyValue['date'] = this.minDate.getDate() + '/' + (this.minDate.getMonth()+1) + '/' + this.minDate.getFullYear();
     
    }
 
@@ -104,6 +104,7 @@ export class SearchComponent implements OnInit {
     //console.log(this.slots);
 
   }
+
   onChangeTimeslot(event){
     this.slot = event.target.value
      
@@ -156,6 +157,7 @@ export class SearchComponent implements OnInit {
       this.categories = response
     })
   }
+
   fetchSubcategories(category) {
     let index = this.filters.findIndex(x => x.filter=="category");   
     if(index!=-1){
@@ -244,6 +246,7 @@ export class SearchComponent implements OnInit {
       this.fetchResults()
     }
   }
+
   setLocation(eventObj,type){
     
       eventObj = eventObj.trim()
@@ -261,6 +264,7 @@ export class SearchComponent implements OnInit {
         this.filterWithKeyValue['location'] = eventObj
       }
   }
+
   filterRecords(eventObj,type){
     if(type=='location'){
       eventObj = eventObj.trim()

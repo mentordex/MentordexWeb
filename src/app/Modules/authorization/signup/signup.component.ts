@@ -494,7 +494,7 @@ export class SignupComponent implements OnInit {
 
     this.utilsService.processPostRequest('updateParentInfo', this.signupStep3Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse('Your information updated successfully.', true);
-      this.router.navigate(['/parent/dashboard']);
+      this.router.navigate(['/parent/search']);
     })
   }
 

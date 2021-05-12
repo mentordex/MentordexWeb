@@ -14,6 +14,7 @@ import { MyMembershipPlanComponent } from './my-membership-plan/my-membership-pl
 import { BillingMethodsComponent } from './billing-methods/billing-methods.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BookingRequestComponent } from './booking-request/booking-request.component';
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
 
@@ -97,6 +98,12 @@ const routes: Routes = [
     path: 'edit-profile',
     component: EditProfileComponent,
     data: { title: 'Edit Profile' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'booking-request/:id',
+    component: BookingRequestComponent,
+    data: { title: 'Booking Request' },
     canActivate: [AuthGuard]
   }
 

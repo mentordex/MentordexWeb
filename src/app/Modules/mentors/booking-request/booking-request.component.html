@@ -1,0 +1,118 @@
+<!--Parent section starts-->
+<section class="pt-125 py-65 bg-md-f8f8f8">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-11 mx-auto">
+                <div class="profile-steps-rightsidebar-column">
+                    <div class="dashboard-list-wrapper">
+                        <div class="dashboard-list-header profile-steps-rightsidebar-column-header">
+                            <div class="row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <p class="notification-header--title text-white">Booking Details</p>
+                                </div>
+                                <!--div class="col-sm-6 text-sm-right">
+                                    <a href="#" class="mark-read--btn text-white">
+                                        View Job post
+                                    </a>
+                                </div-->
+                            </div>
+                        </div>
+                        <div class="dashboard-list-body p-4 px-xl-5">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <p class="mobile-pagetop-heading mb-2 font-18-xs">Job Title</p>
+                                    <p class="profile-label-text font--16-xs color-text">{{jobDetails?.job_title}}</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <p class="mobile-pagetop-heading mb-2 font-18-xs">Job Description</p>
+                                    <p class="profile-label-text font--16-xs color-text">{{jobDetails?.job_description}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="closed-jobs-budgetbox mt-0">
+                                        <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2">Hourly Rate</p>
+                                        <p class="profile-label-text font--16-xs color-text">${{jobDetails?.hourly_rate}}/Hour</p>
+                                        <div class="mt-4 max-w-510">
+                                            <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2">Category</p>
+                                            <p class="profile-label-text font--16-xs color-text">{{jobDetails?.category?.title}}</p>
+                                        </div>
+                                        <div class="mt-4 max-w-510">
+                                            <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2">Speciality</p>
+                                            <p class="profile-label-text font--16-xs color-text">{{jobDetails?.subcategory?.title}}</p>
+                                        </div>
+                                        <ng-container *ngIf="jobDetails?.job_file?.length > 0">
+                                            <div class="mt-4">
+                                                <p class="mobile-pagetop-heading mb-3 font-18-xs font-400">Additional files</p>
+                                                <ul class="list-unstyled mb-0">
+                                                    <li *ngFor="let file of jobDetails?.job_file" class="dashboard-parent-profile-body--subtitle mb-2">
+                                                        <label class="upload-doc--chatbtn">
+                                                        <a target="_blank" href="{{file.file_path}}">
+                                                            <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                                                <path d="M11.9077 6.30932L6.03356 12.0417C4.9047 13.1433 3.09812 13.1212 1.99652 11.9923C0.89491 10.8635 0.916982 9.05691 2.04584 7.9553L8.43078 1.72449C8.76946 1.39399 9.22555 1.21157 9.69874 1.21735C10.1719 1.22313 10.6234 1.41664 10.9539 1.75532C11.2844 2.094 11.4669 2.5501 11.4611 3.02328C11.4553 3.49646 11.2618 3.94797 10.9231 4.27847L5.55975 9.51235C5.27881 9.7865 4.82465 9.78095 4.55049 9.50002C4.27634 9.21908 4.28189 8.76491 4.56282 8.49076L9.41538 3.75534L8.66768 2.98915L3.81513 7.72456C3.47645 8.05507 3.28293 8.50657 3.27715 8.97976C3.27137 9.45294 3.4538 9.90904 3.7843 10.2477C4.1148 10.5864 4.56631 10.7799 5.03949 10.7857C5.51267 10.7915 5.96877 10.609 6.30745 10.2785L11.6708 5.04466C12.7997 3.94305 12.8217 2.13648 11.7201 1.00762C10.6185 -0.121234 8.81194 -0.143305 7.68308 0.958302L1.29814 7.18911C-0.254675 8.70444 -0.285008 11.1872 1.23032 12.74C2.74566 14.2929 5.22843 14.3232 6.78125 12.8079L12.6554 7.07551L11.9077 6.30932Z" fill="#3BB3BD"></path>
+                                                            </svg>                                    </a>             
+                                                        </label> {{file.file_name}}
+
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="closed-jobs-budgetbox">
+                                        <div class="col-xl-8">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-6 mb-3">
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Client Details</p>
+                                                    <p class="profile-label-text font--16-xs">{{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-6 mb-3">
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Location</p>
+                                                    <p class="profile-label-text font--16-xs">{{jobDetails?.parent?.city?.value}}, {{jobDetails?.parent?.state?.value}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-6 mb-3">
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Booking Date</p>
+                                                    <p class="profile-label-text font--16-xs">{{jobDetails?.booking_date}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-6 mb-3">
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Booking Time</p>
+                                                    <p class="profile-label-text font--16-xs">{{jobDetails?.booking_time}}</p>
+                                                </div>
+
+                                                <div class="col-sm-4 col-6 mb-3">
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Client Ratings</p>
+                                                    <div>
+                                                        <ngb-rating [starTemplate]="t" [max]="5" [rate]="jobDetails?.parent?.rating || 0" [readonly]="true"></ngb-rating>
+                                                        <ng-template #t let-fill="fill">
+                                                            <span class="star" [class.full]="fill === 100">
+                                                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                                                            </span>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="closed-jobs-budgetbox mt-0">
+                                        <div class="col-xl-8">
+                                            <div class="row">
+                                                <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="#">Cancel</a>
+                                                <input type="submit" class="primary--button py-2 px-30" value="Accept Booking">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--Parent section ends-->
