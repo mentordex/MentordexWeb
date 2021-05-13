@@ -37,8 +37,18 @@
 
                                             <div *ngFor="let paymentArray of paymentDetailsArray; let i = index" class="each-credit-card-item">
                                                 <div class="row mx-0 align-items-center">
-                                                    <div class="px-1 col-12 each-credit-card-logo">
-                                                        {{paymentArray?.card_type}}
+                                                    <div class="px-1 col-12 each-credit-card-logo mb-3">
+                                                        <div class="row">
+                                                            <div class="col-6 text-left">{{paymentArray?.card_type}}</div>
+                                                            <div class="col-6 text-right">
+                                                                <ng-container *ngIf="!paymentArray.default">
+                                                                    <p class="deafult-card--appearence">
+                                                                        <a href="javascript:void(0)" class="default_card" (click)="removeCard(paymentArray?.stripe_card_id)">Remove</a>
+                                                                    </p>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+
                                                         <!--img src="./img/logos_mastercard.svg" class="img-fluid" alt="masatercard-logo"-->
                                                     </div>
                                                     <div class="px-1 col-12 each-credit-number">
@@ -57,25 +67,21 @@
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-4 text-left mt-3">
+                                                    <div class="col-6 text-left mt-3">
                                                         <ng-container *ngIf="paymentArray.default">
 
                                                             <p class="deafult-card--appearence">Default</p>
 
                                                         </ng-container>
                                                     </div>
-                                                    <div class="col-4 text-right mt-3">
+                                                    <div class="col-6 text-right mt-3">
                                                         <ng-container *ngIf="!paymentArray.default">
                                                             <p class="deafult-card--appearence">
                                                                 <a href="javascript:void(0)" class="default_card" (click)="defaultCard(paymentArray?.stripe_card_id)">Make as default</a>
                                                             </p>
                                                         </ng-container>
                                                     </div>
-                                                    <div class="col-4 text-right mt-3">
-                                                        <p class="deafult-card--appearence">
-                                                            <a href="javascript:void(0)" class="default_card" (click)="removeCard(paymentArray?.stripe_card_id)">Remove</a>
-                                                        </p>
-                                                    </div>
+
                                                 </div>
 
                                             </div>

@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   id: any = '';
   mentorId: any = '';
   mentorProfileDetails: any = {};
+  getNotificationDetails: any = {}
   profileImagePath: any = 'assets/img/none.png';
   getVideoLink: any = '';
   getVideoType: any = '';
@@ -61,6 +62,7 @@ export class DashboardComponent implements OnInit {
 
     this.zone.run(() => {
       this.getMentorProfileDetailsById(this.id);
+      this.getNotifications(this.id);
     });
 
   }
@@ -98,6 +100,16 @@ export class DashboardComponent implements OnInit {
 
     }
 
+  })
+}
+
+/**
+   * get Mentor Details By Token
+  */
+ getNotifications(id): void {
+  this.utilsService.processPostRequest('notifications/getNotifications', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+    this.getNotificationDetails = response;
+    //console.log(this.getNotificationDetails);
   })
 }
 

@@ -305,45 +305,38 @@
                                 </div>
                                 <div class="dashboard-list-body">
                                     <div class="mentorcards-outer notification--mesgouter">
-                                        <span class="text-center">Work in Progress</span>
-                                        <!--ul>
-                                            <li>
-                                                <div class="dashboard-mentorcards">
-                                                    <div class="notification-mentorcards-desc ml-0">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <p class="notification-mentorcards-desc--mentorname">Kiran Kamath has replied to your message.</p>
-                                                                <span class="notification-mentorcards-desc--exp">45min ago</span>
+                                        <ul>
+                                            <ng-container *ngIf="getNotificationDetails?.length > 0; else noNewNotifications">
+                                                <li *ngFor="let getNotification of getNotificationDetails">
+                                                    <a href="javascript:void(0)" routerLink="/mentor/booking-request/{{getNotification?.job_id}}">
+                                                        <div class="dashboard-mentorcards">
+                                                            <div class="notification-mentorcards-desc ml-0">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <p class="notification-mentorcards-desc--mentorname">{{getNotification?.notification}}</p>
+                                                                        <!--span class="notification-mentorcards-desc--exp">45min ago</span-->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ng-container>
+                                            <ng-template #noNewNotifications>
+                                                <li>
+                                                    <div class="dashboard-mentorcards">
+                                                        <div class="notification-mentorcards-desc ml-0">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <p class="notification-mentorcards-desc--mentorname">No Notifications Found.</p>
+
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dashboard-mentorcards">
-                                                    <div class="notification-mentorcards-desc ml-0">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <p class="notification-mentorcards-desc--mentorname">Kiran Kamath has replied to your message.</p>
-                                                                <span class="notification-mentorcards-desc--exp">45min ago</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dashboard-mentorcards">
-                                                    <div class="notification-mentorcards-desc ml-0">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <p class="notification-mentorcards-desc--mentorname">Kiran Kamath has replied to your message.</p>
-                                                                <span class="notification-mentorcards-desc--exp">45min ago</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul-->
+                                                </li>
+                                            </ng-template>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="bg-f9 text-center py-3 px-3">

@@ -96,14 +96,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="closed-jobs-budgetbox mt-0">
-                                        <div class="col-xl-8">
-                                            <div class="row">
-                                                <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="#">Cancel</a>
-                                                <input type="submit" class="primary--button py-2 px-30" value="Accept Booking">
+                                    <ng-container *ngIf="jobDetails?.job_status == 'PENDING'">
+                                        <div class="closed-jobs-budgetbox mt-0">
+                                            <div class="col-xl-8">
+                                                <div class="row">
+                                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" (click)="showUpdateBookingRequestPopup(jobDetails?._id, jobDetails?.parent_id, 'CANCELLED')" href="javascript:void(0)">Cancel</a>
+                                                    <input (click)="showUpdateBookingRequestPopup(jobDetails?._id, jobDetails?.parent_id, 'ACCEPTED')" type=" submit" class="primary--button py-2 px-30 " value="Accept Booking" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </ng-container>
 
                                 </div>
                             </div>
@@ -116,3 +118,6 @@
 
 </section>
 <!--Parent section ends-->
+
+<app-update-booking-request (showUpdateBookingRequestPopup)="showUpdateBookingRequestPopup(getJobId, getParentId, getJobStatus)" (hideUpdateBookingRequestPopup)="hideUpdateBookingRequestPopup($event)" [getParentId]="getParentId" [getJobStatus]="getJobStatus"
+    [getJobId]="getJobId" [isOpen]="isBookingMethodModalOpen"></app-update-booking-request>

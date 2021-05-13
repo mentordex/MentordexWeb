@@ -25,6 +25,8 @@ export class BookingRequestComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
   id: any = '';
   getJobId: any = '';
+  getParentId: any = '';
+  getJobStatus: any = 'ACCEPTED';
   jobDetails: any = {};
 
   isBookingMethodModalOpen: boolean = false;
@@ -58,16 +60,17 @@ export class BookingRequestComponent implements OnInit {
   }
 
 
-  showUpdateBookingRequestPopup(): void {
-
+  showUpdateBookingRequestPopup(jobId, parentId, jobStatus): void {
     this.isBookingMethodModalOpen = true;
-    //this.selectedPriceId = priceId
+    this.getJobId = jobId
+    this.getParentId = parentId
+    this.getJobStatus = jobStatus
   }
 
   hideUpdateBookingRequestPopup(isOpened: boolean): void {
     
     this.isBookingMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
-    
+    this.getJobDetails(this.id, this.getJobId);
   }
 
   //destroy all subscription

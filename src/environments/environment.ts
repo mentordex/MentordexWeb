@@ -25,7 +25,7 @@ export const environment = {
     "PAYMENT-METHOD-SUCCESSFULL":"Your payment method added successfully.",
     "BOOKING-REQUEST-SENT":"Your booking request has been sent successfully.",
     "DEFAULT-CARD-UPDATE-SUCCESS":"Your default card updated successfully.",
-    "DEFAULT-CARD-REMOVED":"Your default card has been removed successfully.",
+    "DEFAULT-CARD-REMOVED":"Your card has been removed successfully.",
     "SUBSCRIPTION-SUCCESS":"Your plan has been activated successfully.",
     "SUBSCRIPTION-CANCEL":"Your plan has been cancelled successfully.",
     "ADD-YOUR-BILLING-METHOD":"Add your billing method to send booking request to mentor.",
