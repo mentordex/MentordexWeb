@@ -72,12 +72,12 @@ export class LoginComponent implements OnInit {
   isEmailValidated: boolean = false
   authorizedEmail: string = '';
 
-  
+
   getGoogleLoginId = '';
   signupStep2Form: FormGroup;
-  
+
   isSignupStep2FormSubmitted: boolean = false
-  
+
 
   SearchCountryField = SearchCountryField;
   TooltipLabel = TooltipLabel;
@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
   stateArrayListing: any = [];
   cityArrayListing: any = [];
 
-  
+
 
   stateValue: Select2Value = '';
   cityValue: Select2Value = '';
@@ -152,7 +152,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginForm.value).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
 
-      console.log('response', response); 
+      console.log('response', response);
       //console.log('response admin_status', response.admin_status); return;
 
       if (response.body.verify_phone == false) {
@@ -173,16 +173,18 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/mentor/basic-details/']);
             } else if (response.body.admin_status == 'NEW') {
               this.router.navigate(['/mentor/application-status/']);
-            } else if (response.body.admin_status == 'APPROVED' && response.body.subscription_status == 'IN-ACTIVE') {
-              this.router.navigate(['/mentor/profile/']);
-            }else if (response.body.admin_status == 'APPROVED' && (response.body.subscription_status == 'ACTIVE' || response.body.subscription_status == 'CANCELLED')) {
-              this.router.navigate(['/mentor/dashboard/']);
             } else {
               this.router.navigate(['/home']);
             }
 
           } else {
-            this.router.navigate(['/home']);
+            if (response.body.admin_status == 'APPROVED' && response.body.subscription_status == 'IN-ACTIVE') {
+              this.router.navigate(['/mentor/profile/']);
+            } else if (response.body.admin_status == 'APPROVED' && (response.body.subscription_status == 'ACTIVE' || response.body.subscription_status == 'CANCELLED')) {
+              this.router.navigate(['/mentor/dashboard/']);
+            } else {
+              this.router.navigate(['/home']);
+            }
           }
 
         } else {
@@ -251,7 +253,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  
+
 
   signInWithGoogle(): void {
     //console.log('hello');
@@ -302,16 +304,18 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['/mentor/basic-details/']);
                   } else if (response.body.admin_status == 'NEW') {
                     this.router.navigate(['/mentor/application-status/']);
-                  } else if (response.body.admin_status == 'APPROVED' && response.body.subscription_status == 'IN-ACTIVE') {
+                  } else {
+                    this.router.navigate(['/home']);
+                  }
+      
+                } else {
+                  if (response.body.admin_status == 'APPROVED' && response.body.subscription_status == 'IN-ACTIVE') {
                     this.router.navigate(['/mentor/profile/']);
                   } else if (response.body.admin_status == 'APPROVED' && (response.body.subscription_status == 'ACTIVE' || response.body.subscription_status == 'CANCELLED')) {
                     this.router.navigate(['/mentor/dashboard/']);
                   } else {
                     this.router.navigate(['/home']);
                   }
-
-                } else {
-                  this.router.navigate(['/home']);
                 }
 
               } else {
@@ -343,9 +347,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  
 
-  
+
+
 
   //Authorizing Submit form
   onSignupStep2FormSubmit() {
@@ -611,7 +615,7 @@ export class LoginComponent implements OnInit {
       this.resetZipcodeControl();
     }
 
-    
+
     if (value == 'all') {
       this.resetStateControl();
       this.resetCityControl();
@@ -625,7 +629,7 @@ export class LoginComponent implements OnInit {
   */
   resetStateControl(): void {
     let stateControl = this.signupStep2Form.controls.state_id;
-    
+
 
     this.signupStep2Form.controls.state.patchValue({
       state_id: '',
@@ -633,7 +637,7 @@ export class LoginComponent implements OnInit {
     });
 
     stateControl.disable(); stateControl.setValue('');
-    
+
 
     this.states = [];
   }
@@ -643,7 +647,7 @@ export class LoginComponent implements OnInit {
   */
   resetCityControl(): void {
     let cityControl = this.signupStep2Form.controls.city_id;
-    
+
 
     this.signupStep2Form.controls.city.patchValue({
       city_id: '',
@@ -651,7 +655,7 @@ export class LoginComponent implements OnInit {
     });
 
     cityControl.disable(); cityControl.setValue('');
-    
+
 
     this.cities = [];
   }
@@ -661,9 +665,9 @@ export class LoginComponent implements OnInit {
   */
   resetZipcodeControl() {
     let zipcodeControl = this.signupStep2Form.controls.zipcode;
-    
+
     zipcodeControl.disable(); zipcodeControl.setValue('');
-    
+
     this.zipcodes = [];
   }
 
@@ -672,9 +676,9 @@ export class LoginComponent implements OnInit {
   */
   enableStateControl(): void {
     let stateControl = this.signupStep2Form.controls.state_id;
-   
+
     stateControl.enable();
-    
+
   }
 
   /**
@@ -682,24 +686,24 @@ export class LoginComponent implements OnInit {
   */
   enableCityControl(): void {
     let cityControl = this.signupStep2Form.controls.city_id;
-    
+
     cityControl.enable();
-    
+
   }
 
-  
+
 
   /**
   * Enable Zipcode Control
   */
   enableZipcodeControl(): void {
     let zipcodeControl = this.signupStep2Form.controls.zipcode;
-    
+
     zipcodeControl.enable();
-    
+
   }
 
-  
+
   //destroy all subscription
   public ngOnDestroy(): void {
     this.onDestroy$.next();

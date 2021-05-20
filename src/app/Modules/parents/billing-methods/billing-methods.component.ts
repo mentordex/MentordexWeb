@@ -90,7 +90,7 @@ export class BillingMethodsComponent implements OnInit {
 
   public removeCard(card_id): void {
     Swal.fire({
-      title: 'Are you sure you want to remove this card default?',
+      title: 'Are you sure you want to remove this card?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -102,7 +102,6 @@ export class BillingMethodsComponent implements OnInit {
         this.utilsService.processPostRequest('removeCard', { userID: this.id, card_id: card_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
           this.utilsService.onResponse(environment.MESSGES['DEFAULT-CARD-REMOVED'], true);
           this.getPaymentDetailsByToken(this.id);
-
         })
 
       }

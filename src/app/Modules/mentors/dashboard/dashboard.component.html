@@ -308,13 +308,13 @@
                                         <ul>
                                             <ng-container *ngIf="getNotificationDetails?.length > 0; else noNewNotifications">
                                                 <li *ngFor="let getNotification of getNotificationDetails">
-                                                    <a href="javascript:void(0)" routerLink="/mentor/booking-request/{{getNotification?.job_id}}">
+                                                    <a class="notification-link" href="javascript:void(0)" routerLink="/mentor/booking-request/{{getNotification?.job_id}}">
                                                         <div class="dashboard-mentorcards">
                                                             <div class="notification-mentorcards-desc ml-0">
                                                                 <div class="row">
                                                                     <div class="col-lg-12">
                                                                         <p class="notification-mentorcards-desc--mentorname">{{getNotification?.notification}}</p>
-                                                                        <!--span class="notification-mentorcards-desc--exp">45min ago</span-->
+                                                                        <span class="notification-mentorcards-desc--exp">{{getNotification?.created_at | dateAgo}}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>

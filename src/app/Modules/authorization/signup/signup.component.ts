@@ -258,8 +258,8 @@ export class SignupComponent implements OnInit {
     //console.log('hello');
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData: any) => {
-        console.log(userData)
-        console.log(userData.firstName)
+        //console.log(userData)
+        //console.log(userData.firstName)
 
         this.signupStep1Form.patchValue({
           email: userData.email
@@ -301,16 +301,18 @@ export class SignupComponent implements OnInit {
                     this.router.navigate(['/mentor/basic-details/']);
                   } else if (response.body.admin_status == 'NEW') {
                     this.router.navigate(['/mentor/application-status/']);
-                  } else if (response.body.admin_status == 'APPROVED' && response.body.subscription_status == 'IN-ACTIVE') {
+                  } else {
+                    this.router.navigate(['/home']);
+                  }
+      
+                } else {
+                  if (response.body.admin_status == 'APPROVED' && response.body.subscription_status == 'IN-ACTIVE') {
                     this.router.navigate(['/mentor/profile/']);
                   } else if (response.body.admin_status == 'APPROVED' && (response.body.subscription_status == 'ACTIVE' || response.body.subscription_status == 'CANCELLED')) {
                     this.router.navigate(['/mentor/dashboard/']);
                   } else {
                     this.router.navigate(['/home']);
                   }
-
-                } else {
-                  this.router.navigate(['/home']);
                 }
 
               } else {

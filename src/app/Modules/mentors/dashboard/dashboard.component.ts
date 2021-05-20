@@ -70,100 +70,98 @@ export class DashboardComponent implements OnInit {
   /**
    * get Mentor Details By Token
   */
- getMentorProfileDetailsById(id): void {
-  this.utilsService.processPostRequest('getMentorProfileDetails', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-    this.mentorProfileDetails = response;
-    //console.log(this.mentorProfileDetails);
+  getMentorProfileDetailsById(id): void {
+    this.utilsService.processPostRequest('getMentorProfileDetails', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.mentorProfileDetails = response;
+      //console.log(this.mentorProfileDetails);
 
-    if (this.mentorProfileDetails.profile_image.length > 0) {
-      //console.log('pello')
-      this.profileImagePath = this.mentorProfileDetails.profile_image[0].file_path;
-    }
+      if (this.mentorProfileDetails.profile_image.length > 0) {
+        //console.log('pello')
+        this.profileImagePath = this.mentorProfileDetails.profile_image[0].file_path;
+      }
 
-    if (this.mentorProfileDetails.introduction_video.length > 0) {
-      //console.log('pello')
-      this.getVideoLink = this.mentorProfileDetails.introduction_video[0].file_path;
-      this.getVideoType = this.mentorProfileDetails.introduction_video[0].file_mimetype;
-    }
+      if (this.mentorProfileDetails.introduction_video.length > 0) {
+        //console.log('pello')
+        this.getVideoLink = this.mentorProfileDetails.introduction_video[0].file_path;
+        this.getVideoType = this.mentorProfileDetails.introduction_video[0].file_mimetype;
+      }
 
-    if(this.mentorProfileDetails.availability.length > 0){
-      this.getAvailableSlots = this.mentorProfileDetails.availability;
-      let getDate = this.getSelectedDate;
+      if (this.mentorProfileDetails.availability.length > 0) {
+        this.getAvailableSlots = this.mentorProfileDetails.availability;
+        let getDate = this.getSelectedDate;
 
-      //console.log(getDate);
+        //console.log(getDate);
 
-      this.selectedAvailabilityArray = this.getAvailableSlots.filter(function (item) {
-        return item.date === getDate;
-      });
+        this.selectedAvailabilityArray = this.getAvailableSlots.filter(function (item) {
+          return item.date === getDate;
+        });
 
-      //console.log(this.selectedAvailabilityArray);
+        //console.log(this.selectedAvailabilityArray);
 
-    }
+      }
 
-  })
-}
-
-/**
-   * get Mentor Details By Token
-  */
- getNotifications(id): void {
-  this.utilsService.processPostRequest('notifications/getNotifications', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-    this.getNotificationDetails = response;
-    //console.log(this.getNotificationDetails);
-  })
-}
-
-public openVideoIntroPopup(video_link): void {
-  //this.getVideoLink = this.dom.bypassSecurityTrustResourceUrl(video_link);
-  this.getVideoLink = video_link;
-  //console.log(this.getVideoLink);
-  if (this.getVideoLink != "") {
-    $('#videoModal').modal('show')
+    })
   }
 
-}
+  /**
+     * get Mentor Notifications By Token
+    */
+  getNotifications(id): void {
+    this.utilsService.processPostRequest('notifications/getNotifications', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.getNotificationDetails = response;
+      console.log(this.getNotificationDetails);
+    })
+  }
 
-public submitMentorBookingRequest(): void {
-  // check Parent has added the billing method or not.
-  this.utilsService.processPostRequest('checkBillingMethodExists', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+  public openVideoIntroPopup(video_link): void {
+    //this.getVideoLink = this.dom.bypassSecurityTrustResourceUrl(video_link);
+    this.getVideoLink = video_link;
+    //console.log(this.getVideoLink);
+    if (this.getVideoLink != "") {
+      $('#videoModal').modal('show')
+    }
 
+  }
 
-  })
-}
-
-onDateChange(value: Date): void {
-  this.selectedAvailabilityArray = [];
-
-  let selectedDate = new Date(value);
-
-  this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
-
-  let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
-
-  this.getSelectedDate = formatDate;
-  
-  this.selectedAvailabilityArray = this.getAvailableSlots.filter(function (item) {
-    return item.date === formatDate;
-  });
-
-  console.log(this.selectedAvailabilityArray);
-}
+  public submitMentorBookingRequest(): void {
+    // check Parent has added the billing method or not.
+    this.utilsService.processPostRequest('checkBillingMethodExists', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
 
 
+    })
+  }
 
-/**
-* set check object array length.
-* @param object
-*  @return number
-*/
-public checkObjectLength(object): number {
-  return Object.keys(object).length;
-}
+  onDateChange(value: Date): void {
+    this.selectedAvailabilityArray = [];
 
-//destroy all subscription
-public ngOnDestroy(): void {
-  this.onDestroy$.next();
-}
+    let selectedDate = new Date(value);
+
+    this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
+
+    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+
+    this.getSelectedDate = formatDate;
+
+    this.selectedAvailabilityArray = this.getAvailableSlots.filter(function (item) {
+      return item.date === formatDate;
+    });
+
+    //console.log(this.selectedAvailabilityArray);
+  }
+
+  /**
+  * set check object array length.
+  * @param object
+  *  @return number
+  */
+  public checkObjectLength(object): number {
+    return Object.keys(object).length;
+  }
+
+  //destroy all subscription
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
 
 }

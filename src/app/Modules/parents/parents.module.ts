@@ -8,10 +8,12 @@ import { BillingMethodsComponent } from './billing-methods/billing-methods.compo
 import { MentorProfileComponent } from './mentor-profile/mentor-profile.component';
 import { BookingRequestComponent } from './booking-request/booking-request.component';
 import { SearchComponent } from './search/search.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { MessagesComponent } from './messages/messages.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, AddPaymentMethodComponent, BillingMethodsComponent, MentorProfileComponent, BookingRequestComponent, SearchComponent],
+  declarations: [DashboardComponent, AddPaymentMethodComponent, BillingMethodsComponent, MentorProfileComponent, BookingRequestComponent, SearchComponent, NotificationsComponent, MessagesComponent],
   imports: [
     CommonModule,
     ParentsRoutingModule,

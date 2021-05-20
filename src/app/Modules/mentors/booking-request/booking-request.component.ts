@@ -42,7 +42,7 @@ export class BookingRequestComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.getJobId = params['id'];
       this.zone.run(() => {
-        this.getJobDetails(this.id, this.getJobId);
+        this.getMentorJobDetails(this.id, this.getJobId);
       });
       //console.log(this.priceValuationForm.value);
     });
@@ -51,8 +51,8 @@ export class BookingRequestComponent implements OnInit {
   /**
    * get Mentor Details By Token
   */
-  getJobDetails(id, getJobId): void {
-    this.utilsService.processPostRequest('jobs/getJobDetails', { userID: id, jobId: getJobId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+ getMentorJobDetails(id, getJobId): void {
+    this.utilsService.processPostRequest('jobs/getMentorJobDetails', { userID: id, jobId: getJobId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.jobDetails = response;
 
       console.log(this.jobDetails);
@@ -70,7 +70,7 @@ export class BookingRequestComponent implements OnInit {
   hideUpdateBookingRequestPopup(isOpened: boolean): void {
     
     this.isBookingMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
-    this.getJobDetails(this.id, this.getJobId);
+    this.getMentorJobDetails(this.id, this.getJobId);
   }
 
   //destroy all subscription

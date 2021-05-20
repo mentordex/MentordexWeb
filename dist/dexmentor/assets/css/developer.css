@@ -472,6 +472,11 @@ ngb-rating * {
     border-radius: 50%;
 }
 
+.notification-link:hover {
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
 @media only screen and (min-width: 768px) {
     .listing-category-modify ul li {
         flex: 0 0 33.33%;

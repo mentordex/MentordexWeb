@@ -87,7 +87,7 @@
                                             </li>
                                             <ng-container *ngIf="selectedAvailabilityArray.length > 0; else noSlotsAvailable">
                                                 <li *ngFor="let availableSlot of selectedAvailabilityArray let i=index">
-                                                    <p class="dashboard-parent-profile-body--title mb-2">{{getCurrentDay}}, {{getSelectedDate | date : 'MMM dd, YYYY'}}</p>
+                                                    <p class="dashboard-parent-profile-body--title mb-2">{{getCurrentDay}}, {{getSelectedDate}}</p>
                                                     <div class="choose-category-wrapper time-slots mt-3">
                                                         <label *ngFor="let available of availableSlot.slots let j=index">
                                                     <input type="checkbox" name="slots" class="card-input-element" disabled>   

@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  API_ENDPOINT: 'http://18.218.99.213:3000',
+  //API_ENDPOINT: 'http://18.218.99.213:3000',
+  API_ENDPOINT: 'https://api.mentordex.app',
   BLOG_API_ENDPOINT:'http://18.218.99.213/mentordex/blog/wp-json/wp/v2',
   TOKEN_NAME:"x-mentordex-auth-token",
   MESSGES:{
