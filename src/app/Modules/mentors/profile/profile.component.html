@@ -431,7 +431,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-9 text-center text-md-left  mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <a (click)="gotoStep(0)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
 
                                                     <input type="submit" [disabled]="academicHistoryForm.invalid" (click)="onSubmitAcademicHistoryForm()" class="primary--button py-2 px-30" value="NEXT">
                                                 </div>
@@ -629,7 +629,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-9 text-center text-md-left  mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" awPreviousStep href="javascript:void(0)">BACK</a>
+                                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" (click)="gotoStep(1)" href="javascript:void(0)">BACK</a>
                                                     <input [disabled]="employmentHistoryForm.invalid" (click)="onSubmitEmploymentHistoryForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
                                                 </div>
                                             </div>
@@ -806,7 +806,7 @@
                                     <div class="row">
                                         <div class="col-12 col-md-9 text-center text-md-left  mb-3">
                                             <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                <a (click)="gotoStep(2)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
                                                 <input [disabled]="achievementsForm.invalid" (click)="onSubmitAchievementsForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
                                             </div>
                                         </div>
@@ -967,7 +967,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-9 text-center text-md-left  mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <a (click)="gotoStep(3)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
                                                     <input [disabled]="hourlyRateForm.invalid" (click)="onSubmitHourlyRateForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
                                                 </div>
                                             </div>
@@ -1084,7 +1084,7 @@
                                         <div class="row">
                                             <div class="col-12 text-center text-md-left mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <a (click)="gotoStep(4)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
                                                     <input [disabled]="addSocialLinksForm.invalid" (click)="onSubmitAddSocialLinksForm()" type="submit" class="primary--button py-2 px-30" value="Complete Setup">
                                                 </div>
                                             </div>

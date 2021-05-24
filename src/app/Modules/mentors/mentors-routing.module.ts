@@ -17,6 +17,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BookingRequestComponent } from './booking-request/booking-request.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { MessagesComponent } from './messages/messages.component';
+import { ViewProfileComponent } from './view-profile/view-profile.component';
+import { UpgradeMembershipComponent } from './upgrade-membership/upgrade-membership.component';
 
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
@@ -119,6 +121,18 @@ const routes: Routes = [
     path: 'messages',
     component: MessagesComponent,
     data: { title: 'Messages' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'my-profile',
+    component: ViewProfileComponent,
+    data: { title: 'Profile' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'upgrade-membership',
+    component: UpgradeMembershipComponent,
+    data: { title: 'Upgrade Membership' },
     canActivate: [AuthGuard]
   }
 

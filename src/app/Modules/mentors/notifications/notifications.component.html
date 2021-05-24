@@ -10,14 +10,14 @@
                                     <p class="notification-header--title text-white">Notifications</p>
                                 </div>
                                 <div class="col-lg-6 text-lg-right">
-                                    <button class="mark-read--btn text-white">
+                                    <!--button class="mark-read--btn text-white">
                                         <span class="mr-2">
                                             <svg width="21" height="18" viewBox="0 0 21 18" fill="none">
                                                 <path d="M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H10V14H2V4L10 9L18 4V9H20V2C20 0.9 19.1 0 18 0ZM10 7L2 2H18L10 7ZM15.34 18L11.8 14.46L13.21 13.05L15.33 15.17L19.57 10.93L21 12.34L15.34 18Z" fill="white"/>
                                             </svg>                                                
                                         </span>
                                         Mark all as read
-                                    </button>
+                                    </button-->
                                 </div>
                             </div>
                         </div>
@@ -26,29 +26,49 @@
                             <!--div class="earlier--title">
                                 Today
                             </div-->
-                            <div class="mentorcards-outer notification--mesgouter">
-                                <ul>
-                                    <li *ngFor="let getNotification of getNotificationDetails">
-                                        <div class="dashboard-mentorcards">
-                                            <div class="notification-mentorcards-profile">
-                                                <img [src]="getNotification?.profileImagePath" alt="mentor-profile-pic">
+                            <ng-container *ngIf="getNotificationDetails.length > 0; else noNotificationsFound;">
+                                <div class="mentorcards-outer notification--mesgouter">
+                                    <ul>
+                                        <li *ngFor="let getNotification of getNotificationDetails">
+                                            <div class="dashboard-mentorcards">
+                                                <div class="notification-mentorcards-profile">
+                                                    <img [src]="getNotification?.profileImagePath" alt="mentor-profile-pic">
+                                                </div>
+                                                <div class="notification-mentorcards-desc">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <p class="notification-mentorcards-desc--mentorname">{{getNotification?.notification}}</p>
+                                                            <span class="notification-mentorcards-desc--exp">{{getNotification?.created_at | dateAgo}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button (click)="markedAsArchived(getNotification?._id)" class="notification--deletebtn">
+                                                <img src="assets/img/notification--delete.png" alt="button">
+                                            </button>
                                             </div>
-                                            <div class="notification-mentorcards-desc">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <p class="notification-mentorcards-desc--mentorname">{{getNotification?.notification}}</p>
-                                                        <span class="notification-mentorcards-desc--exp">{{getNotification?.created_at | dateAgo}}</span>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </ng-container>
+                            <ng-template #noNotificationsFound>
+                                <div class="mentorcards-outer notification--mesgouter">
+                                    <ul>
+                                        <li>
+                                            <div class="dashboard-mentorcards">
+                                                <div class="notification-mentorcards-desc">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <p class="notification-mentorcards-desc--mentorname">No New Notifications</p>
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="notification--deletebtn">
-                                                <img src="assets/img/notification--delete.png" alt="button">
-                                            </button>
-                                        </div>
-                                    </li>
-
-                                </ul>
-                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ng-template>
                         </div>
                     </div>
                 </div>

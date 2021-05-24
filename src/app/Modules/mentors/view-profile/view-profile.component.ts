@@ -18,11 +18,11 @@ import { CustomValidators } from '../../../core/custom-validators';
 declare var $;
 
 @Component({
-  selector: 'app-mentor-profile',
-  templateUrl: './mentor-profile.component.html',
-  styleUrls: ['./mentor-profile.component.css']
+  selector: 'app-view-profile',
+  templateUrl: './view-profile.component.html',
+  styleUrls: ['./view-profile.component.css']
 })
-export class MentorProfileComponent implements OnInit {
+export class ViewProfileComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
   id: any = '';
@@ -41,15 +41,7 @@ export class MentorProfileComponent implements OnInit {
   getAvailableSlots: any = [];
   selectedAvailabilityArray: any = [];
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) {
-    this.minDate = new Date();
-    this.maxDate = new Date();
-    this.minDate.setDate(this.minDate.getDate());
-    this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
-    this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
-    this.getSelectedDate = this.getCurrentDate;
-    //console.log(this.getSelectedDate);
-  }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) { }
 
   ngOnInit(): void {
     this.checkQueryParam();
@@ -58,21 +50,9 @@ export class MentorProfileComponent implements OnInit {
   private checkQueryParam() {
     this.id = localStorage.getItem('x-user-ID');
 
-    this.activatedRoute.params.subscribe((params) => {
-      this.mentorId = params['id'];
-
-
-
-      this.zone.run(() => {
-        this.getMentorProfileDetailsById(this.id, this.mentorId);
-      });
-
-      //console.log(this.getMentorProfileDetailsById.value);
-
+    this.zone.run(() => {
+      this.getMentorProfileDetailsById(this.id, this.id);
     });
-
-
-
 
   }
 
@@ -122,39 +102,11 @@ export class MentorProfileComponent implements OnInit {
 
   }
 
-  public submitMentorBookingRequest(): void {
-    // check Parent has added the billing method or not.
-    this.utilsService.processPostRequest('checkBillingMethodExists', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-
-
-    })
-  }
-
-  onDateChange(value: Date): void {
-    this.selectedAvailabilityArray = [];
-
-    let selectedDate = new Date(value);
-
-    this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
-
-    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
-
-    this.getSelectedDate = formatDate;
-
-    this.selectedAvailabilityArray = this.getAvailableSlots.filter(function (item) {
-      return item.date === formatDate;
-    });
-
-    console.log(this.selectedAvailabilityArray);
-  }
-
-
-
   /**
-* set check object array length.
-* @param object
-*  @return number
-*/
+  * set check object array length.
+  * @param object
+  *  @return number
+  */
   public checkObjectLength(object): number {
     return Object.keys(object).length;
   }

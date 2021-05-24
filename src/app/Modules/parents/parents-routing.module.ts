@@ -6,6 +6,9 @@ import { BillingMethodsComponent } from './billing-methods/billing-methods.compo
 import { MentorProfileComponent } from './mentor-profile/mentor-profile.component';
 import { BookingRequestComponent } from './booking-request/booking-request.component';
 import { SearchComponent } from './search/search.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { MessagesComponent } from './messages/messages.component';
+
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
 
@@ -38,6 +41,18 @@ const routes: Routes = [
     path: 'booking-request/:id',
     component: BookingRequestComponent,
     data: { title: 'Booking Request' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'notifications',
+    component: NotificationsComponent,
+    data: { title: 'Notifications' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'messages',
+    component: MessagesComponent,
+    data: { title: 'Messages' },
     canActivate: [AuthGuard]
   }
 ];

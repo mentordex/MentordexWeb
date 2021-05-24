@@ -26,9 +26,6 @@ import { DropzoneComponent, DropzoneDirective, DropzoneConfigInterface } from 'n
 })
 export class MessagesComponent implements OnInit {
 
-
-
-
   private onDestroy$: Subject<void> = new Subject<void>();
   id: any = '';
   getJobId: any = '';
@@ -36,6 +33,7 @@ export class MessagesComponent implements OnInit {
   getJobStatus: any = 'ACCEPTED';
   jobDetails: any = [];
   parentDetails: any = [];
+  filteredParentDetails: any = [];
   messageDetails: any = [];
   getJobDetailsArray: any = [];
   parentProfileImagePath: any = 'assets/img/none.png';
@@ -54,6 +52,8 @@ export class MessagesComponent implements OnInit {
   selectedParentId: any = '';
 
   isBookingMethodModalOpen: boolean = false;
+
+  options = { autoHide: false, scrollbarMinSize: 100 };
 
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -135,6 +135,10 @@ export class MessagesComponent implements OnInit {
           let fileExtension = (file.name).split('.').pop();
 
           componentObj.base64StringFile = reader.result;
+
+          if (fileExtension == "pdf") {
+            componentObj.base64StringFile = componentObj.base64StringFile.replace('data:application/pdf;base64,', '');
+          }
           componentObj.utilsService.showPageLoader();//start showing page loader
           done();
         };
@@ -145,7 +149,7 @@ export class MessagesComponent implements OnInit {
 
         this.on('sending', function (file, xhr, formData) {
 
-          formData.append('folder', 'introduction_video');
+          formData.append('folder', 'messages');
           formData.append('fileType', file.type);
           formData.append('base64StringFile', componentObj.base64StringFile);
           componentObj.utilsService.showPageLoader();//start showing page loader 
@@ -163,7 +167,7 @@ export class MessagesComponent implements OnInit {
           //console.log('serverResponse', serverResponse);
 
           componentObj.zone.run(() => {
-            componentObj.messageFileArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'introduction_video' }));
+            componentObj.messageFileArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'messages' }));
           });
 
           //console.log('messageFileArray', componentObj.messageFileArray);
@@ -192,8 +196,24 @@ export class MessagesComponent implements OnInit {
 
     this.utilsService.processPostRequest('messages/saveMentorMessage', this.messageForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
-      this.getMentorJobsById(this.id, this.selectedJobId)
+      this.getMentorJobsById(this.id, this.selectedJobId);
+      this.messageForm.patchValue({
+        message: ''
+      })
+
+      this.messageFileArray.clear();
     })
+  }
+
+  onkeypress(value) {
+    if (value != '') {
+      this.parentDetails = this.parentDetails.filter(y => (y.parent_first_name.toLowerCase().indexOf(value.toLowerCase()) > -1) || (y.parent_last_name.toLowerCase().indexOf(value.toLowerCase()) > -1));
+    } else {
+      this.parentDetails = this.filteredParentDetails;
+    }
+
+
+    console.log(this.parentDetails);
   }
 
   /**
@@ -233,6 +253,8 @@ export class MessagesComponent implements OnInit {
 
           this.parentDetails.push({ job_id: element._id, parent_id: element.parent_id, parent_first_name: element.parent.first_name, parent_last_name: element.parent.last_name, parent_profile_image: this.parentProfileImagePath });
 
+          this.filteredParentDetails.push({ job_id: element._id, parent_id: element.parent_id, parent_first_name: element.parent.first_name, parent_last_name: element.parent.last_name, parent_profile_image: this.parentProfileImagePath });
+
           /* get Sidebar Listing */
 
 
@@ -255,7 +277,7 @@ export class MessagesComponent implements OnInit {
             //this.getJobDetailsArray[index]['booking_date'] = bookingDate.toDateString();
 
             this.utilsService.processPostRequest('messages/getMentorJobMessages', { userID: mentorId, job_id: element._id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-              console.log(response)
+              //console.log(response)
 
               this.jobDetails[index]['messages'] = response;
 
@@ -290,7 +312,7 @@ export class MessagesComponent implements OnInit {
 
 
         });
-        console.log(this.getJobDetailsArray);
+        //console.log(this.getJobDetailsArray);
 
       } else {
         this.noJobsFound = true;
@@ -305,6 +327,7 @@ export class MessagesComponent implements OnInit {
    * get Mentor Jobs By Token
   */
   getMentorJobsById(mentorId, jobId): void {
+
     this.utilsService.processPostRequest('messages/getMentorJobsById', { userID: mentorId, job_id: jobId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
 
@@ -389,9 +412,43 @@ export class MessagesComponent implements OnInit {
   }
 
   hideUpdateBookingRequestPopup(isOpened: boolean): void {
-    
+
     this.isBookingMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
     this.getMentorJobsById(this.id, this.getJobId);
+  }
+
+  /**
+   * remove PDF
+   * @param index index of the image array
+   * @return  boolean
+   */
+  removeFile(index, file_category, file_key): void {
+
+    this.messageFileArray.removeAt(index);
+    this.removeFileFromBucket(file_key);
+  }
+
+  /**
+   * remove image from AWS Bucket
+   * @param filePath image url
+   * @param bucket s3 bucket name
+   */
+  removeFileFromBucket(file_key) {
+
+    const params = { fileKey: file_key }
+
+    this.utilsService.processPostRequest('deleteObject', params, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.messageFileArray.reset();
+    })
+  }
+
+  /**
+* set check object array length.
+* @param object
+*  @return number
+*/
+  public checkObjectLength(object): number {
+    return Object.keys(object).length;
   }
 
   //destroy all subscription

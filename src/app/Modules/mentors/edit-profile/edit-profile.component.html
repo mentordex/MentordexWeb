@@ -169,7 +169,7 @@
                                             <div class="col-12 mb-4">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <div class="profile-label-text mb-2">Select available Date and Time in the Calendar</div>
+                                                        <div class="profile-label-text mb-2">Profile Picture</div>
                                                         <div class="text-top-detail mb-1">
                                                             Please upload a high-resolution photo clearly showing your face.
                                                         </div>
@@ -260,7 +260,7 @@
                                                         <textarea formControlName="bio" rows="4" class="profile-steps-input w-100 bg-white resize-none" placeholder="Introduce & describe yourself to parents."></textarea>
 
                                                         <p class="errorCls" *ngIf="basicDetailsForm.controls.bio.touched || isBasicDetailsFormSubmitted">
-                                                            <app-form-validation-errors minLength=30 maxLength=500 errorPrefix="Quick Bio " [errors]="basicDetailsForm.get('bio').errors"></app-form-validation-errors>
+                                                            <app-form-validation-errors minLength=30 maxLength=1000 errorPrefix="Quick Bio " [errors]="basicDetailsForm.get('bio').errors"></app-form-validation-errors>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -431,7 +431,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-9 text-center text-md-left  mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <a (click)="gotoStep(0)" href="javascript:void(0)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3">BACK</a>
 
                                                     <input type="submit" [disabled]="academicHistoryForm.invalid" (click)="onSubmitAcademicHistoryForm()" class="primary--button py-2 px-30" value="NEXT">
                                                 </div>
@@ -598,7 +598,7 @@
                                                             <div class="row mb-4">
                                                                 <div class="col-lg-6">
                                                                     <label class="profile-label-text mb-2">Description</label>
-                                                                    <textarea formControlName="description" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
+                                                                    <textarea formControlName="description" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
 
                                                                     <p class="errorCls" *ngIf="employment.get('description').touched || isEmploymentHistoryFormSubmitted">
                                                                         <app-form-validation-errors minLength=2 maxLength=200 errorPrefix="Description " [errors]="employment.get('description').errors"></app-form-validation-errors>
@@ -629,7 +629,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-9 text-center text-md-left  mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" awPreviousStep href="javascript:void(0)">BACK</a>
+                                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" (click)="gotoStep(1)" href="javascript:void(0)">BACK</a>
                                                     <input [disabled]="employmentHistoryForm.invalid" (click)="onSubmitEmploymentHistoryForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
                                                 </div>
                                             </div>
@@ -777,7 +777,7 @@
                                                         <div class="row mb-4">
                                                             <div class="col-lg-6">
                                                                 <label class="profile-label-text mb-2">Description</label>
-                                                                <textarea formControlName="description" id="" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
+                                                                <textarea formControlName="description" rows="4" class="profile-steps-input w-100 bg-white resize-none"></textarea>
                                                                 <p class="errorCls" *ngIf="achievement.get('description').touched || isAchievementsFormSubmitted">
                                                                     <app-form-validation-errors minLength=2 maxLength=500 errorPrefix="Description
                                                                     " [errors]="achievement.get('description').errors"></app-form-validation-errors>
@@ -806,7 +806,7 @@
                                     <div class="row">
                                         <div class="col-12 col-md-9 text-center text-md-left  mb-3">
                                             <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                <a (click)="gotoStep(2)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
                                                 <input [disabled]="achievementsForm.invalid" (click)="onSubmitAchievementsForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
                                             </div>
                                         </div>
@@ -883,49 +883,80 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-12 col-lg-8">
+                                                        <div class="col-12">
                                                             <label class="profile-label-text mb-3">Select Your Availability </label>
-                                                            <div class="text-top-detail font-14">
+                                                            <div class="text-top-detail font-14 mb-3">
                                                                 Parents will see this availability on your profile while searching for a mentor. You can edit your availability at any time.
                                                             </div>
 
-                                                            <div class="col-xl-6 bdr-date-right mb-4">
-                                                                <bs-datepicker-inline [minDate]="minDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="minDate"></bs-datepicker-inline>
+                                                            <div class="row">
+                                                                <div class="col-lg-6 bdr-date-right mb-4">
+                                                                    <bs-datepicker-inline [minDate]="minDate" [bsConfig]="{ showWeekNumbers:false, isAnimated: true, containerClass: 'theme-blue' }" (bsValueChange)="onDateChange($event)" [bsValue]="minDate"></bs-datepicker-inline>
 
+                                                                </div>
                                                             </div>
-
-                                                            <div class="col-xl-6 pl-lg-4 mb-4">
-                                                                <div class="availtime--box">
-                                                                    <div class="profile-label-text mb-3">Available Time</div>
-                                                                    <ng-container *ngIf="slots.length > 0; else noSlotsAvailable">
-                                                                        <div class="list-style-ul">
-                                                                            <ul>
-                                                                                <li *ngFor="let availableSlot of slots let i=index">
-                                                                                    <div class="choose-category-wrapper time-slots">
-                                                                                        <label>
+                                                            <div class="row">
+                                                                <div class="col-12 pl-lg-4 mb-4">
+                                                                    <div class="availtime--box">
+                                                                        <div class="profile-label-text mb-3">Available Time</div>
+                                                                        <ng-container *ngIf="slots.length > 0; else noSlotsAvailable">
+                                                                            <div class="list-style-ul">
+                                                                                <ul>
+                                                                                    <li *ngFor="let availableSlot of slots let i=index">
+                                                                                        <div class="choose-category-wrapper time-slots">
+                                                                                            <label>
                                                                                         <input [checked]="availableSlot.isChecked" (change)="onCheckboxChange($event)" [value]="availableSlot.slot" type="checkbox" class="card-input-element">   
                                                                                         <div class="category-innebox">
                                                                                             <p class="category-heading-text">{{availableSlot.slot}}</p>
                                                                                         </div>
                                                                                         </label>
-                                                                                    </div>
-                                                                                </li>
+                                                                                        </div>
+                                                                                    </li>
 
-                                                                            </ul>
-                                                                        </div>
-                                                                    </ng-container>
-                                                                    <ng-template #noSlotsAvailable>
-                                                                        <div class="no-slots-available">
-                                                                            <span>No Slots Available</span>
-                                                                        </div>
-                                                                    </ng-template>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                        <ng-template #noSlotsAvailable>
+                                                                            <div class="no-slots-available">
+                                                                                <span>No Slots Available</span>
+                                                                            </div>
+                                                                        </ng-template>
 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 pl-lg-4 mb-4">
+                                                                    <input (click)="onSubmitSaveAndAddMore()" type="submit" class="primary--button py-2 px-30" value="Save and Add More">
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-xl-6 pl-lg-4 mb-4">
-                                                                <input (click)="onSubmitSaveAndAddMore()" type="submit" class="primary--button py-2 px-30" value="Save and Add More">
-                                                            </div>
+                                                            <ng-container *ngIf="selectedAvailabilityArray.length > 0 ">
+                                                                <div class="row">
+                                                                    <div *ngFor="let availability of selectedAvailabilityArray; let i=index" class="col-lg-12">
+                                                                        <div class="border-separator-timeslots">
+                                                                            <label class="selected-date">Selected Date: <span>{{availability.date}}</span></label>
+                                                                            <div class="date-time-selected-slots">
+                                                                                <div class="list-style-ul">
+                                                                                    <ul>
+                                                                                        <li *ngFor="let availableSlot of availability.slots let i=index">
+                                                                                            <div class="choose-category-wrapper time-slots">
+                                                                                                <label>
+                                                                                        <input disabled="true" [checked]="availableSlot.isChecked" (change)="onCheckboxChange($event)" [value]="availableSlot.value" type="checkbox" class="card-input-element">   
+                                                                                        <div class="category-innebox">
+                                                                                            <p class="category-heading-text">{{availableSlot.value}}</p>
+                                                                                        </div>
+                                                                                        </label>
+                                                                                            </div>
+                                                                                        </li>
+
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -936,7 +967,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-9 text-center text-md-left  mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <a (click)="gotoStep(3)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
                                                     <input [disabled]="hourlyRateForm.invalid" (click)="onSubmitHourlyRateForm()" type="submit" class="primary--button py-2 px-30" value="NEXT">
                                                 </div>
                                             </div>
@@ -1009,7 +1040,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 mb-4">
+                                                        <!--div class="col-lg-12 mb-4">
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <label class="profile-label-text mb-2">Social Profiles</label>
@@ -1043,7 +1074,7 @@
                                                                     </ul>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -1053,8 +1084,8 @@
                                         <div class="row">
                                             <div class="col-12 text-center text-md-left mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                                    <a awPreviousStep class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">Back to Profile</a>
-                                                    <input [disabled]="addSocialLinksForm.invalid" (click)="onSubmitAddSocialLinksForm()" type="submit" class="primary--button py-2 px-30" value="Save & Update">
+                                                    <a (click)="gotoStep(4)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
+                                                    <input [disabled]="addSocialLinksForm.invalid" (click)="onSubmitAddSocialLinksForm()" type="submit" class="primary--button py-2 px-30" value="Complete Setup">
                                                 </div>
                                             </div>
                                             <div class="col-12 mt-2">
@@ -1080,3 +1111,5 @@
 
 
 </section>
+
+<ngx-ui-loader></ngx-ui-loader>

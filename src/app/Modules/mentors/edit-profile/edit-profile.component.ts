@@ -16,6 +16,8 @@ import { environment } from '../../../../environments/environment';
 //import custom validators
 import { CustomValidators } from '../../../core/custom-validators';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 import { DropzoneComponent, DropzoneDirective, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 export const minLengthArray = (min: number) => {
@@ -34,6 +36,7 @@ export const minLengthArray = (min: number) => {
 })
 
 export class EditProfileComponent implements OnInit {
+
 
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
@@ -83,7 +86,7 @@ export class EditProfileComponent implements OnInit {
   selectedSlotsArray: any = [];
   selectedSlot: boolean = false;
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) {
     this.minDate = new Date();
     this.maxDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
@@ -94,7 +97,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.initalizeBasicDetailsForm();
     this.initalizeAcademicHistoryForm();
     this.initalizeEmploymentHistoryForm();
@@ -143,8 +145,8 @@ export class EditProfileComponent implements OnInit {
   getMentorProfileDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorProfileDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorProfileDetails = response;
-      //console.log(this.mentorProfileDetails);
-      if (this.mentorProfileDetails.admin_status == 'APPROVED') {
+      //console.log(this.mentorProfileDetails); return;
+      if (this.mentorProfileDetails.admin_status == 'APPROVED' && this.mentorProfileDetails.subscription_status == 'ACTIVE') {
 
         this.basicDetailsForm.patchValue({
           bio: this.mentorProfileDetails.bio,
@@ -286,6 +288,21 @@ export class EditProfileComponent implements OnInit {
         }
 
 
+        if (this.mentorProfileDetails.availability.length > 0) {
+          this.mentorProfileDetails.availability.forEach((element, index, availabilityArray) => {
+            this.availability().push(new FormControl({
+              date: element.date,
+              slots: element.slots
+            }))
+
+            this.selectedAvailabilityArray.push({
+              date: element.date,
+              slots: element.slots
+            })
+          })
+        }
+
+
         this.hourlyRateForm.patchValue({
           hourly_rate: this.mentorProfileDetails.hourly_rate,
         });
@@ -298,18 +315,18 @@ export class EditProfileComponent implements OnInit {
 
         if (this.mentorProfileDetails.hourly_rate && this.mentorProfileDetails.hourly_rate != "") {
           //console.log('ayssello')
-          this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
         }
 
         if (this.mentorProfileDetails.website && this.mentorProfileDetails.website != "") {
           //console.log('ayselslo')
-          this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
         }
 
 
       }
       else {
-        this.router.navigate(['/mentor/application-status']);
+        this.router.navigate(['/']);
       }
 
 
@@ -321,7 +338,7 @@ export class EditProfileComponent implements OnInit {
     this.basicDetailsForm = this.formBuilder.group({
       userID: [''],
       tagline: [''],
-      bio: ['', Validators.compose([Validators.minLength(30), Validators.maxLength(500), Validators.required])],
+      bio: ['', Validators.compose([Validators.minLength(30), Validators.maxLength(1000), Validators.required])],
       servicable_zipcodes: new FormControl([{ value: '' }], minLengthArray(1)),
       profile_image: this.formBuilder.array([]),
       introduction_video: this.formBuilder.array([])
@@ -413,6 +430,7 @@ export class EditProfileComponent implements OnInit {
 
       accept: function (file, done) {
 
+        //componentObj.ngxLoader.start();
         componentObj.profileImageArray.reset();
 
         /* 
@@ -443,16 +461,9 @@ export class EditProfileComponent implements OnInit {
           formData.append('folder', 'profile_image');
           formData.append('fileType', file.type);
           formData.append('base64StringFile', componentObj.base64StringFile);
-          componentObj.utilsService.showPageLoader();//start showing page loader 
+          //componentObj.utilsService.showPageLoader();//start showing page loader 
+
         });
-
-
-        this.on("totaluploadprogress", function (progress) {
-          componentObj.utilsService.showPageLoader('Uploading file ' + parseInt(progress) + '%')
-          if (progress >= 100) {
-            componentObj.utilsService.hidePageLoader();//hide page loader
-          }
-        })
 
         this.on("success", function (file, serverResponse) {
           //console.log('serverResponse', serverResponse);
@@ -462,18 +473,23 @@ export class EditProfileComponent implements OnInit {
 
             componentObj.profileImagePath = serverResponse.fileLocation;
 
+            //componentObj.ngxLoader.stop();
+
           });
 
           //console.log('letterOfRecommendationPdfArray', componentObj.profileImageArray);
           this.removeFile(file);
-          componentObj.utilsService.hidePageLoader();//hide page loader
+
 
         });
 
         this.on("error", function (file, serverResponse) {
           this.removeFile(file);
           componentObj.utilsService.onError(serverResponse);//hide page loader  
-          componentObj.utilsService.hidePageLoader();//hide page loader
+          //componentObj.utilsService.hidePageLoader();//hide page loader
+          componentObj.zone.run(() => {
+            //componentObj.ngxLoader.stop();
+          });
         });
 
       }
@@ -512,10 +528,11 @@ export class EditProfileComponent implements OnInit {
       },
 
       accept: function (file, done) {
-
+        //componentObj.ngxLoader.start();
 
         if ((componentObj.videoIntroudctionArray.length + 1) > 1) {
-          componentObj.utilsService.onError('You cannot upload any more video.');//hide page loader          
+          //componentObj.utilsService.onError('You cannot upload any more video.');//hide page loader
+          componentObj.ngxLoader.stop();
           this.removeFile(file);
           return false;
         }
@@ -540,34 +557,27 @@ export class EditProfileComponent implements OnInit {
           formData.append('folder', 'introduction_video');
           formData.append('fileType', file.type);
           formData.append('base64StringFile', componentObj.base64StringFile);
-          componentObj.utilsService.showPageLoader();//start showing page loader 
+
         });
-
-
-        this.on("totaluploadprogress", function (progress) {
-          componentObj.utilsService.showPageLoader('Uploading file ' + parseInt(progress) + '%')
-          if (progress >= 100) {
-            componentObj.utilsService.hidePageLoader();//hide page loader
-          }
-        })
 
         this.on("success", function (file, serverResponse) {
           //console.log('serverResponse', serverResponse);
 
           componentObj.zone.run(() => {
             componentObj.videoIntroudctionArray.push(new FormControl({ file_path: serverResponse.fileLocation, file_name: serverResponse.fileName, file_key: serverResponse.fileKey, file_mimetype: serverResponse.fileMimeType, file_category: 'introduction_video' }));
+
           });
 
           //console.log('videoIntroudctionArray', componentObj.videoIntroudctionArray);
           this.removeFile(file);
-          componentObj.utilsService.hidePageLoader();//hide page loader
+          //componentObj.ngxLoader.stop();
 
         });
 
         this.on("error", function (file, serverResponse) {
           this.removeFile(file);
           componentObj.utilsService.onError(serverResponse);//hide page loader  
-          componentObj.utilsService.hidePageLoader();//hide page loader
+          //componentObj.ngxLoader.stop();
         });
 
       }
@@ -704,7 +714,7 @@ export class EditProfileComponent implements OnInit {
     }
 
     if (this.hourlyRateForm.controls.hourly_rate.value != '') {
-      this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
     }
 
     //console.log(this.hourlyRateForm.value); return;
@@ -727,7 +737,7 @@ export class EditProfileComponent implements OnInit {
     }
 
     if (this.addSocialLinksForm.controls.website.value != '') {
-      this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
     }
 
     //console.log(this.achievementsForm.value); return;
@@ -1038,9 +1048,50 @@ export class EditProfileComponent implements OnInit {
           slots: this.selectedSlotsArray
         })
 
-        this.slots.forEach(child => {
-          child.isChecked = false
+        this.slots = [];
+        this.initalizeTimeSlots();
+        this.selectedSlotsArray = [];
+
+      } else {
+
+        //console.log('hello')
+        //console.log(this.getSelectedDate)
+        //console.log(this.selectedAvailabilityArray);
+
+
+        let selectedDate = this.getSelectedDate;
+
+        let i: number = 0;
+        this.availability().controls.forEach((item: FormControl) => {
+          //console.log(item);
+          if (item.value.date == this.getSelectedDate) {
+            this.availability().removeAt(i);
+            return;
+          }
+          i++;
+        });
+
+        this.selectedAvailabilityArray = this.selectedAvailabilityArray.filter(function (item) {
+          //console.log(item);
+          //console.log(this.getSelectedDate);
+          return item.date !== selectedDate;
+        });
+
+
+        this.availability().push(new FormControl({
+          date: this.getSelectedDate,
+          slots: this.selectedSlotsArray
+        }))
+
+        this.selectedAvailabilityArray.push({
+          date: this.getSelectedDate,
+          slots: this.selectedSlotsArray
         })
+        this.slots = [];
+        this.initalizeTimeSlots();
+
+        this.selectedSlotsArray = [];
+
 
       }
 
@@ -1048,6 +1099,17 @@ export class EditProfileComponent implements OnInit {
     }
     //console.log(this.availability().value);
     //console.log(this.selectedAvailabilityArray);
+  }
+
+  gotoStep(desinationIndex): void {
+
+    if (desinationIndex == 0) {
+      this.calculateProfilePercentage = 0;
+    } else {
+      this.calculateProfilePercentage = this.calculateProfilePercentage - 15
+    }
+
+    this.wizard.goToStep(desinationIndex);
   }
 
 

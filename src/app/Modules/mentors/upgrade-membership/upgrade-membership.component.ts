@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, FormControl, FormArray, AbstractControl } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from "@angular/router";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -18,21 +17,28 @@ import { CustomValidators } from '../../../core/custom-validators';
 import Swal from 'sweetalert2'
 
 @Component({
-  selector: 'app-my-membership-plan',
-  templateUrl: './my-membership-plan.component.html',
-  styleUrls: ['./my-membership-plan.component.css']
+  selector: 'app-upgrade-membership',
+  templateUrl: './upgrade-membership.component.html',
+  styleUrls: ['./upgrade-membership.component.css']
 })
-export class MyMembershipPlanComponent implements OnInit {
+export class UpgradeMembershipComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
+
   id: any = '';
   paymentDetails: any = {};
   membershipDetails: any = {};
   paymentDetailsArray: any = [];
 
+  isPaymentMethodModalOpen: boolean = false;
+  selectedPriceId: any = '';
+  selectedMembershipId: any = '';
+  membershipPlans: any = [];
+
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getMembershipListing();
     this.checkQueryParam();
   }
 
@@ -64,15 +70,25 @@ export class MyMembershipPlanComponent implements OnInit {
   */
   getMembershipDetailsToken(id): void {
     this.utilsService.processPostRequest('getMentorMembershipDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      //console.log(response);
+      console.log(response);
       this.membershipDetails = response;
     })
   }
 
-  cancelYourSubscription() {
+  /**
+   * get All Mmebership Plans
+   */
+  getMembershipListing() {
+    this.utilsService.processGetRequest('membership/getMembershipPlans', false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      //console.log(response);
+      this.membershipPlans = response;
+    })
+  }
+
+  upgradeYourSubscription() {
     Swal.fire({
-      title: 'Are you sure, you want to cancel your subscription?',
-      text: '',
+      title: 'Are you sure, you want to upgrade your subscription?',
+      text: 'You will charge automatically from your default payment method',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -80,7 +96,7 @@ export class MyMembershipPlanComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        this.utilsService.processPostRequest('cancelYourSubscription', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        this.utilsService.processPostRequest('upgradeYourSubscription', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
           this.utilsService.onResponse(environment.MESSGES['SUBSCRIPTION-CANCEL'], true);
           this.getMembershipDetailsToken(this.id);
 
@@ -90,9 +106,24 @@ export class MyMembershipPlanComponent implements OnInit {
     })
   }
 
+  showPaymentMethodPopup(priceId, membershipId): void {
+    //console.log('priceDetails', priceId); console.log('membershipId', membershipId); return;
+    this.isPaymentMethodModalOpen = true;
+    this.selectedPriceId = priceId
+    this.selectedMembershipId = membershipId
+  }
+
+  hidePaymentMethodPopup(isOpened: boolean): void {
+    // console.log('carDetails', isOpened);
+    this.isPaymentMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
+    this.selectedPriceId = '';
+    this.selectedMembershipId = '';
+  }
+
   //destroy all subscription
   public ngOnDestroy(): void {
     this.onDestroy$.next();
   }
+
 
 }

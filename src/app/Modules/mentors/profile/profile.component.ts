@@ -297,12 +297,12 @@ export class ProfileComponent implements OnInit {
 
         if (this.mentorProfileDetails.hourly_rate && this.mentorProfileDetails.hourly_rate != "") {
           //console.log('ayssello')
-          this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
         }
 
         if (this.mentorProfileDetails.website && this.mentorProfileDetails.website != "") {
           //console.log('ayselslo')
-          this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
         }
 
 
@@ -703,7 +703,7 @@ export class ProfileComponent implements OnInit {
     }
 
     if (this.hourlyRateForm.controls.hourly_rate.value != '') {
-      this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
     }
 
     //console.log(this.hourlyRateForm.value); return;
@@ -726,7 +726,7 @@ export class ProfileComponent implements OnInit {
     }
 
     if (this.addSocialLinksForm.controls.website.value != '') {
-      this.calculateProfilePercentage = this.calculateProfilePercentage + 10;
+      this.calculateProfilePercentage = this.calculateProfilePercentage + 15;
     }
 
     //console.log(this.achievementsForm.value); return;
@@ -1036,13 +1036,20 @@ export class ProfileComponent implements OnInit {
           date: this.getSelectedDate,
           slots: this.selectedSlotsArray
         })
+
         this.slots = [];
         this.initalizeTimeSlots();
-
         this.selectedSlotsArray = [];
 
-      }else{
-        
+      } else {
+
+        //console.log('hello')
+        //console.log(this.getSelectedDate)
+        //console.log(this.selectedAvailabilityArray);
+
+
+        let selectedDate = this.getSelectedDate;
+
         let i: number = 0;
         this.availability().controls.forEach((item: FormControl) => {
           //console.log(item);
@@ -1054,7 +1061,9 @@ export class ProfileComponent implements OnInit {
         });
 
         this.selectedAvailabilityArray = this.selectedAvailabilityArray.filter(function (item) {
-          return item.date !== this.getSelectedDate;
+          //console.log(item);
+          //console.log(this.getSelectedDate);
+          return item.date !== selectedDate;
         });
 
 
@@ -1077,8 +1086,19 @@ export class ProfileComponent implements OnInit {
 
 
     }
-    console.log(this.availability().value);
-    console.log(this.selectedAvailabilityArray);
+    //console.log(this.availability().value);
+    //console.log(this.selectedAvailabilityArray);
+  }
+
+  gotoStep(destinationIndex): void {
+
+    if (destinationIndex == 0) {
+      this.calculateProfilePercentage = 0;
+    } else {
+      this.calculateProfilePercentage = this.calculateProfilePercentage - 15
+    }
+
+    this.wizard.goToStep(destinationIndex);
   }
 
 
