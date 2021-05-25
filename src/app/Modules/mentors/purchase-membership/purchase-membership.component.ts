@@ -27,6 +27,7 @@ export class PurchaseMembershipComponent implements OnInit {
 
   isPaymentMethodModalOpen: boolean = false;
   selectedPriceId: any = '';
+  selectedPrice: any = '';
   selectedMembershipId: any = '';
   membershipPlans:any = [];
 
@@ -46,10 +47,11 @@ export class PurchaseMembershipComponent implements OnInit {
     })
   }
 
-  showPaymentMethodPopup(priceId, membershipId): void {
+  showPaymentMethodPopup(priceId, membershipId, price): void {
     //console.log('priceDetails', priceId); console.log('membershipId', membershipId); return;
     this.isPaymentMethodModalOpen = true;
     this.selectedPriceId = priceId
+    this.selectedPrice = price
     this.selectedMembershipId = membershipId
   }
 
@@ -58,6 +60,7 @@ export class PurchaseMembershipComponent implements OnInit {
     this.isPaymentMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
     this.selectedPriceId = '';
     this.selectedMembershipId = '';
+    this.selectedPrice = '';
   }
 
   //destroy all subscription

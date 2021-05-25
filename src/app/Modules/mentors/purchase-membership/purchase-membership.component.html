@@ -58,7 +58,7 @@
                                         </div>
                                         <div class="planbox-footer">
                                             <div class="text-center">
-                                                <a href="javascript:void(0)" (click)="showPaymentMethodPopup(membership.price_id, membership._id)" class="buy-plan-btn">Buy plan</a>
+                                                <a href="javascript:void(0)" (click)="showPaymentMethodPopup(membership.price_id, membership._id, membership.price)" class="buy-plan-btn">Buy plan</a>
                                             </div>
                                         </div>
                                     </div>
@@ -83,4 +83,5 @@
     </div>
 </section>
 
-<app-add-payment-method (showPaymentMethodPopup)="showPaymentMethodPopup(selectedPriceId, selectedMembershipId)" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen" [membershipPriceId]="selectedPriceId" [membershipId]="selectedMembershipId"></app-add-payment-method>
+<app-add-payment-method (showPaymentMethodPopup)="showPaymentMethodPopup(selectedPriceId, selectedMembershipId, selectedPrice)" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen" [membershipPriceId]="selectedPriceId"
+    [membershipPrice]="selectedPrice" [membershipId]="selectedMembershipId"></app-add-payment-method>

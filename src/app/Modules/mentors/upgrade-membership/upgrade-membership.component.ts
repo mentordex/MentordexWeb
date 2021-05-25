@@ -16,6 +16,8 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 import Swal from 'sweetalert2'
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
   selector: 'app-upgrade-membership',
   templateUrl: './upgrade-membership.component.html',
@@ -35,7 +37,7 @@ export class UpgradeMembershipComponent implements OnInit {
   selectedMembershipId: any = '';
   membershipPlans: any = [];
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.getMembershipListing();
@@ -85,10 +87,10 @@ export class UpgradeMembershipComponent implements OnInit {
     })
   }
 
-  upgradeYourSubscription() {
+  upgradeYourSubscription(priceId, membershipId, price) {
     Swal.fire({
-      title: 'Are you sure, you want to upgrade your subscription?',
-      text: 'You will charge automatically from your default payment method',
+      title: 'Are you sure, you want to change your membership plan?',
+      text: 'You will be charge automatically from your default payment method.',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -96,8 +98,12 @@ export class UpgradeMembershipComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        this.utilsService.processPostRequest('upgradeYourSubscription', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-          this.utilsService.onResponse(environment.MESSGES['SUBSCRIPTION-CANCEL'], true);
+        this.ngxLoader.start();
+
+        this.utilsService.processPostRequest('upgradeYourSubscription', { userID: this.id, priceId: priceId, membershipId: membershipId, price: price  }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+          console.log(response);
+          this.ngxLoader.stop();
+          this.utilsService.onResponse(environment.MESSGES['SUBSCRIPTION-UPGRADED'], true);
           this.getMembershipDetailsToken(this.id);
 
         })

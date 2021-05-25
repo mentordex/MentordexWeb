@@ -30,6 +30,7 @@ export class AddPaymentMethodComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
   @Input() isOpen: any;
   @Input() membershipPriceId: any;
+  @Input() membershipPrice: any;
   @Input() membershipId: any;
   @ViewChild('exampleModal') exampleModal: ElementRef;
 
@@ -80,6 +81,7 @@ export class AddPaymentMethodComponent implements OnInit {
     this.addPaymentWizard = this.formBuilder.group({
       userID: [''],
       priceId: [''],
+      price: [''],
       membershipId: [''],
       payment_details: this.formBuilder.group({
         credit_card_first_name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern('^[a-zA-Z ]*$')])],
@@ -174,6 +176,7 @@ export class AddPaymentMethodComponent implements OnInit {
       //console.log(this.membershipId);
       this.addPaymentWizard.patchValue({
         priceId: this.membershipPriceId,
+        price: this.membershipPrice,
         membershipId: this.membershipId
       });
     }

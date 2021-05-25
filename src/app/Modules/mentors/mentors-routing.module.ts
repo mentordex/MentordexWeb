@@ -19,6 +19,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { MessagesComponent } from './messages/messages.component';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { UpgradeMembershipComponent } from './upgrade-membership/upgrade-membership.component';
+import { TransactionsComponent } from './transactions/transactions.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
@@ -134,7 +136,20 @@ const routes: Routes = [
     component: UpgradeMembershipComponent,
     data: { title: 'Upgrade Membership' },
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'transactions',
+    component: TransactionsComponent,
+    data: { title: 'Transactions History' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'payment-history',
+    component: PaymentHistoryComponent,
+    data: { title: 'Payment History' },
+    canActivate: [AuthGuard]
   }
+
 
 ];
 

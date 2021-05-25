@@ -66,7 +66,7 @@
                                         <ng-template #upgradePlan>
                                             <div class="planbox-footer">
                                                 <div class="text-center">
-                                                    <a href="javascript:void(0)" (click)="showPaymentMethodPopup(membership.price_id, membership._id)" class="buy-plan-btn">Upgrade</a>
+                                                    <a href="javascript:void(0)" (click)="upgradeYourSubscription(membership.price_id, membership._id, membership.price)" class="buy-plan-btn">Upgrade</a>
                                                 </div>
                                             </div>
                                         </ng-template>
@@ -91,5 +91,7 @@
         </div>
     </div>
 </section>
+
+<ngx-ui-loader></ngx-ui-loader>
 
 <app-add-payment-method (showPaymentMethodPopup)="showPaymentMethodPopup(selectedPriceId, selectedMembershipId)" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen" [membershipPriceId]="selectedPriceId" [membershipId]="selectedMembershipId"></app-add-payment-method>
