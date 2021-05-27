@@ -15,6 +15,8 @@ import { environment } from '../../../../environments/environment';
 //import custom validators
 import { CustomValidators } from '../../../core/custom-validators';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 declare var $;
 
 @Component({
@@ -41,7 +43,7 @@ export class MentorProfileComponent implements OnInit {
   getAvailableSlots: any = [];
   selectedAvailabilityArray: any = [];
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) {
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer, private ngxLoader: NgxUiLoaderService) {
     this.minDate = new Date();
     this.maxDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
@@ -56,6 +58,8 @@ export class MentorProfileComponent implements OnInit {
   }
 
   private checkQueryParam() {
+    this.ngxLoader.start();
+
     this.id = localStorage.getItem('x-user-ID');
 
     this.activatedRoute.params.subscribe((params) => {
@@ -72,7 +76,7 @@ export class MentorProfileComponent implements OnInit {
     });
 
 
-
+    this.ngxLoader.stop();
 
   }
 
@@ -80,9 +84,13 @@ export class MentorProfileComponent implements OnInit {
    * get Mentor Details By Token
   */
   getMentorProfileDetailsById(id, mentorId): void {
-    this.utilsService.processPostRequest('getMentorProfileDetailsById', { userID: id, mentorId: mentorId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
+
+
+    this.utilsService.processPostRequest('getMentorProfileDetailsById', { userID: id, mentorId: mentorId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
       this.mentorProfileDetails = response;
-      console.log(this.mentorProfileDetails);
+      //console.log(this.mentorProfileDetails);
 
       if (this.mentorProfileDetails.profile_image.length > 0) {
         //console.log('pello')
@@ -108,6 +116,8 @@ export class MentorProfileComponent implements OnInit {
         //console.log(this.selectedAvailabilityArray);
 
       }
+
+
 
     })
   }
@@ -145,7 +155,7 @@ export class MentorProfileComponent implements OnInit {
       return item.date === formatDate;
     });
 
-    console.log(this.selectedAvailabilityArray);
+    //console.log(this.selectedAvailabilityArray);
   }
 
 

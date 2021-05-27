@@ -15,23 +15,19 @@ import { environment } from '../../../../environments/environment';
 
 //import custom validators
 import { CustomValidators } from '../../../core/custom-validators';
-
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-
-
 declare var $;
 
 @Component({
-  selector: 'app-update-booking-request',
-  templateUrl: './update-booking-request.component.html',
-  styleUrls: ['./update-booking-request.component.css']
+  selector: 'app-update-job-status',
+  templateUrl: './update-job-status.component.html',
+  styleUrls: ['./update-job-status.component.css']
 })
-export class UpdateBookingRequestComponent implements OnInit {
+export class UpdateJobStatusComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
   @Input() isOpen: any;
   @Input() getJobId: any;
-  @Input() getParentId: any;
+  @Input() getMentorId: any;
   @Input() getJobStatus: any;
   //@Input() parentId: any;
 
@@ -44,7 +40,10 @@ export class UpdateBookingRequestComponent implements OnInit {
   updateBookingRequestWizard: FormGroup;
   isBookingRequestSubmitted: boolean = false;
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) {
+  paymentDetails: any = {};
+  paymentDetailsArray: any = [];
+
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.updateBookingRequestForm();
     this.checkQueryParam();
   }
@@ -58,6 +57,8 @@ export class UpdateBookingRequestComponent implements OnInit {
       userID: this.id
     });
 
+    this.getPaymentDetailsByToken(this.id);
+
   }
 
   /**
@@ -66,7 +67,7 @@ export class UpdateBookingRequestComponent implements OnInit {
   private updateBookingRequestForm() {
     this.updateBookingRequestWizard = this.formBuilder.group({
       userID: ['', Validators.required],
-      parent_id: ['', Validators.required],
+      mentor_id: ['', Validators.required],
       job_status: ['', Validators.required],
       job_id: ['', Validators.required],
       job_message: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(1000), Validators.required])],
@@ -74,34 +75,21 @@ export class UpdateBookingRequestComponent implements OnInit {
   }
 
   validateBookingRequestWizard(): void {
-
-
     this.isBookingRequestSubmitted = true;
 
     // stop here if form is invalid
     if (this.updateBookingRequestWizard.invalid) {
       return;
     }
-    
-    this.ngxLoader.start();
+    //this.wizard.goToNextStep();
 
-
-
-    this.utilsService.processPostRequest('jobs/upateBookingRequest', this.updateBookingRequestWizard.value, false, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-
-      
-
+    this.utilsService.processPostRequest('jobs/chargePayment', this.updateBookingRequestWizard.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
-      if(this.getJobStatus == 'ACCEPTED'){
-        this.responseMsg = 'Booking request has been accepted successfully.'
-      }else{
-        this.responseMsg = 'Booking request has been cancelled successfully.'
-      }
+
+      this.responseMsg = 'Job has been marked completed successfully.'
+
 
       this.utilsService.onResponse(this.responseMsg, true);
-
-      this.ngxLoader.stop();
-
       this.close();
     })
   }
@@ -113,11 +101,29 @@ export class UpdateBookingRequestComponent implements OnInit {
       $(this.exampleModal.nativeElement).modal({ backdrop: 'static', keyboard: false, show: true });
       //console.log(this.membershipDetails);
       this.updateBookingRequestWizard.patchValue({
-        parent_id: this.getParentId,
+        mentor_id: this.getMentorId,
         job_status: this.getJobStatus,
         job_id: this.getJobId,
       });
     }
+  }
+
+
+  /**
+   * get Parent Details By Token
+  */
+  getPaymentDetailsByToken(id): void {
+    this.utilsService.processPostRequest('getSavedPaymentMethod', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.paymentDetails = response;
+      //console.log(this.paymentDetails.payment_details);
+      this.paymentDetailsArray = this.paymentDetails.payment_details;
+      this.paymentDetailsArray = this.paymentDetailsArray.filter(function (item) {
+        return item.default === true;
+      });
+
+      //console.log(this.paymentDetailsArray);
+
+    })
   }
 
   close() {

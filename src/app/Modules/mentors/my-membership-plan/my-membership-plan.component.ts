@@ -17,6 +17,9 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 import Swal from 'sweetalert2'
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 @Component({
   selector: 'app-my-membership-plan',
   templateUrl: './my-membership-plan.component.html',
@@ -30,13 +33,14 @@ export class MyMembershipPlanComponent implements OnInit {
   membershipDetails: any = {};
   paymentDetailsArray: any = [];
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.checkQueryParam();
   }
 
   private checkQueryParam() {
+    this.ngxLoader.start();
     this.id = localStorage.getItem('x-user-ID');
     this.getPaymentDetailsByToken(this.id);
     this.getMembershipDetailsToken(this.id);
@@ -55,7 +59,7 @@ export class MyMembershipPlanComponent implements OnInit {
       });
 
       //console.log(this.paymentDetailsArray);
-
+      this.ngxLoader.stop();
     })
   }
 
@@ -66,6 +70,7 @@ export class MyMembershipPlanComponent implements OnInit {
     this.utilsService.processPostRequest('getMentorMembershipDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
       this.membershipDetails = response;
+      this.ngxLoader.stop();
     })
   }
 
@@ -79,11 +84,11 @@ export class MyMembershipPlanComponent implements OnInit {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
-
+        this.ngxLoader.start();
         this.utilsService.processPostRequest('cancelYourSubscription', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
           this.utilsService.onResponse(environment.MESSGES['SUBSCRIPTION-CANCEL'], true);
           this.getMembershipDetailsToken(this.id);
-
+          this.ngxLoader.stop();
         })
 
       }

@@ -11,9 +11,6 @@ import { AuthService, UtilsService } from '../../../core/services';
 //import enviornment
 import { environment } from '../../../../environments/environment';
 
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-
-
 @Component({
   selector: 'app-payment-history',
   templateUrl: './payment-history.component.html',
@@ -25,6 +22,7 @@ export class PaymentHistoryComponent implements OnInit {
   id: any = '';
   getTransactionDetails: any = []
   getInvoiceDetails: any = []
+  getJobDetails: any = []
 
   totalRecords: Number = 0
   pagination: any = {
@@ -32,18 +30,17 @@ export class PaymentHistoryComponent implements OnInit {
     sort_by: 'created_at',
     sort_dir: 'desc',
     filters: [],
-    size: 10,
+    size: 5,
     pageNumber: 1,
   }
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.checkQueryParam();
   }
 
   private checkQueryParam() {
-    this.ngxLoader.start();
     this.id = localStorage.getItem('x-user-ID');
 
     this.zone.run(() => {
@@ -64,31 +61,29 @@ export class PaymentHistoryComponent implements OnInit {
 
       if (this.getTransactionDetails.length > 0) {
         this.getTransactionDetails.forEach((element, index, transactionArray) => {
-          if ('invoice_id' in element && element.invoice_id != '') {
-            this.utilsService.processPostRequest('transactions/fetchInvoicesById', { userID: this.id, invoice_id: element.invoice_id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-              this.getInvoiceDetails = response;
-              if ('invoice_pdf' in this.getInvoiceDetails) {
-                transactionArray[index]['invoice_pdf'] = this.getInvoiceDetails.invoice_pdf;
-                transactionArray[index]['invoice_url'] = this.getInvoiceDetails.invoice_url;
-                transactionArray[index]['invoice_number'] = this.getInvoiceDetails.invoice_number;
+          if ('job_id' in element && element.job_id != '') {
+            this.utilsService.processPostRequest('transactions/fetchJobsById', { userID: this.id, job_id: element.job_id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+              this.getJobDetails = response;
+              if ('job_title' in this.getInvoiceDetails) {
+                transactionArray[index]['job_title'] = this.getJobDetails.job_title;
+                
               }else{
-                transactionArray[index]['invoice_pdf'] = 'N/A';
-                transactionArray[index]['invoice_url'] = 'N/A';
-                transactionArray[index]['invoice_number'] = 'N/A';
+                transactionArray[index]['job_title'] = 'N/A';
+                
               }
 
             })
+          }else{
+            transactionArray[index]['job_title'] = 'N/A';
+            
           }
         });
       }
-
-      this.ngxLoader.stop();
-      //console.log(this.getTransactionDetails);
+      console.log(this.getTransactionDetails);
     })
   }
 
   nextpage(page) {
-    this.ngxLoader.start();
     this.pagination.pageNumber = page;
     this.getTransactions();
   }

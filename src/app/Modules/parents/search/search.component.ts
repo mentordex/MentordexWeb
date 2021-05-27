@@ -213,6 +213,7 @@ export class SearchComponent implements OnInit {
     this.pagination['search'] = this.searchForm.get('search').value
     this.fetchResults()
   }
+  
   sortRecords(event) {
     if (event.target.value) {
       let sortOption = (event.target.value).split(",");

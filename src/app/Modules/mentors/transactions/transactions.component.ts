@@ -29,7 +29,7 @@ export class TransactionsComponent implements OnInit {
     sort_by: 'created_at',
     sort_dir: 'desc',
     filters: [],
-    size: 5,
+    size: 10,
     pageNumber: 1,
   }
 
@@ -77,7 +77,7 @@ export class TransactionsComponent implements OnInit {
           }
         });
       }
-      console.log(this.getTransactionDetails);
+      //console.log(this.getTransactionDetails);
     })
   }
 

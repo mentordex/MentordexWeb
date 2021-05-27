@@ -28,10 +28,11 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { UpgradeMembershipComponent } from './upgrade-membership/upgrade-membership.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
+import { JobsComponent } from './jobs/jobs.component';
 
 
 @NgModule({
-  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent, DashboardComponent, MyMembershipComponent, MyMembershipPlanComponent, BillingMethodsComponent, AddPaymentMethodPopupComponent, EditProfileComponent, BookingRequestComponent, UpdateBookingRequestComponent, NotificationsComponent, MessagesComponent, ViewProfileComponent, UpgradeMembershipComponent, TransactionsComponent, PaymentHistoryComponent],
+  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent, DashboardComponent, MyMembershipComponent, MyMembershipPlanComponent, BillingMethodsComponent, AddPaymentMethodPopupComponent, EditProfileComponent, BookingRequestComponent, UpdateBookingRequestComponent, NotificationsComponent, MessagesComponent, ViewProfileComponent, UpgradeMembershipComponent, TransactionsComponent, PaymentHistoryComponent, JobsComponent],
   imports: [
     CommonModule,
     MentorsRoutingModule,

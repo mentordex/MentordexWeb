@@ -10,10 +10,14 @@ import { BookingRequestComponent } from './booking-request/booking-request.compo
 import { SearchComponent } from './search/search.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { MessagesComponent } from './messages/messages.component';
+import { ViewJobComponent } from './view-job/view-job.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { UpdateJobStatusComponent } from './update-job-status/update-job-status.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, AddPaymentMethodComponent, BillingMethodsComponent, MentorProfileComponent, BookingRequestComponent, SearchComponent, NotificationsComponent, MessagesComponent],
+  declarations: [DashboardComponent, AddPaymentMethodComponent, BillingMethodsComponent, MentorProfileComponent, BookingRequestComponent, SearchComponent, NotificationsComponent, MessagesComponent, ViewJobComponent, JobsComponent, UpdateJobStatusComponent, PaymentHistoryComponent],
   imports: [
     CommonModule,
     ParentsRoutingModule,

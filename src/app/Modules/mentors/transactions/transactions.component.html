@@ -75,7 +75,7 @@
 
                         </div>
                     </div>
-                    <div class="row">
+                    <div *ngIf="totalRecords > 10" class="row">
                         <div class="col-xl-12">
                             <div class="mt-4">
                                 <pagination-template class="mentorcards-pagination-footer" #p="paginationApi" id="listing" maxSize="9" autoHide="true" (pageChange)="nextpage($event)">

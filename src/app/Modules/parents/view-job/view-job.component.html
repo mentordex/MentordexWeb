@@ -1,4 +1,3 @@
-<!--Parent section starts-->
 <section class="pt-125 py-65 bg-md-f8f8f8">
     <div class="container">
         <div class="row">
@@ -61,20 +60,17 @@
                                                 </ul>
                                             </div>
                                         </ng-container>
-
-
                                     </div>
-
                                     <div class="closed-jobs-budgetbox">
                                         <div class="col-xl-8">
                                             <div class="row">
                                                 <div class="col-sm-4 col-6 mb-3">
-                                                    <p class="profile-label-text font--16-xs color-text mb-2">Client Details</p>
-                                                    <p class="profile-label-text font--16-xs">{{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Mentor Details</p>
+                                                    <p class="profile-label-text font--16-xs">{{jobDetails?.mentor?.first_name}} {{jobDetails?.mentor?.last_name}}</p>
                                                 </div>
                                                 <div class="col-sm-4 col-6 mb-3">
                                                     <p class="profile-label-text font--16-xs color-text mb-2">Location</p>
-                                                    <p class="profile-label-text font--16-xs">{{jobDetails?.parent?.city?.value}}, {{jobDetails?.parent?.state?.value}}</p>
+                                                    <p class="profile-label-text font--16-xs">{{jobDetails?.mentor?.city?.value}}, {{jobDetails?.mentor?.state?.value}}</p>
                                                 </div>
                                                 <div class="col-sm-4 col-6 mb-3">
                                                     <p class="profile-label-text font--16-xs color-text mb-2">Booking Date</p>
@@ -98,104 +94,27 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
-
-                                    <!-- Job Status -->
-                                    <ng-container *ngIf="jobDetails?.job_status != 'PENDING' && jobDetails?.job_status != 'ACCEPTED'">
-                                        <div class="closed-jobs-budgetbox">
-                                            <div class="p-4 bg-white">
-                                                <div class="mx-auto max-650">
-                                                    <p class="sent--quote text-center mb-1">
-                                                        Job has been filed as {{jobDetails?.job_status | lowercase}}.
-                                                    </p>
-                                                    <div class="chatbox-bodycontent-msgarea-time text-center mb-1">
-                                                        <p><span>{{jobDetails?.created_at | date:'medium'}}</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-
-                                    <!-- Accept or Decline Button -->
                                     <ng-container *ngIf="jobDetails?.job_status == 'PENDING'">
                                         <div class="closed-jobs-budgetbox mt-0">
                                             <div class="col-xl-8">
                                                 <div class="row">
-                                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" (click)="showUpdateBookingRequestPopup(jobDetails?._id, jobDetails?.parent_id, 'CANCELLED')" href="javascript:void(0)">Decline</a>
-                                                    <input (click)="showUpdateBookingRequestPopup(jobDetails?._id, jobDetails?.parent_id, 'ACCEPTED')" type="submit" class="primary--button py-2 px-30" value="Accept" />
+                                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" (click)="showUpdateBookingRequestPopup(jobDetails?._id, jobDetails?.mentor_id, 'CANCELLED')" href="javascript:void(0)">Cancel</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </ng-container>
 
-                                    <!-- Submit Review Form -->
-                                    <ng-container *ngIf="jobDetails?.job_status == 'COMPLETED' && jobDetails?.parent_review?.review == ''">
-                                        <form [formGroup]="reviewForm">
-                                            <div class="text-center mt-5">
-                                                <p class="mobile-pagetop-heading mb-2 font--16-xs">Rate {{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>
-                                                <ngb-rating [rate]='1' [starTemplate]="t" (leave)="OnSelectRating($event)" (rateChange)="OnSelectRating($event)" [max]="5"></ngb-rating>
-                                                <ng-template #t let-fill="fill">
-                                                    <span class="star" [class.full]="fill === 100">
-                                                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-                                                    </span>
-                                                </ng-template>
-                                                <div class="textarea--compact mx-auto mt-3">
-                                                    <textarea formControlName="review" id="" rows="4" placeholder="Write a Review... "></textarea>
-                                                    <p class="errorCls" *ngIf="reviewForm.controls.review.touched || isReviewFormSubmitted">
-                                                        <app-form-validation-errors minLength=1 maxLength=5000 errorPrefix="Review " [errors]="reviewForm.get( 'review').errors"></app-form-validation-errors>
-                                                    </p>
+                                    <ng-container *ngIf="jobDetails?.job_status == 'ACCEPTED'">
+                                        <div class="closed-jobs-budgetbox mt-0">
+                                            <div class="col-xl-8">
+                                                <div class="row">
+                                                    <input (click)="showUpdateBookingRequestPopup(jobDetails?._id, jobDetails?.mentor_id, 'COMPLETED')" type="submit" class="primary--button py-2 px-30 " value="Mark as Completed" />
                                                 </div>
-                                            </div>
-
-                                            <div class="text-center mt-4 ">
-                                                <button type="submit" [disabled]="reviewForm.invalid" (click)="onSubmitReviewForm()" class="primary--button py-2 ">Submit Review</button>
-                                            </div>
-                                        </form>
-                                    </ng-container>
-
-                                    <!-- Reviews -->
-                                    <ng-container *ngIf="jobDetails?.job_status == 'COMPLETED' && jobDetails?.parent_review?.review != ''">
-                                        <div class="closed-jobs-budgetbox">
-                                            <div class="mt-4 max-w-510 ">
-                                                <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2 ">Review to {{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>
-                                                <p class="profile-label-text font--16-xs color-text ">
-                                                    <ngb-rating [starTemplate]="t" [max]="5" [rate]="jobDetails?.parent_review?.rating || 0" [readonly]="true"></ngb-rating>
-                                                    <ng-template #t let-fill="fill">
-                                                        <span class="star" [class.full]="fill===100">
-                                                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-                                                        </span>
-                                                    </ng-template>
-                                                </p>
-                                                <p class="profile-label-text font--16-xs color-text ">
-                                                    {{jobDetails?.parent_review?.review}}
-                                                </p>
-                                            </div>
-                                            <div class="mt-4 max-w-510 ">
-                                                <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2 ">Review from {{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>
-
-                                                <ng-container *ngIf="jobDetails?.mentor_review?.review=='' ; else viewMentorReview ">
-                                                    <p class="profile-label-text font--16-xs color-text ">
-                                                        <ngb-rating [starTemplate]="t" [max]="5" [rate]="jobDetails?.mentor_review?.rating || 0" [readonly]="true"></ngb-rating>
-                                                        <ng-template #t let-fill="fill">
-                                                            <span class="star" [class.full]="fill===100">
-                                                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-                                                            </span>
-                                                        </ng-template>
-                                                    </p>
-                                                    <p class="profile-label-text font--16-xs color-text ">
-                                                        {{jobDetails?.mentor_review?.review}}
-                                                    </p>
-                                                </ng-container>
-                                                <ng-template #viewMentorReview>
-                                                    <p class="profile-label-text font--16-xs color-text ">
-                                                        No Review Given.
-                                                    </p>
-                                                </ng-template>
                                             </div>
                                         </div>
                                     </ng-container>
+
                                 </div>
                             </div>
                         </div>
@@ -208,7 +127,5 @@
 </section>
 <!--Parent section ends-->
 
-<app-update-booking-request (showUpdateBookingRequestPopup)="showUpdateBookingRequestPopup(getJobId, getParentId, getJobStatus)" (hideUpdateBookingRequestPopup)="hideUpdateBookingRequestPopup($event)" [getParentId]="getParentId" [getJobStatus]="getJobStatus"
-    [getJobId]="getJobId" [isOpen]="isBookingMethodModalOpen"></app-update-booking-request>
-
-<ngx-ui-loader></ngx-ui-loader>
+<app-update-job-status (showUpdateBookingRequestPopup)="showUpdateBookingRequestPopup(getJobId, getMentorId, getJobStatus)" (hideUpdateBookingRequestPopup)="hideUpdateBookingRequestPopup($event)" [getMentorId]="getMentorId" [getJobStatus]="getJobStatus"
+    [getJobId]="getJobId" [isOpen]="isBookingMethodModalOpen"></app-update-job-status>

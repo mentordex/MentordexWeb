@@ -266,7 +266,7 @@
                             </div>
                             <div class="profile-steps-rightsidebar-column-footer bg-f8-footer">
                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
-                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="#">Cancel</a>
+                                    <a class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" routerLink="/parent/search" href="javascript:void(0)">Cancel</a>
                                     <input [disabled]="bookARequestForm.invalid" (click)="validateBookARequestForm()" type="submit" class="primary--button py-2 px-30" value="Request Booking">
                                 </div>
                             </div>
@@ -281,3 +281,5 @@
 
 <app-add-payment-method (showPaymentMethodPopup)="showPaymentMethodPopup()" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen"></app-add-payment-method>
 <!--Parent section ends-->
+
+<ngx-ui-loader></ngx-ui-loader>

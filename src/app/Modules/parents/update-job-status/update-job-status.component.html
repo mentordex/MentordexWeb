@@ -1,0 +1,91 @@
+<div class="modal fade" #exampleModal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog max-900">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <button type="button" (click)="close()" class="close modal-close-btn d-none d-md-inline-block" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path d="M1.40039 1.40869L20.6004 20.6087M1.40039 20.6087L20.6004 1.40869" stroke="#384047" stroke-width="2"/>
+                    </svg>
+                </span>
+              </button>
+                <div class="profile-steps-rightsidebar-column-header d-block d-md-none">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <p class="basic-title">Booking Details</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-md-0">
+                    <div class="col-md-5 px-md-0 d-none d-md-block">
+                        <div class="modalleftbar">
+                            <img src="assets/img/stripe-img.svg" alt="stripe-img">
+                            <p class="billing-method-left-text mt-3"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-7 px-md-0">
+                        <div class="columnbar-order">
+
+                            <form [formGroup]="updateBookingRequestWizard">
+                                <div class="modal-rightbar order-1 pb-0">
+
+                                    <div class="w-100 mb-4">
+                                        <label class="profile-label-text mb-2 font-1rem">Status: {{getJobStatus}}</label>
+
+                                    </div>
+
+                                    <ng-container *ngIf="paymentDetailsArray.length > 0;">
+                                        <div class="w-100 mb-4">
+                                            <p class="mobile-pagetop-heading mb-2">Your Billing Method <span class="change-billing-method">  (<a  href="javascript:void()" routerLink="/parent/payment-methods">Change</a>)</span></p>
+                                            <div *ngFor="let paymentArray of paymentDetailsArray; let i = index" class="each-credit-card-item">
+                                                <div class="row mx-0 align-items-center">
+                                                    <div class="pr-0 each-credit-card-logo">
+                                                        {{paymentArray?.card_type}}
+                                                        <!--img src="./img/logos_mastercard.svg" class="img-fluid" alt="masatercard-logo"-->
+                                                    </div>
+                                                    <div class="px-1 each-credit-number">
+                                                        <p class="profile-label-text font--16 mb-0">xxxx xxxx xxxx {{paymentArray?.credit_card_number}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-5 mb-2 mb-sm-0">
+                                                        <p class="each-credit-card-label">Expires on</p>
+                                                        <p class="profile-label-text font-14 mb-0">{{paymentArray?.exp_month}}/{{paymentArray?.exp_year}}</p>
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <p class="each-credit-card-label">Name</p>
+                                                        <p class="profile-label-text font-14 mb-0">{{paymentArray?.card_holder_name}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="w-100 mb-4">
+                                        <label class="profile-label-text mb-2 font-1rem">Message</label>
+                                        <div class="position-relative">
+
+                                            <textarea type="text" class="profile-steps-input w-100 bg-white resize-none" rows="6" formControlName="job_message"></textarea>
+
+
+                                            <p class="errorCls" *ngIf="updateBookingRequestWizard.controls.job_message.touched || isBookingRequestSubmitted">
+                                                <app-form-validation-errors minLength=10 maxLength=1000 errorPrefix="Message " [errors]="updateBookingRequestWizard.get('job_message').errors"></app-form-validation-errors>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="text-md-right order-3 order-md-2 mt-3 mt-md-0 text-center mb-4 mb-md-5 cpx-4">
+                                    <div class="d-flex justify-content-between justify-content-md-end w-100">
+                                        <input type="submit" [disabled]="updateBookingRequestWizard.invalid" (click)="validateBookingRequestWizard()" class="primary--button py-2 px-30" value="Make Payment">
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

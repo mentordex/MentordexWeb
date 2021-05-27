@@ -21,6 +21,7 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { UpgradeMembershipComponent } from './upgrade-membership/upgrade-membership.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
+import { JobsComponent } from './jobs/jobs.component';
 
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
@@ -147,6 +148,12 @@ const routes: Routes = [
     path: 'payment-history',
     component: PaymentHistoryComponent,
     data: { title: 'Payment History' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'jobs',
+    component: JobsComponent,
+    data: { title: 'Jobs' },
     canActivate: [AuthGuard]
   }
 

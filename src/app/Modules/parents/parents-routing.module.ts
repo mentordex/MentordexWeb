@@ -8,6 +8,8 @@ import { BookingRequestComponent } from './booking-request/booking-request.compo
 import { SearchComponent } from './search/search.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { MessagesComponent } from './messages/messages.component';
+import { ViewJobComponent } from './view-job/view-job.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
@@ -53,6 +55,18 @@ const routes: Routes = [
     path: 'messages',
     component: MessagesComponent,
     data: { title: 'Messages' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'payment-history',
+    component: PaymentHistoryComponent,
+    data: { title: 'Payment History' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'job/:id',
+    component: ViewJobComponent,
+    data: { title: 'View Job' },
     canActivate: [AuthGuard]
   }
 ];

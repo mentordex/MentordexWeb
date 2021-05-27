@@ -18,6 +18,9 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 import { CreditCardValidators } from 'angular-cc-library';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 declare var $;
 
 @Component({
@@ -51,7 +54,9 @@ export class AddPaymentMethodPopupComponent implements OnInit {
   maxYear: number = 2030;
   minYear: number = this.currentYear;
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) {
+  
+
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) {
     this.addPaymentForm();
     this.addAddressForm();
     this.checkQueryParam();
@@ -127,6 +132,8 @@ export class AddPaymentMethodPopupComponent implements OnInit {
   validateAddPaymentMethodWizard() {
 
     //console.log('addPaymentWizard', this.addPaymentWizard)
+
+    this.ngxLoader.start();
 
     this.isPaymentDetailsSubmitted = true;
 

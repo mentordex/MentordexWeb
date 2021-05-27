@@ -5,12 +5,12 @@
                 <div class="profile-steps-leftsidebar pl-0">
                     <ul>
                         <li class="current-active w-100">
-                            <a href="javascript:void(0)" routerLink="/mentor/payment-history" class="pl-2 d-block">
+                            <a href="javascript:void(0)" routerLink="/parent/payment-history" class="pl-2 d-block">
                                 <span class="pills-text d-block">Payment History</span>
                             </a>
                         </li>
                         <li class="w-100">
-                            <a href="javascript:void(0)" routerLink="/mentor/billing-methods" class="pl-2 d-block">
+                            <a href="javascript:void(0)" routerLink="/parent/payment-methods" class="pl-2 d-block">
                                 <span class="pills-text d-block">Billing Methods</span>
                             </a>
                         </li>
@@ -25,7 +25,7 @@
                                 <div class="col-12 col-xl-5 mb-3 mb-xl-0">
                                     <p class="basic-title mb-0">Payment History</p>
                                 </div>
-                                <!--div class="col-12 col-xl-7 text-xl-right">
+                                <div class="col-12 col-xl-7 text-xl-right">
                                     <div class="d-inline-block position-relative">
                                         <div class="row align-items-center">
                                             <div class="col-12 col-xl-4 pr-xl-0 text-xl-right">
@@ -60,7 +60,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div-->
+                                </div>
                             </div>
                         </div>
                         <div class="profile-steps-rightsidebar-column-body p-0">
@@ -71,7 +71,7 @@
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Date</th>
-                                                    <th scope="col">Detail</th>
+                                                    <th scope="col">Job Detail</th>
 
                                                     <th scope="col">Amount</th>
                                                     <th scope="col">Ref ID</th>
@@ -82,18 +82,18 @@
                                                 <ng-container *ngIf="getTransactionDetails?.length > 0; else noTransactions">
                                                     <tr *ngFor="let transaction of getTransactionDetails | paginate: { id: 'listing', itemsPerPage: pagination.size, currentPage: pagination.pageNumber, totalItems: totalRecords }">
                                                         <td>{{transaction?.created_at | date : 'mediumDate'}}</td>
-                                                        <td class="primary-color job-detail-td">{{transaction?.transaction_type}}</td>
+                                                        <td class="primary-color job-detail-td">{{(transaction?.job_title) ? transaction?.job_title : transaction?.transaction_type}}</td>
                                                         <td>${{transaction?.price}}</td>
                                                         <td>{{transaction?.invoice_number}}</td>
                                                         <td>
-                                                            <a href="{{transaction?.invoice_url}}" target="_blank" class="download-pdf--btn primary-color">
+                                                            <a href="{{transaction?.receipt_url}}" target="_blank" class="download-pdf--btn primary-color">
                                                                 <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
                                                             <path d="M15 15.1738H1C0.447715 15.1738 0 15.6215 0 16.1738C0 16.7261 0.447715 17.1738 1 17.1738H15C15.5523 17.1738 16 16.7261 16 16.1738C16 15.6215 15.5523 15.1738 15 15.1738Z" fill="#3BB3BD"></path>
                                                             <path d="M0 14.1738L0 16.1738C0 16.7261 0.447715 17.1738 1 17.1738C1.55228 17.1738 2 16.7261 2 16.1738V14.1738C2 13.6215 1.55228 13.1738 1 13.1738C0.447715 13.1738 0 13.6215 0 14.1738Z" fill="#3BB3BD"></path>
                                                             <path d="M14 14.1738V16.1738C14 16.7261 14.4477 17.1738 15 17.1738C15.5523 17.1738 16 16.7261 16 16.1738V14.1738C16 13.6215 15.5523 13.1738 15 13.1738C14.4477 13.1738 14 13.6215 14 14.1738Z" fill="#3BB3BD"></path>
                                                             <path d="M7.99995 12.1738C7.79263 12.1754 7.58995 12.1125 7.41995 11.9938L3.41995 9.17383C3.20436 9.0209 3.05809 8.78883 3.01312 8.52836C2.96815 8.26789 3.02813 8.0002 3.17995 7.78383C3.25574 7.67568 3.35219 7.58361 3.46376 7.51294C3.57532 7.44227 3.69977 7.39439 3.82994 7.37208C3.9601 7.34976 4.09339 7.35345 4.22212 7.38293C4.35085 7.41241 4.47247 7.4671 4.57995 7.54383L7.99995 9.93383L11.4 7.37383C11.6121 7.2147 11.8788 7.14638 12.1414 7.18388C12.4039 7.22139 12.6408 7.36166 12.7999 7.57383C12.9591 7.786 13.0274 8.0527 12.9899 8.31525C12.9524 8.5778 12.8121 8.8147 12.6 8.97383L8.59995 11.9738C8.42686 12.1037 8.21632 12.1738 7.99995 12.1738Z" fill="#3BB3BD"></path>
                                                             <path d="M8 10.1738C7.73478 10.1738 7.48043 10.0685 7.29289 9.88093C7.10536 9.6934 7 9.43904 7 9.17383V1.17383C7 0.908612 7.10536 0.654258 7.29289 0.466721C7.48043 0.279185 7.73478 0.173828 8 0.173828C8.26522 0.173828 8.51957 0.279185 8.70711 0.466721C8.89464 0.654258 9 0.908612 9 1.17383V9.17383C9 9.43904 8.89464 9.6934 8.70711 9.88093C8.51957 10.0685 8.26522 10.1738 8 10.1738Z" fill="#3BB3BD"></path>
-                                                        </svg> Download.pdf
+                                                        </svg> View Receipt
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -110,7 +110,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div *ngIf="totalRecords > 10" class="row">
+
+                            <div class="row">
                                 <div class="col-xl-12">
                                     <div class="mt-4">
                                         <pagination-template class="mentorcards-pagination-footer" #p="paginationApi" id="listing" maxSize="9" autoHide="true" (pageChange)="nextpage($event)">
@@ -145,5 +146,3 @@
 
 
 </section>
-
-<ngx-ui-loader></ngx-ui-loader>

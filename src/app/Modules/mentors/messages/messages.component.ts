@@ -17,7 +17,7 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 import { DropzoneComponent, DropzoneDirective, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
-
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-messages',
@@ -55,7 +55,7 @@ export class MessagesComponent implements OnInit {
 
   options = { autoHide: false, scrollbarMinSize: 100 };
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.initalizeMessageForm();
@@ -64,13 +64,15 @@ export class MessagesComponent implements OnInit {
   }
 
   private checkQueryParam() {
+    this.ngxLoader.start();
+
     this.id = localStorage.getItem('x-user-ID');
 
     this.zone.run(() => {
       this.getMentorJobs(this.id);
     });
     //console.log(this.priceValuationForm.value);
-
+    
   }
 
   //initalize Message Form
@@ -195,6 +197,7 @@ export class MessagesComponent implements OnInit {
     //console.log(this.messageForm.value); return;
 
     this.utilsService.processPostRequest('messages/saveMentorMessage', this.messageForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.ngxLoader.start();
       //console.log(response);
       this.getMentorJobsById(this.id, this.selectedJobId);
       this.messageForm.patchValue({
@@ -223,7 +226,7 @@ export class MessagesComponent implements OnInit {
     this.utilsService.processPostRequest('messages/getMentorJobs', { userID: mentorId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.jobDetails = response;
       if (this.jobDetails.length > 0) {
-        this.noJobsFound = false;
+        //this.noJobsFound = false;
         this.jobDetails.forEach((element, index) => {
 
           // Reset Profile Image Path
@@ -314,8 +317,11 @@ export class MessagesComponent implements OnInit {
         });
         //console.log(this.getJobDetailsArray);
 
+        this.ngxLoader.stop();
+
       } else {
         this.noJobsFound = true;
+        this.ngxLoader.stop();
       }
 
       //console.log(this.jobDetails);
@@ -327,13 +333,13 @@ export class MessagesComponent implements OnInit {
    * get Mentor Jobs By Token
   */
   getMentorJobsById(mentorId, jobId): void {
-
+    this.ngxLoader.start();
     this.utilsService.processPostRequest('messages/getMentorJobsById', { userID: mentorId, job_id: jobId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
 
       this.jobDetails = response;
       if (this.jobDetails.length > 0) {
-        this.noJobsFound = false;
+        //this.noJobsFound = false;
         this.jobDetails.forEach((element, index) => {
 
           // Reset Profile Image Path
@@ -388,10 +394,7 @@ export class MessagesComponent implements OnInit {
 
           } else {
             this.jobDetails[index]['messages'] = [];
-            //this.getJobDetailsArray[index] = [];
           }
-
-
         });
         //console.log(this.getJobDetailsArray);
 
@@ -399,6 +402,7 @@ export class MessagesComponent implements OnInit {
         this.noJobsFound = true;
       }
 
+      this.ngxLoader.stop();
       //console.log(this.jobDetails);
 
     })

@@ -17,6 +17,8 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 import { DropzoneComponent, DropzoneDirective, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
   selector: 'app-booking-request',
   templateUrl: './booking-request.component.html',
@@ -50,7 +52,7 @@ export class BookingRequestComponent implements OnInit {
 
   selectedSpeciality: any = '';
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) {
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer, private ngxLoader: NgxUiLoaderService) {
     this.minDate = new Date();
     this.maxDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
@@ -68,6 +70,8 @@ export class BookingRequestComponent implements OnInit {
   }
 
   private checkQueryParam() {
+    this.ngxLoader.start();
+
     this.id = localStorage.getItem('x-user-ID');
 
     this.activatedRoute.params.subscribe((params) => {
@@ -79,6 +83,8 @@ export class BookingRequestComponent implements OnInit {
     });
 
     this.getPaymentDetailsByToken(this.id);
+
+    this.ngxLoader.stop();
   }
 
   //initalize Book Requestform
@@ -112,15 +118,21 @@ export class BookingRequestComponent implements OnInit {
     }
     //console.log(this.bookARequestForm.value); return;
     this.utilsService.processPostRequest('jobs/newBookingRequest', this.bookARequestForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
+      this.ngxLoader.start();
+
       //console.log(response);
       this.utilsService.onResponse(environment.MESSGES['BOOKING-REQUEST-SENT'], true);
       this.router.navigate(['/parent/search']);
+
+      this.ngxLoader.stop();
+
     })
 
   }
 
   /**
-   * get Mentor Details By Token
+   * get Mentor Profile Details By Token
   */
   getMentorProfileDetailsById(id, mentorId): void {
     this.utilsService.processPostRequest('getMentorProfileDetailsById', { userID: id, mentorId: mentorId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
@@ -153,7 +165,7 @@ export class BookingRequestComponent implements OnInit {
     this.getAvailableSlotsByDate(selectedDay, formatDate);
   }
 
-  onCategoryChange(event):void {
+  onCategoryChange(event): void {
     this.bookARequestForm.patchValue({ category_id: event.target.getAttribute('data-categoryId'), subcategory_id: event.target.getAttribute('data-subCategoryId') });
     //console.log(this.bookARequestForm.value);
 

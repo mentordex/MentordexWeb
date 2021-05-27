@@ -71,8 +71,7 @@ export class UtilsService {
   */
   processPostRequest(apiEndPoint, data, showLoader = false, message = '') {
 
-    if (showLoader)
-      this.onRequest(environment.MESSGES['CHECKING-AUTHORIZATION']);//show page loader
+    //if (showLoader) this.onRequest(environment.MESSGES['CHECKING-AUTHORIZATION']);
 
     return this.httpClient.post(apiEndPoint, data)
       .pipe(
