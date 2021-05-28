@@ -68,11 +68,21 @@ export class MessagesComponent implements OnInit {
 
     this.id = localStorage.getItem('x-user-ID');
 
-    this.zone.run(() => {
-      this.getMentorJobs(this.id);
-    });
+
+    this.activatedRoute.params.subscribe((params) => {
+      const jobId = ('jobId' in params) ? params['jobId'] : ''
+      if (jobId) {
+        this.selectedJobId = jobId;
+        this.getMentorJobsById(this.id, this.selectedJobId);
+        this.getMentorSidebarList(this.id);
+      } else {
+        this.getMentorJobs(this.id);
+      }
+
+    })
+
     //console.log(this.priceValuationForm.value);
-    
+
   }
 
   //initalize Message Form
@@ -254,9 +264,9 @@ export class MessagesComponent implements OnInit {
 
           //console.log(this.parentProfileImagePath);
 
-          this.parentDetails.push({ job_id: element._id, parent_id: element.parent_id, parent_first_name: element.parent.first_name, parent_last_name: element.parent.last_name, parent_profile_image: this.parentProfileImagePath });
+          this.parentDetails.push({ job_id: element._id, job_title: element.job_title, parent_id: element.parent_id, parent_first_name: element.parent.first_name, parent_last_name: element.parent.last_name, parent_profile_image: this.parentProfileImagePath });
 
-          this.filteredParentDetails.push({ job_id: element._id, parent_id: element.parent_id, parent_first_name: element.parent.first_name, parent_last_name: element.parent.last_name, parent_profile_image: this.parentProfileImagePath });
+          this.filteredParentDetails.push({ job_id: element._id, job_title: element.job_title, parent_id: element.parent_id, parent_first_name: element.parent.first_name, parent_last_name: element.parent.last_name, parent_profile_image: this.parentProfileImagePath });
 
           /* get Sidebar Listing */
 
@@ -312,6 +322,64 @@ export class MessagesComponent implements OnInit {
             this.jobDetails[index]['messages'] = [];
             //this.getJobDetailsArray[index] = [];
           }
+
+
+        });
+        //console.log(this.getJobDetailsArray);
+
+        this.ngxLoader.stop();
+
+      } else {
+        this.noJobsFound = true;
+        this.ngxLoader.stop();
+      }
+
+      //console.log(this.jobDetails);
+
+    })
+  }
+
+  /**
+   * get Mentor Jobs By Token
+  */
+  getMentorSidebarList(mentorId): void {
+    this.utilsService.processPostRequest('messages/getMentorJobs', { userID: mentorId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.jobDetails = response;
+      if (this.jobDetails.length > 0) {
+        //this.noJobsFound = false;
+        this.jobDetails.forEach((element, index) => {
+
+          // Reset Profile Image Path
+          this.parentProfileImagePath = 'assets/img/none.png';
+          this.mentorProfileImagePath = 'assets/img/none.png';
+          this.senderProfileImagePath = 'assets/img/none.png';
+          this.receiverProfileImagePath = 'assets/img/none.png';
+
+
+          /* get Sidebar Listing */
+          if (element.parent.profile_image.length > 0) {
+            //console.log('pello')
+            this.parentProfileImagePath = element.parent.profile_image[0].file_path;
+
+          }
+          this.jobDetails[index]['parent']['profileImagePath'] = this.parentProfileImagePath;
+
+
+          if (element.mentor.profile_image.length > 0) {
+            //console.log('pello')
+            this.mentorProfileImagePath = element.mentor.profile_image[0].file_path;
+
+          }
+          this.jobDetails[index]['mentor']['profileImagePath'] = this.mentorProfileImagePath;
+
+          //console.log(this.parentProfileImagePath);
+
+          this.parentDetails.push({ job_id: element._id, job_title: element.job_title, parent_id: element.parent_id, parent_first_name: element.parent.first_name, parent_last_name: element.parent.last_name, parent_profile_image: this.parentProfileImagePath });
+
+          this.filteredParentDetails.push({ job_id: element._id, job_title: element.job_title, parent_id: element.parent_id, parent_first_name: element.parent.first_name, parent_last_name: element.parent.last_name, parent_profile_image: this.parentProfileImagePath });
+
+          /* get Sidebar Listing */
+
 
 
         });

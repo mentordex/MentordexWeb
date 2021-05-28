@@ -148,7 +148,7 @@ export class BookingRequestComponent implements OnInit {
   }
 
   onDateChange(value: Date): void {
-
+    this.ngxLoader.start();
 
     let selectedDate = new Date(value);
 
@@ -186,6 +186,7 @@ export class BookingRequestComponent implements OnInit {
         this.getAvailableSlots = getSlots['availableSlots'];
       }
       //console.log('response', this.getAvailableSlots);
+      this.ngxLoader.stop();
     })
 
   }
@@ -336,6 +337,7 @@ export class BookingRequestComponent implements OnInit {
    * get Parent Details By Token
   */
   getPaymentDetailsByToken(id): void {
+    this.ngxLoader.start();
     this.utilsService.processPostRequest('getSavedPaymentMethod', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.paymentDetails = response;
       //console.log(this.paymentDetails.payment_details);
@@ -353,17 +355,21 @@ export class BookingRequestComponent implements OnInit {
       this.paymentDetailsArray = this.paymentDetailsArray.filter(function (item) {
         return item.default === true;
       });
+
+      this.ngxLoader.stop();
     })
   }
 
   showPaymentMethodPopup(): void {
 
     this.isPaymentMethodModalOpen = true;
+
     //this.selectedPriceId = priceId
   }
 
   hidePaymentMethodPopup(isOpened: boolean): void {
     // console.log('carDetails', isOpened);
+    this.ngxLoader.stop();
     this.isPaymentMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
     this.getPaymentDetailsByToken(this.id);
   }

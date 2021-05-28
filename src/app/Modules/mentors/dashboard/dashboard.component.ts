@@ -17,6 +17,8 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 declare var $;
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -42,8 +44,21 @@ export class DashboardComponent implements OnInit {
   getAvailableSlots: any = [];
   selectedAvailabilityArray: any = [];
 
+  getTransactionDetails: any = []
+  getInvoiceDetails: any = []
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) {
+  totalRecords: Number = 0
+  pagination: any = {
+    search: '',
+    sort_by: 'created_at',
+    sort_dir: 'desc',
+    filters: [],
+    size: 5,
+    pageNumber: 1,
+  }
+
+
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer, private ngxLoader: NgxUiLoaderService) {
     this.minDate = new Date();
     this.maxDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
@@ -58,11 +73,14 @@ export class DashboardComponent implements OnInit {
   }
 
   private checkQueryParam() {
+    this.ngxLoader.start();
     this.id = localStorage.getItem('x-user-ID');
 
     this.zone.run(() => {
+      this.pagination['userID'] = this.id;
       this.getMentorProfileDetailsById(this.id);
       this.getNotifications(this.id);
+      this.getTransactions();
     });
 
   }
@@ -100,6 +118,8 @@ export class DashboardComponent implements OnInit {
 
       }
 
+      this.ngxLoader.stop();
+
     })
   }
 
@@ -107,9 +127,67 @@ export class DashboardComponent implements OnInit {
      * get Mentor Notifications By Token
     */
   getNotifications(id): void {
+    this.ngxLoader.start();
     this.utilsService.processPostRequest('notifications/getNotifications', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.getNotificationDetails = response;
-      console.log(this.getNotificationDetails);
+
+      if (this.getNotificationDetails.length > 0) {
+        this.getNotificationDetails.forEach((element, index, notificationArray) => {
+          if (element.notification_type == 'BOOKING') {
+            notificationArray[index]['redirectUrl'] = '/mentor/booking-request/' + element.job_id;
+          } else if (element.notification_type == 'MESSAGE') {
+            notificationArray[index]['redirectUrl'] = '/mentor/messages/' + element.job_id;
+          } else if (element.notification_type == 'SUBSCRIPTION') {
+            notificationArray[index]['redirectUrl'] = '/mentor/payment-history';
+          } else {
+            notificationArray[index]['redirectUrl'] = 'javascript:void(0)';
+          }
+        })
+
+      }
+
+      this.getNotificationDetails = this.getNotificationDetails.slice(0, 5);
+      //console.log(this.getNotificationDetails);
+      this.ngxLoader.stop();
+    })
+  }
+
+  /**
+   * get Mentor Transactions By Token
+  */
+  getTransactions(): void {
+    //console.log(this.pagination); return;
+    this.ngxLoader.start();
+    this.utilsService.processPostRequest('transactions/getTransactions', this.pagination, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.getTransactionDetails = response['records'];
+      this.totalRecords = response['total_records'];
+
+      if (this.getTransactionDetails.length > 0) {
+        this.getTransactionDetails.forEach((element, index, transactionArray) => {
+          if ('invoice_id' in element && element.invoice_id != '') {
+            this.utilsService.processPostRequest('transactions/fetchInvoicesById', { userID: this.id, invoice_id: element.invoice_id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+              this.getInvoiceDetails = response;
+              if ('invoice_pdf' in this.getInvoiceDetails) {
+                transactionArray[index]['invoice_pdf'] = this.getInvoiceDetails.invoice_pdf;
+                transactionArray[index]['invoice_url'] = this.getInvoiceDetails.invoice_url;
+                transactionArray[index]['invoice_number'] = this.getInvoiceDetails.invoice_number;
+              } else {
+                transactionArray[index]['invoice_pdf'] = 'N/A';
+                transactionArray[index]['invoice_url'] = 'N/A';
+                transactionArray[index]['invoice_number'] = 'N/A';
+              }
+
+            })
+          }
+        });
+      }
+
+      this.getTransactionDetails = this.getTransactionDetails.slice(0, 5);
+
+      this.ngxLoader.stop();
+
+
+      //console.log(this.getTransactionDetails);
     })
   }
 

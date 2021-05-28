@@ -385,7 +385,7 @@ export class SearchComponent implements OnInit {
     this.rating = ''
     this.hourlyRate = ''
     this.location = ''
-    this.selectedDate = new Date()
+    //this.selectedDate = new Date()
     //this.filterWithKeyValue['date'] = this.selectedDate
     this.filterWithKeyValue['date'] = ''
     this.fetchResults()

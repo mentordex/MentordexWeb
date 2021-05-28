@@ -18,6 +18,9 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 import { CreditCardValidators } from 'angular-cc-library';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 declare var $;
 
 @Component({
@@ -51,7 +54,7 @@ export class AddPaymentMethodComponent implements OnInit {
   maxYear: number = 2030;
   minYear: number = this.currentYear;
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) {
     this.addPaymentForm();
     this.addAddressForm();
     this.checkQueryParam();
@@ -136,12 +139,12 @@ export class AddPaymentMethodComponent implements OnInit {
     }
     //this.wizard.goToNextStep();
 
+    this.ngxLoader.start();
+
     this.utilsService.processPostRequest('addYourPaymentMethod', this.addPaymentWizard.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
       this.utilsService.onResponse(environment.MESSGES['PAYMENT-METHOD-SUCCESSFULL'], true);
       this.close();
-      //this.utilsService.onResponse('Your information updated successfully.', true);
-      //this.router.navigate(['/mentor/skills']);
     })
   }
 
@@ -172,7 +175,6 @@ export class AddPaymentMethodComponent implements OnInit {
   ngOnChanges(): void {
     //to show the modal popup
     if (this.isOpen) {
-      
       $(this.exampleModal.nativeElement).modal({ backdrop: 'static', keyboard: false, show: true });
       //console.log(this.membershipDetails);
       this.addPaymentWizard.patchValue({

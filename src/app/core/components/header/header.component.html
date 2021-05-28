@@ -199,59 +199,37 @@
                           </span>
                           <span class="notication-color"></span>
                         </button>
-                        <ul class="list-unstyled mb-0 suggetion-dropdown dropdown-menu" role="listbox">
-                            <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
-                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
-                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span>
-                                    <span class="nav-search-catalog-option">
-                                  Notification Title
-                                  </span>
-                                    <span class="nav-search-catalog-query-type">
-                                  Notification Description
-                                  </span>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
-                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
-                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span>
-                                    <span class="nav-search-catalog-option">
-                                    Notification Title
-                                  </span>
-                                    <span class="nav-search-catalog-query-type">
-                                    Notification Description
-                                  </span>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
-                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
-                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span>
-                                    <span class="nav-search-catalog-option">
-                                    Notification Title
-                                  </span>
-                                    <span class="nav-search-catalog-query-type">
-                                    Notification Description
-                                  </span>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
-                                    <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
-                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span>
-                                    <span class="nav-search-catalog-option">
-                                    Notification Title
-                                  </span>
-                                    <span class="nav-search-catalog-query-type">
-                                    Notification Description
-                                  </span>
-                                </a>
-                            </li>
+                        <ul class="list-unstyled mb-0 suggetion-dropdown dropdown-menu splice-text" role="listbox">
+                            <ng-container *ngIf="getFiveNotificationDetails.length > 0; else noNewNotifications;">
+                                <li *ngFor="let getNotification of getFiveNotificationDetails" role="presentation">
+                                    <a routerLink="{{getNotification?.redirectUrl}}" role="option" class="nav-search-anchor">
+                                        <div class="splice-text-inner">
+                                            <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                        <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                                      </span>
+                                            <span class="nav-search-catalog-option">
+                                            {{getNotification?.notification }}
+                                      </span>
+                                            <span class="nav-search-catalog-query-type">
+                                            {{getNotification?.created_at | dateAgo}}
+                                      </span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ng-container>
+                            <ng-template #noNewNotifications>
+                                <li role="presentation">
+                                    <a role="option" class="nav-search-anchor">
+                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                        <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                                      </span>
+                                        <span class="nav-search-catalog-option">
+                                      No Notifications Found.
+                                      </span>
+
+                                    </a>
+                                </li>
+                            </ng-template>
                         </ul>
                     </div>
                     <span class="mx-2 mx-lg-3">
@@ -261,19 +239,17 @@
                     </span>
                     <div class="btn-cs-nav-dropdown">
                         <button dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span>
-                              <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-                                  <path d="M10 11C10 8.23858 12.2386 6 15 6C17.7614 6 20 8.23858 20 11C20 13.7614 17.7614 16 15 16C12.2386 16 10 13.7614 10 11Z" fill="#3BB3BD"/>
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0ZM2 15C2 7.8203 7.8203 2 15 2C22.1797 2 28 7.8203 28 15C28 18.6991 26.455 22.0374 23.9751 24.4047C23.6731 20.8172 20.6655 18 17 18H13C9.33448 18 6.3269 20.8172 6.02493 24.4047C3.54501 22.0374 2 18.6991 2 15Z" fill="#3BB3BD"/>
-                              </svg>    
-                              <svg class="ml-1" width="14" height="8" viewBox="0 0 14 8" fill="none">
-                                  <path d="M1.7998 1.2666L6.9998 6.4666L12.1998 1.2666" stroke="#3BB3BD" stroke-width="1.5" stroke-linecap="square"/>
-                              </svg>                                                                                   
-                          </span>
+                          
+                            <span class="menu-profile-pic"> <img [src]="profileImagePath" alt="profile-pic"></span>   
+                            <span>
+                            <svg class="ml-1" width="14" height="8" viewBox="0 0 14 8" fill="none">
+                                <path d="M1.7998 1.2666L6.9998 6.4666L12.1998 1.2666" stroke="#3BB3BD" stroke-width="1.5" stroke-linecap="square"/>
+                            </svg>                                                                                   
+                            </span>
                         </button>
                         <ul class="list-unstyled mb-0 suggetion-dropdown dropdown-menu profile-dropmenu" role="listbox">
                             <li role="presentation">
-                                <a role="option" class="nav-search-anchor">
+                                <a role="option" routerLink="parent/profile" class="nav-search-anchor">
                                     <span class="nav-search-catalog-query-type textindent-0">
                                      Edit Profile
                                     </span>
@@ -286,20 +262,20 @@
                                     </span>
                                 </a>
                             </li>
-                            <li role="presentation">
+                            <!--li role="presentation">
                                 <a role="option" class="nav-search-anchor">
                                     <span class="nav-search-catalog-query-type textindent-0">
                                         Help
                                     </span>
                                 </a>
-                            </li>
-                            <li role="presentation">
+                            </li-->
+                            <!--li role="presentation">
                                 <a role="option" class="nav-search-anchor">
                                     <span class="nav-search-catalog-query-type textindent-0">
                                         Settings
                                     </span>
                                 </a>
-                            </li>
+                            </li-->
                             <li role="presentation">
                                 <a href="javascript:void(0)" (click)="logout()" role="option" class="nav-search-anchor">
                                     <span class="nav-search-catalog-query-type textindent-0">
@@ -398,7 +374,7 @@
                         <a class="nav-link scoll--link" routerLink="parent/search">HOME</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link scoll--link" href="javascript:void(0)">MY MENTORS</a>
+                        <a class="nav-link scoll--link" routerLink="parent/jobs" href="javascript:void(0)">MY JOBS</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link scoll--link" routerLink="/parent/messages" href="javascript:void(0)">MESSAGES</a>
@@ -472,59 +448,37 @@
                           </span>
                           <span class="notication-color"></span>
                         </button>
-                            <ul class="list-unstyled mb-0 suggetion-dropdown dropdown-menu" role="listbox">
-                                <li role="presentation">
-                                    <a role="option" class="nav-search-anchor">
-                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
-                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span>
-                                        <span class="nav-search-catalog-option">
-                                  Notification Title
-                                  </span>
-                                        <span class="nav-search-catalog-query-type">
-                                  Notification Description
-                                  </span>
-                                    </a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="option" class="nav-search-anchor">
-                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
-                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span>
-                                        <span class="nav-search-catalog-option">
-                                    Notification Title
-                                  </span>
-                                        <span class="nav-search-catalog-query-type">
-                                    Notification Description
-                                  </span>
-                                    </a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="option" class="nav-search-anchor">
-                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
-                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span>
-                                        <span class="nav-search-catalog-option">
-                                    Notification Title
-                                  </span>
-                                        <span class="nav-search-catalog-query-type">
-                                    Notification Description
-                                  </span>
-                                    </a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="option" class="nav-search-anchor">
-                                        <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
-                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                                  </span>
-                                        <span class="nav-search-catalog-option">
-                                    Notification Title
-                                  </span>
-                                        <span class="nav-search-catalog-query-type">
-                                    Notification Description
-                                  </span>
-                                    </a>
-                                </li>
+                            <ul class="list-unstyled mb-0 suggetion-dropdown dropdown-menu splice-text" role="listbox">
+                                <ng-container *ngIf="getFiveNotificationDetails.length > 0; else noNewNotifications;">
+                                    <li *ngFor="let getNotification of getFiveNotificationDetails" role="presentation">
+                                        <a routerLink="{{getNotification?.redirectUrl}}" role="option" class="nav-search-anchor">
+                                            <div class="splice-text-inner">
+                                                <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                                <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                                            </span>
+                                                <span class="nav-search-catalog-option">
+                                                    {{getNotification?.notification}}
+                                            </span>
+                                                <span class="nav-search-catalog-query-type">
+                                                    {{getNotification?.created_at | dateAgo}}
+                                            </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ng-container>
+                                <ng-template #noNewNotifications>
+                                    <li role="presentation">
+                                        <a role="option" class="nav-search-anchor">
+                                            <span icon-name="user" size="" aria-hidden="true" class="up-s-nav-icon">
+                                            <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                                          </span>
+                                            <span class="nav-search-catalog-option">
+                                          No Notifications Found.
+                                          </span>
+
+                                        </a>
+                                    </li>
+                                </ng-template>
                             </ul>
                         </div>
                         <span class="mx-2 mx-lg-3">
@@ -550,7 +504,7 @@
                                         </div>
                                         <div class="mentor-dropdown-shortcode-profile--desc">
                                             <p>{{userInfo?.first_name}} {{userInfo?.last_name}}</p>
-                                            <a href="javascript:void(0)">View Profile</a>
+                                            <a routerLink="/mentor/my-profile" href="javascript:void(0)">View Profile</a>
                                         </div>
                                     </div>
                                 </li>
@@ -569,13 +523,13 @@
                                     </a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="option" class="nav-search-anchor">
+                                    <a routerLink="mentor/payment-history" role="option" class="nav-search-anchor">
                                         <span class="nav-search-catalog-query-type textindent-0">
                                     Payments & Transactions
                                     </span>
                                     </a>
                                 </li>
-                                <li role="presentation">
+                                <!--li role="presentation">
                                     <a role="option" class="nav-search-anchor">
                                         <span class="nav-search-catalog-query-type textindent-0">
                                     Advertisements
@@ -595,7 +549,7 @@
                                         Help
                                     </span>
                                     </a>
-                                </li>
+                                </li-->
                                 <li role="presentation">
                                     <a (click)="logout()" role="option" class="nav-search-anchor">
                                         <span class="nav-search-catalog-query-type textindent-0">
@@ -691,10 +645,10 @@
                     </ul>
                     <ul class="navbar-nav align-items-center ml-lg-4 ml-xl-35">
                         <li class="nav-item">
-                            <a class="nav-link scoll--link" href="#">MY JOBS</a>
+                            <a class="nav-link scoll--link" routerLink="/mentor/jobs">MY JOBS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link scoll--link" href="#">CALENDAR</a>
+                            <a class="nav-link scoll--link" href="javascript:void(0)">CALENDAR</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link scoll--link" routerLink="/mentor/messages">MESSAGES</a>

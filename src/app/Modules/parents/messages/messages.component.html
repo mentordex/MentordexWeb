@@ -52,24 +52,25 @@
                                 </div>
                                 <div class="chatbox-inboxlist">
                                     <ul>
-                                        <li *ngFor="let mentor of mentorDetails; let i= index;">
-                                            <a href="javascript:void(0)" (click)="getParentJobsById(id, mentor?.job_id)">
-                                                <div class="chat-fill-row">
-                                                    <div class="chat-list">
-                                                        <div class="chat-people">
-                                                            <div class="chat-img">
-                                                                <img [src]="mentor?.mentor_profile_image" alt="usericon">
-                                                            </div>
-                                                            <div class="chat-desc">
-                                                                <p>{{mentor?.mentor_first_name}} {{mentor?.mentor_last_name}}</p>
-                                                                <!--span>When I can reach to you and you can</span-->
+                                        <ngx-simplebar [options]="options">
+                                            <li *ngFor="let mentor of mentorDetails; let i= index;">
+                                                <a href="javascript:void(0)" (click)="getParentJobsById(id, mentor?.job_id)">
+                                                    <div class="chat-fill-row">
+                                                        <div class="chat-list">
+                                                            <div class="chat-people">
+                                                                <div class="chat-img">
+                                                                    <img [src]="mentor?.mentor_profile_image" alt="usericon">
+                                                                </div>
+                                                                <div class="chat-desc">
+                                                                    <p>{{mentor?.mentor_first_name}} {{mentor?.mentor_last_name}}</p>
+                                                                    <span>{{mentor?.job_title}}</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
-
+                                                </a>
+                                            </li>
+                                        </ngx-simplebar>
                                     </ul>
                                 </div>
                             </div>
@@ -135,38 +136,38 @@
                                                         </li>
                                                     </ngx-simplebar>
                                                 </ul>
+                                                <ng-container *ngIf="job?.job_status == 'ACCEPTED'; else noChatRoomAvailable">
+                                                    <form [formGroup]="messageForm">
+                                                        <div class="chatbox-bodycontent-sentarea d-flex align-items-start">
 
-                                                <form [formGroup]="messageForm">
-                                                    <div class="chatbox-bodycontent-sentarea d-flex align-items-center">
+                                                            <div class="chatbox-bodycontent-sentarea--upload pt-1">
 
-                                                        <div class="chatbox-bodycontent-sentarea--upload">
+                                                                <div class="dropzone dropzone-container" [dropzone]="messageFileConfiguration" [disabled]="disabled"></div>
 
-                                                            <div class="dropzone dropzone-container" [dropzone]="messageFileConfiguration" [disabled]="disabled"></div>
+                                                            </div>
+                                                            <div class="chatbox-bodycontent-sentarea--input" aria-labelledby="chatinputArea">
+                                                                <input type="text" formControlName="message" r class="type--msgarea" placeholder="Type a message...">
 
-                                                        </div>
-                                                        <div class="chatbox-bodycontent-sentarea--input" aria-labelledby="chatinputArea">
-                                                            <input type="text" formControlName="message" r class="type--msgarea" placeholder="Type a message...">
+                                                                <p class="errorCls" *ngIf="messageForm.controls.message.touched || isMessageFormSubmitted">
+                                                                    <app-form-validation-errors minLength=1 maxLength=5000 errorPrefix="Message " [errors]="messageForm.get('message').errors"></app-form-validation-errors>
+                                                                </p>
+                                                            </div>
+                                                            <div class="chatbox-bodycontent-sentarea--formbtn">
 
-                                                            <p class="errorCls" *ngIf="messageForm.controls.message.touched || isMessageFormSubmitted">
-                                                                <app-form-validation-errors minLength=1 maxLength=5000 errorPrefix="Message " [errors]="messageForm.get('message').errors"></app-form-validation-errors>
-                                                            </p>
-                                                        </div>
-                                                        <div class="chatbox-bodycontent-sentarea--formbtn">
-
-                                                            <button [disabled]="messageForm.invalid" (click)="onSubmitMessageForm()" type="submit" class="w-100 btn--transparent">
+                                                                <button [disabled]="messageForm.invalid" (click)="onSubmitMessageForm()" type="submit" class="w-100 btn--transparent">
 
                                                                 <span class="mobile-sent--btn d-sm-none"><i class="fa fa-paper-plane" aria-hidden="true"></i></span>
 
                                                                 <span class="primary--button px-4 d-none d-sm-inline-block w-100">Reply</span>
                                                             </button>
+                                                            </div>
+
                                                         </div>
 
-                                                    </div>
+                                                        <div *ngIf="checkObjectLength(messageFileArray.value) > 0" class="inner_box">
 
-                                                    <div *ngIf="checkObjectLength(messageFileArray.value) > 0" class="inner_box">
-
-                                                        <div class="box_outer inline-pdf-section">
-                                                            <span class="relative_images">
+                                                            <div class="box_outer inline-pdf-section">
+                                                                <span class="relative_images">
                                                                     <span *ngFor="let messageFile of messageFileArray.value | keyvalue; let messageFileIndex = index;" class="img_box">
                                                                         
 
@@ -177,13 +178,31 @@
                                                                             <i (click)="removeFile(messageFile.key, 'messages ',messageFile.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
                                                                         </div>
                                                                     </span>
-                                                            </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </form>
+                                                </ng-container>
+                                                <ng-template #noChatRoomAvailable>
+                                                    <div *ngIf="job?.job_status != 'PENDING'" class="p-4 border-dashed-top bg-white">
+                                                        <div class="mx-auto max-650">
+                                                            <p class="sent--quote text-center mb-1">
+                                                                Job has been filed as {{job?.job_status | lowercase}}.
+                                                            </p>
+                                                            <p class="sent--quote text-center mb-1 color--text">
+                                                                This chat room is no more available.
+                                                            </p>
+                                                            <div class="chatbox-bodycontent-msgarea-time text-center mb-1">
+                                                                <p><span>{{job?.created_at | date:'medium'}}</span></p>
+                                                            </div>
+                                                            <p class="sent--quote text-center">
+                                                                <a routerLink="/parent/job/{{job?._id}}" href="javascript:void(0))" class="anchor--primary">View Job Details</a>
+                                                            </p>
                                                         </div>
                                                     </div>
-
-
-                                                </form>
-
+                                                </ng-template>
                                             </div>
                                         </div>
                                     </ng-container>
@@ -210,3 +229,5 @@
     </div>
 
 </section>
+
+<ngx-ui-loader></ngx-ui-loader>

@@ -33,7 +33,7 @@
 
                                     </div>
 
-                                    <ng-container *ngIf="paymentDetailsArray.length > 0;">
+                                    <ng-container *ngIf="paymentDetailsArray.length > 0 && getJobStatus == 'COMPLETED'; ">
                                         <div class="w-100 mb-4">
                                             <p class="mobile-pagetop-heading mb-2">Your Billing Method <span class="change-billing-method">  (<a  href="javascript:void()" routerLink="/parent/payment-methods">Change</a>)</span></p>
                                             <div *ngFor="let paymentArray of paymentDetailsArray; let i = index" class="each-credit-card-item">
@@ -77,7 +77,8 @@
                                 </div>
                                 <div class="text-md-right order-3 order-md-2 mt-3 mt-md-0 text-center mb-4 mb-md-5 cpx-4">
                                     <div class="d-flex justify-content-between justify-content-md-end w-100">
-                                        <input type="submit" [disabled]="updateBookingRequestWizard.invalid" (click)="validateBookingRequestWizard()" class="primary--button py-2 px-30" value="Make Payment">
+                                        <input type="submit" *ngIf="getJobStatus == 'COMPLETED'; " [disabled]="updateBookingRequestWizard.invalid" (click)="validateBookingRequestWizard()" class="primary--button py-2 px-30" value="Make Payment">
+                                        <input type="submit" *ngIf="getJobStatus == 'CANCELLED'; " [disabled]="updateBookingRequestWizard.invalid" (click)="validateBookingRequestWizard()" class="primary--button py-2 px-30" value="Submit">
                                     </div>
                                 </div>
                             </form>

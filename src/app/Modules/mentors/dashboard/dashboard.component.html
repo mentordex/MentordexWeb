@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="col-12 text-center my-2 ">
                                             <div class="addrow">
-                                                <button class="color--primary font--16" type="button" role="button">
+                                                <button routerLink="/mentor/my-profile" class="color--primary font--16" type="button" role="button">
                                                         View Profile
                                                     </button>
                                             </div>
@@ -308,7 +308,7 @@
                                         <ul>
                                             <ng-container *ngIf="getNotificationDetails?.length > 0; else noNewNotifications">
                                                 <li *ngFor="let getNotification of getNotificationDetails">
-                                                    <a class="notification-link" href="javascript:void(0)" routerLink="/mentor/booking-request/{{getNotification?.job_id}}">
+                                                    <a class="notification-link" href="javascript:void(0)" routerLink="{{getNotification?.redirectUrl}}">
                                                         <div class="dashboard-mentorcards">
                                                             <div class="notification-mentorcards-desc ml-0">
                                                                 <div class="row">
@@ -357,73 +357,38 @@
                                 </div>
                                 <div class="dashboard-list-body">
                                     <div class="mentorcards-outer notification--mesgouter">
-                                        <span class="text-center">Work in Progress</span>
-                                        <!--ul>
-                                            <li>
-                                                <div class="dashboard-mentorcards">
-                                                    <div class="notification-mentorcards-desc ml-0 w-100 pr-0">
-                                                        <div class="row">
-                                                            <div class="col-6 col-md-3">
-                                                                <p class="text-top-detail">Date</p>
-                                                                <p class="text-top-detail color-heading">05 Aug, 2020</p>
-                                                            </div>
-                                                            <div class="col-6 col-md-6 text-center">
-                                                                <p class="text-top-detail">Amount</p>
-                                                                <p class="text-top-detail color-heading">$1200</p>
-                                                            </div>
-                                                            <div class="col-6 col-md-3">
-                                                                <p class="text-top-detail">Client</p>
-                                                                <p class="text-top-detail color-heading">Om Arya</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dashboard-mentorcards">
-                                                    <div class="notification-mentorcards-desc ml-0 w-100 pr-0">
-                                                        <div class="row">
-                                                            <div class="col-6 col-md-3">
-                                                                <p class="text-top-detail">Date</p>
-                                                                <p class="text-top-detail color-heading">05 Aug, 2020</p>
-                                                            </div>
-                                                            <div class="col-6 col-md-6 text-center">
-                                                                <p class="text-top-detail">Amount</p>
-                                                                <p class="text-top-detail color-heading">$1200</p>
-                                                            </div>
-                                                            <div class="col-6 col-md-3">
-                                                                <p class="text-top-detail">Client</p>
-                                                                <p class="text-top-detail color-heading">Om Arya</p>
+
+                                        <ul>
+                                            <ng-container *ngIf="getTransactionDetails?.length > 0; else noTransactions">
+                                                <li *ngFor="let transaction of getTransactionDetails">
+                                                    <div class="dashboard-mentorcards">
+                                                        <div class="notification-mentorcards-desc ml-0 w-100 pr-0">
+                                                            <div class="row">
+                                                                <div class="col-6 col-md-3">
+                                                                    <p class="text-top-detail">Date</p>
+                                                                    <p class="text-top-detail color-heading">{{transaction?.created_at | date : 'mediumDate'}}</p>
+                                                                </div>
+                                                                <div class="col-6 col-md-6 text-center">
+                                                                    <p class="text-top-detail">Amount</p>
+                                                                    <p class="text-top-detail color-heading">${{transaction?.price}}</p>
+                                                                </div>
+                                                                <div class="col-6 col-md-3">
+                                                                    <p class="text-top-detail">Type</p>
+                                                                    <p class="text-top-detail color-heading">{{transaction?.transaction_type}}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dashboard-mentorcards">
-                                                    <div class="notification-mentorcards-desc ml-0 w-100 pr-0">
-                                                        <div class="row">
-                                                            <div class="col-6 col-md-3">
-                                                                <p class="text-top-detail">Date</p>
-                                                                <p class="text-top-detail color-heading">05 Aug, 2020</p>
-                                                            </div>
-                                                            <div class="col-6 col-md-6 text-center">
-                                                                <p class="text-top-detail">Amount</p>
-                                                                <p class="text-top-detail color-heading">$1200</p>
-                                                            </div>
-                                                            <div class="col-6 col-md-3">
-                                                                <p class="text-top-detail">Client</p>
-                                                                <p class="text-top-detail color-heading">-</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul-->
+                                                </li>
+                                            </ng-container>
+                                            <ng-template #noTransactions>
+                                                <li><span>No Recent Transactions Found.</span></li>
+                                            </ng-template>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="bg-f9 text-center py-3 px-3">
-                                    <button role="button" type="button" class="btn--transparent color--primary">See See All Transactions</button>
+                                    <button routerLink="/mentor/payment-history/" role="button" type="button" class="btn--transparent color--primary">See All Transactions</button>
                                 </div>
                             </div>
                         </div>
@@ -434,3 +399,5 @@
     </div>
 </section>
 <!--Parent section ends-->
+
+<ngx-ui-loader></ngx-ui-loader>

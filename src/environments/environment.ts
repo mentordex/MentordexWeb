@@ -23,13 +23,17 @@ export const environment = {
     "PASSWORD-UPDATED":"Password has been updated successfully.",
     "EMAIL-SENT":"We have sent the password reset instructions to your email ID.",
     "PAYMENT-METHOD-SUCCESSFULL":"Your payment method added successfully.",
-    "BOOKING-REQUEST-SENT":"Your booking request has been sent successfully.",
+    "BOOKING-REQUEST-SENT":"Your job request has been sent successfully.",
+    "BOOKING-REQUEST-CANCELLED":"Your job request has been cancelled successfully.",
+    "BOOKING-REQUEST-COMPLETED":"Your job has been marked as completed successfully.",
     "DEFAULT-CARD-UPDATE-SUCCESS":"Your default card updated successfully.",
     "DEFAULT-CARD-REMOVED":"Your card has been removed successfully.",
     "SUBSCRIPTION-SUCCESS":"Your plan has been activated successfully.",
     "SUBSCRIPTION-CANCEL":"Your plan has been cancelled successfully.",
     "SUBSCRIPTION-UPGRADED":"Your plan has been changed successfully.",
+    "MENTOR-SAVED":"Mentor has been saved successfully.",
     "ADD-YOUR-BILLING-METHOD":"Add your billing method to send booking request to mentor.",
+    "PROFILE-UPDATED":"Profile Updated Successfully.",
   },
   //social logins
   SOCIAL_LOGINS: {

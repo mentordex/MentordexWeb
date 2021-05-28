@@ -25,7 +25,7 @@
                                 <div class="col-12 col-xl-5 mb-3 mb-xl-0">
                                     <p class="basic-title mb-0">Payment History</p>
                                 </div>
-                                <div class="col-12 col-xl-7 text-xl-right">
+                                <!--div class="col-12 col-xl-7 text-xl-right">
                                     <div class="d-inline-block position-relative">
                                         <div class="row align-items-center">
                                             <div class="col-12 col-xl-4 pr-xl-0 text-xl-right">
@@ -60,7 +60,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div-->
                             </div>
                         </div>
                         <div class="profile-steps-rightsidebar-column-body p-0">
@@ -111,7 +111,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div *ngIf="totalRecords > 10" class="row">
                                 <div class="col-xl-12">
                                     <div class="mt-4">
                                         <pagination-template class="mentorcards-pagination-footer" #p="paginationApi" id="listing" maxSize="9" autoHide="true" (pageChange)="nextpage($event)">
@@ -146,3 +146,4 @@
 
 
 </section>
+<ngx-ui-loader></ngx-ui-loader>

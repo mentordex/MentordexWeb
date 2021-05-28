@@ -15,6 +15,9 @@ import { environment } from '../../../../environments/environment';
 
 //import custom validators
 import { CustomValidators } from '../../../core/custom-validators';
+
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 declare var $;
 
 @Component({
@@ -43,7 +46,7 @@ export class UpdateJobStatusComponent implements OnInit {
   paymentDetails: any = {};
   paymentDetailsArray: any = [];
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) {
     this.updateBookingRequestForm();
     this.checkQueryParam();
   }
@@ -75,6 +78,9 @@ export class UpdateJobStatusComponent implements OnInit {
   }
 
   validateBookingRequestWizard(): void {
+
+    this.ngxLoader.start();
+
     this.isBookingRequestSubmitted = true;
 
     // stop here if form is invalid
@@ -82,16 +88,25 @@ export class UpdateJobStatusComponent implements OnInit {
       return;
     }
     //this.wizard.goToNextStep();
+    if (this.getJobStatus == 'COMPLETED') {
+      this.utilsService.processPostRequest('jobs/chargePayment', this.updateBookingRequestWizard.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        //console.log(response);
+        this.responseMsg = environment.MESSGES['BOOKING-REQUEST-COMPLETED'];
+        this.utilsService.onResponse(this.responseMsg, true);
+        this.close();
+      })
+    }
 
-    this.utilsService.processPostRequest('jobs/chargePayment', this.updateBookingRequestWizard.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      //console.log(response);
+    if (this.getJobStatus == 'CANCELLED') {
+      this.utilsService.processPostRequest('jobs/cancelBookingRequest', this.updateBookingRequestWizard.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+        //console.log(response);
+        this.responseMsg = environment.MESSGES['BOOKING-REQUEST-CANCELLED'];
+        this.utilsService.onResponse(this.responseMsg, true);
+        this.close();
+      })
+    }
 
-      this.responseMsg = 'Job has been marked completed successfully.'
 
-
-      this.utilsService.onResponse(this.responseMsg, true);
-      this.close();
-    })
   }
 
   ngOnChanges(): void {

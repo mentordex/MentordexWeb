@@ -14,10 +14,11 @@ import { ViewJobComponent } from './view-job/view-job.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { UpdateJobStatusComponent } from './update-job-status/update-job-status.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, AddPaymentMethodComponent, BillingMethodsComponent, MentorProfileComponent, BookingRequestComponent, SearchComponent, NotificationsComponent, MessagesComponent, ViewJobComponent, JobsComponent, UpdateJobStatusComponent, PaymentHistoryComponent],
+  declarations: [DashboardComponent, AddPaymentMethodComponent, BillingMethodsComponent, MentorProfileComponent, BookingRequestComponent, SearchComponent, NotificationsComponent, MessagesComponent, ViewJobComponent, JobsComponent, UpdateJobStatusComponent, PaymentHistoryComponent, ProfileComponent],
   imports: [
     CommonModule,
     ParentsRoutingModule,

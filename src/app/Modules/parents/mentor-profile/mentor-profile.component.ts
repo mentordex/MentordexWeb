@@ -30,9 +30,13 @@ export class MentorProfileComponent implements OnInit {
   id: any = '';
   mentorId: any = '';
   mentorProfileDetails: any = {};
+  mentorProfileReviews: any = [];
   profileImagePath: any = 'assets/img/none.png';
   getVideoLink: any = '';
   getVideoType: any = '';
+
+  getMentorCompletedJobsCount: number = 0;
+  mentorAlreadySaved:boolean = false;
 
   minDate: Date;
   maxDate: Date;
@@ -42,6 +46,8 @@ export class MentorProfileComponent implements OnInit {
 
   getAvailableSlots: any = [];
   selectedAvailabilityArray: any = [];
+
+  options = { autoHide: false, scrollbarMinSize: 100 };
 
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer, private ngxLoader: NgxUiLoaderService) {
     this.minDate = new Date();
@@ -65,18 +71,14 @@ export class MentorProfileComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.mentorId = params['id'];
 
-
-
       this.zone.run(() => {
         this.getMentorProfileDetailsById(this.id, this.mentorId);
+        this.getMentorReviewsById(this.id, this.mentorId);
       });
 
       //console.log(this.getMentorProfileDetailsById.value);
 
     });
-
-
-    this.ngxLoader.stop();
 
   }
 
@@ -117,8 +119,26 @@ export class MentorProfileComponent implements OnInit {
 
       }
 
+      this.ngxLoader.stop();
+
+    })
+  }
+
+  /**
+   * get Mentor Reviews By Token
+  */
+  getMentorReviewsById(id, mentorId): void {
 
 
+
+    this.utilsService.processPostRequest('getMentorReviewsById', { userID: id, mentorId: mentorId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
+      this.mentorProfileReviews = response['mentorReviews'];
+      this.getMentorCompletedJobsCount = response['mentorCompletedJobsCount'];
+      this.mentorAlreadySaved = response['mentorAlreadySaved'];
+
+      //console.log(this.mentorAlreadySaved);
+      //console.log(this.getMentorCompletedJobsCount);
     })
   }
 
@@ -132,11 +152,13 @@ export class MentorProfileComponent implements OnInit {
 
   }
 
-  public submitMentorBookingRequest(): void {
+  public saveMentor(mentor_id): void {
+    this.ngxLoader.start();
     // check Parent has added the billing method or not.
-    this.utilsService.processPostRequest('checkBillingMethodExists', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-
-
+    this.utilsService.processPostRequest('saveMentor', { userID: this.id, mentorId: mentor_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.mentorAlreadySaved = true;
+      this.utilsService.onResponse(environment.MESSGES['MENTOR-SAVED'], true);
+      this.ngxLoader.stop();
     })
   }
 
@@ -159,12 +181,11 @@ export class MentorProfileComponent implements OnInit {
   }
 
 
-
   /**
-* set check object array length.
-* @param object
-*  @return number
-*/
+  * set check object array length.
+  * @param object
+  *  @return number
+  */
   public checkObjectLength(object): number {
     return Object.keys(object).length;
   }

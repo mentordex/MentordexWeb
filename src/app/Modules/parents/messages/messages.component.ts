@@ -17,7 +17,7 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 import { DropzoneComponent, DropzoneDirective, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
-
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-messages',
@@ -55,7 +55,7 @@ export class MessagesComponent implements OnInit {
 
   options = { autoHide: false, scrollbarMinSize: 100 };
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.initalizeMessageForm();
@@ -64,11 +64,22 @@ export class MessagesComponent implements OnInit {
   }
 
   private checkQueryParam() {
+    this.ngxLoader.start();
     this.id = localStorage.getItem('x-user-ID');
 
-    this.zone.run(() => {
-      this.getParentJobs(this.id);
-    });
+
+
+    this.activatedRoute.params.subscribe((params) => {
+      const jobId = ('jobId' in params) ? params['jobId'] : ''
+      if (jobId) {
+        this.selectedJobId = jobId;
+        this.getParentJobsById(this.id, this.selectedJobId);
+        this.getParentSidebarList(this.id);
+      } else {
+        this.getParentJobs(this.id);
+      }
+
+    })
     //console.log(this.priceValuationForm.value);
 
   }
@@ -196,6 +207,7 @@ export class MessagesComponent implements OnInit {
 
     this.utilsService.processPostRequest('messages/saveParentMessage', this.messageForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
+      this.ngxLoader.start();
       this.getParentJobsById(this.id, this.selectedJobId);
       this.messageForm.patchValue({
         message: ''
@@ -249,9 +261,9 @@ export class MessagesComponent implements OnInit {
 
           //console.log(this.parentProfileImagePath);
 
-          this.mentorDetails.push({ job_id: element._id, mentor_id: element.mentor_id, mentor_first_name: element.mentor.first_name, mentor_last_name: element.mentor.last_name, mentor_profile_image: this.mentorProfileImagePath });
+          this.mentorDetails.push({ job_id: element._id, job_title: element.job_title, mentor_id: element.mentor_id, mentor_first_name: element.mentor.first_name, mentor_last_name: element.mentor.last_name, mentor_profile_image: this.mentorProfileImagePath });
 
-          this.filteredMentorDetails.push({ job_id: element._id, mentor_id: element.mentor_id, mentor_first_name: element.mentor.first_name, mentor_last_name: element.mentor.last_name, mentor_profile_image: this.mentorProfileImagePath });
+          this.filteredMentorDetails.push({ job_id: element._id, job_title: element.job_title, mentor_id: element.mentor_id, mentor_first_name: element.mentor.first_name, mentor_last_name: element.mentor.last_name, mentor_profile_image: this.mentorProfileImagePath });
 
           /* get Sidebar Listing */
 
@@ -301,9 +313,11 @@ export class MessagesComponent implements OnInit {
 
             });
 
+            this.ngxLoader.stop();
+
           } else {
             this.jobDetails[index]['messages'] = [];
-
+            this.ngxLoader.stop();
           }
 
 
@@ -314,7 +328,63 @@ export class MessagesComponent implements OnInit {
         this.noJobsFound = true;
       }
 
-      console.log(this.getJobDetailsArray);
+      //console.log(this.getJobDetailsArray);
+
+    })
+  }
+
+  /**
+   * get Parent Jobs By Token
+  */
+  getParentSidebarList(parentId): void {
+    this.utilsService.processPostRequest('messages/getParentJobs', { userID: parentId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+      this.jobDetails = response;
+      if (this.jobDetails.length > 0) {
+        this.noJobsFound = false;
+        this.jobDetails.forEach((element, index) => {
+
+          // Reset Profile Image Path
+          this.parentProfileImagePath = 'assets/img/none.png';
+          this.mentorProfileImagePath = 'assets/img/none.png';
+          this.senderProfileImagePath = 'assets/img/none.png';
+          this.receiverProfileImagePath = 'assets/img/none.png';
+
+
+          /* get Sidebar Listing */
+          if (element.parent.profile_image.length > 0) {
+            //console.log('pello')
+            this.parentProfileImagePath = element.parent.profile_image[0].file_path;
+
+          }
+          this.jobDetails[index]['parent']['profileImagePath'] = this.parentProfileImagePath;
+
+
+          if (element.mentor.profile_image.length > 0) {
+            //console.log('pello')
+            this.mentorProfileImagePath = element.mentor.profile_image[0].file_path;
+
+          }
+          this.jobDetails[index]['mentor']['profileImagePath'] = this.mentorProfileImagePath;
+
+          //console.log(this.parentProfileImagePath);
+
+          this.mentorDetails.push({ job_id: element._id, job_title: element.job_title, mentor_id: element.mentor_id, mentor_first_name: element.mentor.first_name, mentor_last_name: element.mentor.last_name, mentor_profile_image: this.mentorProfileImagePath });
+
+          this.filteredMentorDetails.push({ job_id: element._id, job_title: element.job_title, mentor_id: element.mentor_id, mentor_first_name: element.mentor.first_name, mentor_last_name: element.mentor.last_name, mentor_profile_image: this.mentorProfileImagePath });
+
+          /* get Sidebar Listing */
+
+
+          this.ngxLoader.stop();
+
+        });
+
+
+      } else {
+        this.noJobsFound = true;
+      }
+
+      //console.log(this.getJobDetailsArray);
 
     })
   }
@@ -323,7 +393,7 @@ export class MessagesComponent implements OnInit {
    * get Mentor Jobs By Token
   */
   getParentJobsById(parentId, jobId): void {
-
+    this.ngxLoader.start();
     this.utilsService.processPostRequest('messages/getParentJobsById', { userID: parentId, job_id: jobId }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
 
@@ -394,7 +464,7 @@ export class MessagesComponent implements OnInit {
       } else {
         this.noJobsFound = true;
       }
-
+      this.ngxLoader.stop();
       //console.log(this.jobDetails);
 
     })

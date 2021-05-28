@@ -481,6 +481,33 @@ ngb-rating * {
     max-height: 450px;
 }
 
+.chatbox-inboxlist ngx-simplebar {
+    max-height: 620px;
+}
+
+.mentor-reviews ngx-simplebar {
+    max-height: 450px;
+}
+
+.splice-text .nav-search-anchor {
+    overflow: visible;
+    position: relative;
+    white-space: normal;
+}
+
+.splice-text span.up-s-nav-icon {
+    position: absolute;
+    left: 12px;
+}
+
+.splice-text-inner .nav-search-catalog-query-type {
+    margin-left: -25px;
+}
+
+.splice-text-inner {
+    padding-left: 24px;
+}
+
 .chatlist--modification+form .dz-button {
     outline: none;
     box-shadow: none;

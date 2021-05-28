@@ -38,7 +38,7 @@
                                                 </span> {{mentorProfileDetails?.city?.value}}, {{mentorProfileDetails?.state?.value}}
                                                 </div>
                                                 <div class="dashboard-parent-profile-header-content-author-exp">
-                                                    Jobs Completed: 0
+                                                    Jobs Completed: {{getMentorCompletedJobsCount}}
                                                 </div>
                                             </div>
                                         </div>
@@ -60,15 +60,18 @@
                                         </button>
                                         </div>
                                         <div class="col-lg-8 text-md-right">
-                                            <!--button role="button" type="button" class="primary--button-transparent py-1  mb-2 mb-sm-0">
+                                            <button *ngIf="mentorAlreadySaved == false" (click)="saveMentor(mentorProfileDetails?._id)" role="button" type="button" class="primary--button-transparent py-1  mb-2 mr-2 mb-sm-0">
                                             Save Mentor
-                                        </button-->
-                                            <button routerLink="/parent/booking-request/{{mentorProfileDetails?._id}}" role="button" type="button" class="primary--button py-1 mb-2 mr-2 mb-sm-0 cursor--pointer">
+                                            </button>
+
+                                            <button *ngIf="mentorAlreadySaved == true" role="button" type="button" class="primary--button-transparent py-1  mb-2 mr-2 mb-sm-0">
+                                                Saved
+                                                </button>
+
+                                            <button routerLink="/parent/booking-request/{{mentorProfileDetails?._id}}" role="button" type="button" class="primary--button py-1 mb-2 mb-sm-0 cursor--pointer">
                                             Send Booking Request
                                         </button>
-                                            <button role="button" type="button" class="primary--button-white py-1">
-                                            Message
-                                        </button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -188,66 +191,69 @@
                                                 <div>
                                                     <p class="dashboard-parent-profile-body--title">Reviews & Ratings</p>
                                                 </div>
-                                                <div id="scrollbarRun" class="each-review-row-scrollbar" data-simplebar>
-                                                    <div class="each-review-row">
-                                                        <div class="col-12 px-0">
-                                                            <div class="row mx-0">
+                                                <div id="scrollbarRun" class="each-review-row-scrollbar mentor-reviews">
+                                                    <ng-container *ngIf="getMentorCompletedJobsCount > 0; else noReviewsFound;">
+                                                        <ngx-simplebar [options]="options">
+                                                            <div *ngFor="let mentorReview of mentorProfileReviews let i=index" class="each-review-row">
                                                                 <div class="col-12 px-0">
-                                                                    <p class="dashboard-parent-profile-body--subtitle text--heading mb-1">No Reviews</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--div class="each-review-row">
-                                                        <div class="col-12 px-0">
-                                                            <div class="row mx-0">
-                                                                <div class="col-12 px-0">
-                                                                    <video _ngcontent-okx-c182="" width="736" height="422" autoplay=""><source _ngcontent-okx-c182="" type="video/mp4" src="https://mentordex-dev.s3.us-east-2.amazonaws.com/introduction_video/1618750907735"> Your browser does not support the video tag. </video>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div-->
-                                                    <!--div class="each-review-row">
-                                                        <div class="col-12 px-0">
-                                                            <div class="row mx-0">
-                                                                <div class="col-12 px-0">
-                                                                    <p class="dashboard-parent-profile-body--subtitle text--heading mb-1">Help in exam preparation, writing of the methodological part of a thesis/PhD...</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pr-xl-130">
-                                                            <div class="col-12 px-0">
-                                                                <div class="row mb-2 mx-0">
-                                                                    <div class="col-sm-5 mb-2 mb-sm-0 px-0">
-                                                                        <p class="dashboard-parent-profile-body--subtitle">16 Aug - 15 Sept</p>
-                                                                    </div>
-                                                                    <div class="col-sm-7 text-right px-0">
-                                                                        <p class="dashboard-parent-profile-body--subtitle">
-                                                                            <span class="d-inline-block mr-1">
-                                                                            <svg width="97" height="17" viewBox="0 0 97 17" fill="none">
-                                                                                <path d="M16.295 6.53712L11.336 5.81641L9.11921 1.32227C9.05866 1.19923 8.95905 1.09962 8.836 1.03907C8.52741 0.886726 8.15241 1.01368 7.99811 1.32227L5.78132 5.81641L0.822333 6.53712C0.685614 6.55665 0.560614 6.6211 0.464911 6.71876C0.349211 6.83768 0.285455 6.99766 0.287653 7.16357C0.28985 7.32947 0.357821 7.48771 0.47663 7.60352L4.06452 11.1016L3.21686 16.041C3.19699 16.1559 3.2097 16.2741 3.25357 16.3821C3.29743 16.4902 3.37069 16.5838 3.46504 16.6523C3.55939 16.7208 3.67106 16.7615 3.78737 16.7698C3.90368 16.7781 4.02 16.7537 4.12311 16.6992L8.55866 14.3672L12.9942 16.6992C13.1153 16.7637 13.2559 16.7852 13.3907 16.7617C13.7305 16.7031 13.9591 16.3809 13.9005 16.041L13.0528 11.1016L16.6407 7.60352C16.7383 7.50782 16.8028 7.38282 16.8223 7.2461C16.8751 6.9043 16.6368 6.5879 16.295 6.53712Z" fill="#3BB3BD"/>
-                                                                                <path d="M36.295 6.53712L31.336 5.81641L29.1192 1.32227C29.0587 1.19923 28.9591 1.09962 28.836 1.03907C28.5274 0.886726 28.1524 1.01368 27.9981 1.32227L25.7813 5.81641L20.8223 6.53712C20.6856 6.55665 20.5606 6.6211 20.4649 6.71876C20.3492 6.83768 20.2855 6.99766 20.2877 7.16357C20.2899 7.32947 20.3578 7.48771 20.4766 7.60352L24.0645 11.1016L23.2169 16.041C23.197 16.1559 23.2097 16.2741 23.2536 16.3821C23.2974 16.4902 23.3707 16.5838 23.465 16.6523C23.5594 16.7208 23.6711 16.7615 23.7874 16.7698C23.9037 16.7781 24.02 16.7537 24.1231 16.6992L28.5587 14.3672L32.9942 16.6992C33.1153 16.7637 33.2559 16.7852 33.3907 16.7617C33.7305 16.7031 33.9591 16.3809 33.9005 16.041L33.0528 11.1016L36.6407 7.60352C36.7383 7.50782 36.8028 7.38282 36.8223 7.2461C36.8751 6.9043 36.6368 6.5879 36.295 6.53712Z" fill="#3BB3BD"/>
-                                                                                <path d="M56.295 6.53712L51.336 5.81641L49.1192 1.32227C49.0587 1.19923 48.9591 1.09962 48.836 1.03907C48.5274 0.886726 48.1524 1.01368 47.9981 1.32227L45.7813 5.81641L40.8223 6.53712C40.6856 6.55665 40.5606 6.6211 40.4649 6.71876C40.3492 6.83768 40.2855 6.99766 40.2877 7.16357C40.2899 7.32947 40.3578 7.48771 40.4766 7.60352L44.0645 11.1016L43.2169 16.041C43.197 16.1559 43.2097 16.2741 43.2536 16.3821C43.2974 16.4902 43.3707 16.5838 43.465 16.6523C43.5594 16.7208 43.6711 16.7615 43.7874 16.7698C43.9037 16.7781 44.02 16.7537 44.1231 16.6992L48.5587 14.3672L52.9942 16.6992C53.1153 16.7637 53.2559 16.7852 53.3907 16.7617C53.7305 16.7031 53.9591 16.3809 53.9005 16.041L53.0528 11.1016L56.6407 7.60352C56.7383 7.50782 56.8028 7.38282 56.8223 7.2461C56.8751 6.9043 56.6368 6.5879 56.295 6.53712Z" fill="#3BB3BD"/>
-                                                                                <path d="M76.295 6.53712L71.336 5.81641L69.1192 1.32227C69.0587 1.19923 68.9591 1.09962 68.836 1.03907C68.5274 0.886726 68.1524 1.01368 67.9981 1.32227L65.7813 5.81641L60.8223 6.53712C60.6856 6.55665 60.5606 6.6211 60.4649 6.71876C60.3492 6.83768 60.2855 6.99766 60.2877 7.16357C60.2899 7.32947 60.3578 7.48771 60.4766 7.60352L64.0645 11.1016L63.2169 16.041C63.197 16.1559 63.2097 16.2741 63.2536 16.3821C63.2974 16.4902 63.3707 16.5838 63.465 16.6523C63.5594 16.7208 63.6711 16.7615 63.7874 16.7698C63.9037 16.7781 64.02 16.7537 64.1231 16.6992L68.5587 14.3672L72.9942 16.6992C73.1153 16.7637 73.2559 16.7852 73.3907 16.7617C73.7305 16.7031 73.9591 16.3809 73.9005 16.041L73.0528 11.1016L76.6407 7.60352C76.7383 7.50782 76.8028 7.38282 76.8223 7.2461C76.8751 6.9043 76.6368 6.5879 76.295 6.53712Z" fill="#3BB3BD"/>
-                                                                                <path d="M96.295 6.53712L91.336 5.81641L89.1192 1.32227C89.0587 1.19923 88.9591 1.09962 88.836 1.03907C88.5274 0.886726 88.1524 1.01368 87.9981 1.32227L85.7813 5.81641L80.8223 6.53712C80.6856 6.55665 80.5606 6.6211 80.4649 6.71876C80.3492 6.83768 80.2855 6.99766 80.2877 7.16357C80.2899 7.32947 80.3578 7.48771 80.4766 7.60352L84.0645 11.1016L83.2169 16.041C83.197 16.1559 83.2097 16.2741 83.2536 16.3821C83.2974 16.4902 83.3707 16.5838 83.465 16.6523C83.5594 16.7208 83.6711 16.7615 83.7874 16.7698C83.9037 16.7781 84.02 16.7537 84.1231 16.6992L88.5587 14.3672L92.9942 16.6992C93.1153 16.7637 93.2559 16.7852 93.3907 16.7617C93.7305 16.7031 93.9591 16.3809 93.9005 16.041L93.0528 11.1016L96.6407 7.60352C96.7383 7.50782 96.8028 7.38282 96.8223 7.2461C96.8751 6.9043 96.6368 6.5879 96.295 6.53712Z" fill="#E8E8E8"/>
-                                                                            </svg>                       
-                                                                        </span> 4.0
-                                                                        </p>
+                                                                    <div class="row mx-0">
+                                                                        <div class="col-12 px-0">
+                                                                            <p class="dashboard-parent-profile-body--subtitle text--heading mb-1">{{mentorReview?.job_title}}</p>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="pr-xl-130">
+                                                                    <div class="col-12 px-0">
+                                                                        <div class="row mb-2 mx-0">
+                                                                            <div class="col-sm-5 mb-2 mb-sm-0 px-0">
+                                                                                <p class="dashboard-parent-profile-body--subtitle">{{mentorReview?.modified_at | date:'mediumDate'}}</p>
+                                                                            </div>
+                                                                            <ng-container *ngIf="mentorReview?.mentor_review?.rating > 0;">
+                                                                                <div class="col-sm-7 text-right px-0">
+                                                                                    <p class="dashboard-parent-profile-body--subtitle">
+                                                                                        <ngb-rating [starTemplate]="t" [max]="5" [rate]="mentorReview?.mentor_review?.rating || 0" [readonly]="true"></ngb-rating>
+                                                                                        <ng-template #t let-fill="fill">
+                                                                                            <span class="star" [class.full]="fill===100">
+                                                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                                                                                            </span>
+                                                                                        </ng-template>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </ng-container>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12 px-0">
+                                                                        <div class="row mx-0">
+                                                                            <div class="col-12 px-0">
+                                                                                <ng-container *ngIf="mentorReview?.mentor_review?.rating > 0; else noReviewGiven;">
+                                                                                    <p class="dashboard-parent-profile-body--subtitle font-14 font-italic">
+                                                                                        “{{mentorReview?.mentor_review?.review}}”
+                                                                                    </p>
+                                                                                </ng-container>
+                                                                                <ng-template #noReviewGiven>
+                                                                                    <p class="dashboard-parent-profile-body--subtitle font-14 font-italic">
+                                                                                        No Review Given.
+                                                                                    </p>
+                                                                                </ng-template>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+                                                        </ngx-simplebar>
+                                                    </ng-container>
+
+                                                    <ng-template #noReviewsFound>
+                                                        <div class="each-review-row">
                                                             <div class="col-12 px-0">
                                                                 <div class="row mx-0">
                                                                     <div class="col-12 px-0">
-                                                                        <p class="dashboard-parent-profile-body--subtitle font-14 font-italic">
-                                                                            “What a brilliant teacher I have ever met. He clelared all my doubts and I topped in my class. 100% Recommended.”
-                                                                        </p>
+                                                                        <p class="dashboard-parent-profile-body--subtitle text--heading mb-1">No Reviews Yet.</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div-->
-
+                                                    </ng-template>
 
                                                 </div>
                                             </li>

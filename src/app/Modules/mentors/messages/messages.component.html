@@ -52,24 +52,25 @@
                                 </div>
                                 <div class="chatbox-inboxlist">
                                     <ul>
-                                        <li *ngFor="let parent of parentDetails; let i= index;">
-                                            <a href="javascript:void(0)" (click)="getMentorJobsById(id, parent?.job_id)">
-                                                <div class="chat-fill-row">
-                                                    <div class="chat-list">
-                                                        <div class="chat-people">
-                                                            <div class="chat-img">
-                                                                <img [src]="parent?.parent_profile_image" alt="usericon">
-                                                            </div>
-                                                            <div class="chat-desc">
-                                                                <p>{{parent?.parent_first_name}} {{parent?.parent_last_name}}</p>
-                                                                <!--span>When I can reach to you and you can</span-->
+                                        <ngx-simplebar [options]="options">
+                                            <li *ngFor="let parent of parentDetails; let i= index;">
+                                                <a href="javascript:void(0)" (click)="getMentorJobsById(id, parent?.job_id)">
+                                                    <div class="chat-fill-row">
+                                                        <div class="chat-list">
+                                                            <div class="chat-people">
+                                                                <div class="chat-img">
+                                                                    <img [src]="parent?.parent_profile_image" alt="usericon">
+                                                                </div>
+                                                                <div class="chat-desc">
+                                                                    <p>{{parent?.parent_first_name}} {{parent?.parent_last_name}}</p>
+                                                                    <span>{{parent?.job_title}}</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
-
+                                                </a>
+                                            </li>
+                                        </ngx-simplebar>
                                     </ul>
                                 </div>
                             </div>
@@ -184,9 +185,9 @@
                                                 <ng-container *ngIf="job?.job_status == 'ACCEPTED'; else noChatRoomAvailable">
 
                                                     <form [formGroup]="messageForm">
-                                                        <div class="chatbox-bodycontent-sentarea d-flex align-items-center">
+                                                        <div class="chatbox-bodycontent-sentarea d-flex align-items-start">
 
-                                                            <div class="chatbox-bodycontent-sentarea--upload">
+                                                            <div class="chatbox-bodycontent-sentarea--upload pt-1">
 
                                                                 <div class="dropzone dropzone-container" [dropzone]="messageFileConfiguration" [disabled]="disabled"></div>
 

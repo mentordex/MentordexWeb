@@ -16,6 +16,9 @@ import { CustomValidators } from '../../../core/custom-validators';
 
 import Swal from 'sweetalert2'
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 @Component({
   selector: 'app-billing-methods',
   templateUrl: './billing-methods.component.html',
@@ -33,13 +36,14 @@ export class BillingMethodsComponent implements OnInit {
   //selectedPriceId: any = '';
 
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.checkQueryParam();
   }
 
   private checkQueryParam() {
+    this.ngxLoader.start();
     this.id = localStorage.getItem('x-user-ID');
     this.getPaymentDetailsByToken(this.id);
   }
@@ -52,6 +56,7 @@ export class BillingMethodsComponent implements OnInit {
       this.paymentDetails = response;
       //console.log(this.paymentDetails.payment_details);
       this.paymentDetailsArray = this.paymentDetails.payment_details;
+      this.ngxLoader.stop();
     })
   }
 
@@ -65,6 +70,7 @@ export class BillingMethodsComponent implements OnInit {
     // console.log('carDetails', isOpened);
     this.isPaymentMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
     this.checkQueryParam();
+    this.ngxLoader.stop();
   }
 
   public defaultCard(card_id): void {
@@ -77,11 +83,11 @@ export class BillingMethodsComponent implements OnInit {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
-
+        this.ngxLoader.start();
         this.utilsService.processPostRequest('defaultCard', { userID: this.id, card_id: card_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
           this.utilsService.onResponse(environment.MESSGES['DEFAULT-CARD-UPDATE-SUCCESS'], true);
           this.getPaymentDetailsByToken(this.id);
-
+          this.ngxLoader.stop();
         })
 
       }
@@ -98,10 +104,11 @@ export class BillingMethodsComponent implements OnInit {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
-
+        this.ngxLoader.start();
         this.utilsService.processPostRequest('removeCard', { userID: this.id, card_id: card_id }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
           this.utilsService.onResponse(environment.MESSGES['DEFAULT-CARD-REMOVED'], true);
           this.getPaymentDetailsByToken(this.id);
+          this.ngxLoader.stop();
         })
 
       }

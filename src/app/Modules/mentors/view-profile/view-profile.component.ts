@@ -15,6 +15,9 @@ import { environment } from '../../../../environments/environment';
 //import custom validators
 import { CustomValidators } from '../../../core/custom-validators';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 declare var $;
 
 @Component({
@@ -41,17 +44,23 @@ export class ViewProfileComponent implements OnInit {
   getAvailableSlots: any = [];
   selectedAvailabilityArray: any = [];
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer) { }
+  mentorProfileReviews: any = [];
+  getMentorCompletedJobsCount: number = 0;
+  mentorAlreadySaved:boolean = false;
+
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.checkQueryParam();
   }
 
   private checkQueryParam() {
+    this.ngxLoader.start();
     this.id = localStorage.getItem('x-user-ID');
 
     this.zone.run(() => {
       this.getMentorProfileDetailsById(this.id, this.id);
+      this.getMentorReviewsById(this.id, this.id);
     });
 
   }
@@ -89,8 +98,28 @@ export class ViewProfileComponent implements OnInit {
 
       }
 
+      this.ngxLoader.stop();
+
     })
   }
+
+  /**
+   * get Mentor Reviews By Token
+  */
+ getMentorReviewsById(id, mentorId): void {
+
+
+
+  this.utilsService.processPostRequest('getMentorReviewsById', { userID: id, mentorId: mentorId }, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+
+    this.mentorProfileReviews = response['mentorReviews'];
+    this.getMentorCompletedJobsCount = response['mentorCompletedJobsCount'];
+    this.mentorAlreadySaved = response['mentorAlreadySaved'];
+
+    //console.log(this.mentorAlreadySaved);
+    //console.log(this.getMentorCompletedJobsCount);
+  })
+}
 
   public openVideoIntroPopup(video_link): void {
     //this.getVideoLink = this.dom.bypassSecurityTrustResourceUrl(video_link);

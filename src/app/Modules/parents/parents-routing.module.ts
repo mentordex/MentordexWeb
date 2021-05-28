@@ -10,6 +10,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { MessagesComponent } from './messages/messages.component';
 import { ViewJobComponent } from './view-job/view-job.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
@@ -58,6 +60,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'messages/:jobId',
+    component: MessagesComponent,
+    data: { title: 'Messages' },
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'payment-history',
     component: PaymentHistoryComponent,
     data: { title: 'Payment History' },
@@ -67,6 +75,18 @@ const routes: Routes = [
     path: 'job/:id',
     component: ViewJobComponent,
     data: { title: 'View Job' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'jobs',
+    component: JobsComponent,
+    data: { title: 'Jobs' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    data: { title: 'My Profile' },
     canActivate: [AuthGuard]
   }
 ];

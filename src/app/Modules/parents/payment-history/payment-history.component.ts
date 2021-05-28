@@ -11,6 +11,9 @@ import { AuthService, UtilsService } from '../../../core/services';
 //import enviornment
 import { environment } from '../../../../environments/environment';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 @Component({
   selector: 'app-payment-history',
   templateUrl: './payment-history.component.html',
@@ -30,11 +33,11 @@ export class PaymentHistoryComponent implements OnInit {
     sort_by: 'created_at',
     sort_dir: 'desc',
     filters: [],
-    size: 5,
+    size: 10,
     pageNumber: 1,
   }
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.checkQueryParam();
@@ -42,7 +45,7 @@ export class PaymentHistoryComponent implements OnInit {
 
   private checkQueryParam() {
     this.id = localStorage.getItem('x-user-ID');
-
+    this.ngxLoader.start();
     this.zone.run(() => {
       this.pagination['userID'] = this.id;
       this.getTransactions();
@@ -64,26 +67,28 @@ export class PaymentHistoryComponent implements OnInit {
           if ('job_id' in element && element.job_id != '') {
             this.utilsService.processPostRequest('transactions/fetchJobsById', { userID: this.id, job_id: element.job_id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
               this.getJobDetails = response;
-              if ('job_title' in this.getInvoiceDetails) {
+              if ('job_title' in this.getJobDetails) {
                 transactionArray[index]['job_title'] = this.getJobDetails.job_title;
-                
               }else{
-                transactionArray[index]['job_title'] = 'N/A';
+                transactionArray[index]['job_title'] = element.transaction_type;
                 
               }
 
             })
           }else{
-            transactionArray[index]['job_title'] = 'N/A';
+            transactionArray[index]['job_title'] = element.transaction_type;
             
           }
         });
       }
-      console.log(this.getTransactionDetails);
+
+      this.ngxLoader.stop();
+      //console.log(this.getTransactionDetails);
     })
   }
 
   nextpage(page) {
+    this.ngxLoader.start();
     this.pagination.pageNumber = page;
     this.getTransactions();
   }

@@ -127,6 +127,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'messages/:jobId',
+    component: MessagesComponent,
+    data: { title: 'Messages' },
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'my-profile',
     component: ViewProfileComponent,
     data: { title: 'Profile' },
