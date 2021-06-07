@@ -5,7 +5,7 @@
                 <div class="profile-steps-leftsidebar">
                     <ul>
                         <li [class.current-active]="getWizardStep === 1">
-                            <a href="javascript:void(0)">
+                            <a (click)="goToSelectedStep(0)" href="javascript:void(0)">
                                 <span class="pills-icon">
                                         <svg width="21" height="18" viewBox="0 0 21 18" fill="none">
                                             <path d="M9.45801 5.87532C9.45801 7.60449 8.06218 9.00032 6.33301 9.00032C4.60384 9.00032 3.20801 7.60449 3.20801 5.87532C3.20801 4.14616 4.60384 2.75033 6.33301 2.75033C8.06218 2.75033 9.45801 4.14616 9.45801 5.87532ZM12.583 17.3337H0.0830078V15.2503C0.0830078 12.9482 2.88509 11.0837 6.33301 11.0837C9.78092 11.0837 12.583 12.9482 12.583 15.2503V17.3337ZM20.9163 9.00032V11.0837H11.5413V9.00032H20.9163ZM20.9163 4.83366V6.91699H11.5413V4.83366H20.9163ZM20.9163 0.666992V2.75033H11.5413V0.666992H20.9163Z" fill="#384047"/>
@@ -20,7 +20,7 @@
                             </a>
                         </li>
                         <li [class.current-active]="getWizardStep === 2">
-                            <a href="#">
+                            <a (click)="goToSelectedStep(1)" href="javascript:void(0)">
                                 <span class="pills-icon l-5">
                                         <svg width="25" height="21" viewBox="0 0 25 21" fill="none">
                                             <path d="M22.7539 14.8948H15.4297C14.2329 14.8948 13.1685 15.4719 12.5 16.3625C11.8315 15.4719 10.7671 14.8948 9.57031 14.8948H2.24609C1.8418 14.8948 1.51367 15.2229 1.51367 15.6272V16.3596H7.65576C9.36924 16.3596 11.0739 16.699 12.5 17.6497C13.9257 16.6993 15.6301 16.3596 17.3442 16.3596H23.4863V15.6272C23.4863 15.2229 23.1582 14.8948 22.7539 14.8948Z" fill="#384047"/>
@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li [class.current-active]="getWizardStep === 3">
-                            <a href="#">
+                            <a (click)="goToSelectedStep(2)" href="javascript:void(0)">
                                 <span class="pills-icon">
                                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
                                             <g clip-path="url(#clip0)">
@@ -64,7 +64,7 @@
                             </a>
                         </li>
                         <li [class.current-active]="getWizardStep === 4">
-                            <a href="#">
+                            <a (click)="goToSelectedStep(3)" href="javascript:void(0)">
                                 <span class="pills-icon">
                                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
                                             <g clip-path="url(#clip0)">
@@ -90,7 +90,7 @@
                             </a>
                         </li>
                         <li [class.current-active]="getWizardStep === 5">
-                            <a href="#">
+                            <a (click)="goToSelectedStep(4)" href="javascript:void(0)">
                                 <span class="pills-icon">
                                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
                                             <path d="M21.3389 3.66113C18.9779 1.3002 15.8389 0 12.5 0C9.16113 0 6.02207 1.3002 3.66113 3.66113C1.3002 6.02207 0 9.16113 0 12.5C0 15.8389 1.30024 18.9779 3.66113 21.3389C6.02202 23.6999 9.16113 25 12.5 25C15.8389 25 18.9779 23.6998 21.3389 21.3389C23.6998 18.9779 25 15.8389 25 12.5C25 9.16113 23.6998 6.02212 21.3389 3.66113ZM12.5 11.7188C14.4385 11.7188 16.0156 13.2958 16.0156 15.2344C16.0156 16.8397 14.9337 18.1962 13.461 18.6154C13.3552 18.6455 13.2812 18.7407 13.2812 18.8507V19.5092C13.2812 19.9299 12.958 20.2918 12.5377 20.3116C12.0891 20.3327 11.7188 19.9752 11.7188 19.5312V18.8505C11.7188 18.7408 11.6452 18.6456 11.5397 18.6156C10.0733 18.1986 8.99419 16.8522 8.98442 15.2562C8.98184 14.8302 9.3168 14.4657 9.74268 14.4535C10.1846 14.4408 10.5469 14.7953 10.5469 15.2344C10.5469 16.3575 11.4999 17.2623 12.6396 17.1826C13.6017 17.1154 14.3811 16.336 14.4482 15.3739C14.5278 14.2341 13.6231 13.2812 12.5 13.2812C10.5615 13.2812 8.98438 11.7042 8.98438 9.76562C8.98438 8.1603 10.0663 6.80376 11.539 6.38462C11.6448 6.35449 11.7188 6.25933 11.7188 6.14932V5.49082C11.7188 5.07012 12.042 4.70815 12.4623 4.68838C12.9109 4.66728 13.2812 5.02476 13.2812 5.46875V6.14946C13.2812 6.25918 13.3548 6.35439 13.4603 6.38442C14.9267 6.80142 16.0058 8.14775 16.0156 9.7438C16.0182 10.1698 15.6832 10.5343 15.2573 10.5465C14.8154 10.5592 14.4531 10.2047 14.4531 9.76562C14.4531 8.64248 13.5001 7.7377 12.3604 7.81738C11.3983 7.88462 10.6189 8.66401 10.5518 9.62612C10.4722 10.7659 11.3769 11.7188 12.5 11.7188Z" fill="#384047" fill-opacity="0.7"/>
@@ -105,7 +105,7 @@
                             </a>
                         </li>
                         <li [class.current-active]="getWizardStep === 6">
-                            <a href="#">
+                            <a (click)="goToSelectedStep(5)" href="javascript:void(0)">
                                 <span class="pills-icon">
                                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0)">
@@ -1085,7 +1085,7 @@
                                             <div class="col-12 text-center text-md-left mb-3">
                                                 <div class="d-flex justify-content-between justify-content-md-start w-100">
                                                     <a (click)="gotoStep(4)" class="alt--button font-w-500 py-2 px-30 mr-2 mr-sm-3" href="javascript:void(0)">BACK</a>
-                                                    <input [disabled]="addSocialLinksForm.invalid" (click)="onSubmitAddSocialLinksForm()" type="submit" class="primary--button py-2 px-30" value="Complete Setup">
+                                                    <input [disabled]="addSocialLinksForm.invalid" (click)="onSubmitAddSocialLinksForm()" type="submit" class="primary--button py-2 px-30" value="Update">
                                                 </div>
                                             </div>
                                             <div class="col-12 mt-2">

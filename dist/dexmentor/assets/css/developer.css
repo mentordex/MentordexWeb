@@ -477,6 +477,59 @@ ngb-rating * {
     color: var(--color-primary);
 }
 
+.chatlist--modification ngx-simplebar {
+    max-height: 450px;
+}
+
+.chatbox-inboxlist ngx-simplebar {
+    max-height: 620px;
+}
+
+.mentor-reviews ngx-simplebar {
+    max-height: 450px;
+}
+
+.splice-text .nav-search-anchor {
+    overflow: visible;
+    position: relative;
+    white-space: normal;
+}
+
+.splice-text span.up-s-nav-icon {
+    position: absolute;
+    left: 12px;
+}
+
+.splice-text-inner .nav-search-catalog-query-type {
+    margin-left: -25px;
+}
+
+.splice-text-inner {
+    padding-left: 24px;
+}
+
+.chatlist--modification+form .dz-button {
+    outline: none;
+    box-shadow: none;
+    border: 0px;
+    background: transparent;
+}
+
+.buy-plan-btn.active {
+    text-decoration: none;
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+    transition: .2s ease-in all;
+}
+
+.message-file-name {
+    color: var(--color-primary);
+    font-size: 13px;
+    display: inline-block;
+    font-weight: 500;
+}
+
 @media only screen and (min-width: 768px) {
     .listing-category-modify ul li {
         flex: 0 0 33.33%;

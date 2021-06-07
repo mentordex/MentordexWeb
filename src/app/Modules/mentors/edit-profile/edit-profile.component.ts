@@ -1112,6 +1112,11 @@ export class EditProfileComponent implements OnInit {
     this.wizard.goToStep(desinationIndex);
   }
 
+  goToSelectedStep(desinationIndex): void {
+    console.log(desinationIndex);
+    this.wizard.goToStep(desinationIndex);
+  }
+
 
   /**
 * set check object array length.

@@ -1,0 +1,102 @@
+<div class="modal fade" #exampleModal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog max-900">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <button type="button" (click)="close()" class="close modal-close-btn d-none d-md-inline-block" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path d="M1.40039 1.40869L20.6004 20.6087M1.40039 20.6087L20.6004 1.40869" stroke="#384047" stroke-width="2"/>
+                    </svg>
+                </span>
+              </button>
+                <div class="profile-steps-rightsidebar-column-header d-block d-md-none">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <p class="basic-title">Membership plan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-md-0">
+                    <div class="col-md-5 px-md-0 d-none d-md-block">
+                        <div class="modalleftbar">
+                            <img src="assets/img/stripe-img.svg" alt="stripe-img">
+                            <p class="billing-method-left-text mt-3">Add your bank account</p>
+                        </div>
+                    </div>
+                    <div class="col-md-7 px-md-0">
+                        <div class="columnbar-order">
+
+                            <form [formGroup]="addPaymentWizard">
+                                <div formGroupName="bank_details" class="modal-rightbar order-1 pb-0">
+
+                                    <div class="w-100 mb-4">
+                                        <label class="profile-label-text mb-2 font-1rem">Account Number</label>
+                                        <div class="position-relative">
+
+                                            <input type="text" class="profile-steps-input w-100 bg-white cardNumber" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.bank_details.get('account_number').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.bank_details.get('account_number').errors }"
+                                                formControlName="account_number" />
+
+
+
+
+                                            <p class="error_label" *ngIf="addPaymentWizard.controls.bank_details.get('account_number').touched || isPaymentDetailsSubmitted">
+                                                <app-form-validation-errors errorPrefix="Account Number " [errors]="addPaymentWizard.controls.bank_details.get('account_number').errors"></app-form-validation-errors>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="w-100 mb-4">
+
+                                        <label class="profile-label-text mb-2 font-1rem">Account Holder Name</label>
+                                        <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white" formControlName="account_holder_name" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.bank_details.get('account_holder_name').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.bank_details.get('account_holder_name').errors }">
+
+                                        <p *ngIf="addPaymentWizard.controls.bank_details.get('account_holder_name').touched || isPaymentDetailsSubmitted">
+                                            <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="Account Holder Name " [errors]="addPaymentWizard.controls.bank_details.get('account_holder_name').errors"></app-form-validation-errors>
+                                        </p>
+
+
+                                    </div>
+
+                                    <div class="w-100 mb-4">
+                                        <label class="profile-label-text mb-2 font-1rem">Routing Number</label>
+                                        <div class="position-relative">
+
+                                            <input type="text" class="profile-steps-input w-100 bg-white" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.bank_details.get('routing_number').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.bank_details.get('routing_number').errors }"
+                                                formControlName="routing_number" />
+
+
+
+
+                                            <p class="error_label" *ngIf="addPaymentWizard.controls.bank_details.get('routing_number').touched || isPaymentDetailsSubmitted">
+                                                <app-form-validation-errors errorPrefix="Routing Number " [errors]="addPaymentWizard.controls.bank_details.get('routing_number').errors"></app-form-validation-errors>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 mb-4">
+
+                                        <label class="profile-label-text mb-2 font-1rem">Bank Name</label>
+                                        <input type="text" class="profile-steps-input w-100 mt-md-60 bg-white" formControlName="bank_name" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.bank_details.get('bank_name').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.bank_details.get('bank_name').errors }">
+
+                                        <p *ngIf="addPaymentWizard.controls.bank_details.get('bank_name').touched || isPaymentDetailsSubmitted">
+                                            <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="Bank Name " [errors]="addPaymentWizard.controls.bank_details.get('bank_name').errors"></app-form-validation-errors>
+                                        </p>
+
+
+                                    </div>
+
+
+                                </div>
+                                <div class="text-md-right order-3 order-md-2 mt-3 mt-md-0 text-center mb-4 mb-md-5 cpx-4">
+                                    <div class="d-flex justify-content-between justify-content-md-end w-100">
+
+                                        <input type="submit" [disabled]="addPaymentWizard.invalid" (click)="validateAddPaymentMethodWizard()" class="primary--button py-2 px-30" value="Add">
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

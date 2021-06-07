@@ -22,6 +22,8 @@ import { Select2Module, Select2Utils, Select2 } from 'ng-select2-component';
 import { SocialAuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 
 type Select2Data = (Select2Option)[];
 
@@ -78,8 +80,8 @@ export class SignupComponent implements OnInit {
   TooltipLabel = TooltipLabel;
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
-  preferredCountries: CountryISO[] = [CountryISO.UnitedStates];
-  onlyCountries: CountryISO[] = [CountryISO.UnitedStates];
+  preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.India];
+  onlyCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.India];
 
   countries: Select2Data = [];
   states: Select2Data = [];
@@ -118,7 +120,7 @@ export class SignupComponent implements OnInit {
 
 
 
-  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private socialAuthService: SocialAuthService) { }
+  constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private socialAuthService: SocialAuthService, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.initalizeSignupStep1Form()
@@ -256,10 +258,12 @@ export class SignupComponent implements OnInit {
 
   signInWithGoogle(): void {
     //console.log('hello');
+
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData: any) => {
         //console.log(userData)
         //console.log(userData.firstName)
+        this.ngxLoader.start();
 
         this.signupStep1Form.patchValue({
           email: userData.email
@@ -323,6 +327,7 @@ export class SignupComponent implements OnInit {
             }
           }
 
+          this.ngxLoader.stop();
 
         });
 
@@ -379,6 +384,7 @@ export class SignupComponent implements OnInit {
       return false;
     }
 
+    this.ngxLoader.start();
 
     // Check Email Exists or not
     this.utilsService.processPostRequest('checkEmailExists', this.signupStep1Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
@@ -389,7 +395,9 @@ export class SignupComponent implements OnInit {
       });
       // get Country Listing
       this.getCountryListing();
+      this.ngxLoader.stop();
       this.wizard.goToNextStep();
+
     })
 
 
@@ -403,6 +411,8 @@ export class SignupComponent implements OnInit {
       this.isSignupStep2FormSubmitted = true
       return false;
     }
+
+    this.ngxLoader.start();
 
     let phoneJson = this.signupStep2Form.controls.phone.value;
 
@@ -436,11 +446,15 @@ export class SignupComponent implements OnInit {
         this.router.navigate(['/mentor/verify-phone/' + response.body['_id']]);
 
       }
+
+      this.ngxLoader.stop();
+
     })
 
   }
 
   getParentDetailsByToken(id): void {
+    this.ngxLoader.start();
     this.utilsService.processPostRequest('getParentDetails', { userID: id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.parentDetails = response;
 
@@ -487,16 +501,19 @@ export class SignupComponent implements OnInit {
 
       //console.log(this.signupStep3Form.value)
 
+      this.ngxLoader.stop();
+
     })
   }
 
   onSignupStep3FormSubmit() {
 
     //console.log(this.signupStep3Form.value); return;
-
+    this.ngxLoader.start();
     this.utilsService.processPostRequest('updateParentInfo', this.signupStep3Form.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse('Your information updated successfully.', true);
       this.router.navigate(['/parent/search']);
+      this.ngxLoader.stop();
     })
   }
 

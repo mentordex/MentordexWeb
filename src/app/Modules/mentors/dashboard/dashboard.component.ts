@@ -48,6 +48,9 @@ export class DashboardComponent implements OnInit {
   getInvoiceDetails: any = []
 
   totalRecords: Number = 0
+  totalCompletedRecords: Number = 0
+  jobsArray: any = [];
+
   pagination: any = {
     search: '',
     sort_by: 'created_at',
@@ -56,6 +59,17 @@ export class DashboardComponent implements OnInit {
     size: 5,
     pageNumber: 1,
   }
+
+  jobsPagination: any = {
+    search: '',
+    sort_by: 'created_at',
+    sort_dir: 'desc',
+    filters: [],
+    size: 5,
+    pageNumber: 1,
+  }
+
+  filterWithJobStatus = {}
 
 
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private dom: DomSanitizer, private ngxLoader: NgxUiLoaderService) {
@@ -78,9 +92,11 @@ export class DashboardComponent implements OnInit {
 
     this.zone.run(() => {
       this.pagination['userID'] = this.id;
+      this.jobsPagination['userID'] = this.id;
       this.getMentorProfileDetailsById(this.id);
       this.getNotifications(this.id);
       this.getTransactions();
+      this.getAllJobs();
     });
 
   }
@@ -190,6 +206,21 @@ export class DashboardComponent implements OnInit {
       //console.log(this.getTransactionDetails);
     })
   }
+
+  
+  getAllJobs(): void {
+    //console.log(this.pagination); return;
+    this.ngxLoader.start();
+    this.filterWithJobStatus['job_status'] = 'ACCEPTED';
+    this.jobsPagination['filters'] = this.filterWithJobStatus
+    this.utilsService.processPostRequest('jobs/getMentorJobs', this.jobsPagination, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => { 
+      console.log(response);
+      this.jobsArray = response['records'];
+      this.totalCompletedRecords = response['total_completed_records'];
+      this.ngxLoader.stop();
+    })
+  }
+
 
   public openVideoIntroPopup(video_link): void {
     //this.getVideoLink = this.dom.bypassSecurityTrustResourceUrl(video_link);

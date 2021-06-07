@@ -22,6 +22,7 @@ import { UpgradeMembershipComponent } from './upgrade-membership/upgrade-members
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { AddBankAccountComponent } from './add-bank-account/add-bank-account.component';
 
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
@@ -100,6 +101,12 @@ const routes: Routes = [
     path: 'billing-methods',
     component: BillingMethodsComponent,
     data: { title: 'My Billing Method' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'bank-accounts',
+    component: AddBankAccountComponent,
+    data: { title: 'My Bank Account' },
     canActivate: [AuthGuard]
   },
   {

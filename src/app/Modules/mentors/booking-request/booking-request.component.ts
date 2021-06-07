@@ -81,7 +81,7 @@ export class BookingRequestComponent implements OnInit {
       })
 
       this.ngxLoader.stop();
-      console.log(this.jobDetails);
+      //console.log(this.jobDetails);
     })
   }
 
@@ -103,7 +103,8 @@ export class BookingRequestComponent implements OnInit {
     //console.log(this.reviewForm.value); return;
 
     this.utilsService.processPostRequest('jobs/saveParentReview', this.reviewForm.value, false, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-      console.log(response);
+      this.checkQueryParam();
+      //console.log(response);
       this.ngxLoader.stop();
     })
   }

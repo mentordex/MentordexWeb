@@ -9,12 +9,12 @@
                                 <span class="pills-text d-block">Payment History</span>
                             </a>
                         </li>
-                        <li class="current-active w-100">
+                        <li class="-100">
                             <a href="javascript:void(0)" routerLink="/mentor/billing-methods" class="pl-2 d-block">
                                 <span class="pills-text d-block">Billing Methods</span>
                             </a>
                         </li>
-                        <li class="w-100">
+                        <li class="current-active w-100">
                             <a href="javascript:void(0)" routerLink="/mentor/bank-accounts" class="pl-2 d-block">
                                 <span class="pills-text d-block">Bank Accounts</span>
                             </a>
@@ -28,27 +28,27 @@
                         <div class="profile-steps-rightsidebar-column-header">
                             <div class="row align-items-center">
                                 <div class="col-12 mb-3 mb-xl-0">
-                                    <p class="basic-title mb-0">Billing Method</p>
+                                    <p class="basic-title mb-0">Bank Account Details</p>
                                 </div>
                             </div>
                         </div>
                         <div class="profile-steps-rightsidebar-column-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <label class="profile-label-text">Credit Cards</label>
+                                    <label class="profile-label-text">Bank Accounts</label>
                                     <div class="credit-card-wrapper">
 
-                                        <ng-container *ngIf="paymentDetailsArray.length > 0; else noCardsAvailable">
+                                        <ng-container *ngIf="bankDetailsArray.length > 0; else noCardsAvailable">
 
-                                            <div *ngFor="let paymentArray of paymentDetailsArray; let i = index" class="each-credit-card-item">
+                                            <div *ngFor="let bankArray of bankDetailsArray; let i = index" class="each-credit-card-item">
                                                 <div class="row mx-0 align-items-center">
                                                     <div class="px-1 col-12 each-credit-card-logo mb-3">
                                                         <div class="row">
-                                                            <div class="col-6 text-left">{{paymentArray?.card_type}}</div>
-                                                            <div class="col-6 text-right">
-                                                                <ng-container *ngIf="!paymentArray.default">
+                                                            <!--div class="col-6 text-left">{{bankArray?.card_type}}</div-->
+                                                            <div class="col-12 text-right">
+                                                                <ng-container *ngIf="!bankArray.default">
                                                                     <p class="deafult-card--appearence">
-                                                                        <a href="javascript:void(0)" class="default_card" (click)="removeCard(paymentArray?.stripe_card_id)">Remove</a>
+                                                                        <a href="javascript:void(0)" class="default_card" (click)="removeBankAccount(bankArray?._id)">Remove</a>
                                                                     </p>
                                                                 </ng-container>
                                                             </div>
@@ -57,32 +57,42 @@
                                                         <!--img src="./img/logos_mastercard.svg" class="img-fluid" alt="masatercard-logo"-->
                                                     </div>
                                                     <div class="px-1 col-12 each-credit-number">
-                                                        <p class="profile-label-text font--16 mb-0">xxxx xxxx xxxx {{paymentArray?.credit_card_number}}</p>
+                                                        <p class="each-credit-card-label">Account Number</p>
+                                                        <p class="profile-label-text font--16 mb-0"> {{bankArray?.account_number}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="row mt-2">
-                                                    <div class="col-5 mb-2 mb-sm-0">
-                                                        <p class="each-credit-card-label">Expires on</p>
-                                                        <p class="profile-label-text font-14 mb-0">{{paymentArray?.exp_month}}/{{paymentArray?.exp_year}}</p>
+                                                    <div class="col-12 mb-2 mb-sm-0">
+                                                        <p class="each-credit-card-label">Routing Number</p>
+                                                        <p class="profile-label-text font-14 mb-0">{{bankArray?.routing_number}}</p>
                                                     </div>
-                                                    <div class="col-7">
+
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
                                                         <p class="each-credit-card-label">Name</p>
-                                                        <p class="profile-label-text font-14 mb-0">{{paymentArray?.card_holder_name}}</p>
+                                                        <p class="profile-label-text font-14 mb-0">{{bankArray?.account_holder_name}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
+                                                        <p class="each-credit-card-label">Bank Name</p>
+                                                        <p class="profile-label-text font-14 mb-0">{{bankArray?.bank_name}}</p>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
                                                     <div class="col-6 text-left mt-3">
-                                                        <ng-container *ngIf="paymentArray.default">
+                                                        <ng-container *ngIf="bankArray.default">
 
                                                             <p class="deafult-card--appearence">Default</p>
 
                                                         </ng-container>
                                                     </div>
                                                     <div class="col-6 text-right mt-3">
-                                                        <ng-container *ngIf="!paymentArray.default">
+                                                        <ng-container *ngIf="!bankArray.default">
                                                             <p class="deafult-card--appearence">
-                                                                <a href="javascript:void(0)" class="default_card" (click)="defaultCard(paymentArray?.stripe_card_id)">Make as default</a>
+                                                                <a href="javascript:void(0)" class="default_card" (click)="defaultBankAccount(bankArray?._id)">Make as default</a>
                                                             </p>
                                                         </ng-container>
                                                     </div>
@@ -93,14 +103,14 @@
                                         </ng-container>
                                         <ng-template #noCardsAvailable>
                                             <div class="no-slots-available">
-                                                <span>No Cards Found.</span>
+                                                <span>No Accounts Found.</span>
                                             </div>
                                         </ng-template>
 
                                     </div>
                                     <div class="my-4 my-xl-5">
                                         <button role="button" (click)="showPaymentMethodPopup()" type="button" class="add--button py-0 color--primary  px-0 text-uppercase">
-                                                ADD NEW CARD
+                                                ADD YOUR BANK ACCOUNT
                                             </button>
                                     </div>
 
@@ -114,6 +124,6 @@
     </div>
 
 </section>
-<app-add-payment-method-popup (showPaymentMethodPopup)="showPaymentMethodPopup()" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen"></app-add-payment-method-popup>
+<app-add-bank-account-popup (showPaymentMethodPopup)="showPaymentMethodPopup()" (hidePaymentMethodPopup)="hidePaymentMethodPopup($event)" [isOpen]="isPaymentMethodModalOpen"></app-add-bank-account-popup>
 
 <ngx-ui-loader></ngx-ui-loader>

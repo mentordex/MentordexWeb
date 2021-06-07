@@ -118,7 +118,7 @@
                                     <div class="row mt-4 mx-0">
                                         <div class="col-12 text-center">
                                             <p class="text-top-detail color-heading font-18 mb-0">
-                                                This Month's Analytics
+                                                Total Analytics
                                             </p>
                                         </div>
                                     </div>
@@ -130,10 +130,10 @@
                                         </div>
                                         <div class="col-sm-7 mb-3 text-sm-right">
                                             <p class="text-top-detail font-18 mb-0">
-                                                N/A
+                                                {{totalCompletedRecords}}
                                             </p>
                                         </div>
-                                        <div class="col-sm-5 mb-3">
+                                        <!--div class="col-sm-5 mb-3">
                                             <p class="text-top-detail font-18 mb-0">
                                                 <span class="mt-1 vertical-align-middle mt-1 d-inline-block">Jobs Earnings</span>
                                             </p>
@@ -142,7 +142,7 @@
                                             <p class="text-top-detail font-18 mb-0">
                                                 N/A
                                             </p>
-                                        </div>
+                                        </div-->
                                     </div>
                                 </div>
                             </div>
@@ -153,88 +153,47 @@
                             <div class="dashboard-list-wrapper">
                                 <div class="dashboard-parent-profile-header">
                                     <div class="dashboard-parent-profile-header-content-autor mb-0">
-                                        Upcoming Private Classes
+                                        Upcoming Jobs
                                     </div>
                                 </div>
                                 <div class="dashboard-parent-profile-body px-0">
-                                    <span class="text-center">Work in Progress</span>
-                                    <!--ul class="list-unstyled mb-0 upcoming-private-class">
-                                        <li>
-                                            <div class="row mt-3 mx-0">
-                                                <div class="col-sm-12 mb-3">
-                                                    <p class="dashboard-mentorcards-desc--mentorname font--16 mb-0">
-                                                        English Teacher Requirement (1+ yr Exp)
-                                                    </p>
+                                    <ng-container *ngIf="jobsArray?.length > 0; else noJobs">
+                                        <ul class="list-unstyled mb-0 upcoming-private-class">
+                                            <li *ngFor="let job of jobsArray">
+                                                <div class="row mt-3 mx-0">
+                                                    <div class="col-sm-12 mb-3">
+                                                        <p class="dashboard-mentorcards-desc--mentorname font--16 mb-0">
+                                                            {{job?.job_title}}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-6 text-left">
+                                                        <p class="text-top-detail mb-2">
+                                                            Booking Date
+                                                        </p>
+                                                        <p class="text-top-detail color-heading">
+                                                            {{job?.booking_date}}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-5 col-xl-4 pl-sm-0 ml-auto text-left">
+                                                        <p class="text-top-detail mb-2">
+                                                            Booking Time
+                                                        </p>
+                                                        <p class="text-top-detail color-heading">
+                                                            {{job?.booking_time}}
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-6 text-left">
-                                                    <p class="text-top-detail mb-2">
-                                                        Start Date
-                                                    </p>
-                                                    <p class="text-top-detail color-heading">
-                                                        05 Aug, 2020
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-5 col-xl-4 pl-sm-0 ml-auto text-left">
-                                                    <p class="text-top-detail mb-2">
-                                                        Time Duration
-                                                    </p>
-                                                    <p class="text-top-detail color-heading">
-                                                        11:00 AM to 12:00 PM
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row mx-0 mt-3">
-                                                <div class="col-sm-12 mb-3">
-                                                    <p class="dashboard-mentorcards-desc--mentorname font--16 mb-0">
-                                                        English Teacher Requirement (1+ yr Exp)
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-6 mb-3 text-left">
-                                                    <p class="text-top-detail mb-2">
-                                                        Start Date
-                                                    </p>
-                                                    <p class="text-top-detail color-heading">
-                                                        05 Aug, 2020
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-5 col-xl-4 pl-sm-0 ml-auto mb-3 text-left">
-                                                    <p class="text-top-detail mb-2">
-                                                        Time Duration
-                                                    </p>
-                                                    <p class="text-top-detail color-heading">
-                                                        11:00 AM to 12:00 PM
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row mx-0 mt-3">
-                                                <div class="col-sm-12 mb-3">
-                                                    <p class="dashboard-mentorcards-desc--mentorname font--16 mb-0">
-                                                        English Teacher Requirement (1+ yr Exp)
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-6 mb-3 text-left">
-                                                    <p class="text-top-detail mb-2">
-                                                        Start Date
-                                                    </p>
-                                                    <p class="text-top-detail color-heading">
-                                                        05 Aug, 2020
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-5 col-xl-4 pl-sm-0 ml-auto mb-3 text-left">
-                                                    <p class="text-top-detail mb-2">
-                                                        Time Duration
-                                                    </p>
-                                                    <p class="text-top-detail color-heading">
-                                                        11:00 AM to 12:00 PM
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul-->
+                                            </li>
+
+                                        </ul>
+                                    </ng-container>
+                                    <ng-template #noJobs>
+                                        <ul class="list-unstyled mb-0 upcoming-private-class">
+                                            <li>
+                                                <span>No Jobs Found</span>
+                                            </li>
+                                        </ul>
+                                    </ng-template>
                                 </div>
                             </div>
                         </div>

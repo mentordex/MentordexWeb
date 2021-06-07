@@ -14,6 +14,9 @@ import { CustomValidators } from '../../../core/custom-validators';
 //import enviornment
 import { environment } from '../../../../environments/environment';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 @Component({
   selector: 'app-verify-phone',
   templateUrl: './verify-phone.component.html',
@@ -27,7 +30,7 @@ export class VerifyPhoneComponent implements OnInit {
   phoneVerificationForm: FormGroup;
   isPhoneVerificationFormSubmitted: boolean = false
 
-  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.utilsService.checkAndRedirect();
@@ -45,7 +48,7 @@ export class VerifyPhoneComponent implements OnInit {
 
   // URL Query Param
   private checkQueryParam() {
-
+    this.ngxLoader.start();
     this.activatedRoute.params.subscribe((params) => {
       this.id = params['id'];
       this.getMentorDetailsByToken(params['id']);
@@ -65,6 +68,7 @@ export class VerifyPhoneComponent implements OnInit {
     this.utilsService.processPostRequest('getMentorDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorDetails = response;
       //console.log(this.mentorDetails);
+      this.ngxLoader.stop();
     })
   }
 
@@ -72,8 +76,10 @@ export class VerifyPhoneComponent implements OnInit {
    * Resend Email Verification
   */
   resendEmailVerification(id):void {
+    this.ngxLoader.start();
     this.utilsService.processPostRequest('resendMentorEmailVerification', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse(environment.MESSGES['RESEND-EMAIL-VERIFICATION'], true);
+      this.ngxLoader.stop();
     })
   }
 
@@ -81,8 +87,10 @@ export class VerifyPhoneComponent implements OnInit {
    * Resend Phone Verification
   */
   resendPhoneVerification(id) {
+    this.ngxLoader.start();
     this.utilsService.processPostRequest('resendMentorPhoneVerification', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse(environment.MESSGES['RESEND-PHONE-VERIFICATION'], true);
+      this.ngxLoader.stop();
     })
   }
 
@@ -96,9 +104,16 @@ export class VerifyPhoneComponent implements OnInit {
       return false;
     }
 
+    this.ngxLoader.start();
+
     this.utilsService.processPostRequest('submitMentorPhoneVerification', { userID: this.id, phoneToken: this.phoneVerificationForm.controls.phone_token.value }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.utilsService.onResponse(environment.MESSGES['PHONE-VERIFICATION-SUCCESS'], true);
+
+      this.ngxLoader.stop();
+
       this.router.navigate(['/mentor/verification-success/' + this.id]);
+      
+
     })
     
   }

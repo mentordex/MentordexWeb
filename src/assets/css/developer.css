@@ -482,7 +482,7 @@ ngb-rating * {
 }
 
 .chatbox-inboxlist ngx-simplebar {
-    max-height: 620px;
+    max-height: 603px;
 }
 
 .mentor-reviews ngx-simplebar {
@@ -528,6 +528,41 @@ ngb-rating * {
     font-size: 13px;
     display: inline-block;
     font-weight: 500;
+}
+
+span.relative_images.chat-document-filebox {
+    margin-bottom: 15px;
+    padding: 0px 15px;
+}
+
+.chat-document-filebox .file_name {
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.chat-document-filebox .img_box {
+    background: #e7f4f5;
+    padding: 15px 50px 15px 20px;
+    border-radius: 6px;
+    line-height: normal;
+    width: 100%;
+}
+
+.chat-document-filebox .remove-file {
+    text-align: center;
+    color: #fff;
+    top: 50%;
+    right: 20px;
+    background: #3bb3bd;
+    width: 21px;
+    height: 21px;
+    position: absolute;
+    line-height: 21px;
+    font-size: 11px;
+    transform: translateY(-50%);
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 768px) {

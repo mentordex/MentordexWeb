@@ -5208,7 +5208,7 @@ body {
 
 .nav-search-catalog-option {
     color: var(--color-heding);
-    font-weight: 600;
+    /*font-weight: 600;*/
     margin-bottom: 4px;
     font-size: 14px;
     display: inline-block;
