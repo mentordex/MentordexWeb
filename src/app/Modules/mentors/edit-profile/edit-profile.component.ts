@@ -1113,8 +1113,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   goToSelectedStep(desinationIndex): void {
-    console.log(desinationIndex);
-    this.wizard.goToStep(desinationIndex);
+    //console.log(desinationIndex);
+    //this.wizard.goToStep(desinationIndex);
+    //this.getWizardStep = desinationIndex + 1;
   }
 
 

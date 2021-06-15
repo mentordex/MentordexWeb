@@ -188,7 +188,7 @@ export class LoginComponent implements OnInit {
           }
 
         } else {
-          const responseMessage = 'Great!! ' + response.body.first_name + ', welcome to your dashboard.'
+          const responseMessage = 'Success! ' + response.body.first_name + ', welcome to your personalized dashboard.'
           this.utilsService.onResponse(responseMessage, true);//show page loader 
           this.router.navigate(['/parent/search']);
         }
@@ -319,7 +319,7 @@ export class LoginComponent implements OnInit {
                 }
 
               } else {
-                const responseMessage = 'Great!! ' + response.body.first_name + ', welcome to your dashboard.'
+                const responseMessage = 'Success! ' + response.body.first_name + ', welcome to your personalized dashboard.'
                 this.utilsService.onResponse(responseMessage, true);//show page loader 
                 this.router.navigate(['/parent/search']);
               }

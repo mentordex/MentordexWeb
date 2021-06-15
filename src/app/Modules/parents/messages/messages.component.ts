@@ -64,6 +64,7 @@ export class MessagesComponent implements OnInit {
   }
 
   private checkQueryParam() {
+
     this.ngxLoader.start();
     this.id = localStorage.getItem('x-user-ID');
 
@@ -198,6 +199,7 @@ export class MessagesComponent implements OnInit {
   }
 
   onSubmitMessageForm() {
+
     if (this.messageForm.invalid) {
       this.isMessageFormSubmitted = true
       return false;
@@ -209,11 +211,9 @@ export class MessagesComponent implements OnInit {
       //console.log(response);
       this.ngxLoader.start();
       this.getParentJobsById(this.id, this.selectedJobId);
-      this.messageForm.patchValue({
-        message: ''
-      })
-
+      this.messageForm.reset();      
       this.messageFileArray.clear();
+      this.isMessageFormSubmitted = false
     })
   }
 

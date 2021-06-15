@@ -10,7 +10,7 @@ export const environment = {
   TOKEN_NAME:"x-mentordex-auth-token",
   MESSGES:{
     "CHECKING-AUTHORIZATION":"Please Wait..",
-    "LOGIN-SUCCESS":"You have loggedin successfully.",
+    "LOGIN-SUCCESS":"You are now logged in.",
     "LOGOUT-SUCCESS":"You are successfully logged out.",
     "REGISTERED-SUCCESSFULLY":"Great! Thank you for registering with us. Please verify your email and mobile number.",
     "PARENT-REGISTERED-SUCCESSFULLY":"Thank You for Registering!.",

@@ -210,11 +210,9 @@ export class MessagesComponent implements OnInit {
       this.ngxLoader.start();
       //console.log(response);
       this.getMentorJobsById(this.id, this.selectedJobId);
-      this.messageForm.patchValue({
-        message: ''
-      })
-
+      this.messageForm.reset();      
       this.messageFileArray.clear();
+      this.isMessageFormSubmitted = false
     })
   }
 

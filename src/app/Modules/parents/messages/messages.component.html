@@ -167,7 +167,7 @@
                                                         <div *ngIf="checkObjectLength(messageFileArray.value) > 0" class="inner_box">
 
                                                             <div class="box_outer inline-pdf-section">
-                                                                <span class="relative_images">
+                                                                <span class="relative_images chat-document-filebox">
                                                                     <span *ngFor="let messageFile of messageFileArray.value | keyvalue; let messageFileIndex = index;" class="img_box">
                                                                         
 
@@ -189,7 +189,7 @@
                                                     <div *ngIf="job?.job_status != 'PENDING'" class="p-4 border-dashed-top bg-white">
                                                         <div class="mx-auto max-650">
                                                             <p class="sent--quote text-center mb-1">
-                                                                Job has been filed as {{job?.job_status | lowercase}}.
+                                                                Job is {{job?.job_status | lowercase}}.
                                                             </p>
                                                             <p class="sent--quote text-center mb-1 color--text">
                                                                 This chat room is no more available.

@@ -236,10 +236,10 @@
                                                     <div *ngIf="job?.job_status != 'PENDING'" class="p-4 border-dashed-top bg-white">
                                                         <div class="mx-auto max-650">
                                                             <p class="sent--quote text-center mb-1">
-                                                                Job has been filed as {{job?.job_status | lowercase}}.
+                                                                Job is {{job?.job_status | lowercase}}.
                                                             </p>
                                                             <p class="sent--quote text-center mb-1 color--text">
-                                                                This chat room is no more available.
+                                                                This chat is no longer available.
                                                             </p>
                                                             <div class="chatbox-bodycontent-msgarea-time text-center mb-1">
                                                                 <p><span>{{job?.created_at | date:'medium'}}</span></p>

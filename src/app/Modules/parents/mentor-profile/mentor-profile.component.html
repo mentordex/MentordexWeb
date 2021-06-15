@@ -135,26 +135,35 @@
                                             <li *ngIf="mentorProfileDetails.academics">
                                                 <p class="dashboard-parent-profile-body--title mb-3">Educational Qualifications</p>
                                                 <ng-container *ngFor="let academic of mentorProfileDetails.academics">
-                                                    <p class="dashboard-parent-profile-body--subtitle mb-2 text--heading font--500">{{academic?.area_of_study}} ({{academic?.degree}})</p>
-                                                    <ul class="list-unstyled mb-3">
-                                                        <li class="dashboard-parent-profile-body--subtitle">{{academic?.institution_name}}</li>
-                                                        <li class="dashboard-parent-profile-body--subtitle">{{academic?.start_year}} ・ {{academic?.end_year}}</li>
-                                                    </ul>
-
+                                                    <ng-container *ngIf="academic?.area_of_study != ''; else noEducationalQualifications">
+                                                        <p class="dashboard-parent-profile-body--subtitle mb-2 text--heading font--500">{{academic?.area_of_study}} ({{academic?.degree}})</p>
+                                                        <ul class="list-unstyled mb-3">
+                                                            <li class="dashboard-parent-profile-body--subtitle">{{academic?.institution_name}}</li>
+                                                            <li class="dashboard-parent-profile-body--subtitle">{{academic?.start_year}} ・ {{academic?.end_year}}</li>
+                                                        </ul>
+                                                    </ng-container>
+                                                    <ng-template #noEducationalQualifications>
+                                                        <p class="dashboard-parent-profile-body--subtitle mb-2 text--heading font--500">N/A</p>
+                                                    </ng-template>
                                                 </ng-container>
                                             </li>
                                             <li *ngIf="mentorProfileDetails.employments">
                                                 <p class="dashboard-parent-profile-body--title mb-3">Work Experience</p>
 
                                                 <ng-container *ngFor="let employment of mentorProfileDetails.employments">
-                                                    <p class="dashboard-parent-profile-body--subtitle mb-2 text--heading font--500">{{employment?.title}}</p>
-                                                    <ul class="list-unstyled mb-3">
-                                                        <li class="dashboard-parent-profile-body--subtitle">{{employment?.company}}, {{employment?.city}}, {{employment?.state}}</li>
-                                                        <li class="dashboard-parent-profile-body--subtitle">{{employment?.start_year}}-{{employment?.end_year}}</li>
-                                                    </ul>
+                                                    <ng-container *ngIf="employment?.title != ''; else noWorkExperience">
+                                                        <p class="dashboard-parent-profile-body--subtitle mb-2 text--heading font--500">{{employment?.title}}</p>
+                                                        <ul class="list-unstyled mb-3">
+                                                            <li class="dashboard-parent-profile-body--subtitle">{{employment?.company}}, {{employment?.city}}, {{employment?.state}}</li>
+                                                            <li class="dashboard-parent-profile-body--subtitle">{{employment?.start_year}}-{{employment?.end_year}}</li>
+                                                        </ul>
+                                                    </ng-container>
+                                                    <ng-template #noWorkExperience>
+                                                        <p class="dashboard-parent-profile-body--subtitle mb-2 text--heading font--500">N/A</p>
+                                                    </ng-template>
                                                 </ng-container>
                                             </li>
-                                            <li *ngIf="mentorProfileDetails.letter_of_recommendation">
+                                            <li *ngIf="mentorProfileDetails?.letter_of_recommendation?.length > 0; else noLOR">
                                                 <p class="dashboard-parent-profile-body--subtitle mb-3 text--heading font--500">Letter of Recommendations</p>
                                                 <ul class="list-unstyled mb-0">
                                                     <li *ngFor="let lor of mentorProfileDetails.letter_of_recommendation" class="dashboard-parent-profile-body--subtitle mb-2">
@@ -169,6 +178,14 @@
 
                                                 </ul>
                                             </li>
+                                            <ng-template #noLOR>
+                                                <li>
+                                                    <p class="dashboard-parent-profile-body--subtitle mb-3 text--heading font--500">Letter of Recommendations</p>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="dashboard-parent-profile-body--subtitle mb-2">N/A</li>
+                                                    </ul>
+                                                </li>
+                                            </ng-template>
                                         </ul>
                                     </div>
                                 </div>

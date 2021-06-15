@@ -78,12 +78,16 @@ export class PaymentHistoryComponent implements OnInit {
               }
 
             })
+          }else{
+            transactionArray[index]['invoice_pdf'] = 'N/A';
+                transactionArray[index]['invoice_url'] = 'N/A';
+                transactionArray[index]['invoice_number'] = 'N/A';
           }
         });
       }
 
       this.ngxLoader.stop();
-      //console.log(this.getTransactionDetails);
+      console.log(this.getTransactionDetails);
     })
   }
 

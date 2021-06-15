@@ -77,6 +77,11 @@
                                                     <p class="profile-label-text font--16-xs">{{jobDetails?.parent?.city?.value}}, {{jobDetails?.parent?.state?.value}}</p>
                                                 </div>
                                                 <div class="col-sm-4 col-6 mb-3">
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Total Amount</p>
+                                                    <p class="profile-label-text font--16-xs">${{jobDetails?.hourly_rate}}</p>
+                                                </div>
+
+                                                <div class="col-sm-4 col-6 mb-3">
                                                     <p class="profile-label-text font--16-xs color-text mb-2">Booking Date</p>
                                                     <p class="profile-label-text font--16-xs">{{jobDetails?.booking_date}}</p>
                                                 </div>
@@ -86,7 +91,7 @@
                                                 </div>
 
                                                 <div class="col-sm-4 col-6 mb-3">
-                                                    <p class="profile-label-text font--16-xs color-text mb-2">Client Ratings</p>
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Parent Ratings</p>
                                                     <div>
                                                         <ngb-rating [starTemplate]="t" [max]="5" [rate]="jobDetails?.parent?.rating || 0" [readonly]="true"></ngb-rating>
                                                         <ng-template #t let-fill="fill">
@@ -116,11 +121,22 @@
                                         </div>
                                     </ng-container>
 
+                                    <ng-container *ngIf="jobDetails?.job_status == 'ACCEPTED'">
+                                        <div class="closed-jobs-budgetbox mt-0">
+                                            <div class="col-xl-8">
+                                                <div class="row">
+
+                                                    <input (click)="showUpdateBookingRequestPopup(jobDetails?._id, jobDetails?.parent_id, 'CANCELLED')" type="submit" class="primary--button py-2 px-30" value="Cancel" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+
                                     <!-- Reviews -->
                                     <ng-container *ngIf="jobDetails?.job_status == 'COMPLETED' && jobDetails?.parent_review?.review != ''">
                                         <div class="closed-jobs-budgetbox">
                                             <div class="mt-4 max-w-510 ">
-                                                <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2 ">Review to {{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>
+                                                <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2 ">Review of {{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>
 
                                                 <ng-container *ngIf="jobDetails?.parent_review?.review!='' ; else viewParentReview ">
                                                     <p class="profile-label-text font--16-xs color-text ">
@@ -173,7 +189,7 @@
                                             <div class="p-4 bg-white">
                                                 <div class="mx-auto max-650">
                                                     <p class="sent--quote text-center mb-1">
-                                                        Job has been filed as {{jobDetails?.job_status | lowercase}}.
+                                                        Job is {{jobDetails?.job_status | lowercase}}.
                                                     </p>
                                                     <div class="chatbox-bodycontent-msgarea-time text-center mb-1">
                                                         <p><span>{{jobDetails?.created_at | date:'medium'}}</span></p>
@@ -185,7 +201,7 @@
 
 
                                     <!-- Submit Review Form -->
-                                    <ng-container *ngIf="jobDetails?.job_status == 'COMPLETED' && jobDetails?.parent_review?.review == ''">
+                                    <ng-container *ngIf="jobDetails?.job_status == 'COMPLETED' &&  jobDetails?.parent_review?.review == ''">
                                         <form [formGroup]="reviewForm">
                                             <div class="text-center mt-5">
                                                 <p class="mobile-pagetop-heading mb-2 font--16-xs">Rate {{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>

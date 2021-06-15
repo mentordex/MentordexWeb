@@ -98,10 +98,10 @@
                         <a class="nav-link scoll--link" routerLink="/quick-links/about-us">ABOUT MENTORDEX <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link scoll--link" href="#">PARENTS</a>
+                        <a class="nav-link scoll--link" routerLink="/authorization">PARENTS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link scoll--link" href="#">MENTORS</a>
+                        <a class="nav-link scoll--link" routerLink="/authorization">MENTORS</a>
                     </li>
                     <li *ngIf="!isLoggedin" class="nav-item">
                         <a class="nav-link scoll--link" routerLink="/authorization">LOGIN</a>
@@ -156,7 +156,7 @@
             </div>
             <div class="d-none d-md-block">
                 <div *ngIf="!isLoggedin && title=='Login'" class="center-flex">
-                    <div class="new-mentordex-txt flex-shrink-0 mr-4">New to MentorDex</div>
+                    <div class="new-mentordex-txt flex-shrink-0 mr-4">New to MentorDex?</div>
                     <a class="alt--button font-w-500 py-2" routerLink="/authorization/signup">SIGN UP</a>
                 </div>
                 <div *ngIf="!isLoggedin && (title=='Signup' || title=='Reset Password' || title=='Forgot Password')" class="center-flex">
@@ -184,7 +184,7 @@
 <div *ngIf="isParentPage" class="navbar-outer">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand order-lg-1" href="#">
+            <a class="navbar-brand order-lg-1" routerLink="parent/search">
                 <span class="sr-only">MentorDex</span>
                 <img class="img-fluid" src="assets/img/mentordex-main-logo.svg" alt="mentordex-main-logo">
             </a>
@@ -392,11 +392,11 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <div class="logo-box text-center text-md-left mx-auto mx-md-0">
-                    <a class="navbar-brand d-none d-md-block mr-0" href="#">
+                    <a class="navbar-brand d-none d-md-block mr-0" routerLink="/">
                         <span class="sr-only">MentorDex</span>
                         <img class="img-fluid" src="assets/img/mentordex-main-logo.svg" alt="mentordex-main-logo">
                     </a>
-                    <a class="navbar-brand d-md-none mr-0" href="#">
+                    <a class="navbar-brand d-md-none mr-0" routerLink="/">
                         <svg width="111" height="15" viewBox="0 0 111 15" fill="none">
                         <path d="M0.693359 0.208984H4.20339L8.55103 8.78462L12.8588 0.208984H16.3489V14.1693H13.5169V4.73612L9.5482 12.7533H7.51398L3.52531 4.73612V14.1693H0.693359V0.208984Z" fill="#65B67C"/>
                         <path d="M23.9958 3.34009C25.7242 3.34009 27.0338 3.83867 27.9246 4.83584C28.8287 5.83301 29.2807 7.22239 29.2807 9.004C29.2807 9.32309 29.2741 9.56906 29.2608 9.7419H21.5627C21.7355 10.42 22.0679 10.9518 22.5598 11.3374C23.0518 11.7096 23.6434 11.8958 24.3348 11.8958C24.84 11.8958 25.3253 11.8027 25.7906 11.6166C26.256 11.4171 26.6748 11.1313 27.0471 10.759L28.6625 12.3944C28.1174 13.006 27.4526 13.478 26.6682 13.8103C25.897 14.1294 25.0328 14.289 24.0755 14.289C22.9454 14.289 21.9549 14.063 21.104 13.6109C20.2663 13.1589 19.6149 12.5207 19.1495 11.6964C18.6975 10.872 18.4714 9.92139 18.4714 8.84445C18.4714 7.75422 18.7041 6.79694 19.1695 5.97261C19.6348 5.13499 20.2863 4.49016 21.1239 4.03811C21.9615 3.57276 22.9188 3.34009 23.9958 3.34009ZM26.389 7.92706C26.3624 7.22239 26.1363 6.65733 25.7109 6.23187C25.2854 5.80642 24.7204 5.59369 24.0157 5.59369C23.3509 5.59369 22.7925 5.80642 22.3405 6.23187C21.9017 6.64404 21.6225 7.2091 21.5028 7.92706H26.389Z" fill="#65B67C"/>
@@ -433,7 +433,7 @@
     <div class="navbar-outer">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand order-lg-1" href="#">
+                <a class="navbar-brand order-lg-1" routerLink="mentor/dashboard">
                     <span class="sr-only">MentorDex</span>
                     <img src="assets/img/mentordex-main-logo.svg" class="img-fluid" alt="mentordex-logo">
                 </a>

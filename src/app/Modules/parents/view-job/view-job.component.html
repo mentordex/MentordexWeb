@@ -73,6 +73,10 @@
                                                     <p class="profile-label-text font--16-xs">{{jobDetails?.mentor?.city?.value}}, {{jobDetails?.mentor?.state?.value}}</p>
                                                 </div>
                                                 <div class="col-sm-4 col-6 mb-3">
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Total Amount</p>
+                                                    <p class="profile-label-text font--16-xs">${{jobDetails?.hourly_rate}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-6 mb-3">
                                                     <p class="profile-label-text font--16-xs color-text mb-2">Booking Date</p>
                                                     <p class="profile-label-text font--16-xs">{{jobDetails?.booking_date}}</p>
                                                 </div>
@@ -82,7 +86,7 @@
                                                 </div>
 
                                                 <div class="col-sm-4 col-6 mb-3">
-                                                    <p class="profile-label-text font--16-xs color-text mb-2">Client Ratings</p>
+                                                    <p class="profile-label-text font--16-xs color-text mb-2">Mentor Ratings</p>
                                                     <div>
                                                         <ngb-rating [starTemplate]="t" [max]="5" [rate]="jobDetails?.parent?.rating || 0" [readonly]="true"></ngb-rating>
                                                         <ng-template #t let-fill="fill">
@@ -126,7 +130,7 @@
                                     <ng-container *ngIf="jobDetails?.job_status == 'COMPLETED' && jobDetails?.mentor_review?.review != ''">
                                         <div class="closed-jobs-budgetbox">
                                             <div class="mt-4 max-w-510 ">
-                                                <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2 ">Review to {{jobDetails?.mentor?.first_name}} {{jobDetails?.mentor?.last_name}}</p>
+                                                <p class="mobile-pagetop-heading mb-2 font-18-xs font-400 mb-2 ">Review of {{jobDetails?.mentor?.first_name}} {{jobDetails?.mentor?.last_name}}</p>
                                                 <ng-container *ngIf="jobDetails?.mentor_review?.review != ''; else viewMentorReview ">
                                                     <p class="profile-label-text font--16-xs color-text ">
                                                         <ngb-rating [starTemplate]="t" [max]="5" [rate]="jobDetails?.mentor_review?.rating || 0" [readonly]="true"></ngb-rating>
@@ -178,7 +182,7 @@
                                             <div class="p-4 bg-white">
                                                 <div class="mx-auto max-650">
                                                     <p class="sent--quote text-center mb-1">
-                                                        Job has been filed as {{jobDetails?.job_status | lowercase}}.
+                                                        Job is {{jobDetails?.job_status | lowercase}}.
                                                     </p>
                                                     <div class="chatbox-bodycontent-msgarea-time text-center mb-1">
                                                         <p><span>{{jobDetails?.created_at | date:'medium'}}</span></p>

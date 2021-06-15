@@ -6,7 +6,7 @@ export const environment = {
   TOKEN_NAME:"x-mentordex-auth-token",
   MESSGES:{
     "CHECKING-AUTHORIZATION":"Please Wait..",
-    "LOGIN-SUCCESS":"You have loggedin successfully.",
+    "LOGIN-SUCCESS":"You are now logged in.",
     "LOGOUT-SUCCESS":"You are successfully logged out.",
     "REGISTERED-SUCCESSFULLY":"Great! Thank you for registering with us. Please verify your email and mobile number.",
     "PARENT-REGISTERED-SUCCESSFULLY":"Thank You for Registering!.",
@@ -23,7 +23,9 @@ export const environment = {
     "BOOKING-REQUEST-CANCELLED":"Your job request has been cancelled successfully.",
     "BOOKING-REQUEST-COMPLETED":"Your job has been marked as completed successfully.",
     "DEFAULT-CARD-UPDATE-SUCCESS":"Your default card updated successfully.",
+    "DEFAULT-BANK-UPDATE-SUCCESS":"Your default account updated successfully.",
     "DEFAULT-CARD-REMOVED":"Your card has been removed successfully.",
+    "DEFAULT-ACCOUNT-REMOVED":"Your account has been removed successfully.",
     "SUBSCRIPTION-SUCCESS":"Your plan has been activated successfully.",
     "SUBSCRIPTION-CANCEL":"Your plan has been cancelled successfully.",
     "SUBSCRIPTION-UPGRADED":"Your plan has been changed successfully.",

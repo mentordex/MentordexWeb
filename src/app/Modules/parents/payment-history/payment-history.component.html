@@ -74,7 +74,7 @@
                                                     <th scope="col">Job Detail</th>
 
                                                     <th scope="col">Amount</th>
-                                                    <th scope="col">Ref ID</th>
+                                                    <th scope="col">Status</th>
                                                     <th scope="col">Download Invoice</th>
                                                 </tr>
                                             </thead>
@@ -84,7 +84,7 @@
                                                         <td>{{transaction?.created_at | date : 'mediumDate'}}</td>
                                                         <td class="primary-color job-detail-td">{{(transaction?.job_title) ? transaction?.job_title : transaction?.transaction_type}}</td>
                                                         <td>${{transaction?.price}}</td>
-                                                        <td>{{transaction?.invoice_number}}</td>
+                                                        <td>{{transaction?.transaction_status?transaction?.transaction_status:'N/A'}}</td>
                                                         <td>
                                                             <a href="{{transaction?.receipt_url}}" target="_blank" class="download-pdf--btn primary-color">
                                                                 <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
