@@ -100,7 +100,7 @@
                                                     </div>
                                                 </div>
                                                 <div *ngIf="job?.job_status == 'ACCEPTED'" class="col-lg-4 mt-2 mt-lg-0 text-lg-right">
-                                                    <button (click)="showUpdateBookingRequestPopup(job?._id, job?.parent_id, 'COMPLETED ')" role="button" type="button" class="primary--button mr-2 py-1 btn-fit">Mark as Completed</button>
+                                                    <button (click)="showUpdateBookingRequestPopup(job?._id, job?.mentor_id, 'COMPLETED')" role="button" type="button" class="primary--button mr-2 py-1 btn-fit">Mark as Completed</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -229,5 +229,8 @@
     </div>
 
 </section>
+
+<app-update-job-status (showUpdateBookingRequestPopup)="showUpdateBookingRequestPopup(getJobId, getMentorId, getJobStatus)" (hideUpdateBookingRequestPopup)="hideUpdateBookingRequestPopup($event)" [getMentorId]="getMentorId" [getJobStatus]="getJobStatus"
+    [getJobId]="getJobId" [isOpen]="isBookingMethodModalOpen"></app-update-job-status>
 
 <ngx-ui-loader></ngx-ui-loader>

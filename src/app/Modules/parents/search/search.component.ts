@@ -139,7 +139,7 @@ export class SearchComponent implements OnInit {
       this.initalizeTimeSlots()
       this.slot = '';
       let selectedDate = new Date(value);
-      this.filterWithKeyValue['date'] = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+      this.filterWithKeyValue['date'] = ("0" + (selectedDate.getMonth() + 1)).slice(-2) + '/' + selectedDate.getDate() + '/' + selectedDate.getFullYear();
 
       let slotindex = this.filters.findIndex(x => x.filter == "slot");
       if (slotindex != -1) {

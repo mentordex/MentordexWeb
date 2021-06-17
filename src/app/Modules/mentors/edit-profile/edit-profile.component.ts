@@ -86,12 +86,16 @@ export class EditProfileComponent implements OnInit {
   selectedSlotsArray: any = [];
   selectedSlot: boolean = false;
 
+  introductionVideoType:any = 'Upload';
+  validUrl = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+  validYoutubeUrl = '/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/';
+
   constructor(private zone: NgZone, private formBuilder: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private ngxLoader: NgxUiLoaderService) {
     this.minDate = new Date();
     this.maxDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
     this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
-    this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
+    this.getCurrentDate = ("0" + (this.minDate.getMonth() + 1)).slice(-2) + '/' + (this.minDate.getDate()) + '/' + this.minDate.getFullYear();
     this.getSelectedDate = this.getCurrentDate;
     //this.hourlyRateForm.controls.availability.get('date').patchValue(this.getCurrentDate);
   }
@@ -108,6 +112,8 @@ export class EditProfileComponent implements OnInit {
     this.initalizeTimeSlots();
     this.checkQueryParam();
   }
+
+  
 
   private checkQueryParam() {
     this.id = localStorage.getItem('x-user-ID');
@@ -145,13 +151,15 @@ export class EditProfileComponent implements OnInit {
   getMentorProfileDetailsByToken(id): void {
     this.utilsService.processPostRequest('getMentorProfileDetails', { userID: this.id }, true).pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       this.mentorProfileDetails = response;
-      //console.log(this.mentorProfileDetails); return;
+      console.log(this.mentorProfileDetails); 
       if (this.mentorProfileDetails.admin_status == 'APPROVED' && this.mentorProfileDetails.subscription_status == 'ACTIVE') {
 
         this.basicDetailsForm.patchValue({
           bio: this.mentorProfileDetails.bio,
           tagline: this.mentorProfileDetails.tagline,
-          servicable_zipcodes: this.mentorProfileDetails.servicable_zipcodes
+          servicable_zipcodes: this.mentorProfileDetails.servicable_zipcodes,
+          introduction_video_type: this.mentorProfileDetails.introduction_video_type,
+          introduction_youtube_url: this.mentorProfileDetails.introduction_youtube_url,
         });
 
         if (this.mentorProfileDetails.bio && this.mentorProfileDetails.bio != "") {
@@ -169,6 +177,11 @@ export class EditProfileComponent implements OnInit {
           this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
         }
 
+        if (this.mentorProfileDetails.introduction_youtube_url && this.mentorProfileDetails.introduction_youtube_url != "") {
+          //console.log('hello')
+          this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
+        }
+
         if (this.mentorProfileDetails.profile_image.length > 0) {
           //console.log('pello')
           this.profileImageArray.push(new FormControl(this.mentorProfileDetails.profile_image[0]));
@@ -177,6 +190,10 @@ export class EditProfileComponent implements OnInit {
 
           this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
 
+        }
+
+        if(this.mentorProfileDetails.introduction_video_type){
+          this.introductionVideoType = this.mentorProfileDetails.introduction_video_type;
         }
 
         if (this.mentorProfileDetails.introduction_video.length > 0) {
@@ -341,7 +358,10 @@ export class EditProfileComponent implements OnInit {
       bio: ['', Validators.compose([Validators.minLength(30), Validators.maxLength(1000), Validators.required])],
       servicable_zipcodes: new FormControl([{ value: '' }], minLengthArray(1)),
       profile_image: this.formBuilder.array([]),
-      introduction_video: this.formBuilder.array([])
+      introduction_video: this.formBuilder.array([]),
+      introduction_youtube_url: [''],
+      introduction_video_type: ['Upload'],
+      introduction_video_radio: [false],
     });
   }
 
@@ -621,10 +641,12 @@ export class EditProfileComponent implements OnInit {
       this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
     }
 
-    if (this.videoIntroudctionArray.length > 0) {
+    if (this.videoIntroudctionArray.length > 0 || this.basicDetailsForm.controls.introduction_youtube_url.value != '') {
       //console.log('5')
       this.calculateProfilePercentage = this.calculateProfilePercentage + 5;
     }
+
+    //console.log(this.basicDetailsForm.value); return;
 
     this.utilsService.processPostRequest('updateProfileBasicDetails', this.basicDetailsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
@@ -746,6 +768,34 @@ export class EditProfileComponent implements OnInit {
 
       this.router.navigate(['/mentor/my-profile']);
     })
+  }
+
+  /**
+   * check introduction video type is selected
+   * @param  videoType refrence value 
+   */
+  checkVideoType(videoType: string): void {
+    //console.log(videoType)
+    let videoYoutubeUrl = this.basicDetailsForm.controls.introduction_youtube_url;
+
+    this.introductionVideoType = videoType; 
+    if(videoType == 'Youtube'){
+      this.videoIntroudctionArray.clear();
+      //videoYoutubeUrl.setValidators(Validators.pattern(this.validYoutubeUrl));
+      videoYoutubeUrl.clearValidators();
+      videoYoutubeUrl.updateValueAndValidity();
+
+      
+
+    }else{
+      videoYoutubeUrl.clearValidators();
+      videoYoutubeUrl.updateValueAndValidity();
+    }
+
+    this.basicDetailsForm.patchValue({
+        introduction_video_type: this.introductionVideoType
+    })
+
   }
 
 
@@ -1029,7 +1079,7 @@ export class EditProfileComponent implements OnInit {
 
   onDateChange(value: Date): void {
     let selectedDate = new Date(value);
-    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+    let formatDate = ("0" + (selectedDate.getMonth() + 1)).slice(-2) + '/' + selectedDate.getDate() + '/' + selectedDate.getFullYear();
     this.getSelectedDate = formatDate;
     //this.hourlyRateForm.controls.availability.get('date').patchValue(formatDate);
   }

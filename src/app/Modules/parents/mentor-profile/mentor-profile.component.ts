@@ -54,7 +54,7 @@ export class MentorProfileComponent implements OnInit {
     this.maxDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
     this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
-    this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
+    this.getCurrentDate = ("0" + (this.minDate.getMonth() + 1)).slice(-2) + '/' + (this.minDate.getDate()) + '/' + this.minDate.getFullYear();
     this.getSelectedDate = this.getCurrentDate;
     //console.log(this.getSelectedDate);
   }
@@ -169,7 +169,7 @@ export class MentorProfileComponent implements OnInit {
 
     this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
 
-    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+    let formatDate = ("0" + (selectedDate.getMonth() + 1)).slice(-2) + '/' + selectedDate.getDate() + '/' + selectedDate.getFullYear();
 
     this.getSelectedDate = formatDate;
 

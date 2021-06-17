@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit {
     this.maxDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
     this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
-    this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
+    this.getCurrentDate = ("0" + (this.minDate.getMonth() + 1)).slice(-2) + '/' + (this.minDate.getDate()) + '/' + this.minDate.getFullYear();
     this.getSelectedDate = this.getCurrentDate;
     //console.log(this.getSelectedDate);
   }
@@ -214,7 +214,7 @@ export class DashboardComponent implements OnInit {
     this.filterWithJobStatus['job_status'] = 'ACCEPTED';
     this.jobsPagination['filters'] = this.filterWithJobStatus
     this.utilsService.processPostRequest('jobs/getMentorJobs', this.jobsPagination, false).pipe(takeUntil(this.onDestroy$)).subscribe((response) => { 
-      console.log(response);
+      //console.log(response);
       this.jobsArray = response['records'];
       this.totalCompletedRecords = response['total_completed_records'];
       this.ngxLoader.stop();
@@ -247,7 +247,7 @@ export class DashboardComponent implements OnInit {
 
     this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()]
 
-    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+    let formatDate = ("0" + (selectedDate.getMonth() + 1)).slice(-2) + '/' + selectedDate.getDate() + '/' + selectedDate.getFullYear();
 
     this.getSelectedDate = formatDate;
 

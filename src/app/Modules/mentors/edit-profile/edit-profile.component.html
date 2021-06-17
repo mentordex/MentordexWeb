@@ -202,16 +202,41 @@
                                             </div>
                                             <div class="col-12 mb-4">
                                                 <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="mt-1 text-center text-md-left">
-                                                            <div class="csuploadfile upload-dropzone--btn">
-                                                                <div class="dropzone dropzone-container" [dropzone]="videoConfiguration" [disabled]="disabled"></div>
-                                                            </div>
+                                                    <div class="col-12 subject-category-box">
+                                                        <ul class="flex-column">
+                                                            <li>
 
-                                                            <div *ngIf="checkObjectLength(videoIntroudctionArray.value) > 0" class="inner_box">
+                                                                <label class="mordern-radiobox-label" for="Upload">
+                                                                    <input type="radio" (click)="checkVideoType('Upload')" formControlName="introduction_video_type" value="Upload" id="Upload">
+                                                                    <span class="design"></span>
+                                                                    <span class="text">Upload</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label class="mordern-radiobox-label" for="Youtube">
+                                                                    <input type="radio" (click)="checkVideoType('Youtube')" formControlName="introduction_video_type" value="Youtube" id="Youtube">
+                                                                    <span class="design"></span>
+                                                                    <span class="text">Youtube Url</span>
+                                                                </label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                                <div class="box_outer inline-pdf-section">
-                                                                    <span class="relative_images">
+                                            <ng-container *ngIf="introductionVideoType == 'Upload'">
+                                                <div class="col-12 mb-4">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="mt-1 text-center text-md-left">
+                                                                <div class="csuploadfile upload-dropzone--btn">
+                                                                    <div class="dropzone dropzone-container" [dropzone]="videoConfiguration" [disabled]="disabled"></div>
+                                                                </div>
+
+                                                                <div *ngIf="checkObjectLength(videoIntroudctionArray.value) > 0" class="inner_box">
+
+                                                                    <div class="box_outer inline-pdf-section">
+                                                                        <span class="relative_images">
                                                                             <span *ngFor="let videoIntroudction of videoIntroudctionArray.value | keyvalue; let videoIntroudctionIndex = index;" class="img_box">
                                                                                 
         
@@ -222,14 +247,30 @@
                                                                                     <i (click)="removeFile(videoIntroudction.key, 'introduction_video',videoIntroudction.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
                                                                                 </div>
                                                                             </span>
-                                                                    </span>
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="introductionVideoType == 'Youtube'">
+                                                <div class="col-12 mb-4">
+                                                    <div class="row">
+                                                        <div class="col-md-8 col-lg-7">
+                                                            <label for="" class="profile-label-text">Youtube Url </label>
+                                                            <input type="text" formControlName="introduction_youtube_url" class="profile-steps-input w-100 bg-white">
+
+                                                            <!--p class="errorCls" *ngIf="basicDetailsForm.controls.introduction_youtube_url.touched || isBasicDetailsFormSubmitted">
+                                                                <span>Enter valid youtube url.</span>
+                                                            </p-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
                                             <div class="col-12 mb-4">
                                                 <div class="row">
                                                     <div class="col-md-8 col-lg-7">

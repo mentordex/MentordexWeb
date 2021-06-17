@@ -23,6 +23,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { AddBankAccountComponent } from './add-bank-account/add-bank-account.component';
+import { EditSkillsComponent } from './edit-skills/edit-skills.component';
+import { EditAvailabilityComponent } from './edit-availability/edit-availability.component';
 
 
 import { AuthGuard } from '../../core/guards/auth-guard.service';
@@ -53,6 +55,18 @@ const routes: Routes = [
     path: 'skills',
     component: SkillsComponent,
     data: { title: 'Skills' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-skills',
+    component: EditSkillsComponent,
+    data: { title: 'Edit Skills' },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-availability',
+    component: EditAvailabilityComponent,
+    data: { title: 'Edit Availability' },
     canActivate: [AuthGuard]
   },
   {

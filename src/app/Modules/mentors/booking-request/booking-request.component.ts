@@ -81,7 +81,7 @@ export class BookingRequestComponent implements OnInit {
       })
 
       this.ngxLoader.stop();
-      console.log(this.jobDetails);
+      //console.log(this.jobDetails);
     })
   }
 

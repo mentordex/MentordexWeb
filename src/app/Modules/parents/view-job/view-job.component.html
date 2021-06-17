@@ -88,7 +88,7 @@
                                                 <div class="col-sm-4 col-6 mb-3">
                                                     <p class="profile-label-text font--16-xs color-text mb-2">Mentor Ratings</p>
                                                     <div>
-                                                        <ngb-rating [starTemplate]="t" [max]="5" [rate]="jobDetails?.parent?.rating || 0" [readonly]="true"></ngb-rating>
+                                                        <ngb-rating [starTemplate]="t" [max]="5" [rate]="jobDetails?.mentor?.rating || 0" [readonly]="true"></ngb-rating>
                                                         <ng-template #t let-fill="fill">
                                                             <span class="star" [class.full]="fill === 100">
                                                           <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
@@ -196,7 +196,7 @@
                                     <ng-container *ngIf="jobDetails?.job_status == 'COMPLETED' && jobDetails?.mentor_review?.review == ''">
                                         <form [formGroup]="reviewForm">
                                             <div class="text-center mt-5">
-                                                <p class="mobile-pagetop-heading mb-2 font--16-xs">Rate {{jobDetails?.parent?.first_name}} {{jobDetails?.parent?.last_name}}</p>
+                                                <p class="mobile-pagetop-heading mb-2 font--16-xs">Rate {{jobDetails?.mentor?.first_name}} {{jobDetails?.mentor?.last_name}}</p>
                                                 <ngb-rating [rate]='1' [starTemplate]="t" (leave)="OnSelectRating($event)" (rateChange)="OnSelectRating($event)" [max]="5"></ngb-rating>
                                                 <ng-template #t let-fill="fill">
                                                     <span class="star" [class.full]="fill === 100">

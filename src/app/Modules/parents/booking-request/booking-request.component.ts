@@ -58,7 +58,7 @@ export class BookingRequestComponent implements OnInit {
     this.minDate.setDate(this.minDate.getDate());
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.getCurrentDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]
-    this.getCurrentDate = this.minDate.getDate() + '/' + (this.minDate.getMonth() + 1) + '/' + this.minDate.getFullYear();
+    this.getCurrentDate = ("0" + (this.minDate.getMonth() + 1)).slice(-2) + '/' + (this.minDate.getDate()) + '/' + this.minDate.getFullYear();
 
   }
 
@@ -153,13 +153,13 @@ export class BookingRequestComponent implements OnInit {
     let selectedDate = new Date(value);
 
 
-    let formatDate = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear();
+    let formatDate = ("0" + (selectedDate.getMonth() + 1)).slice(-2) + '/' + selectedDate.getDate() + '/' + selectedDate.getFullYear();
     this.bookARequestForm.controls.booking_date.patchValue(formatDate);
 
     let selectedDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][selectedDate.getDay()];
 
     let getSelectedYear = selectedDate.getFullYear();
-    let getSelectedMonth = selectedDate.getMonth() + 1;
+    let getSelectedMonth = ("0" + (selectedDate.getMonth() + 1)).slice(-2);
     let getSelectedDate = selectedDate.getDate();
     //this.getCurrentDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()]
     this.getAvailableSlotsByDate(selectedDay, formatDate);

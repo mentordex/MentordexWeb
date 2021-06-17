@@ -33,11 +33,11 @@ export const maxLengthArray = (min: number) => {
 }
 
 @Component({
-  selector: 'app-skills',
-  templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.css']
+  selector: 'app-edit-skills',
+  templateUrl: './edit-skills.component.html',
+  styleUrls: ['./edit-skills.component.css']
 })
-export class SkillsComponent implements OnInit {
+export class EditSkillsComponent implements OnInit {
 
   private onDestroy$: Subject<void> = new Subject<void>();
   id: any = ''
@@ -275,11 +275,17 @@ export class SkillsComponent implements OnInit {
   }
 
   onSubcateory2Change(e) {
+    
+
     this.skillsForm.controls.subcategory2.patchValue({ subcategory_id: e.target.value, value: e.target.getAttribute('data-subCategoryName') });
+
+    //console.log(this.skillsForm.value);
   }
 
   onSubcateory3Change(e) {
     this.skillsForm.controls.subcategory3.patchValue({ subcategory_id: e.target.value, value: e.target.getAttribute('data-subCategoryName') });
+
+    //console.log(this.skillsForm.value);
   }
 
   /**
@@ -314,8 +320,9 @@ export class SkillsComponent implements OnInit {
 
     this.utilsService.processPostRequest('updateSkillsDetails', this.skillsForm.value, true, '').pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
       //console.log(response);
-      //this.utilsService.onResponse('Your information updated successfully.', true);
-      this.router.navigate(['/mentor/book-a-slot']);
+      this.checkQueryParam();
+      this.utilsService.onResponse('Your skills updated successfully.', true);
+      //this.router.navigate(['/mentor/book-a-slot']);
     })
   }
 

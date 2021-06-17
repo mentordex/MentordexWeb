@@ -496,6 +496,20 @@ export class MessagesComponent implements OnInit {
     })
   }
 
+  showUpdateBookingRequestPopup(jobId, mentorId, jobStatus): void {
+    this.isBookingMethodModalOpen = true;
+    this.getJobId = jobId
+    this.getMentorId = mentorId
+    this.getJobStatus = jobStatus
+  }
+
+  hideUpdateBookingRequestPopup(isOpened: boolean): void {
+    
+    this.isBookingMethodModalOpen = isOpened; //set to false which will reset modal to show on click again
+    this.getParentJobsById(this.id, this.selectedJobId);
+    this.ngxLoader.stop();
+  }
+
   /**
 * set check object array length.
 * @param object

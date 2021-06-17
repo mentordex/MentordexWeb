@@ -31,10 +31,12 @@ import { PaymentHistoryComponent } from './payment-history/payment-history.compo
 import { JobsComponent } from './jobs/jobs.component';
 import { AddBankAccountComponent } from './add-bank-account/add-bank-account.component';
 import { AddBankAccountPopupComponent } from './add-bank-account-popup/add-bank-account-popup.component';
+import { EditSkillsComponent } from './edit-skills/edit-skills.component';
+import { EditAvailabilityComponent } from './edit-availability/edit-availability.component';
 
 
 @NgModule({
-  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent, DashboardComponent, MyMembershipComponent, MyMembershipPlanComponent, BillingMethodsComponent, AddPaymentMethodPopupComponent, EditProfileComponent, BookingRequestComponent, UpdateBookingRequestComponent, NotificationsComponent, MessagesComponent, ViewProfileComponent, UpgradeMembershipComponent, TransactionsComponent, PaymentHistoryComponent, JobsComponent, AddBankAccountComponent, AddBankAccountPopupComponent],
+  declarations: [VerifyPhoneComponent, VerifyEmailComponent, VerificationSuccessComponent, BasicDetailsComponent, SkillsComponent, BookASlotComponent, ApplicationStatusComponent, ProfileComponent, PurchaseMembershipComponent, AddPaymentMethodComponent, PurchaseMembershipSuccessComponent, DashboardComponent, MyMembershipComponent, MyMembershipPlanComponent, BillingMethodsComponent, AddPaymentMethodPopupComponent, EditProfileComponent, BookingRequestComponent, UpdateBookingRequestComponent, NotificationsComponent, MessagesComponent, ViewProfileComponent, UpgradeMembershipComponent, TransactionsComponent, PaymentHistoryComponent, JobsComponent, AddBankAccountComponent, AddBankAccountPopupComponent, EditSkillsComponent, EditAvailabilityComponent],
   imports: [
     CommonModule,
     MentorsRoutingModule,
